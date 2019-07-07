@@ -11,6 +11,8 @@
 'use strict';
 const utils = require('@iobroker/adapter-core');
 const request = require('request');
+const xml2js = require('xml2js');
+
 
 var AdapterStarted;
 
@@ -52,9 +54,18 @@ function requestXML(url){
     request.post({
         url:     url
       }, function(error, response, body){
-        if (body) {
-            adapter.log.info('Antwort: ' + response + ',' + body + ',' + error); // Hello, world!
-
+        if (error){
+            adapter.log.error(error)
         }
+        if (body) {
+            processXML(body)
+        }
+        
       });    
+}
+
+function processXML(content){
+        var json = JSON.parse(content)
+        adapter.log(json)
+        adapter.log(json.title)
 }
