@@ -53,9 +53,6 @@ function requestXML(url){
     request.post({
         url:     url
       }, function(error, response, body){
-        adapter.log.info('Response: ' + response)
-        adapter.log.info('Body: ' + body)
-
         if (error){
             adapter.log.error(error)
         }
@@ -67,7 +64,6 @@ function requestXML(url){
 }
 
 function processXML(content){
-        var json = JSON.parse(content)
-        adapter.log.info(json)
-        adapter.log.info(json.title)
+        
+        adapter.log.info(content.title)
 }
