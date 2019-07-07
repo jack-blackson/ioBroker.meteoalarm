@@ -49,29 +49,12 @@ function main() {
 }
 
 function requestXML(url){
-    /*
-    const Http = new XMLHttpRequest();
-    Http.open("GET", url);
-    Http.send();
+    request.post({
+        url:     url
+      }, function(error, response, body){
+        if (body) {
+            adapter.log.info('Antwort: ' + response + ',' + body + ',' + error); // Hello, world!
 
-    Http.onreadystatechange = (e) => {
-      adapter.log.info(Http.responseText)
-      adapter.log.info('antwort erhalten')
-    }
-    */
-
-    let xhr = new XMLHttpRequest();
-
-    xhr.open('GET', url);
-
-    xhr.responseType = 'document';
-
-    xhr.send();
-
-    xhr.onload = function() {
-         let responseObj = xhr.response;
-         adapter.log.info(responseObj.message); // Hello, world!
-    };
-
-    adapter.log.debug('Request URL: ' + url);
+        }
+      });    
 }
