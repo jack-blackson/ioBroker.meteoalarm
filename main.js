@@ -41,16 +41,22 @@ function startAdapter(options) {
 
 function main() {
     var callback
-    requestXML('http://meteoalarm.eu/documents/rss/at/AT002.rss', callback)
-    adapter.log.info('Ergebnis: ' + callback  )
+    requestXML('http://meteoalarm.eu/documents/rss/at/AT002.rss')
 
     adapter.config.interval = 600000;
     adapter.subscribeStates('*')
 }
 
-function requestXML(url,callback){
+function requestXML(url){
     request = request || require('request');
 
+    const Http = new XMLHttpRequest();
+    Http.open("GET", url);
+    Http.send();
+
+    Http.onreadystatechange = (e) => {
+      console.log(Http.responseText)
+    }
+
     adapter.log.debug('Request URL: ' + url);
-    request(url, (error, response, body) => callback(!body ? error || JSON.stringify(response) : null, body, url));
 }
