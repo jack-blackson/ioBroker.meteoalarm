@@ -1,21 +1,21 @@
 {
-  "name": "iobroker.countdown",
-  "version": "0.7.0",
-  "description": "Countdown",
+  "name": "iobroker.meteoalarm",
+  "version": "0.1.0",
+  "description": "Meteolaram",
   "main": "main.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jack-blackson/ioBroker.countdown.git"
+    "url": "git+https://github.com/jack-blackson/ioBroker.meteoalarm.git"
   },
   "author": {
     "name": "jack_blackson",
     "email": "blacksonj7@gmail.com"
   },
-  "keywords": ["Countdown","countdown"],
+  "keywords": ["Meteolarm","meteoalarm","weather alarm"],
   "license": "MIT",
-  "homepage": "https://github.com/jack-blackson/ioBroker.countdown",
+  "homepage": "https://github.com/jack-blackson/ioBroker.meteoalarm",
   "bugs": {
-    "url": "https://github.com/jack-blackson/ioBroker.countdown/issues"
+    "url": "https://github.com/jack-blackson/ioBroker.meteoalarm/issues"
   },
   "dependencies": {
     "moment":"2.24.0",

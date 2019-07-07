@@ -1,45 +1,21 @@
 {
     "common": {
-      "name": "countdown",
-      "version": "0.7.0",
+      "name": "meteoalarm",
+      "version": "0.1.0",
       "news": {
         "0.1.0": {
           "en": "Initial version",
           "de": "Initiale Version "
-        },
-        "0.2.0": {
-          "en": "Ajusted packages",
-          "de": "Pakete angepasst "
-        },
-        "0.3.0": {
-          "en": "Add total Hours and Days, small fixes",
-          "de": "Totale Stunden und Tage hinzugefügt, kleine Korrekturen "
-        },
-        "0.4.0": {
-          "en": "Restructuring",
-          "de": "Struktur geändert "
-        },
-        "0.5.0": {
-          "en": "Adjustable Table",
-          "de": "Anpassbare Tabellen "
-        },
-        "0.6.0": {
-          "en": "Adjustable date format, Add Countdowns with adddays,..",
-          "de": "Datumsformat anpassbar, Countdowns mit adddays & Co hinzufügen"
-        },
-        "0.7.0": {
-          "en": "Bugfixes, add countdowns with addhours and addminutes",
-          "de": "Bugfixes, Countdowns mit addminutes und addhours hinzufügen"
         }
       },
-      "title": "Countdown",
+      "title": "Meteoalarm",
           "titleLang": {
-            "en": "Countdown",
-            "de": "Countdown"
+            "en": "Meteoalarm",
+            "de": "Meteoalarm"
           },
           "desc": {
-            "en": "Countdown Adapter",
-            "de": "Countdown Adapter"
+            "en": "Meteoalarm Adapter",
+            "de": "Meteoalarm Adapter"
           },
           "authors": [
               "Jack <blacksonj7@gmail.com>"
@@ -49,15 +25,15 @@
           "mode":                     "daemon",
           "messagebox":               true,
       "enabled":                  false,
-          "readme":                   "https://github.com/jack-blackson/ioBroker.countdown/master/README.md",
+          "readme":                   "https://github.com/jack-blackson/ioBroker.meteoalarm/master/README.md",
           "loglevel":                 "info",
           "restartAdapters":          [
-            "countdown"
+            "meteoalarm"
           ],        
-          "keywords":                 ["countdown"],
-          "icon":                     "countdown.png",
+          "keywords":                 ["meteoalarm"],
+          "icon":                     "meteoalarm.png",
           "materialize":              true,
-          "extIcon":                  "https://raw.githubusercontent.com/jack-blackson/ioBroker.countdown/master/admin/countdown.png",
+          "extIcon":                  "https://raw.githubusercontent.com/jack-blackson/ioBroker.meteoalarm/master/admin/meteoalarm.png",
           "type":                     "date-and-time",
       "singletonHost":            true
       },
