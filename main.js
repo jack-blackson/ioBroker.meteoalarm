@@ -13,6 +13,7 @@ const utils = require('@iobroker/adapter-core');
 var AdapterStarted;
 
 let adapter;
+let request;
 startAdapter()
 
 setInterval(function() { 
@@ -39,17 +40,17 @@ function startAdapter(options) {
 
 
 function main() {
-
-    requestXML('http://meteoalarm.eu/documents/rss/at/AT002.rss')
+    var callback
+    requestXML('http://meteoalarm.eu/documents/rss/at/AT002.rss', callback)
+    adapter.log.info('Ergebnis: ' + callback  )
 
     adapter.config.interval = 600000;
     adapter.subscribeStates('*')
 }
 
-function requestXML(url){
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.open("GET", url);
-    xmlhttp.send();
-    var xmlDoc = xmlhttp.responseXML;
-    console.log(xmlDoc)
+function requestXML(url,callback){
+    request = request || require('request');
+
+    adapter.log.debug('Request URL: ' + url);
+    request(url, (error, response, body) => callback(!body ? error || JSON.stringify(response) : null, body, url));
 }
