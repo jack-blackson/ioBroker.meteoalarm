@@ -79,7 +79,9 @@ function requestXML(url){
 
 				} else {
 
-					adapter.log.info("Result: " + result.title);
+					adapter.log.info("Result: " + JSON.stringify(result));
+					adapter.log.info("Result title: " + JSON.stringify(result.title));
+					adapter.log.info("Result title2: " + JSON.stringify(result.xml.title));
 
 				}
 
