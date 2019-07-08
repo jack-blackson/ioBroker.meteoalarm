@@ -16,6 +16,14 @@ var parseString = require('xml2js').parseString;
 
 var AdapterStarted;
 
+var warningTextToday = '';
+var warningTextTodayFrom = '';
+var warningTextTodayTo = '';
+var warningTextTodayType = '';
+var warningTextTodayLevel = '';
+var warningTextTodayColor = '';
+
+
 let adapter;
 startAdapter()
 
@@ -94,5 +102,85 @@ function processJSON(content){
         adapter.setState({state: 'lastUpdate'}, {val: JSON.stringify(newdate), ack: true});
         adapter.setState({state: 'publicationDate'}, {val: JSON.stringify(content.rss.channel.item.pubdate), ack: true});
         adapter.log.info('Wetter: ' + JSON.stringify(content.rss.channel.item.description))
+        parseWeather(content.rss.channel.item.description)
+        adapter.setState({state: 'todayWarning'}, {val: warningTextToday, ack: true});
+        adapter.setState({state: 'todayWarningFrom'}, {val: warningTextTodayFrom, ack: true});
+        adapter.setState({state: 'todayWarningTo'}, {val: warningTextTodayTo, ack: true});
+        adapter.setState({state: 'todayWarningType'}, {val: warningTextTodayType, ack: true});
+        adapter.setState({state: 'todayWarningLevel'}, {val: warningTextTodayLevel, ack: true});
+        adapter.setState({state: 'todayWarningColor'}, {val: warningTextTodayColor, ack: true});
+}
+
+function parseWeather(description){
+    var WarnungsText = '';
+
+    // Warning Text Today
+    var SearchCrit1 = description.indexOf('Today') + 1;
+    var SearchCrit2 = description.indexOf('Tomorrow') + 1;
+    var ContentHeute = description.slice((SearchCrit1 - 1), SearchCrit2);
+    SearchCrit1 = ContentHeute.indexOf('deutsch: ') + 1;
+    SearchCrit1 = (typeof SearchCrit1 == 'number' ? SearchCrit1 : 0) + 9;
+    SearchCrit2 = ContentHeute.indexOf('english') + 1;
+    SearchCrit2 = (typeof SearchCrit2 == 'number' ? SearchCrit2 : 0) + -1;
+    if (SearchCrit1 != '9') {
+        WarnungsText = ContentHeute.slice((SearchCrit1 - 1), SearchCrit2);
+    }
+    warningTextToday = WarnungsText;
+
+    // Warning Text From/To Today
+    SearchCrit1 = ContentHeute.indexOf('From: </b><i>') + 1;
+    SearchCrit1 = (typeof SearchCrit1 == 'number' ? SearchCrit1 : 0) + 13;
+    SearchCrit2 = ContentHeute.indexOf('CET') + 1;
+    SearchCrit2 = (typeof SearchCrit2 == 'number' ? SearchCrit2 : 0) + -2;
+    var Warnung_Von = ContentHeute.slice((SearchCrit1 - 1), SearchCrit2);
+    SearchCrit1 = ContentHeute.indexOf('Until: </b><i>') + 1;
+    SearchCrit1 = (typeof SearchCrit1 == 'number' ? SearchCrit1 : 0) + 14;
+    SearchCrit2 = ContentHeute.indexOf(' CET</i></td><') + 1;
+    SearchCrit2 = (typeof SearchCrit2 == 'number' ? SearchCrit2 : 0) + -1;
+    var Warnung_Bis = ContentHeute.slice((SearchCrit1 - 1), SearchCrit2);
+    warningTextTodayFrom = Warnung_Von
+    warningTextTodayTo = Warnung_Bis
+
+    //Warning Text Today Type
+    SearchCrit1 = ContentHeute.indexOf('awt:') + 1;
+    SearchCrit1 = (typeof SearchCrit1 == 'number' ? SearchCrit1 : 0) + 4;
+    SearchCrit2 = SearchCrit1 + 1;
+    var Typ = ContentHeute.slice((SearchCrit1 - 1), SearchCrit2);
+    if (SearchCrit1 != 0) {
+      warningTextTodayType = Typ;
+    }
+
+    // Warning Text Today Level
+    SearchCrit1 = ContentHeute.indexOf('level:') + 1;
+    SearchCrit1 = (typeof SearchCrit1 == 'number' ? SearchCrit1 : 0) + 6;
+    SearchCrit2 = SearchCrit1 + 1;
+    var Level = ContentHeute.charAt((SearchCrit1 - 1));
+    if (SearchCrit1 != 0) {
+        warningTextTodayLevel = Level;
+
+    
+    warningTextTodayColor = '';
+    switch (Level) {
+        case '1':
+            // Grün
+            warningTextTodayColor = '#01DF3A';
+            break;
+        case '2':
+            // Gelb
+            warningTextTodayColor = '#FFFF00';
+            break;
+        case '3':
+            // Orange
+            warningTextTodayColor = '#FF8000';
+            break;
+        case '4':
+            // Rot
+            warningTextTodayColor = '#FF0000';
+            break;
+        default:
+           
+            break;
+        }
+    }
 
 }
