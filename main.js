@@ -79,7 +79,7 @@ function requestXML(url){
 
 				} else {
 
-					adapter.log.info("Result: " + result);
+					adapter.log.info("Result: " + result.title);
 
 				}
 
