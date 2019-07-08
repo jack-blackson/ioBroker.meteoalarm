@@ -11,8 +11,7 @@
 'use strict';
 const utils = require('@iobroker/adapter-core');
 const request = require('request');
-const convert = require('xml2js');
-
+var parseString = require('xml2js').parseString;
 
 var AdapterStarted;
 
@@ -63,9 +62,35 @@ function requestXML(url){
             adapter.log.error(error)
         }
         if (body) {
-            var json = convert.xml2json(body, {compact: false, spaces: 4});
-            adapter.log.info(json);
-            processXML(body)
+
+            parseString(body, {
+
+				explicitArray: false,
+
+				mergeAttrs: true
+
+			}, 
+
+			function (err, result) {
+
+				if (err) {
+
+					adapter.log.error("Fehler: " + err);
+
+				} else {
+
+					adapter.log.info("Result: " + result);
+
+				}
+
+			});
+
+
+
+
+            //var json = convert.xml2json(body, {compact: false, spaces: 4});
+            //adapter.log.info(json);
+            //processXML(body)
         }
         
       });    
