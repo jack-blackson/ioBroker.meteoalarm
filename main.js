@@ -69,7 +69,7 @@ function main() {
     });
 
     //'http://meteoalarm.eu/documents/rss/at/AT002.rss'
-    //http://meteoalarm.eu/documents/rss/de/DE288.rss
+    //  http://meteoalarm.eu/documents/rss/de/DE288.rss
     if (adapter.config.pathXML != '') {
         requestXML(adapter.config.pathXML)
     }
@@ -122,15 +122,47 @@ function processJSON(content){
            val: JSON.stringify(content.rss.channel.item.title),
            'native' : {}
         });
-        adapter.setState({device: '' , channel: '', state: 'location'}, {val: JSON.stringify(content.rss.channel.item.title), ack: true});
-        adapter.setState({state: 'link'}, {val: JSON.stringify(content.rss.channel.item.link), ack: true});
+
+        adapter.setObjectNotExists('link', {
+            common: {
+                  name: 'link'
+            },
+            type: 'state',
+            val: JSON.stringify(content.rss.channel.item.link),
+            'native' : {}
+         });
+
         var newdate = moment(new Date(), 'DD.MM.YYYY HH:mm:ss').toDate()
-        adapter.setState({state: 'lastUpdate'}, {val: JSON.stringify(newdate), ack: true});
-        adapter.setState({state: 'publicationDate'}, {val: JSON.stringify(content.rss.channel.item.pubdate), ack: true});
+        adapter.setObjectNotExists('lastUpdate', {
+            common: {
+                  name: 'lastUpdate'
+            },
+            type: 'state',
+            val: newdate,
+            'native' : {}
+         });
+
+         adapter.setObjectNotExists('publicationDate', {
+            common: {
+                  name: 'publicationDate'
+            },
+            type: 'state',
+            val: JSON.stringify(content.rss.channel.item.pubdate),
+            'native' : {}
+         });
+
         adapter.log.info('Wetter: ' + JSON.stringify(content.rss.channel.item.description))
         parseWeather(content.rss.channel.item.description)
 
         // today
+        adapter.setObjectNotExists('today.text', {
+            common: {
+                  name: 'text'
+            },
+            type: 'state',
+            val: warningTextToday,
+            'native' : {}
+         });
         adapter.setState({channel: 'today', state: 'text'}, {val: warningTextToday, ack: true});
         adapter.setState({channel: 'today', state: 'from'}, {val: warningTextTodayFrom, ack: true});
         adapter.setState({channel: 'today', state: 'to'}, {val: warningTextTodayTo, ack: true});
