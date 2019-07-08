@@ -1,6 +1,6 @@
 /**
  *
- *      ioBroker COUNTDOWN Adapter
+ *      ioBroker Meteoalarm Adapter
  *
  *      (c) 2019 Alexander K <blacksonj7@gmail.com>
  *
@@ -114,6 +114,14 @@ function requestXML(url){
 }
 
 function processJSON(content){
+        adapter.setObjectNotExists('location', {
+           common: {
+                 name: 'location'
+           },
+           type: 'state',
+           val: JSON.stringify(content.rss.channel.item.title),
+           'native' : {}
+        });
         adapter.setState({device: '' , channel: '', state: 'location'}, {val: JSON.stringify(content.rss.channel.item.title), ack: true});
         adapter.setState({state: 'link'}, {val: JSON.stringify(content.rss.channel.item.link), ack: true});
         var newdate = moment(new Date(), 'DD.MM.YYYY HH:mm:ss').toDate()
