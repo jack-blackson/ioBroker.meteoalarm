@@ -11,6 +11,7 @@
 'use strict';
 const utils = require('@iobroker/adapter-core');
 const request = require('request');
+const moment = require('moment');
 var parseString = require('xml2js').parseString;
 
 var AdapterStarted;
@@ -79,27 +80,19 @@ function requestXML(url){
 					adapter.log.error("Fehler: " + err);
 
 				} else {
-
-					adapter.log.info("Result: " + JSON.stringify(result));
-					adapter.log.info("Result title: " + JSON.stringify(result.rss));
-					adapter.log.info("Result title2: " + JSON.stringify(result.rss.channel.title));
-
+                    processJSON(body)
 				}
-
 			});
-
-
-
-
-            //var json = convert.xml2json(body, {compact: false, spaces: 4});
-            //adapter.log.info(json);
-            //processXML(body)
         }
-        
       });    
 }
 
-function processXML(content){
-        
-        adapter.log.info(content.title)
+function processJSON(content){
+        adapter.setState({state: 'location'}, {val: JSON.stringify(content.rss.channel.item.title), ack: true});
+        adapter.setState({state: 'link'}, {val: JSON.stringify(content.rss.channel.item.link), ack: true});
+        var newdate = moment(new Date(), 'DD.MM.YYYY HH:mm:ss').toDate()
+        adapter.setState({state: 'lastUpdate'}, {val: JSON.stringify(newdate), ack: true});
+        adapter.setState({state: 'publicationDate'}, {val: JSON.stringify(content.rss.channel.item.pubdate), ack: true});
+        adapter.log.info('Wetter: ' + JSON.stringify(content.rss.channel.item.description))
+
 }
