@@ -80,7 +80,7 @@ function requestXML(url){
 					adapter.log.error("Fehler: " + err);
 
 				} else {
-                    processJSON(body)
+                    processJSON(result)
 				}
 			});
         }
