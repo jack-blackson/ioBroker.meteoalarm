@@ -11,7 +11,7 @@
 'use strict';
 const utils = require('@iobroker/adapter-core');
 const request = require('request');
-const xml2js = require('xml2js');
+const convert = require('xml2js');
 
 
 var AdapterStarted;
@@ -47,6 +47,9 @@ function main() {
     if (adapter.config.pathXML != '') {
         requestXML(adapter.config.pathXML)
     }
+    else{
+        adapter.log.error('No path maintained!!')
+    }
 
     adapter.config.interval = 600000;
     adapter.subscribeStates('*')
@@ -60,7 +63,7 @@ function requestXML(url){
             adapter.log.error(error)
         }
         if (body) {
-            var json = xml2js.xml2json(body, {compact: false, spaces: 4});
+            var json = convert.xml2json(body, {compact: false, spaces: 4});
             adapter.log.info(json);
             processXML(body)
         }
