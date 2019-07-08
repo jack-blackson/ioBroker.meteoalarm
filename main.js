@@ -119,7 +119,10 @@ function processJSON(content){
                  name: 'location'
            },
            type: 'state',
-           val: JSON.stringify(content.rss.channel.item.title),
+           read: true, 
+           write: false, 
+           def: JSON.stringify(content.rss.channel.item.title),
+           role: 'value',
            'native' : {}
         });
 
@@ -128,7 +131,10 @@ function processJSON(content){
                   name: 'link'
             },
             type: 'state',
-            val: JSON.stringify(content.rss.channel.item.link),
+            read: true, 
+            write: false, 
+            def: JSON.stringify(content.rss.channel.item.link),
+            role: 'value',
             'native' : {}
          });
 
@@ -138,7 +144,10 @@ function processJSON(content){
                   name: 'lastUpdate'
             },
             type: 'state',
-            val: newdate,
+            read: true, 
+            write: false, 
+            def: newdate,
+            role: 'value',
             'native' : {}
          });
 
