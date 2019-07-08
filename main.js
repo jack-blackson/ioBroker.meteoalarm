@@ -114,7 +114,7 @@ function requestXML(url){
 }
 
 function processJSON(content){
-        adapter.setState({state: 'location'}, {val: JSON.stringify(content.rss.channel.item.title), ack: true});
+        adapter.setState({device: '' , channel: '', state: 'location'}, {val: JSON.stringify(content.rss.channel.item.title), ack: true});
         adapter.setState({state: 'link'}, {val: JSON.stringify(content.rss.channel.item.link), ack: true});
         var newdate = moment(new Date(), 'DD.MM.YYYY HH:mm:ss').toDate()
         adapter.setState({state: 'lastUpdate'}, {val: JSON.stringify(newdate), ack: true});
