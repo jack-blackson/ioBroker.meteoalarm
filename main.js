@@ -11,6 +11,7 @@
 'use strict';
 const utils = require('@iobroker/adapter-core');
 const request = require('request');
+const xml2js = require('xml2js');
 
 
 var AdapterStarted;
@@ -42,8 +43,10 @@ function startAdapter(options) {
 
 
 function main() {
-    var callback
-    requestXML('http://meteoalarm.eu/documents/rss/at/AT002.rss')
+    //'http://meteoalarm.eu/documents/rss/at/AT002.rss'
+    if (adapter.config.pathXML != '') {
+        requestXML(adapter.config.pathXML)
+    }
 
     adapter.config.interval = 600000;
     adapter.subscribeStates('*')
@@ -57,6 +60,8 @@ function requestXML(url){
             adapter.log.error(error)
         }
         if (body) {
+            var json = xml2js.xml2json(body, {compact: false, spaces: 4});
+            adapter.log.info(json);
             processXML(body)
         }
         
