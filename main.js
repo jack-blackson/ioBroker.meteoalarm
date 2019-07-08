@@ -51,6 +51,23 @@ function startAdapter(options) {
 
 
 function main() {
+
+    adapter.setObjectNotExists('', {
+        common: {
+              name: 'today'
+        },
+        type: 'channel',
+        'native' : {}
+    });
+
+    adapter.setObjectNotExists('', {
+        common: {
+              name: 'tomorrow'
+        },
+        type: 'channel',
+        'native' : {}
+    });
+
     //'http://meteoalarm.eu/documents/rss/at/AT002.rss'
     if (adapter.config.pathXML != '') {
         requestXML(adapter.config.pathXML)
@@ -103,12 +120,14 @@ function processJSON(content){
         adapter.setState({state: 'publicationDate'}, {val: JSON.stringify(content.rss.channel.item.pubdate), ack: true});
         adapter.log.info('Wetter: ' + JSON.stringify(content.rss.channel.item.description))
         parseWeather(content.rss.channel.item.description)
-        adapter.setState({state: 'todayWarning'}, {val: warningTextToday, ack: true});
-        adapter.setState({state: 'todayWarningFrom'}, {val: warningTextTodayFrom, ack: true});
-        adapter.setState({state: 'todayWarningTo'}, {val: warningTextTodayTo, ack: true});
-        adapter.setState({state: 'todayWarningType'}, {val: warningTextTodayType, ack: true});
-        adapter.setState({state: 'todayWarningLevel'}, {val: warningTextTodayLevel, ack: true});
-        adapter.setState({state: 'todayWarningColor'}, {val: warningTextTodayColor, ack: true});
+
+        // today
+        adapter.setState({channel: 'today', state: 'text'}, {val: warningTextToday, ack: true});
+        adapter.setState({channel: 'today', state: 'from'}, {val: warningTextTodayFrom, ack: true});
+        adapter.setState({channel: 'today', state: 'to'}, {val: warningTextTodayTo, ack: true});
+        adapter.setState({channel: 'today', state: 'type'}, {val: warningTextTodayType, ack: true});
+        adapter.setState({channel: 'today', state: 'level'}, {val: warningTextTodayLevel, ack: true});
+        adapter.setState({channel: 'today', state: 'color'}, {val: warningTextTodayColor, ack: true});
 }
 
 function parseWeather(description){
