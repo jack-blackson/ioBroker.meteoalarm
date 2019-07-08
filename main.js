@@ -115,15 +115,12 @@ function requestXML(url){
 
 function processJSON(content){
         adapter.setObjectNotExists('location', {
-           common: {
-                 name: 'location'
-           },
-           type: 'state',
+           name: 'location',
+           type: "string",
            read: true, 
            write: false, 
            def: JSON.stringify(content.rss.channel.item.title),
            role: 'value',
-           'native' : {}
         });
 
         adapter.setObjectNotExists('link', {
