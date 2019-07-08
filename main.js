@@ -52,7 +52,7 @@ function startAdapter(options) {
 
 function main() {
 
-    adapter.setObjectNotExists('', {
+    adapter.setObjectNotExists('today', {
         common: {
               name: 'today'
         },
@@ -60,7 +60,7 @@ function main() {
         'native' : {}
     });
 
-    adapter.setObjectNotExists('', {
+    adapter.setObjectNotExists('tomorrow', {
         common: {
               name: 'tomorrow'
         },
@@ -69,6 +69,7 @@ function main() {
     });
 
     //'http://meteoalarm.eu/documents/rss/at/AT002.rss'
+    //http://meteoalarm.eu/documents/rss/de/DE288.rss
     if (adapter.config.pathXML != '') {
         requestXML(adapter.config.pathXML)
     }
