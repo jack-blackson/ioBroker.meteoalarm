@@ -163,12 +163,46 @@ function processJSON(content){
             val: warningTextToday,
             'native' : {}
          });
-        adapter.setState({channel: 'today', state: 'text'}, {val: warningTextToday, ack: true});
-        adapter.setState({channel: 'today', state: 'from'}, {val: warningTextTodayFrom, ack: true});
-        adapter.setState({channel: 'today', state: 'to'}, {val: warningTextTodayTo, ack: true});
-        adapter.setState({channel: 'today', state: 'type'}, {val: warningTextTodayType, ack: true});
-        adapter.setState({channel: 'today', state: 'level'}, {val: warningTextTodayLevel, ack: true});
-        adapter.setState({channel: 'today', state: 'color'}, {val: warningTextTodayColor, ack: true});
+         adapter.setObjectNotExists('today.from', {
+            common: {
+                  name: 'from'
+            },
+            type: 'state',
+            val: warningTextTodayFrom,
+            'native' : {}
+         });
+         adapter.setObjectNotExists('today.to', {
+            common: {
+                  name: 'to'
+            },
+            type: 'state',
+            val: warningTextTodayTo,
+            'native' : {}
+         });
+         adapter.setObjectNotExists('today.type', {
+            common: {
+                  name: 'type'
+            },
+            type: 'state',
+            val: warningTextTodayType,
+            'native' : {}
+         });
+         adapter.setObjectNotExists('today.level', {
+            common: {
+                  name: 'level'
+            },
+            type: 'state',
+            val: warningTextTodayLevel,
+            'native' : {}
+         });
+         adapter.setObjectNotExists('today.color', {
+            common: {
+                  name: 'color'
+            },
+            type: 'state',
+            val: warningTextTodayColor,
+            'native' : {}
+         });
 }
 
 function parseWeather(description){
