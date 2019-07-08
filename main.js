@@ -82,7 +82,7 @@ function requestXML(url){
 
 					adapter.log.info("Result: " + JSON.stringify(result));
 					adapter.log.info("Result title: " + JSON.stringify(result.rss));
-					adapter.log.info("Result title2: " + JSON.stringify(result.rss.title));
+					adapter.log.info("Result title2: " + JSON.stringify(result.rss.channel.title));
 
 				}
 
