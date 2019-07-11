@@ -124,6 +124,8 @@ function processJSON(content){
            role: 'value',
         });
         */
+       adapter.log.info('Location: ' + JSON.stringify(content.rss.channel.item.title))
+
         adapter.setState('location',JSON.stringify(content.rss.channel.item.title))
 
         adapter.setObjectNotExists('link', {
