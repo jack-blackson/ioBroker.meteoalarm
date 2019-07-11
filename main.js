@@ -257,6 +257,7 @@ function parseWeather(description){
     SearchCrit1 = (typeof SearchCrit1 == 'number' ? SearchCrit1 : 0) + 6;
     SearchCrit2 = SearchCrit1 + 1;
     var Level = ContentHeute.charAt((SearchCrit1 - 1));
+    var Color = ''
     if (SearchCrit1 != 0) {
         adapter.createState('', 'today', 'level', {
             read: true, 
@@ -267,23 +268,22 @@ function parseWeather(description){
             role: 'value'
         });
     
-        warningTextTodayColor = '';
         switch (Level) {
          case '1':
             // Grün
-            warningTextTodayColor = '#01DF3A';
+            Color = '#01DF3A';
             break;
         case '2':
             // Gelb
-            warningTextTodayColor = '#FFFF00';
+            Color = '#FFFF00';
             break;
         case '3':
             // Orange
-            warningTextTodayColor = '#FF8000';
+            Color = '#FF8000';
             break;
         case '4':
             // Rot
-            warningTextTodayColor = '#FF0000';
+            Color = '#FF0000';
             break;
         default:
            
@@ -294,7 +294,7 @@ function parseWeather(description){
             write: true, 
             name: "Color", 
             type: "string", 
-            def: warningTextTodayColor,
+            def: Color,
             role: 'value'
         });
     }
