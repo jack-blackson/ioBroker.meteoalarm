@@ -16,12 +16,8 @@ var parseString = require('xml2js').parseString;
 
 var AdapterStarted;
 
-var warningTextToday = '';
-var warningTextTodayFrom = '';
-var warningTextTodayTo = '';
-var warningTextTodayType = '';
-var warningTextTodayLevel = '';
-var warningTextTodayColor = '';
+var DescFilter1 = '';
+var DescFilter2 = '';
 
 
 let adapter;
@@ -115,6 +111,8 @@ function requestXML(url){
 
 function processJSON(content){
 
+    getFilters()
+
     adapter.log.info('Location: ' + JSON.stringify(content.rss.channel.item.title))
     adapter.log.info('Wetter: ' + JSON.stringify(content.rss.channel.item.description))
 
@@ -167,9 +165,10 @@ function parseWeather(description){
     var SearchCrit1 = description.indexOf('Today') + 1;
     var SearchCrit2 = description.indexOf('Tomorrow') + 1;
     var ContentHeute = description.slice((SearchCrit1 - 1), SearchCrit2);
-    SearchCrit1 = ContentHeute.indexOf('deutsch: ') + 1;
+    SearchCrit1 = description.indexOf(DescFilter1) + 1;
     SearchCrit1 = (typeof SearchCrit1 == 'number' ? SearchCrit1 : 0) + 9;
-    SearchCrit2 = ContentHeute.indexOf('english') + 1;
+    var ContentFromDescFilter1 = ContentHeute.slice((SearchCrit1))
+    SearchCrit2 = ContentFromDescFilter1.indexOf(DescFilter2) + 1;
     SearchCrit2 = (typeof SearchCrit2 == 'number' ? SearchCrit2 : 0) + -1;
     if (SearchCrit1 != '9') {
         WarnungsText = ContentHeute.slice((SearchCrit1 - 1), SearchCrit2);
@@ -183,24 +182,40 @@ function parseWeather(description){
         role: 'value'
     });
 
+    // Icon Link:
+    SearchCrit1 = ContentHeute.indexOf('src=') + 1;
+    SearchCrit1 = (typeof SearchCrit1 == 'number' ? SearchCrit1 : 0) + 13;
+    SearchCrit2 = ContentHeute.indexOf('alt=') + 1;
+    SearchCrit2 = (typeof SearchCrit2 == 'number' ? SearchCrit2 : 0) + -2;
+    var Warnung_img = ContentHeute.slice((SearchCrit1 - 1), SearchCrit2);
+    adapter.createState('', 'icon', 'from', {
+        read: true, 
+        write: true, 
+        name: "Icon", 
+        type: "string", 
+        def: Warnung_img,
+        role: 'value'
+    });
 
     adapter.log.info('Variable searchcrit before:' + SearchCrit1 )
 
     // Warning Text From/To Today
-    SearchCrit1 = ContentHeute.indexOf('From: </b><i>') + 1;
-    SearchCrit1 = (typeof SearchCrit1 == 'number' ? SearchCrit1 : 0) + 13;
-    SearchCrit2 = ContentHeute.indexOf('CET') + 1;
-    SearchCrit2 = (typeof SearchCrit2 == 'number' ? SearchCrit2 : 0) + -2;
-    adapter.log.info('Variable ContentHeute:' + ContentHeute )
-    adapter.log.info('IndexOf:' +  ContentHeute.indexOf('From: </b><i>'))
+    var Warnung_Von = ''
+    var Warnung_Bis = ''
+    if (ContentHeute.indexOf('From: </b><i>') != -1){
+        SearchCrit1 = ContentHeute.indexOf('From: </b><i>') + 1;
+        SearchCrit1 = (typeof SearchCrit1 == 'number' ? SearchCrit1 : 0) + 13;
+        SearchCrit2 = ContentHeute.indexOf('CET') + 1;
+        SearchCrit2 = (typeof SearchCrit2 == 'number' ? SearchCrit2 : 0) + -2;
+        Warnung_Von = ContentHeute.slice((SearchCrit1 - 1), SearchCrit2);
 
-    adapter.log.info('Variable From:' + SearchCrit1 + ',' + SearchCrit2 )
-    var Warnung_Von = ContentHeute.slice((SearchCrit1 - 1), SearchCrit2);
-    SearchCrit1 = ContentHeute.indexOf('Until: </b><i>') + 1;
-    SearchCrit1 = (typeof SearchCrit1 == 'number' ? SearchCrit1 : 0) + 14;
-    SearchCrit2 = ContentHeute.indexOf(' CET</i></td><') + 1;
-    SearchCrit2 = (typeof SearchCrit2 == 'number' ? SearchCrit2 : 0) + -1;
-    var Warnung_Bis = ContentHeute.slice((SearchCrit1 - 1), SearchCrit2);
+        SearchCrit1 = ContentHeute.indexOf('Until: </b><i>') + 1;
+        SearchCrit1 = (typeof SearchCrit1 == 'number' ? SearchCrit1 : 0) + 14;
+        SearchCrit2 = ContentHeute.indexOf(' CET</i></td><') + 1;
+        SearchCrit2 = (typeof SearchCrit2 == 'number' ? SearchCrit2 : 0) + -1;
+        Warnung_Bis = ContentHeute.slice((SearchCrit1 - 1), SearchCrit2);
+    }
+    
     adapter.createState('', 'today', 'from', {
         read: true, 
         write: true, 
@@ -284,5 +299,33 @@ function parseWeather(description){
             role: 'value'
         });
     }
+
+}
+
+function getFilters(){
+    DescFilter1 = '';
+    DescFilter2 = '';
+
+    var link = adapter.config.pathXML
+    var SearchCrit1 = link.indexOf('rss') + 4;
+    var country = link.slice((SearchCrit1), SearchCrit1 + 2)
+    switch (country) {
+        case 'at':
+            // Österreich
+            DescFilter1 = 'deutsch:';
+            DescFilter2 = 'english:';
+           break;
+        case 'de':
+                // Deutschland
+                DescFilter1 = 'deutsch:';
+                DescFilter2 = '</td>';
+               break;
+       default:
+          
+           break;
+       }
+
+
+
 
 }
