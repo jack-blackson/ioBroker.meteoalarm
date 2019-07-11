@@ -126,7 +126,7 @@ function processJSON(content){
         */
        adapter.log.info('Location: ' + JSON.stringify(content.rss.channel.item.title))
 
-        adapter.setState('location',JSON.stringify(content.rss.channel.item.title))
+        adapter.setState('location','test')
 
         adapter.setObjectNotExists('link', {
             common: {
