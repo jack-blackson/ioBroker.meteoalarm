@@ -240,7 +240,6 @@ function parseWeather(description){
     SearchCrit2 = SearchCrit1 + 1;
     var Typ = ContentHeute.slice((SearchCrit1 - 1), SearchCrit2);
     if (SearchCrit1 != 0) {
-      warningTextTodayType = Typ;
       adapter.createState('', 'today', 'type', {
         read: true, 
         write: true, 
@@ -320,8 +319,14 @@ function getFilters(){
                 DescFilter1 = 'deutsch:';
                 DescFilter2 = '</td>';
                break;
-       default:
-          
+        case 'it':
+            // Italien
+            DescFilter1 = 'italiano:';
+            DescFilter2 = '</td>';
+           break;
+        default:
+                DescFilter1 = 'english:';
+                DescFilter2 = '</td>';
            break;
        }
 
