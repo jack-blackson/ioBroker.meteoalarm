@@ -158,59 +158,6 @@ function processJSON(content){
 
 
     parseWeather(content.rss.channel.item.description)
-
-
-    /*
-        // today
-        adapter.setObjectNotExists('today.text', {
-            common: {
-                  name: 'text'
-            },
-            type: 'state',
-            val: warningTextToday,
-            'native' : {}
-         });
-         adapter.setObjectNotExists('today.from', {
-            common: {
-                  name: 'from'
-            },
-            type: 'state',
-            val: warningTextTodayFrom,
-            'native' : {}
-         });
-         adapter.setObjectNotExists('today.to', {
-            common: {
-                  name: 'to'
-            },
-            type: 'state',
-            val: warningTextTodayTo,
-            'native' : {}
-         });
-         adapter.setObjectNotExists('today.type', {
-            common: {
-                  name: 'type'
-            },
-            type: 'state',
-            val: warningTextTodayType,
-            'native' : {}
-         });
-         adapter.setObjectNotExists('today.level', {
-            common: {
-                  name: 'level'
-            },
-            type: 'state',
-            val: warningTextTodayLevel,
-            'native' : {}
-         });
-         adapter.setObjectNotExists('today.color', {
-            common: {
-                  name: 'color'
-            },
-            type: 'state',
-            val: warningTextTodayColor,
-            'native' : {}
-         });
-         */
 }
 
 function parseWeather(description){
@@ -237,6 +184,7 @@ function parseWeather(description){
     });
 
 
+    adapter.log.info('Variable searchcrit before:' + SearchCrit1 )
 
     // Warning Text From/To Today
     SearchCrit1 = ContentHeute.indexOf('From: </b><i>') + 1;
@@ -244,6 +192,7 @@ function parseWeather(description){
     SearchCrit2 = ContentHeute.indexOf('CET') + 1;
     SearchCrit2 = (typeof SearchCrit2 == 'number' ? SearchCrit2 : 0) + -2;
     adapter.log.info('Variable ContentHeute:' + ContentHeute )
+    adapter.log.info('IndexOf:' +  ContentHeute.indexOf('From: </b><i>'))
 
     adapter.log.info('Variable From:' + SearchCrit1 + ',' + SearchCrit2 )
     var Warnung_Von = ContentHeute.slice((SearchCrit1 - 1), SearchCrit2);
