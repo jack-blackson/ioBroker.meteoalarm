@@ -69,9 +69,11 @@ function main() {
     });
 
     //'http://meteoalarm.eu/documents/rss/at/AT002.rss'
-    //  http://meteoalarm.eu/documents/rss/de/DE288.rss
+    //  http://meteoalarm.eu/documents/rss/de/DE387.rss
     if (adapter.config.pathXML != '') {
-        requestXML(adapter.config.pathXML)
+        //requestXML(adapter.config.pathXML)
+        requestXML('http://meteoalarm.eu/documents/rss/de/DE387.rss')
+
     }
     else{
         adapter.log.error('No path maintained!!')
@@ -120,13 +122,12 @@ function processJSON(content){
            type: "string",
            read: true, 
            write: false, 
-           def: JSON.stringify(content.rss.channel.item.title),
            role: 'value',
         });
         
        adapter.log.info('Location: ' + JSON.stringify(content.rss.channel.item.title))
 
-        //adapter.setState('location','test')
+        adapter.setState('location','test')
 
         adapter.setObjectNotExists('link', {
             common: {
