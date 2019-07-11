@@ -167,12 +167,11 @@ function parseWeather(description){
     var ContentHeute = description.slice((SearchCrit1 - 1), SearchCrit2);
     SearchCrit1 = description.indexOf(DescFilter1) + 1;
     SearchCrit1 = (typeof SearchCrit1 == 'number' ? SearchCrit1 : 0) + DescFilter1.length;
+    adapter.log.info()
     var ContentFromDescFilter1 = ContentHeute.slice((SearchCrit1))
     SearchCrit2 = ContentFromDescFilter1.indexOf(DescFilter2) + 1;
     SearchCrit2 = (typeof SearchCrit2 == 'number' ? SearchCrit2 : 0) + -1;
-    if (SearchCrit1 != '9') {
-        WarnungsText = ContentHeute.slice((SearchCrit1 - 1), SearchCrit2);
-    }
+    WarnungsText = ContentFromDescFilter1.slice(1, SearchCrit2);
     adapter.createState('', 'today', 'text', {
         read: true, 
         write: true, 
@@ -188,7 +187,7 @@ function parseWeather(description){
     SearchCrit2 = ContentHeute.indexOf('alt=') + 1;
     SearchCrit2 = (typeof SearchCrit2 == 'number' ? SearchCrit2 : 0) + -2;
     var Warnung_img = ContentHeute.slice((SearchCrit1 - 1), SearchCrit2);
-    adapter.createState('', 'icon', 'from', {
+    adapter.createState('', 'today', 'icon', {
         read: true, 
         write: true, 
         name: "Icon", 
@@ -196,8 +195,6 @@ function parseWeather(description){
         def: Warnung_img,
         role: 'value'
     });
-
-    adapter.log.info('Variable searchcrit before:' + SearchCrit1 )
 
     // Warning Text From/To Today
     var Warnung_Von = ''
