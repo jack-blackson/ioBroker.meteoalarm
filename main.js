@@ -71,9 +71,7 @@ function main() {
     //'http://meteoalarm.eu/documents/rss/at/AT002.rss'
     //  http://meteoalarm.eu/documents/rss/de/DE387.rss
     if (adapter.config.pathXML != '') {
-        //requestXML(adapter.config.pathXML)
-        requestXML('http://meteoalarm.eu/documents/rss/de/DE387.rss')
-
+        requestXML(adapter.config.pathXML)
     }
     else{
         adapter.log.error('No path maintained!!')
@@ -154,7 +152,7 @@ function processJSON(content){
         write: true, 
         name: "publicationDate", 
         type: "string", 
-        def: JSON.stringify(content.rss.channel.item.pubdate),
+        def: JSON.stringify(content.rss.channel.item.pubDate),
         role: 'value'
     });
 
