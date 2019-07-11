@@ -114,6 +114,7 @@ function requestXML(url){
 }
 
 function processJSON(content){
+        /*
         adapter.setObjectNotExists('location', {
            name: 'location',
            type: "string",
@@ -122,6 +123,8 @@ function processJSON(content){
            def: JSON.stringify(content.rss.channel.item.title),
            role: 'value',
         });
+        */
+        adapter.setState('location',JSON.stringify(content.rss.channel.item.title))
 
         adapter.setObjectNotExists('link', {
             common: {
