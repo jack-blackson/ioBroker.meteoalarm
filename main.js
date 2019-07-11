@@ -160,7 +160,7 @@ function processJSON(content){
     parseWeather(content.rss.channel.item.description)
 
 
-
+    /*
         // today
         adapter.setObjectNotExists('today.text', {
             common: {
@@ -210,6 +210,7 @@ function processJSON(content){
             val: warningTextTodayColor,
             'native' : {}
          });
+         */
 }
 
 function parseWeather(description){
@@ -242,6 +243,7 @@ function parseWeather(description){
     SearchCrit1 = (typeof SearchCrit1 == 'number' ? SearchCrit1 : 0) + 13;
     SearchCrit2 = ContentHeute.indexOf('CET') + 1;
     SearchCrit2 = (typeof SearchCrit2 == 'number' ? SearchCrit2 : 0) + -2;
+    adapter.log.info('Variable From:' + SearchCrit1 + ',' + SearchCrit2 )
     var Warnung_Von = ContentHeute.slice((SearchCrit1 - 1), SearchCrit2);
     SearchCrit1 = ContentHeute.indexOf('Until: </b><i>') + 1;
     SearchCrit1 = (typeof SearchCrit1 == 'number' ? SearchCrit1 : 0) + 14;
