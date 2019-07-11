@@ -172,6 +172,8 @@ function parseWeather(description){
 
     SearchCrit2 = ContentFromDescFilter1.indexOf(DescFilter2) + 1;
     SearchCrit2 = (typeof SearchCrit2 == 'number' ? SearchCrit2 : 0) + -1;
+    adapter.log.info('SearchCrit2: ' + SearchCrit2)
+
     WarnungsText = ContentFromDescFilter1.slice(1, SearchCrit2);
     adapter.createState('', 'today', 'text', {
         read: true, 
