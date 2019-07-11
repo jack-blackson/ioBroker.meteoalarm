@@ -167,8 +167,9 @@ function parseWeather(description){
     var ContentHeute = description.slice((SearchCrit1 - 1), SearchCrit2);
     SearchCrit1 = description.indexOf(DescFilter1) + 1;
     SearchCrit1 = (typeof SearchCrit1 == 'number' ? SearchCrit1 : 0) + DescFilter1.length;
-    adapter.log.info()
     var ContentFromDescFilter1 = ContentHeute.slice((SearchCrit1))
+    adapter.log.info('ContentFromDescFilter1: ' + ContentFromDescFilter1)
+
     SearchCrit2 = ContentFromDescFilter1.indexOf(DescFilter2) + 1;
     SearchCrit2 = (typeof SearchCrit2 == 'number' ? SearchCrit2 : 0) + -1;
     WarnungsText = ContentFromDescFilter1.slice(1, SearchCrit2);
