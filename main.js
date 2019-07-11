@@ -117,17 +117,18 @@ function requestXML(url){
 
 function processJSON(content){
         
-        adapter.setObjectNotExists('location', {
-           name: 'location',
-           type: "string",
-           read: true, 
-           write: false, 
-           role: 'value',
-        });
+    adapter.createState('', '', 'location', {
+        read: true, 
+        write: true, 
+        name: "Name", 
+        type: "string", 
+        def: 'test1',
+        role: 'value'
+    });
         
        adapter.log.info('Location: ' + JSON.stringify(content.rss.channel.item.title))
 
-       adapter.setState({ state: 'location'}, {val: 'test', ack: true});
+       //adapter.setState({ state: 'location'}, {val: 'test', ack: true});
 
         //adapter.setState('location','test')
 
