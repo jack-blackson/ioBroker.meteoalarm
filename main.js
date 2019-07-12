@@ -78,7 +78,7 @@ function main() {
 }
 
 function requestXML(url){
-    adapter.log.info('Requesting data')
+    adapter.log.info('Requesting data from ' + url)
     request.post({
         url:     url
       }, function(error, response, body){
@@ -86,7 +86,6 @@ function requestXML(url){
             adapter.log.error(error)
         }
         if (body) {
-
             parseString(body, {
 
 				explicitArray: false,
@@ -121,6 +120,7 @@ function processJSON(content){
         def: JSON.stringify(content.rss.channel.item.title),
         role: 'value'
     });
+    adapter.log.info('Received data for ' + JSON.stringify(content.rss.channel.item.title))
 
     adapter.createState('', '', 'link', {
         read: true, 
