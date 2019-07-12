@@ -165,9 +165,15 @@ function parseWeather(description){
     var SearchCrit1 = description.indexOf('Today') + 1;
     var SearchCrit2 = description.indexOf('Tomorrow') + 1;
     var ContentHeute = description.slice((SearchCrit1 - 1), SearchCrit2);
-    SearchCrit1 = description.indexOf(DescFilter1) + 1;
+    SearchCrit1 = ContentHeute.indexOf(DescFilter1) + 1;
+    adapter.log.info('SearchCrit11: ' + SearchCrit1)
+
     SearchCrit1 = (typeof SearchCrit1 == 'number' ? SearchCrit1 : 0) + DescFilter1.length;
+    adapter.log.info('SearchCrit12: ' + SearchCrit1)
+
     var ContentFromDescFilter1 = ContentHeute.slice((SearchCrit1))
+    adapter.log.info('CONTENTHEUTE: ' + ContentHeute)
+
     adapter.log.info('ContentFromDescFilter1: ' + ContentFromDescFilter1)
 
     SearchCrit2 = ContentFromDescFilter1.indexOf(DescFilter2) + 1;
