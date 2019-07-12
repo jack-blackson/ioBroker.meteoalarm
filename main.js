@@ -113,9 +113,6 @@ function processJSON(content){
 
     getFilters()
 
-    adapter.log.info('Location: ' + JSON.stringify(content.rss.channel.item.title))
-    adapter.log.info('Wetter: ' + JSON.stringify(content.rss.channel.item.description))
-
     adapter.createState('', '', 'location', {
         read: true, 
         write: true, 

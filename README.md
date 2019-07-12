@@ -43,13 +43,13 @@ Please go to http://meteoalarm.eu and choose your region. Then go to the RSS sym
 |:---:|:---:|
 |1|Wind|
 |2|Thunder & Lightning|
-|3||
-|4||
-|5||
-|6||
-|7||
-|8||
-|9||
+|3|unknown|
+|4|unknown|
+|5|High temperature|
+|6|unknown|
+|7|unknown|
+|8|Forest fire|
+|9|unknown|
 |10|Rain|
 
 ## Alarm Levels
