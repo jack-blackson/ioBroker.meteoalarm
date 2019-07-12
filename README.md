@@ -17,7 +17,10 @@
 
 meteoalarm Adapter for ioBroker
 ------------------------------------------------------------------------------
+This adapter is pulling weather alarms from meteoalarm.eu, which includes wind, snow, rain, high and low temperature,etc. This information is available in local language and for detailed regions.
 
+## How to use it
+Please go to http://meteoalarm.eu and choose your region. Then go to the RSS symbol on the top right side, do a right click and copy the link. This is the link which you please add to the setup of the adapter.
 
 ## Available fields
 |Field Name|Description|                                                                       
@@ -36,7 +39,18 @@ meteoalarm Adapter for ioBroker
 
 
 ## Alarm Types
-
+|Alarm Type|Description|                                                                       
+|:---:|:---:|
+|1|Wind|
+|2|Thunder & Lightning|
+|3||
+|4||
+|5||
+|6||
+|7||
+|8||
+|9||
+|10|Rain|
 
 ## Alarm Levels
 |Alarm Level|Description|                                                                       
