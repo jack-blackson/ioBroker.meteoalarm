@@ -19,10 +19,48 @@ meteoalarm Adapter for ioBroker
 ------------------------------------------------------------------------------
 
 
+## Available fields
+|Field Name|Description|                                                                       
+|:---:|:---:|
+|Last Update|Date when the adapter received data the last time|
+|Link|Link to the RSS Feed|
+|Location|Alarm Location|
+|Publication Date|Publication Date of the alarm according to the website|
+|Text|Alarm Text in country specific language|
+|From|Alarm starting date|
+|To|Alarm ending date|
+|Type|Type of Alarm -> see below|
+|Level|Level of Alarm -> see below|
+|Color|Alarm color for widgets|
+|Icon|Alarm type icon|
+
+
+## Alarm Types
+
+
+## Alarm Levels
+|Alarm Level|Description|                                                                       
+|:---:|:---:|
+|Green|There is no warning available at the moment.|
+|Yellow|The weather is potentially dangerous. The predicted weather phenomena are not unusual, but increased attention should be paid to activities exposed to meteorological risks. Keep yourself informed about the meteorological conditions to be expected and do not take any avoidable risks.|
+|Orange|The weather is dangerous. Unusual meteorological phenomena have been predicted. Damage and accidents are likely. Be very attentive and careful and keep up to date with the expected meteorological conditions. |
+|Red|The weather is very dangerous. Unusually intense meteorological phenomena were predicted. Extreme damage and accidents, often over large areas, threaten life and property. |
+
+## Supported countries
+* Austria
+* Germany
+* Italy
+
+If you don't find your country, please create an issue on github, and I will be happy to add it
+
 
 ## Changelog
-### 0.1.0 (2019-07-XX)
+### 0.1.0 (2019-07-12)
 * (jack-blackson) initial version
+
+
+## Credits
+Bell in icon designed by Freepik from www.flaticon.com
 
 
 ## License

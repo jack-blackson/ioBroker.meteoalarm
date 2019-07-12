@@ -18,7 +18,7 @@ var AdapterStarted;
 
 var DescFilter1 = '';
 var DescFilter2 = '';
-
+var country = '';
 
 let adapter;
 startAdapter()
@@ -134,8 +134,7 @@ function processJSON(content){
         role: 'value'
     });
         
-
-    var newdate = moment(new Date(), 'DD.MM.YYYY HH:mm:ss').toDate()
+    var newdate = moment(new Date()).local().format('DD.MM.YYYY HH:mm')
     adapter.createState('', '', 'lastUpdate', {
         read: true, 
         write: true, 
@@ -154,8 +153,13 @@ function processJSON(content){
         role: 'value'
     });
 
-
-    parseWeather(content.rss.channel.item.description)
+    if (DescFilter1 != 'nA'){
+        parseWeather(content.rss.channel.item.description)
+    }
+    else{
+        // Land ist nicht in der Filterliste (getfilters()) -> daher kann Text nicht gefunden werden
+        adapter.log.error('The country ' + country +  ' is not set up. Please create a github issue to get it set up.')
+    }
 }
 
 function parseWeather(description){
@@ -166,21 +170,13 @@ function parseWeather(description){
     var SearchCrit2 = description.indexOf('Tomorrow') + 1;
     var ContentHeute = description.slice((SearchCrit1 - 1), SearchCrit2);
     SearchCrit1 = ContentHeute.indexOf(DescFilter1) + 1;
-    adapter.log.info('SearchCrit11: ' + SearchCrit1)
-
-    SearchCrit1 = (typeof SearchCrit1 == 'number' ? SearchCrit1 : 0) + DescFilter1.length;
-    adapter.log.info('SearchCrit12: ' + SearchCrit1)
-
-    var ContentFromDescFilter1 = ContentHeute.slice((SearchCrit1))
-    adapter.log.info('CONTENTHEUTE: ' + ContentHeute)
-
-    adapter.log.info('ContentFromDescFilter1: ' + ContentFromDescFilter1)
-
-    SearchCrit2 = ContentFromDescFilter1.indexOf(DescFilter2) + 1;
-    SearchCrit2 = (typeof SearchCrit2 == 'number' ? SearchCrit2 : 0) + -1;
-    adapter.log.info('SearchCrit2: ' + SearchCrit2)
-
-    WarnungsText = ContentFromDescFilter1.slice(1, SearchCrit2);
+    if (SearchCrit1 != 0){
+        SearchCrit1 = (typeof SearchCrit1 == 'number' ? SearchCrit1 : 0) + DescFilter1.length;
+        var ContentFromDescFilter1 = ContentHeute.slice((SearchCrit1))
+        SearchCrit2 = ContentFromDescFilter1.indexOf(DescFilter2) + 1;
+        SearchCrit2 = (typeof SearchCrit2 == 'number' ? SearchCrit2 : 0) + -1;
+        WarnungsText = ContentFromDescFilter1.slice(1, SearchCrit2);
+    } 
     adapter.createState('', 'today', 'text', {
         read: true, 
         write: true, 
@@ -313,7 +309,7 @@ function getFilters(){
 
     var link = adapter.config.pathXML
     var SearchCrit1 = link.indexOf('rss') + 4;
-    var country = link.slice((SearchCrit1), SearchCrit1 + 2)
+    country = link.slice((SearchCrit1), SearchCrit1 + 2)
     switch (country) {
         case 'at':
             // Österreich
@@ -331,12 +327,8 @@ function getFilters(){
             DescFilter2 = '</td>';
            break;
         default:
-                DescFilter1 = 'english:';
-                DescFilter2 = '</td>';
+                DescFilter1 = 'nA';
+                DescFilter2 = 'nA';
            break;
        }
-
-
-
-
 }
