@@ -1,7 +1,11 @@
 {
     "common": {
       "name": "meteoalarm",
+<<<<<<< Updated upstream
       "version": "0.1.0",
+=======
+      "version": "0.3.0",
+>>>>>>> Stashed changes
       "news": {
         "0.1.0": {
           "en": "Initial version",
