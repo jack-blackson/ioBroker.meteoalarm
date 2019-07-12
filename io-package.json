@@ -1,11 +1,15 @@
 {
     "common": {
       "name": "meteoalarm",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "news": {
         "0.1.0": {
           "en": "Initial version",
           "de": "Initiale Version "
+        },
+        "0.2.0": {
+          "en": "Add tomorrow data",
+          "de": "Morgen Daten hinzugefügt "
         }
       },
       "title": "Meteoalarm",
