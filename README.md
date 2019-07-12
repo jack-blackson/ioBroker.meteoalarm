@@ -76,9 +76,9 @@ If you don't find your country, please create an issue on github, and I will be 
 
 
 ## Changelog
-### 0.1.0 (2019-07-12)
+### 0.1.0 (2019-07-11)
 * (jack-blackson) initial version
-### 0.2.0 (2019-07-13)
+### 0.2.0 (2019-07-12)
 * (jack-blackson) Added "Tomorrow" data
 
 ## Credits
