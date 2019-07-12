@@ -22,6 +22,9 @@ This adapter is pulling weather alarms from meteoalarm.eu, which includes wind, 
 ## How to use it
 Please go to http://meteoalarm.eu and choose your region. Then go to the RSS symbol on the top right side, do a right click and copy the link. This is the link which you please add to the setup of the adapter.
 
+![Logo](screenshot.png)
+
+
 ## Available fields
 |Field Name|Description|                                                                       
 |:---:|:---:|
