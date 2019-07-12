@@ -1,0 +1,85 @@
+<html>
+<link rel="stylesheet" type="text/css" href="../../css/adapter.css"/>
+<link rel="stylesheet" type="text/css" href="../../lib/css/materialize.css">
+
+<script type="text/javascript" src="../../lib/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../../socket.io/socket.io.js"></script>
+
+<script type="text/javascript" src="../../js/translate.js"></script>
+<script type="text/javascript" src="../../lib/js/materialize.js"></script>
+<script type="text/javascript" src="../../js/adapter-settings.js"></script>
+<script type="text/javascript" src="words.js"></script>
+
+
+<style>
+    .table_header {
+        background-color: blue;
+        color: white;
+    }
+    .ip {
+        width: 150px;
+        text-align: right;
+    }
+</style>
+<!-- you have to define 2 functions in the global scope: -->
+<script type="text/javascript">
+    var setup = [];
+    // the function loadSettings has to exist ...
+    function save(callback) {
+            var obj = {};
+            $('.value').each(function () {
+                var $this = $(this);
+                var id = $this.attr('id');
+                if ($this.attr('type') === 'checkbox') {
+                    obj[$this.attr('id')] = $this.prop('checked');
+                } else {
+                    obj[$this.attr('id')] = $this.val();
+                }
+            });
+            callback(obj);
+        }
+    
+        function load(settings, onChange) {
+            if (!settings) return;
+            $('.value').each(function () {
+                var key = $(this).attr('id');
+                var $key = $('#' + key + '.value');
+                if ($key.attr('type') === 'checkbox') {
+                    $key.prop('checked', settings[key]).change(function () {
+                        onChange();
+                    });
+                } else {
+                    $key.val(settings[key]).change(function () {
+                        onChange();
+                    }).keyup(function () {
+                        onChange();
+                    });
+                }
+            });
+            onChange(false);
+        }
+</script>
+<style>
+    .m .select-wrapper+label {
+        top: 100%;
+    }
+</style>
+</head>
+<body>
+<div class="m adapter-container">
+    <div class="row">
+        <div class="row">
+            <div class="input-field col s3">
+                <img src="meteoalarm.png" class="logo">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s12">
+            <input type="text" id="pathXML" class="value" />
+            <label for="pathXML" class="translate">AddPath</label>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,40 @@
+{
+  "name": "iobroker.meteoalarm",
+  "version": "0.1.0",
+  "description": "Meteolaram",
+  "main": "main.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jack-blackson/ioBroker.meteoalarm.git"
+  },
+  "author": {
+    "name": "jack_blackson",
+    "email": "blacksonj7@gmail.com"
+  },
+  "keywords": ["Meteolarm","meteoalarm","weather alarm"],
+  "license": "MIT",
+  "homepage": "https://github.com/jack-blackson/ioBroker.meteoalarm",
+  "bugs": {
+    "url": "https://github.com/jack-blackson/ioBroker.meteoalarm/issues"
+  },
+  "dependencies": {
+    "@iobroker/testing": "^1.2.0",
+    "@iobroker/adapter-core": "^1.0.3",
+    "request": "2.88.0",
+    "xml2js": "0.4.19",
+    "moment":"2.24.0"
+  },
+  "scripts": {
+    "test": "npm run test:package && npm run test:unit",
+    "test:package": "mocha test/package --exit",
+    "test:unit": "mocha test/unit --exit",
+    "test:integration": "mocha test/integration --exit"
+  },
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "mocha": "^6.1.4",
+    "chai": "^4.2.0"
+  },
+
+  "readmeFilename": "README.md"
+}

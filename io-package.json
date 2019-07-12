@@ -1,0 +1,45 @@
+{
+    "common": {
+      "name": "meteoalarm",
+      "version": "0.1.0",
+      "news": {
+        "0.1.0": {
+          "en": "Initial version",
+          "de": "Initiale Version "
+        }
+      },
+      "title": "Meteoalarm",
+          "titleLang": {
+            "en": "Meteoalarm",
+            "de": "Meteoalarm"
+          },
+          "desc": {
+            "en": "Meteoalarm Adapter",
+            "de": "Meteoalarm Adapter"
+          },
+          "authors": [
+              "Jack <blacksonj7@gmail.com>"
+          ],
+          "license":                  "MIT",
+          "platform":                 "Javascript/Node.js",
+          "mode":                     "daemon",
+          "messagebox":               true,
+      "enabled":                  false,
+          "readme":                   "https://github.com/jack-blackson/ioBroker.meteoalarm/master/README.md",
+          "loglevel":                 "info",
+          "restartAdapters":          [
+            "meteoalarm"
+          ],        
+          "keywords":                 ["meteoalarm"],
+          "icon":                     "meteoalarm.png",
+          "materialize":              true,
+          "extIcon":                  "https://raw.githubusercontent.com/jack-blackson/ioBroker.meteoalarm/master/admin/meteoalarm.png",
+          "type":                     "date-and-time",
+      "singletonHost":            true
+      },
+       "native": {
+          "interval": 120000
+      },
+      "objects": [],
+      "instanceObjects": []
+  }
