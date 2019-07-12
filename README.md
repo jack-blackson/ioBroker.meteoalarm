@@ -64,6 +64,7 @@ Please go to http://meteoalarm.eu and choose your region. Then go to the RSS sym
 * Austria
 * Germany
 * Italy
+* Hungary
 
 If you don't find your country, please create an issue on github, and I will be happy to add it
 

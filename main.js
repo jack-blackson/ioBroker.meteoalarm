@@ -341,6 +341,11 @@ function getFilters(){
             DescFilter1 = 'italiano:';
             DescFilter2 = '</td>';
            break;
+        case 'hu':
+            // Ungarn
+            DescFilter1 = 'magyar:';
+            DescFilter2 = 'english:';
+           break;
         default:
                 DescFilter1 = 'nA';
                 DescFilter2 = 'nA';
