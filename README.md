@@ -6,7 +6,7 @@
 
 [![NPM version](http://img.shields.io/npm/v/iobroker.meteoalarm.svg)](https://www.npmjs.com/package/iobroker.meteoalarm)
 
-**Tests:** [![Build Status Travis](https://travis-ci.org/jack-blackson/ioBroker.meteoalarm.svg?branch=master)](https://travis-ci.org/jack-blackson/ioBroker.meteoalarm) 
+**Tests:** [![Build Status Travis](https://travis-ci.com/jack-blackson/ioBroker.meteoalarm.svg?branch=master)](https://travis-ci.com/jack-blackson/ioBroker.meteoalarm) 
 
 [![NPM](https://nodei.co/npm/iobroker.meteoalarm.png?downloads=true)](https://nodei.co/npm/iobroker.meteoalarm.png?downloads=true/)
 <!--![Number of Installations](http://iobroker.live/badges/bring-installed.svg) ![Number of Installations](http://iobroker.live/badges/bring-stable.svg) 
@@ -21,6 +21,9 @@ This adapter is pulling weather alarms from meteoalarm.eu, which includes wind, 
 
 ## How to use it
 Please go to http://meteoalarm.eu and choose your region. Then go to the RSS symbol on the top right side, do a right click and copy the link. This is the link which you please add to the setup of the adapter.
+
+![Logo](screenshot.png)
+
 
 ## Available fields
 |Field Name|Description|                                                                       
@@ -64,14 +67,19 @@ Please go to http://meteoalarm.eu and choose your region. Then go to the RSS sym
 * Austria
 * Germany
 * Italy
+* Hungary
 
 If you don't find your country, please create an issue on github, and I will be happy to add it
 
+## Features to implement
+* Handle multiple alarms on one day
+
 
 ## Changelog
-### 0.1.0 (2019-07-12)
+### 0.1.0 (2019-07-11)
 * (jack-blackson) initial version
-
+### 0.2.0 (2019-07-12)
+* (jack-blackson) Added "Tomorrow" data
 
 ## Credits
 Bell in icon designed by Freepik from www.flaticon.com
