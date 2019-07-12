@@ -188,7 +188,7 @@ function parseWeather(description){
     SearchCrit1 = ContentHeute.indexOf('src=') + 1;
     SearchCrit1 = (typeof SearchCrit1 == 'number' ? SearchCrit1 : 0) + 13;
     SearchCrit2 = ContentHeute.indexOf('alt=') + 1;
-    SearchCrit2 = (typeof SearchCrit2 == 'number' ? SearchCrit2 : 0) + -2;
+    SearchCrit2 = (typeof SearchCrit2 == 'number' ? SearchCrit2 : 0) + -3;
     var Warnung_img = ContentHeute.slice((SearchCrit1 - 1), SearchCrit2);
     adapter.createState('', 'today', 'icon', {
         read: true, 
