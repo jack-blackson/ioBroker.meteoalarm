@@ -1,12 +1,7 @@
 {
   "name": "iobroker.meteoalarm",
-<<<<<<< Updated upstream
-  "version": "0.1.0",
-  "description": "Meteolaram",
-=======
   "version": "0.3.0",
-  "description": "Meteoalarm",
->>>>>>> Stashed changes
+  "description": "Meteolaram",
   "main": "main.js",
   "repository": {
     "type": "git",

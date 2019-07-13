@@ -78,7 +78,7 @@ function main() {
 }
 
 function requestXML(url){
-    adapter.log.info('Requesting data')
+    adapter.log.info('Requesting data from ' + url)
     request.post({
         url:     url
       }, function(error, response, body){
@@ -86,7 +86,6 @@ function requestXML(url){
             adapter.log.error(error)
         }
         if (body) {
-
             parseString(body, {
 
 				explicitArray: false,
@@ -121,6 +120,7 @@ function processJSON(content){
         def: JSON.stringify(content.rss.channel.item.title),
         role: 'value'
     });
+    adapter.log.info('Received data for ' + JSON.stringify(content.rss.channel.item.title))
 
     adapter.createState('', '', 'link', {
         read: true, 
@@ -151,7 +151,8 @@ function processJSON(content){
     });
 
     if (DescFilter1 != 'nA'){
-        parseWeather(content.rss.channel.item.description)
+        parseWeather(content.rss.channel.item.description,'today')
+        parseWeather(content.rss.channel.item.description,'tomorrow')
     }
     else{
         // Land ist nicht in der Filterliste (getfilters()) -> daher kann Text nicht gefunden werden
@@ -159,12 +160,29 @@ function processJSON(content){
     }
 }
 
-function parseWeather(description){
+function parseWeather(description,type){
     var WarnungsText = '';
+    var folder = '';
+    var SearchCrit1 = 0;
+    var SearchCrit2 = 0;
+    switch (type) {
+        case 'today':
+            SearchCrit1 = description.indexOf('Today') + 1;
+            SearchCrit2 = description.indexOf('Tomorrow') + 1;
+            folder = 'today';
+           break;
+       case 'tomorrow':
+            SearchCrit1 = description.indexOf('Tomorrow') + 1;
+            SearchCrit2 = description.length;
+            folder = 'tomorrow';
+           break;       
+       default:
+           break;
+       }
+
+
 
     // Warning Text Today
-    var SearchCrit1 = description.indexOf('Today') + 1;
-    var SearchCrit2 = description.indexOf('Tomorrow') + 1;
     var ContentHeute = description.slice((SearchCrit1 - 1), SearchCrit2);
     SearchCrit1 = ContentHeute.indexOf(DescFilter1) + 1;
     if (SearchCrit1 != 0){
@@ -174,7 +192,7 @@ function parseWeather(description){
         SearchCrit2 = (typeof SearchCrit2 == 'number' ? SearchCrit2 : 0) + -1;
         WarnungsText = ContentFromDescFilter1.slice(1, SearchCrit2);
     } 
-    adapter.createState('', 'today', 'text', {
+    adapter.createState('', folder, 'text', {
         read: true, 
         write: true, 
         name: "Text", 
@@ -215,7 +233,7 @@ function parseWeather(description){
         Warnung_Bis = ContentHeute.slice((SearchCrit1 - 1), SearchCrit2);
     }
     
-    adapter.createState('', 'today', 'from', {
+    adapter.createState('', folder, 'from', {
         read: true, 
         write: true, 
         name: "From", 
@@ -223,7 +241,7 @@ function parseWeather(description){
         def: Warnung_Von,
         role: 'value'
     });
-    adapter.createState('', 'today', 'to', {
+    adapter.createState('', folder, 'to', {
         read: true, 
         write: true, 
         name: "To", 
@@ -239,7 +257,7 @@ function parseWeather(description){
     SearchCrit2 = SearchCrit1 + 1;
     var Typ = ContentHeute.slice((SearchCrit1 - 1), SearchCrit2);
     if (SearchCrit1 != 0) {
-      adapter.createState('', 'today', 'type', {
+      adapter.createState('', folder, 'type', {
         read: true, 
         write: true, 
         name: "To", 
@@ -258,7 +276,7 @@ function parseWeather(description){
     var Level = ContentHeute.charAt((SearchCrit1 - 1));
     var Color = ''
     if (SearchCrit1 != 0) {
-        adapter.createState('', 'today', 'level', {
+        adapter.createState('', folder, 'level', {
             read: true, 
             write: true, 
             name: "Level", 
@@ -288,7 +306,7 @@ function parseWeather(description){
            
             break;
         }
-        adapter.createState('', 'today', 'color', {
+        adapter.createState('', folder, 'color', {
             read: true, 
             write: true, 
             name: "Color", 
@@ -322,6 +340,11 @@ function getFilters(){
             // Italien
             DescFilter1 = 'italiano:';
             DescFilter2 = '</td>';
+           break;
+        case 'hu':
+            // Ungarn
+            DescFilter1 = 'magyar:';
+            DescFilter2 = 'english:';
            break;
         default:
                 DescFilter1 = 'nA';
