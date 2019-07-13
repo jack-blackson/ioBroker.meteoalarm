@@ -164,7 +164,7 @@ function processJSON(content){
 function updateHTMLWidget(){
     var htmllong = '';
 
-    adapter.log.info('Typ: ' + adapter.getState("meteoalarm.0.today.type").val)
+    adapter.log.info('Typ: ' + adapter.getState('meteoalarm.0.today.type').val)
 
     var TypeName = getTypeName(adapter.today.type);
     
