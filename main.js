@@ -163,8 +163,8 @@ function processJSON(content){
 
 function updateHTMLWidget(){
     var htmllong = '';
-    var TypeName = ';'
-    getTypeName(TypeName)
+    var TypeName = getTypeName(adapter.today.type);
+    
     htmllong += '<div style="background:' + adapter.today.color + '"  border:"10px">';
     htmllong += '<h3><img src="' +  adapter.today.icon + '" alt="" width="50" height="50"/>'
     htmllong += TypeName + '</h3><p>' + adapter.today.from + ' - ' + adapter.today.to 
@@ -178,6 +178,45 @@ function updateHTMLWidget(){
         def: htmllong,
         role: 'value'
     });
+}
+
+function getTypeName(type){
+
+    switch (type) {
+        case '1':
+            return 'Wind'
+            break;
+        case '2':
+            return 'Blitz und Donner'
+            break;
+        case '3':
+            return 'Unbekannt'
+            break;
+        case '4':
+            return 'Nebel'
+            break;
+        case '5':
+            return 'Hohe Temperaturen'
+            break;
+        case '6':
+            return 'Unbekannt'
+            break;
+        case '7':
+            return 'Küstenereigniss'
+            break;
+        case '8':
+            return 'Waldbrand'
+            break;
+        case '9':
+            return 'Unbekannt'
+            break;
+        case '10':
+            return 'Regen'
+            break;
+       default:
+           return undefined
+           break;
+    }
 }
 
 function parseWeather(description,type){
