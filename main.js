@@ -166,7 +166,7 @@ function updateHTMLWidget(){
     //adapter.log.info('Typ: ' + adapter.getState("meteoalarm.0.link").val )
 
     adapter.getForeignObject('meteoalarm.0.today', (err, obj1) => {
-        obj1.common.type.val
+        obj1.common.type
     })
     /*
     adapter.getForeignState('meteoalarm.0.today', function (err1, result) {
