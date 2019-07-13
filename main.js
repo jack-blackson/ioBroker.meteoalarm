@@ -163,8 +163,11 @@ function processJSON(content){
 
 function updateHTMLWidget(){
     var htmllong = '';
-    adapter.log.info('Typ: ' + adapter.getState("meteoalarm.0.link").val )
+    //adapter.log.info('Typ: ' + adapter.getState("meteoalarm.0.link").val )
 
+    adapter.getForeignObject('meteoalarm.0.today', (err, obj1) => {
+        obj1.common.type.val
+    })
     /*
     adapter.getForeignState('meteoalarm.0.today', function (err1, result) {
             adapter.log.info('Typ: ' + result.type.value)
