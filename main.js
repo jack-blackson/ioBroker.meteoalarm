@@ -169,7 +169,7 @@ function updateHTMLWidget(){
     });
 
 
-
+    /*
     var TypeName = getTypeName(adapter.today.type);
     
     htmllong += '<div style="background:' + adapter.today.color + '"  border:"10px">';
@@ -185,6 +185,7 @@ function updateHTMLWidget(){
         def: htmllong,
         role: 'value'
     });
+    */
 }
 
 function getTypeName(type){
