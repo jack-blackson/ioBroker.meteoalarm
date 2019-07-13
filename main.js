@@ -174,26 +174,29 @@ function updateHTMLWidget(){
     var text = '';
 
     adapter.getState('today.type', function (err, state) {
+        adapter.log.info('Type: ' + state.value)
         typeName = getTypeName(state.val);
+        adapter.log.info('Typename: ' + typeName)
+
     });
     adapter.getState('today.color', function (err, state) {
-        color = getTypeName(state.val);
+        color = state.val;
     });
 
     adapter.getState('today.icon', function (err, state) {
-        icon = getTypeName(state.val);
+        icon = state.val;
     });
 
     adapter.getState('today.from', function (err, state) {
-        from = getTypeName(state.val);
+        from = state.val;
     });
 
     adapter.getState('today.to', function (err, state) {
-        to = getTypeName(state.val);
+        to = state.val;
     });
     
     adapter.getState('today.text', function (err, state) {
-        text = getTypeName(state.val);
+        text = state.val;
     });
 
     setInterval(function() { 
