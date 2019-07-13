@@ -163,11 +163,13 @@ function processJSON(content){
 
 function updateHTMLWidget(){
     var htmllong = '';
-    //adapter.log.info('Typ: ' + adapter.getState("meteoalarm.0.link").val )
 
-    adapter.getForeignObject('meteoalarm.0.today', (err, obj1) => {
-        adapter.log.info('Type: ' + obj1.common.type)
-    })
+
+    adapter.log.info('Typ: ' + adapter.getState("link").val )
+
+    //adapter.getForeignObject('meteoalarm.0.today', (err, obj1) => {
+    //    adapter.log.info('Type: ' + obj1.common.type)
+    //})
     /*
     adapter.getForeignState('meteoalarm.0.today', function (err1, result) {
             adapter.log.info('Typ: ' + result.type.value)
