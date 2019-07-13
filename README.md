@@ -44,10 +44,10 @@ Please go to http://meteoalarm.eu and choose your region. Then go to the RSS sym
 |1|Wind|
 |2|Thunder & Lightning|
 |3|unknown|
-|4|unknown|
+|4|Fog|
 |5|High temperature|
 |6|unknown|
-|7|unknown|
+|7|Coast Events|
 |8|Forest fire|
 |9|unknown|
 |10|Rain|

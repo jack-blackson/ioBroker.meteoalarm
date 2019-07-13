@@ -153,11 +153,31 @@ function processJSON(content){
     if (DescFilter1 != 'nA'){
         parseWeather(content.rss.channel.item.description,'today')
         parseWeather(content.rss.channel.item.description,'tomorrow')
+        updateHTMLWidget()
     }
     else{
         // Land ist nicht in der Filterliste (getfilters()) -> daher kann Text nicht gefunden werden
         adapter.log.error('The country ' + country +  ' is not set up. Please create a github issue to get it set up.')
     }
+}
+
+function updateHTMLWidget(){
+    var htmllong = '';
+    var TypeName = ';'
+    getTypeName(TypeName)
+    htmllong += '<div style="background:' + adapter.today.color + '"  border:"10px">';
+    htmllong += '<h3><img src="' +  adapter.today.icon + '" alt="" width="50" height="50"/>'
+    htmllong += TypeName + '</h3><p>' + adapter.today.from + ' - ' + adapter.today.to 
+    htmllong += '</p><p>' + adapter.today.text + '</p></div>'
+
+    adapter.createState('', '', 'htmlLong', {
+        read: true, 
+        write: true, 
+        name: "HTML Widget Long Text", 
+        type: "string", 
+        def: htmllong,
+        role: 'value'
+    });
 }
 
 function parseWeather(description,type){
@@ -260,7 +280,7 @@ function parseWeather(description,type){
       adapter.createState('', folder, 'type', {
         read: true, 
         write: true, 
-        name: "To", 
+        name: "Type", 
         type: "string", 
         def: Typ,
         role: 'value'
