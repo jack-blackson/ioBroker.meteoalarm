@@ -163,47 +163,40 @@ function processJSON(content){
 
 function updateHTMLWidget(){
     var htmllong = '';
+    var typeName = '';
+    var color = '';
+    var icon = '';
+    var from = '';
+    var to = '';
+    var text = '';
 
-    adapter.getState('link', function (err, state) {
-
-        // err prüfen, wenn err gesetzt dann Fehler
-
-        // state checken, kann leer/null/undefined sein!
-
-        // sonst state.val
-        adapter.log.info('LInk: ' + state.val )
-        
-
-    });
     adapter.getState('today.type', function (err, state) {
+        typeName = getTypeName(state.val);
+    });
+    adapter.getState('today.color', function (err, state) {
+        color = getTypeName(state.val);
+    });
 
-        // err prüfen, wenn err gesetzt dann Fehler
+    adapter.getState('today.icon', function (err, state) {
+        icon = getTypeName(state.val);
+    });
 
-        // state checken, kann leer/null/undefined sein!
+    adapter.getState('today.from', function (err, state) {
+        from = getTypeName(state.val);
+    });
 
-        // sonst state.val
-        adapter.log.info('Typ: ' + state.val )
-        
-
+    adapter.getState('today.to', function (err, state) {
+        to = getTypeName(state.val);
     });
     
-
-    //adapter.getForeignObject('meteoalarm.0.today', (err, obj1) => {
-    //    adapter.log.info('Type: ' + obj1.common.type)
-    //})
-    /*
-    adapter.getForeignState('meteoalarm.0.today', function (err1, result) {
-            adapter.log.info('Typ: ' + result.type.value)
+    adapter.getState('today.text', function (err, state) {
+        text = getTypeName(state.val);
     });
-    */
-
-    /*
-    var TypeName = getTypeName(adapter.today.type);
     
-    htmllong += '<div style="background:' + adapter.today.color + '"  border:"10px">';
-    htmllong += '<h3><img src="' +  adapter.today.icon + '" alt="" width="50" height="50"/>'
-    htmllong += TypeName + '</h3><p>' + adapter.today.from + ' - ' + adapter.today.to 
-    htmllong += '</p><p>' + adapter.today.text + '</p></div>'
+    htmllong += '<div style="background:' + color + '"  border:"10px">';
+    htmllong += '<h3><img src="' +  icon + '" alt="" width="50" height="50"/>'
+    htmllong += typeName + '</h3><p>' + from + ' - ' + to 
+    htmllong += '</p><p>' + text + '</p></div>'
 
     adapter.createState('', '', 'htmlLong', {
         read: true, 
@@ -213,7 +206,7 @@ function updateHTMLWidget(){
         def: htmllong,
         role: 'value'
     });
-    */
+    
 }
 
 function getTypeName(type){
@@ -259,7 +252,7 @@ function getTypeName(type){
             return 'Regen-Flut'
             break;
        default:
-           return undefined
+           return 'undefined'
            break;
     }
 
