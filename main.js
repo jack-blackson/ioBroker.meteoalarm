@@ -164,8 +164,29 @@ function processJSON(content){
 function updateHTMLWidget(){
     var htmllong = '';
 
+    adapter.getState('link', function (err, state) {
 
-    adapter.log.info('Typ: ' + adapter.getState("link").val )
+        // err prüfen, wenn err gesetzt dann Fehler
+
+        // state checken, kann leer/null/undefined sein!
+
+        // sonst state.val
+        adapter.log.info('LInk: ' + state.val )
+        
+
+    });
+    adapter.getState('today.type', function (err, state) {
+
+        // err prüfen, wenn err gesetzt dann Fehler
+
+        // state checken, kann leer/null/undefined sein!
+
+        // sonst state.val
+        adapter.log.info('Typ: ' + state.val )
+        
+
+    });
+    
 
     //adapter.getForeignObject('meteoalarm.0.today', (err, obj1) => {
     //    adapter.log.info('Type: ' + obj1.common.type)
