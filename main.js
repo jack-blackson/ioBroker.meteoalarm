@@ -153,7 +153,10 @@ function processJSON(content){
     if (DescFilter1 != 'nA'){
         parseWeather(content.rss.channel.item.description,'today')
         parseWeather(content.rss.channel.item.description,'tomorrow')
-        updateHTMLWidget()
+        setInterval(function() { 
+            updateHTMLWidget()
+        }, 5000);
+        
     }
     else{
         // Land ist nicht in der Filterliste (getfilters()) -> daher kann Text nicht gefunden werden
@@ -192,21 +195,22 @@ function updateHTMLWidget(){
     adapter.getState('today.text', function (err, state) {
         text = getTypeName(state.val);
     });
-    
-    htmllong += '<div style="background:' + color + '"  border:"10px">';
-    htmllong += '<h3><img src="' +  icon + '" alt="" width="50" height="50"/>'
-    htmllong += typeName + '</h3><p>' + from + ' - ' + to 
-    htmllong += '</p><p>' + text + '</p></div>'
 
-    adapter.createState('', '', 'htmlLong', {
-        read: true, 
-        write: true, 
-        name: "HTML Widget Long Text", 
-        type: "string", 
-        def: htmllong,
-        role: 'value'
-    });
+    setInterval(function() { 
+        htmllong += '<div style="background:' + color + '"  border:"10px">';
+        htmllong += '<h3><img src="' +  icon + '" alt="" width="50" height="50"/>'
+        htmllong += typeName + '</h3><p>' + from + ' - ' + to 
+        htmllong += '</p><p>' + text + '</p></div>'
     
+        adapter.createState('', '', 'htmlLong', {
+            read: true, 
+            write: true, 
+            name: "HTML Widget Long Text", 
+            type: "string", 
+            def: htmllong,
+            role: 'value'
+        });
+    }, 5000);
 }
 
 function getTypeName(type){
