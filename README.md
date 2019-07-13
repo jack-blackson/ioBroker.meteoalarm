@@ -87,6 +87,7 @@ If you don't find your country, please create an issue on github, and I will be 
 * (jack-blackson) Added "Tomorrow" data
 ### 0.3.0 (2019-07-13)
 * (jack-blackson) Added HTML Widget
+* (jack-blackson) Bugfix icon
 
 ## Credits
 Bell in icon designed by Freepik from www.flaticon.com
