@@ -312,7 +312,7 @@ function parseWeather(description,type){
     SearchCrit2 = ContentHeute.indexOf('alt=') + 1;
     SearchCrit2 = (typeof SearchCrit2 == 'number' ? SearchCrit2 : 0) + -3;
     var Warnung_img = ContentHeute.slice((SearchCrit1 - 1), SearchCrit2);
-    adapter.createState('', 'today', 'icon', {
+    adapter.createState('', folder, 'icon', {
         read: true, 
         write: true, 
         name: "Icon", 
