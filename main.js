@@ -203,9 +203,9 @@ function updateHTMLWidget(){
 
     setTimeout(function() { 
         htmllong += '<div style="background:' + color + '"  border:"10px">';
-        htmllong += '<h3><img src="//' +  icon + '" alt="" width="15" height="15"/>'
+        htmllong += '<p></p><h3><img src="//' +  icon + '" alt="" width="20" height="20"/> '
         htmllong += typeName + '</h3><p>' + from + ' - ' + to 
-        htmllong += '</p><p>' + text + '</p></div>'
+        htmllong += '</p><p>' + text + '</p><<p></p>/div>'
     
         adapter.createState('', '', 'htmlLong', {
             read: true, 
