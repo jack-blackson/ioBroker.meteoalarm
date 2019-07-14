@@ -153,7 +153,7 @@ function processJSON(content){
     if (DescFilter1 != 'nA'){
         parseWeather(content.rss.channel.item.description,'today')
         parseWeather(content.rss.channel.item.description,'tomorrow')
-        setInterval(function() { 
+        setTimeout(function() { 
             updateHTMLWidget()
         }, 5000);
         
@@ -175,7 +175,9 @@ function updateHTMLWidget(){
 
     adapter.getState('today.type', function (err, state) {
         adapter.log.info('Type: ' + state.val)
-        typeName = getTypeName(state.val);
+        var typeNumber = Number(state.val)
+
+        typeName = getTypeName(typeNumber);
         adapter.log.info('Typename: ' + typeName)
 
     });
@@ -199,7 +201,7 @@ function updateHTMLWidget(){
         text = state.val;
     });
 
-    setInterval(function() { 
+    setTimeout(function() { 
         htmllong += '<div style="background:' + color + '"  border:"10px">';
         htmllong += '<h3><img src="//' +  icon + '" alt="" width="15" height="15"/>'
         htmllong += typeName + '</h3><p>' + from + ' - ' + to 
