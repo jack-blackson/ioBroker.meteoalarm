@@ -153,11 +153,118 @@ function processJSON(content){
     if (DescFilter1 != 'nA'){
         parseWeather(content.rss.channel.item.description,'today')
         parseWeather(content.rss.channel.item.description,'tomorrow')
+        setTimeout(function() { 
+            updateHTMLWidget()
+        }, 5000);
+        
     }
     else{
         // Land ist nicht in der Filterliste (getfilters()) -> daher kann Text nicht gefunden werden
         adapter.log.error('The country ' + country +  ' is not set up. Please create a github issue to get it set up.')
     }
+}
+
+function updateHTMLWidget(){
+    var htmllong = '';
+    var typeName = '';
+    var color = '';
+    var icon = '';
+    var from = '';
+    var to = '';
+    var text = '';
+
+    adapter.getState('today.type', function (err, state) {
+        adapter.log.info('Type: ' + state.val)
+        var typeNumber = Number(state.val)
+
+        typeName = getTypeName(typeNumber);
+        adapter.log.info('Typename: ' + typeName)
+
+    });
+    adapter.getState('today.color', function (err, state) {
+        color = state.val;
+    });
+
+    adapter.getState('today.icon', function (err, state) {
+        icon = state.val;
+    });
+
+    adapter.getState('today.from', function (err, state) {
+        from = state.val;
+    });
+
+    adapter.getState('today.to', function (err, state) {
+        to = state.val;
+    });
+    
+    adapter.getState('today.text', function (err, state) {
+        text = state.val;
+    });
+
+    setTimeout(function() { 
+        htmllong += '<div style="background:' + color + '"  border:"10px">';
+        htmllong += '<p></p><h3><img src="//' +  icon + '" alt="" width="20" height="20"/> '
+        htmllong += typeName + '</h3><p>' + from + ' - ' + to 
+        htmllong += '</p><p>' + text + '</p><<p></p>/div>'
+    
+        adapter.createState('', '', 'htmlLong', {
+            read: true, 
+            write: true, 
+            name: "HTML Widget Long Text", 
+            type: "string", 
+            def: htmllong,
+            role: 'value'
+        });
+    }, 5000);
+}
+
+function getTypeName(type){
+
+    switch (type) {
+        case 1:
+            return 'Wind'
+            break;
+        case 2:
+            return 'Schnee & Eis'
+            break;
+        case 3:
+            return 'Blitz und Donner'
+            break;
+        case 4:
+            return 'Nebel'
+            break;
+        case 5:
+            return 'Hohe Temperaturen'
+            break;
+        case 6:
+            return 'Niedrige Temperaturen'
+            break;
+        case 7:
+            return 'Küstenereigniss'
+            break;
+        case 8:
+            return 'Waldbrand'
+            break;
+        case 9:
+            return 'Lawinen'
+            break;
+        case 10:
+            return 'Regen'
+            break;
+        case 11:
+            return 'Unknown'
+            break;
+        case 12:
+            return 'Flut'
+            break;
+        case 13:
+            return 'Regen-Flut'
+            break;
+       default:
+           return 'undefined'
+           break;
+    }
+
 }
 
 function parseWeather(description,type){
@@ -207,7 +314,7 @@ function parseWeather(description,type){
     SearchCrit2 = ContentHeute.indexOf('alt=') + 1;
     SearchCrit2 = (typeof SearchCrit2 == 'number' ? SearchCrit2 : 0) + -3;
     var Warnung_img = ContentHeute.slice((SearchCrit1 - 1), SearchCrit2);
-    adapter.createState('', 'today', 'icon', {
+    adapter.createState('', folder, 'icon', {
         read: true, 
         write: true, 
         name: "Icon", 
@@ -260,7 +367,7 @@ function parseWeather(description,type){
       adapter.createState('', folder, 'type', {
         read: true, 
         write: true, 
-        name: "To", 
+        name: "Type", 
         type: "string", 
         def: Typ,
         role: 'value'

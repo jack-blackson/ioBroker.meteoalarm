@@ -1,7 +1,7 @@
 {
   "name": "iobroker.meteoalarm",
-  "version": "0.2.0",
-  "description": "Meteoalarm",
+  "version": "0.3.0",
+  "description": "Meteolaram",
   "main": "main.js",
   "repository": {
     "type": "git",

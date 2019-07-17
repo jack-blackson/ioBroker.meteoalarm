@@ -45,15 +45,20 @@ Please go to http://meteoalarm.eu and choose your region. Then go to the RSS sym
 |Alarm Type|Description|                                                                       
 |:---:|:---:|
 |1|Wind|
-|2|Thunder & Lightning|
-|3|unknown|
-|4|unknown|
+|2|Snow/Ice|
+|3|Thunder & Lightning|
+|4|Fog|
 |5|High temperature|
-|6|unknown|
-|7|unknown|
+|6|Low temperature|
+|7|Coast Event|
 |8|Forest fire|
-|9|unknown|
+|9|Avalanches|
 |10|Rain|
+|11|Unknown|
+|12|Flood|
+|13|Rain-Flood|
+
+
 
 ## Alarm Levels
 |Alarm Level|Description|                                                                       
@@ -80,6 +85,9 @@ If you don't find your country, please create an issue on github, and I will be 
 * (jack-blackson) initial version
 ### 0.2.0 (2019-07-12)
 * (jack-blackson) Added "Tomorrow" data
+### 0.3.0 (2019-07-13)
+* (jack-blackson) Added HTML Widget
+* (jack-blackson) Bugfix icon
 
 ## Credits
 Bell in icon designed by Freepik from www.flaticon.com
