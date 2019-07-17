@@ -11,7 +11,7 @@
     "name": "jack_blackson",
     "email": "blacksonj7@gmail.com"
   },
-  "keywords": ["Meteolarm","meteoalarm","weather alarm"],
+  "keywords": ["Meteoalarm","meteoalarm","weather alarm"],
   "license": "MIT",
   "homepage": "https://github.com/jack-blackson/ioBroker.meteoalarm",
   "bugs": {
