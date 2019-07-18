@@ -453,14 +453,14 @@ function getFilters(){
             DescFilter1 = 'magyar:';
             DescFilter2 = 'english:';
            break;
-        case 'fr':
-            // Frankreich
-            DescFilter1 = 'français:';
-            DescFilter2 = 'english:';
-           break;
         case 'no':
             // Norwegen
             DescFilter1 = 'norsk:';
+            DescFilter2 = 'english:';
+           break;
+        case 'nl':
+            // Niederlande
+            DescFilter1 = 'nederlands:';
             DescFilter2 = 'english:';
            break;
         default:

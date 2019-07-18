@@ -71,10 +71,13 @@ Please go to http://meteoalarm.eu and choose your region. Then go to the RSS sym
 ## Supported countries
 * Austria
 * Germany
-* Italy
 * Hungary
-* France
+* Italy
+* Netherlands
 * Norwege
+
+## Not possible countries (no rss feed available)
+* France
 
 If you don't find your country, please create an issue on github, and I will be happy to add it
 
