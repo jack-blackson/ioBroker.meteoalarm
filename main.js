@@ -466,7 +466,7 @@ function getFilters(){
         case 'fi':
             // Finnland
             DescFilter1 = 'suomi:';
-            DescFilter2 = 'english:';
+            DescFilter2 = 'svenska:';
            break;
         case 'hr':
             // Kroatien
