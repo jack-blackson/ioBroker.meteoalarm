@@ -463,6 +463,16 @@ function getFilters(){
             DescFilter1 = 'nederlands:';
             DescFilter2 = 'english:';
            break;
+        case 'fi':
+            // Finnland
+            DescFilter1 = 'suomi:';
+            DescFilter2 = 'english:';
+           break;
+        case 'hr':
+            // Kroatien
+            DescFilter1 = 'hrvatski:';
+            DescFilter2 = 'english:';
+           break;
         default:
                 DescFilter1 = 'nA';
                 DescFilter2 = 'nA';

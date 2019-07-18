@@ -70,6 +70,8 @@ Please go to http://meteoalarm.eu and choose your region. Then go to the RSS sym
 
 ## Supported countries
 * Austria
+* Croatia
+* Finnland
 * Germany
 * Hungary
 * Italy
@@ -77,14 +79,15 @@ Please go to http://meteoalarm.eu and choose your region. Then go to the RSS sym
 * Norwege
 
 ## Not possible countries (no rss feed available)
-* France
+* France (no rss feed available)
+* Portugal (no splitting possible)
+* Slovenia (no rss feed available)
 
 If you don't find your country, please create an issue on github, and I will be happy to add it
 
 ## Features to implement
 * Handle multiple alarms on one day
 * Display alarms for tomorrow
-* Nicer colors for widget
 * Multilanguage
 
 
@@ -97,7 +100,7 @@ If you don't find your country, please create an issue on github, and I will be 
 * (jack-blackson) Added HTML Widget
 * (jack-blackson) Bugfix icon
 ### 0.4.0 (2019-07-22)
-* (jack-blackson) Added HTML Widget
+* (jack-blackson) Added data for NL,NO,HR,FI
 
 ## Credits
 Bell in icon designed by Freepik from www.flaticon.com
