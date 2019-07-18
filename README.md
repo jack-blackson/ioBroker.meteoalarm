@@ -73,6 +73,8 @@ Please go to http://meteoalarm.eu and choose your region. Then go to the RSS sym
 * Germany
 * Italy
 * Hungary
+* France
+* Norwege
 
 If you don't find your country, please create an issue on github, and I will be happy to add it
 
@@ -91,6 +93,8 @@ If you don't find your country, please create an issue on github, and I will be 
 ### 0.3.0 (2019-07-13)
 * (jack-blackson) Added HTML Widget
 * (jack-blackson) Bugfix icon
+### 0.4.0 (2019-07-22)
+* (jack-blackson) Added HTML Widget
 
 ## Credits
 Bell in icon designed by Freepik from www.flaticon.com
