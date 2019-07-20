@@ -81,11 +81,11 @@ function requestXML(url){
     adapter.log.info('Requesting data from ' + url)
     request.post({
         url:     url,
-        timeout: 10000
+        timeout: 5000
       }, function(error, response, body){
         if (error){
             if (error.code === 'ETIMEDOUT'){
-                adapter.log.error('No website response after 10 seconds. Adapter will try again in 10 minutes.')
+                adapter.log.error('No website response after 5 seconds. Adapter will try again in 10 minutes.')
             }
             else(
                 adapter.log.error(error)
