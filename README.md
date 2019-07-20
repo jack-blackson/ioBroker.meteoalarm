@@ -83,12 +83,12 @@ Please go to http://meteoalarm.eu and choose your region. Then go to the RSS sym
 * Norwege
 * Spain
 
-## Not possible countries (no rss feed available)
+If you don't find your country, please create an issue on github, and I will be happy to add it
+
+## Not possible countries
 * France (no rss feed available)
 * Portugal (no splitting possible)
 * Slovenia (no rss feed available)
-
-If you don't find your country, please create an issue on github, and I will be happy to add it
 
 ## Features to implement
 * Handle multiple alarms on one day
@@ -104,7 +104,7 @@ If you don't find your country, please create an issue on github, and I will be 
 ### 0.3.0 (2019-07-13)
 * (jack-blackson) Added HTML Widget
 * (jack-blackson) Bugfix icon
-### 0.4.0 (2019-07-22)
+### 0.4.0 (2019-07-20)
 * (jack-blackson) Added data for NL,NO,HR,FI,ES
 * (jack-blackson) Added Type Text, Type is now empty if Level is 1 (No Warning)
 * (jack-blackson) Adjusted colors
