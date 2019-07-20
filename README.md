@@ -77,6 +77,7 @@ Please go to http://meteoalarm.eu and choose your region. Then go to the RSS sym
 * Italy
 * Netherlands
 * Norwege
+* Spain
 
 ## Not possible countries (no rss feed available)
 * France (no rss feed available)
@@ -100,7 +101,7 @@ If you don't find your country, please create an issue on github, and I will be 
 * (jack-blackson) Added HTML Widget
 * (jack-blackson) Bugfix icon
 ### 0.4.0 (2019-07-22)
-* (jack-blackson) Added data for NL,NO,HR,FI
+* (jack-blackson) Added data for NL,NO,HR,FI,ES
 
 ## Credits
 Bell in icon designed by Freepik from www.flaticon.com

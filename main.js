@@ -175,9 +175,7 @@ function updateHTMLWidget(){
     var level = '';
 
     adapter.getState('today.type', function (err, state) {
-        adapter.log.info('Type: ' + state.val)
         typeName = getTypeName(parseInt(state.val));
-        adapter.log.info('Typename: ' + typeName)
 
     });
     adapter.getState('today.color', function (err, state) {
@@ -428,11 +426,9 @@ function parseWeather(description,type){
     SearchCrit2 = SearchCrit1 + 1;
     var Typ = parseInt(ContentHeute.slice((SearchCrit1 - 1), SearchCrit2));
     if (SearchCrit1 != 0) {
-        adapter.log.info('typ ausgelesen: ' + Typ)
         if (Level == '1'){
             Typ = 0;
         }
-        adapter.log.info('typ nach if: ' + Typ)
 
         adapter.createState('', folder, 'type', {
             read: true, 
@@ -501,6 +497,11 @@ function getFilters(){
         case 'hr':
             // Kroatien
             DescFilter1 = 'hrvatski:';
+            DescFilter2 = 'english:';
+           break;
+        case 'es':
+            // Spanien
+            DescFilter1 = 'español:';
             DescFilter2 = 'english:';
            break;
         default:
