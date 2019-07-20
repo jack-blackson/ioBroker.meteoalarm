@@ -360,6 +360,52 @@ function parseWeather(description,type){
         role: 'value'
     });
 
+        // Warning Text  Level
+        SearchCrit1 = ContentHeute.indexOf('level:') + 1;
+        SearchCrit1 = (typeof SearchCrit1 == 'number' ? SearchCrit1 : 0) + 6;
+        SearchCrit2 = SearchCrit1 + 1;
+        var Level = ContentHeute.charAt((SearchCrit1 - 1));
+        var Color = ''
+        if (SearchCrit1 != 0) {
+            adapter.createState('', folder, 'level', {
+                read: true, 
+                write: true, 
+                name: "Level", 
+                type: "string", 
+                def: Level,
+                role: 'value'
+            });
+        
+            switch (Level) {
+             case '1':
+                // Grün
+                Color = '#01DF3A';
+                break;
+            case '2':
+                // Gelb
+                Color = '#FFFF00';
+                break;
+            case '3':
+                // Orange
+                Color = '#FF8000';
+                break;
+            case '4':
+                // Rot
+                Color = '#FF0000';
+                break;
+            default:
+               
+                break;
+            }
+            adapter.createState('', folder, 'color', {
+                read: true, 
+                write: true, 
+                name: "Color", 
+                type: "string", 
+                def: Color,
+                role: 'value'
+            });
+        }
 
     //Warning Text Type
     SearchCrit1 = ContentHeute.indexOf('awt:') + 1;
@@ -367,6 +413,10 @@ function parseWeather(description,type){
     SearchCrit2 = SearchCrit1 + 1;
     var Typ = ContentHeute.slice((SearchCrit1 - 1), SearchCrit2);
     if (SearchCrit1 != 0) {
+        if (Level = 1){
+            Typ = '';
+        }
+
         adapter.createState('', folder, 'type', {
             read: true, 
             write: true, 
@@ -386,55 +436,6 @@ function parseWeather(description,type){
             });
     }
     
-
-
-    // Warning Text Today Level
-    SearchCrit1 = ContentHeute.indexOf('level:') + 1;
-    SearchCrit1 = (typeof SearchCrit1 == 'number' ? SearchCrit1 : 0) + 6;
-    SearchCrit2 = SearchCrit1 + 1;
-    var Level = ContentHeute.charAt((SearchCrit1 - 1));
-    var Color = ''
-    if (SearchCrit1 != 0) {
-        adapter.createState('', folder, 'level', {
-            read: true, 
-            write: true, 
-            name: "Level", 
-            type: "string", 
-            def: Level,
-            role: 'value'
-        });
-    
-        switch (Level) {
-         case '1':
-            // Grün
-            Color = '#01DF3A';
-            break;
-        case '2':
-            // Gelb
-            Color = '#FFFF00';
-            break;
-        case '3':
-            // Orange
-            Color = '#FF8000';
-            break;
-        case '4':
-            // Rot
-            Color = '#FF0000';
-            break;
-        default:
-           
-            break;
-        }
-        adapter.createState('', folder, 'color', {
-            read: true, 
-            write: true, 
-            name: "Color", 
-            type: "string", 
-            def: Color,
-            role: 'value'
-        });
-    }
-
 }
 
 function getFilters(){
