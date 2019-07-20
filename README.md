@@ -39,7 +39,8 @@ Please go to http://meteoalarm.eu and choose your region. Then go to the RSS sym
 |   To|Alarm ending date|
 |   Type|Type of Alarm as number|
 |   TypeText|Type of Alarm as text|
-|   Level|Level of Alarm -> see below|
+|   Level|Level of Alarm as number|
+|   LevelText|Level of Alarm as text|
 |   Color|Alarm color for widgets|
 |   Icon|Alarm type icon|
 
