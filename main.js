@@ -329,7 +329,7 @@ function parseWeather(description,type){
     SearchCrit1 = (typeof SearchCrit1 == 'number' ? SearchCrit1 : 0) + 13;
     SearchCrit2 = ContentHeute.indexOf('alt=') + 1;
     SearchCrit2 = (typeof SearchCrit2 == 'number' ? SearchCrit2 : 0) + -3;
-    var Warnung_img = ContentHeute.slice((SearchCrit1 - 1), SearchCrit2);
+    var Warnung_img =  'https://' + ContentHeute.slice((SearchCrit1 - 1), SearchCrit2);
     adapter.createState('', folder, 'icon', {
         read: true, 
         write: true, 
@@ -396,11 +396,11 @@ function parseWeather(description,type){
                 break;
             case '2':
                 // Gelb
-                Color = '#FFFF00';
+                Color = '#FEFE04';
                 break;
             case '3':
                 // Orange
-                Color = '#FF8000';
+                Color = '#FECA36';
                 break;
             case '4':
                 // Rot

@@ -102,6 +102,8 @@ If you don't find your country, please create an issue on github, and I will be 
 * (jack-blackson) Bugfix icon
 ### 0.4.0 (2019-07-22)
 * (jack-blackson) Added data for NL,NO,HR,FI,ES
+* (jack-blackson) Added Type Text, Type is now empty if Level is 1 (No Warning)
+* (jack-blackson) Adjusted colors
 
 ## Credits
 Bell in icon designed by Freepik from www.flaticon.com
