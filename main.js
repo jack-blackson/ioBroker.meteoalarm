@@ -80,8 +80,10 @@ function main() {
 function requestXML(url){
     adapter.log.info('Requesting data from ' + url)
     request.post({
-        url:     url
+        url:     url,
+        timeout: 50
       }, function(error, response, body){
+        adapter.log.info(response)
         if (error){
             adapter.log.error(error)
         }
