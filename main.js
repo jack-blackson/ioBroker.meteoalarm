@@ -413,9 +413,11 @@ function parseWeather(description,type){
     SearchCrit2 = SearchCrit1 + 1;
     var Typ = ContentHeute.slice((SearchCrit1 - 1), SearchCrit2);
     if (SearchCrit1 != 0) {
+        adapter.log.info('typ ausgelesen: ' + Typ)
         if (Level == '1'){
             Typ = '';
         }
+        adapter.log.info('typ nach if: ' + Typ)
 
         adapter.createState('', folder, 'type', {
             read: true, 
