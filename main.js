@@ -413,7 +413,7 @@ function parseWeather(description,type){
     SearchCrit2 = SearchCrit1 + 1;
     var Typ = ContentHeute.slice((SearchCrit1 - 1), SearchCrit2);
     if (SearchCrit1 != 0) {
-        if (Level = 1){
+        if (Level == '1'){
             Typ = '';
         }
 
