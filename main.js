@@ -114,7 +114,7 @@ function processJSON(content){
 
     adapter.createState('', '', 'location', {
         read: true, 
-        write: true, 
+        write: false, 
         name: "Location", 
         type: "string", 
         def: JSON.stringify(content.rss.channel.item.title),
@@ -124,7 +124,7 @@ function processJSON(content){
 
     adapter.createState('', '', 'link', {
         read: true, 
-        write: true, 
+        write: false, 
         name: "Link", 
         type: "string", 
         def: JSON.stringify(content.rss.channel.item.link),
@@ -134,7 +134,7 @@ function processJSON(content){
     var newdate = moment(new Date()).local().format('DD.MM.YYYY HH:mm')
     adapter.createState('', '', 'lastUpdate', {
         read: true, 
-        write: true, 
+        write: false, 
         name: "lastUpdate", 
         type: "string", 
         def: newdate,
@@ -143,7 +143,7 @@ function processJSON(content){
 
     adapter.createState('', '', 'publicationDate', {
         read: true, 
-        write: true, 
+        write: false, 
         name: "publicationDate", 
         type: "string", 
         def: JSON.stringify(content.rss.channel.item.pubDate),
@@ -155,7 +155,7 @@ function processJSON(content){
         parseWeather(content.rss.channel.item.description,'tomorrow')
         setTimeout(function() { 
             updateHTMLWidget()
-        }, 5000);
+        }, 2000);
         
     }
     else{
@@ -172,17 +172,18 @@ function updateHTMLWidget(){
     var from = '';
     var to = '';
     var text = '';
+    var level = '';
 
     adapter.getState('today.type', function (err, state) {
-        adapter.log.info('Type: ' + state.val)
-        var typeNumber = Number(state.val)
-
-        typeName = getTypeName(typeNumber);
-        adapter.log.info('Typename: ' + typeName)
+        typeName = getTypeName(parseInt(state.val));
 
     });
     adapter.getState('today.color', function (err, state) {
         color = state.val;
+    });
+
+    adapter.getState('today.level', function (err, state) {
+        level = state.val;
     });
 
     adapter.getState('today.icon', function (err, state) {
@@ -202,20 +203,32 @@ function updateHTMLWidget(){
     });
 
     setTimeout(function() { 
-        htmllong += '<div style="background:' + color + '"  border:"10px">';
-        htmllong += '<p></p><h3><img src="//' +  icon + '" alt="" width="20" height="20"/> '
-        htmllong += typeName + '</h3><p>' + from + ' - ' + to 
-        htmllong += '</p><p>' + text + '</p></div>'
+        if (level != '1'){
+            // Warnung vorhanden
+            htmllong += '<div style="background:' + color + '"  border:"10px">';
+            htmllong += '<h3><img src="' +  icon + '" alt="" width="20" height="20"/> '
+            htmllong += typeName + '</h3><p>' + from + ' - ' + to 
+            htmllong += '</p><p>' + text + '</p></div>'
+        }
+        else{
+            // keine Warnung vorhanden
+            var textNoWarning = 'Aktuell ist keine Warnung vorhanden.'
+            htmllong += '<div style="background:' + color + '"  border:"10px">';
+            htmllong += '<p></p><h3> '
+            htmllong += textNoWarning + '</h3><p>'  
+            htmllong += '</p><p></p></div>'
+        }
+        
     
-        adapter.createState('', '', 'htmlLong', {
+        adapter.createState('', '', 'htmlToday', {
             read: true, 
-            write: true, 
-            name: "HTML Widget Long Text", 
+            write: false, 
+            name: "HTML Widget Today", 
             type: "string", 
             def: htmllong,
             role: 'value'
         });
-    }, 5000);
+    }, 2000);
 }
 
 function getTypeName(type){
@@ -260,6 +273,31 @@ function getTypeName(type){
         case 13:
             return 'Regen-Flut'
             break;
+        case 0:
+            return ''
+            break;
+       default:
+           return 'undefined'
+           break;
+    }
+
+}
+
+function getLevelName(level){
+
+    switch (level) {
+        case 1:
+            return 'Keine Gefahr vorhanden'
+            break;
+        case 2:
+            return 'Das Wetter ist potenziell gefährlich'
+            break;
+        case 3:
+            return 'Das Wetter ist gefährlich'
+            break;
+        case 4:
+            return 'Das Wetter ist sehr gefährlich'
+            break;
        default:
            return 'undefined'
            break;
@@ -289,7 +327,7 @@ function parseWeather(description,type){
 
 
 
-    // Warning Text Today
+    // Warning Text
     var ContentHeute = description.slice((SearchCrit1 - 1), SearchCrit2);
     SearchCrit1 = ContentHeute.indexOf(DescFilter1) + 1;
     if (SearchCrit1 != 0){
@@ -301,7 +339,7 @@ function parseWeather(description,type){
     } 
     adapter.createState('', folder, 'text', {
         read: true, 
-        write: true, 
+        write: false, 
         name: "Text", 
         type: "string", 
         def: WarnungsText,
@@ -313,10 +351,10 @@ function parseWeather(description,type){
     SearchCrit1 = (typeof SearchCrit1 == 'number' ? SearchCrit1 : 0) + 13;
     SearchCrit2 = ContentHeute.indexOf('alt=') + 1;
     SearchCrit2 = (typeof SearchCrit2 == 'number' ? SearchCrit2 : 0) + -3;
-    var Warnung_img = ContentHeute.slice((SearchCrit1 - 1), SearchCrit2);
+    var Warnung_img =  'https://' + ContentHeute.slice((SearchCrit1 - 1), SearchCrit2);
     adapter.createState('', folder, 'icon', {
         read: true, 
-        write: true, 
+        write: false, 
         name: "Icon", 
         type: "string", 
         def: Warnung_img,
@@ -342,7 +380,7 @@ function parseWeather(description,type){
     
     adapter.createState('', folder, 'from', {
         read: true, 
-        write: true, 
+        write: false, 
         name: "From", 
         type: "string", 
         def: Warnung_Von,
@@ -350,79 +388,98 @@ function parseWeather(description,type){
     });
     adapter.createState('', folder, 'to', {
         read: true, 
-        write: true, 
+        write: false, 
         name: "To", 
         type: "string", 
         def: Warnung_Bis,
         role: 'value'
     });
 
+        // Warning Text  Level
+        SearchCrit1 = ContentHeute.indexOf('level:') + 1;
+        SearchCrit1 = (typeof SearchCrit1 == 'number' ? SearchCrit1 : 0) + 6;
+        SearchCrit2 = SearchCrit1 + 1;
+        var Level = parseInt(ContentHeute.charAt(SearchCrit1 - 1));
+        var Color = ''
+        if (SearchCrit1 != 0) {
+            adapter.createState('', folder, 'level', {
+                read: true, 
+                write: false, 
+                name: "Level", 
+                type: "string", 
+                def: Level,
+                role: 'value'
+            });
 
-    //Warning Text Today Type
+            adapter.createState('', folder, 'levelText', {
+                read: true, 
+                write: false, 
+                name: "Level Text", 
+                type: "string", 
+                def: getLevelName(Level),
+                role: 'value'
+                });
+        
+            switch (Level) {
+             case 1:
+                // Grün
+                Color = '#01DF3A';
+                break;
+            case 2:
+                // Gelb
+                Color = '#FEFE04';
+                break;
+            case 3:
+                // Orange
+                Color = '#FECA36';
+                break;
+            case 4:
+                // Rot
+                Color = '#FD0204';
+                break;
+            default:
+               
+                break;
+            }
+            adapter.createState('', folder, 'color', {
+                read: true, 
+                write: false, 
+                name: "Color", 
+                type: "string", 
+                def: Color,
+                role: 'value'
+            });
+        }
+
+    //Warning Text Type
     SearchCrit1 = ContentHeute.indexOf('awt:') + 1;
     SearchCrit1 = (typeof SearchCrit1 == 'number' ? SearchCrit1 : 0) + 4;
     SearchCrit2 = SearchCrit1 + 1;
-    var Typ = ContentHeute.slice((SearchCrit1 - 1), SearchCrit2);
+    var Typ = parseInt(ContentHeute.slice((SearchCrit1 - 1), SearchCrit2));
     if (SearchCrit1 != 0) {
-      adapter.createState('', folder, 'type', {
-        read: true, 
-        write: true, 
-        name: "Type", 
-        type: "string", 
-        def: Typ,
-        role: 'value'
-        });
-    }
-    
-
-
-    // Warning Text Today Level
-    SearchCrit1 = ContentHeute.indexOf('level:') + 1;
-    SearchCrit1 = (typeof SearchCrit1 == 'number' ? SearchCrit1 : 0) + 6;
-    SearchCrit2 = SearchCrit1 + 1;
-    var Level = ContentHeute.charAt((SearchCrit1 - 1));
-    var Color = ''
-    if (SearchCrit1 != 0) {
-        adapter.createState('', folder, 'level', {
-            read: true, 
-            write: true, 
-            name: "Level", 
-            type: "string", 
-            def: Level,
-            role: 'value'
-        });
-    
-        switch (Level) {
-         case '1':
-            // Grün
-            Color = '#01DF3A';
-            break;
-        case '2':
-            // Gelb
-            Color = '#FFFF00';
-            break;
-        case '3':
-            // Orange
-            Color = '#FF8000';
-            break;
-        case '4':
-            // Rot
-            Color = '#FF0000';
-            break;
-        default:
-           
-            break;
+        if (Level == 1){
+            Typ = 0;
         }
-        adapter.createState('', folder, 'color', {
+
+        adapter.createState('', folder, 'type', {
             read: true, 
-            write: true, 
-            name: "Color", 
+            write: false, 
+            name: "Type", 
             type: "string", 
-            def: Color,
+            def: Typ,
             role: 'value'
         });
-    }
 
+        adapter.createState('', folder, 'typeText', {
+            read: true, 
+            write: false, 
+            name: "Type Text", 
+            type: "string", 
+            def: getTypeName(Typ),
+            role: 'value'
+            });
+    }
+    
 }
 
 function getFilters(){
@@ -451,6 +508,31 @@ function getFilters(){
         case 'hu':
             // Ungarn
             DescFilter1 = 'magyar:';
+            DescFilter2 = 'english:';
+           break;
+        case 'no':
+            // Norwegen
+            DescFilter1 = 'norsk:';
+            DescFilter2 = 'english:';
+           break;
+        case 'nl':
+            // Niederlande
+            DescFilter1 = 'nederlands:';
+            DescFilter2 = 'english:';
+           break;
+        case 'fi':
+            // Finnland
+            DescFilter1 = 'suomi:';
+            DescFilter2 = 'svenska:';
+           break;
+        case 'hr':
+            // Kroatien
+            DescFilter1 = 'hrvatski:';
+            DescFilter2 = 'english:';
+           break;
+        case 'es':
+            // Spanien
+            DescFilter1 = 'español:';
             DescFilter2 = 'english:';
            break;
         default:

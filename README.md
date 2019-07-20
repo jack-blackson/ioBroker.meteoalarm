@@ -32,13 +32,17 @@ Please go to http://meteoalarm.eu and choose your region. Then go to the RSS sym
 |Link|Link to the RSS Feed|
 |Location|Alarm Location|
 |Publication Date|Publication Date of the alarm according to the website|
-|Text|Alarm Text in country specific language|
-|From|Alarm starting date|
-|To|Alarm ending date|
-|Type|Type of Alarm -> see below|
-|Level|Level of Alarm -> see below|
-|Color|Alarm color for widgets|
-|Icon|Alarm type icon|
+|HTMLToday|HTML Widget that displays Alarms for today|
+|Today/Tomorrow|These datapoints are available for today and tomorrow:|
+|   Text|Alarm Text in country specific language|
+|   From|Alarm starting date|
+|   To|Alarm ending date|
+|   Type|Type of Alarm as number|
+|   TypeText|Type of Alarm as text|
+|   Level|Level of Alarm as number|
+|   LevelText|Level of Alarm as text|
+|   Color|Alarm color for widgets|
+|   Icon|Alarm type icon|
 
 
 ## Alarm Types
@@ -70,16 +74,25 @@ Please go to http://meteoalarm.eu and choose your region. Then go to the RSS sym
 
 ## Supported countries
 * Austria
+* Croatia
+* Finnland
 * Germany
-* Italy
 * Hungary
+* Italy
+* Netherlands
+* Norwege
+* Spain
 
 If you don't find your country, please create an issue on github, and I will be happy to add it
+
+## Not possible countries
+* France (no rss feed available)
+* Portugal (no splitting possible)
+* Slovenia (no rss feed available)
 
 ## Features to implement
 * Handle multiple alarms on one day
 * Display alarms for tomorrow
-* Nicer colors for widget
 * Multilanguage
 
 
@@ -91,6 +104,10 @@ If you don't find your country, please create an issue on github, and I will be 
 ### 0.3.0 (2019-07-13)
 * (jack-blackson) Added HTML Widget
 * (jack-blackson) Bugfix icon
+### 0.4.0 (2019-07-20)
+* (jack-blackson) Added data for NL,NO,HR,FI,ES
+* (jack-blackson) Added Type Text, Type is now empty if Level is 1 (No Warning)
+* (jack-blackson) Adjusted colors
 
 ## Credits
 Bell in icon designed by Freepik from www.flaticon.com
