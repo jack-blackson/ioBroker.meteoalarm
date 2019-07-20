@@ -416,24 +416,24 @@ function parseWeather(description,type){
                 write: true, 
                 name: "Level Text", 
                 type: "string", 
-                def: getTypeName(Level),
+                def: getLevelName(Level),
                 role: 'value'
                 });
         
             switch (Level) {
-             case '1':
+             case 1:
                 // Grün
                 Color = '#01DF3A';
                 break;
-            case '2':
+            case 2:
                 // Gelb
                 Color = '#FEFE04';
                 break;
-            case '3':
+            case 3:
                 // Orange
                 Color = '#FECA36';
                 break;
-            case '4':
+            case 4:
                 // Rot
                 Color = '#FD0204';
                 break;
@@ -457,7 +457,7 @@ function parseWeather(description,type){
     SearchCrit2 = SearchCrit1 + 1;
     var Typ = parseInt(ContentHeute.slice((SearchCrit1 - 1), SearchCrit2));
     if (SearchCrit1 != 0) {
-        if (Level == '1'){
+        if (Level == 1){
             Typ = 0;
         }
 
