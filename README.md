@@ -108,6 +108,8 @@ If you don't find your country, please create an issue on github, and I will be 
 * (jack-blackson) Added data for NL,NO,HR,FI,ES
 * (jack-blackson) Added Type Text, Type is now empty if Level is 1 (No Warning)
 * (jack-blackson) Adjusted colors
+### 0.5.0 (2019-07-21)
+* (jack-blackson) Handle Timeouts
 
 ## Credits
 Bell in icon designed by Freepik from www.flaticon.com
