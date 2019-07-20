@@ -32,13 +32,16 @@ Please go to http://meteoalarm.eu and choose your region. Then go to the RSS sym
 |Link|Link to the RSS Feed|
 |Location|Alarm Location|
 |Publication Date|Publication Date of the alarm according to the website|
-|Text|Alarm Text in country specific language|
-|From|Alarm starting date|
-|To|Alarm ending date|
-|Type|Type of Alarm -> see below|
-|Level|Level of Alarm -> see below|
-|Color|Alarm color for widgets|
-|Icon|Alarm type icon|
+|HTMLToday|HTML Widget that displays Alarms for today|
+|Today/Tomorrow|These datapoints are available for today and tomorrow:|
+|   Text|Alarm Text in country specific language|
+|   From|Alarm starting date|
+|   To|Alarm ending date|
+|   Type|Type of Alarm as number|
+|   TypeText|Type of Alarm as text|
+|   Level|Level of Alarm -> see below|
+|   Color|Alarm color for widgets|
+|   Icon|Alarm type icon|
 
 
 ## Alarm Types

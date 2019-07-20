@@ -206,7 +206,7 @@ function updateHTMLWidget(){
         if (level != '1'){
             // Warnung vorhanden
             htmllong += '<div style="background:' + color + '"  border:"10px">';
-            htmllong += '<p></p><h3><img src="//' +  icon + '" alt="" width="20" height="20"/> '
+            htmllong += '<p></p><h3><img src="' +  icon + '" alt="" width="20" height="20"/> '
             htmllong += typeName + '</h3><p>' + from + ' - ' + to 
             htmllong += '</p><p>' + text + '</p></div>'
         }
@@ -220,10 +220,10 @@ function updateHTMLWidget(){
         }
         
     
-        adapter.createState('', '', 'htmlLong', {
+        adapter.createState('', '', 'htmlToday', {
             read: true, 
             write: true, 
-            name: "HTML Widget Long Text", 
+            name: "HTML Widget Today", 
             type: "string", 
             def: htmllong,
             role: 'value'
@@ -404,7 +404,7 @@ function parseWeather(description,type){
                 break;
             case '4':
                 // Rot
-                Color = '#FF0000';
+                Color = '#FD0204';
                 break;
             default:
                
