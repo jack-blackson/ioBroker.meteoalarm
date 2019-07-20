@@ -114,7 +114,7 @@ function processJSON(content){
 
     adapter.createState('', '', 'location', {
         read: true, 
-        write: true, 
+        write: false, 
         name: "Location", 
         type: "string", 
         def: JSON.stringify(content.rss.channel.item.title),
@@ -124,7 +124,7 @@ function processJSON(content){
 
     adapter.createState('', '', 'link', {
         read: true, 
-        write: true, 
+        write: false, 
         name: "Link", 
         type: "string", 
         def: JSON.stringify(content.rss.channel.item.link),
@@ -134,7 +134,7 @@ function processJSON(content){
     var newdate = moment(new Date()).local().format('DD.MM.YYYY HH:mm')
     adapter.createState('', '', 'lastUpdate', {
         read: true, 
-        write: true, 
+        write: false, 
         name: "lastUpdate", 
         type: "string", 
         def: newdate,
@@ -143,7 +143,7 @@ function processJSON(content){
 
     adapter.createState('', '', 'publicationDate', {
         read: true, 
-        write: true, 
+        write: false, 
         name: "publicationDate", 
         type: "string", 
         def: JSON.stringify(content.rss.channel.item.pubDate),
@@ -222,7 +222,7 @@ function updateHTMLWidget(){
     
         adapter.createState('', '', 'htmlToday', {
             read: true, 
-            write: true, 
+            write: false, 
             name: "HTML Widget Today", 
             type: "string", 
             def: htmllong,
@@ -339,7 +339,7 @@ function parseWeather(description,type){
     } 
     adapter.createState('', folder, 'text', {
         read: true, 
-        write: true, 
+        write: false, 
         name: "Text", 
         type: "string", 
         def: WarnungsText,
@@ -354,7 +354,7 @@ function parseWeather(description,type){
     var Warnung_img =  'https://' + ContentHeute.slice((SearchCrit1 - 1), SearchCrit2);
     adapter.createState('', folder, 'icon', {
         read: true, 
-        write: true, 
+        write: false, 
         name: "Icon", 
         type: "string", 
         def: Warnung_img,
@@ -380,7 +380,7 @@ function parseWeather(description,type){
     
     adapter.createState('', folder, 'from', {
         read: true, 
-        write: true, 
+        write: false, 
         name: "From", 
         type: "string", 
         def: Warnung_Von,
@@ -388,7 +388,7 @@ function parseWeather(description,type){
     });
     adapter.createState('', folder, 'to', {
         read: true, 
-        write: true, 
+        write: false, 
         name: "To", 
         type: "string", 
         def: Warnung_Bis,
@@ -404,7 +404,7 @@ function parseWeather(description,type){
         if (SearchCrit1 != 0) {
             adapter.createState('', folder, 'level', {
                 read: true, 
-                write: true, 
+                write: false, 
                 name: "Level", 
                 type: "string", 
                 def: Level,
@@ -413,7 +413,7 @@ function parseWeather(description,type){
 
             adapter.createState('', folder, 'levelText', {
                 read: true, 
-                write: true, 
+                write: false, 
                 name: "Level Text", 
                 type: "string", 
                 def: getLevelName(Level),
@@ -443,7 +443,7 @@ function parseWeather(description,type){
             }
             adapter.createState('', folder, 'color', {
                 read: true, 
-                write: true, 
+                write: false, 
                 name: "Color", 
                 type: "string", 
                 def: Color,
@@ -463,7 +463,7 @@ function parseWeather(description,type){
 
         adapter.createState('', folder, 'type', {
             read: true, 
-            write: true, 
+            write: false, 
             name: "Type", 
             type: "string", 
             def: Typ,
@@ -472,7 +472,7 @@ function parseWeather(description,type){
 
         adapter.createState('', folder, 'typeText', {
             read: true, 
-            write: true, 
+            write: false, 
             name: "Type Text", 
             type: "string", 
             def: getTypeName(Typ),
