@@ -84,7 +84,7 @@ function requestXML(url){
         timeout: 50
       }, function(error, response, body){
         if (error){
-            if (error === 'ETIMEDOUT'){
+            if (error.code === 'ETIMEDOUT'){
                 adapter.log.error('No website response after 10 seconds. Adapter will try again in 10 minutes.')
             }
             else(
