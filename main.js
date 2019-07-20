@@ -81,7 +81,7 @@ function requestXML(url){
     adapter.log.info('Requesting data from ' + url)
     request.post({
         url:     url,
-        timeout: 50
+        timeout: 10000
       }, function(error, response, body){
         if (error){
             if (error.code === 'ETIMEDOUT'){
