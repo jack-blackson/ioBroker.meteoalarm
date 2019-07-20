@@ -176,8 +176,9 @@ function updateHTMLWidget(){
     adapter.getState('today.type', function (err, state) {
         adapter.log.info('Type: ' + state.val)
         //var typeNumber = Number(state.val)
-
-        typeName = getTypeName(state.val);
+        var typeNumber = '';
+        typeNumber = state.val
+        typeName = getTypeName(typeNumber);
         adapter.log.info('Typename: ' + typeName)
 
     });
@@ -411,7 +412,8 @@ function parseWeather(description,type){
     SearchCrit1 = ContentHeute.indexOf('awt:') + 1;
     SearchCrit1 = (typeof SearchCrit1 == 'number' ? SearchCrit1 : 0) + 4;
     SearchCrit2 = SearchCrit1 + 1;
-    var Typ = ContentHeute.slice((SearchCrit1 - 1), SearchCrit2);
+    var Typ = '';
+    Typ = ContentHeute.slice((SearchCrit1 - 1), SearchCrit2);
     if (SearchCrit1 != 0) {
         adapter.log.info('typ ausgelesen: ' + Typ)
         if (Level == '1'){
