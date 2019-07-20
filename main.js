@@ -172,6 +172,7 @@ function updateHTMLWidget(){
     var from = '';
     var to = '';
     var text = '';
+    var level = '';
 
     adapter.getState('today.type', function (err, state) {
         adapter.log.info('Type: ' + state.val)
@@ -181,6 +182,10 @@ function updateHTMLWidget(){
     });
     adapter.getState('today.color', function (err, state) {
         color = state.val;
+    });
+
+    adapter.getState('today.level', function (err, state) {
+        level = state.val;
     });
 
     adapter.getState('today.icon', function (err, state) {
@@ -200,10 +205,22 @@ function updateHTMLWidget(){
     });
 
     setTimeout(function() { 
-        htmllong += '<div style="background:' + color + '"  border:"10px">';
-        htmllong += '<p></p><h3><img src="//' +  icon + '" alt="" width="20" height="20"/> '
-        htmllong += typeName + '</h3><p>' + from + ' - ' + to 
-        htmllong += '</p><p>' + text + '</p></div>'
+        if (level != '1'){
+            // Warnung vorhanden
+            htmllong += '<div style="background:' + color + '"  border:"10px">';
+            htmllong += '<p></p><h3><img src="//' +  icon + '" alt="" width="20" height="20"/> '
+            htmllong += typeName + '</h3><p>' + from + ' - ' + to 
+            htmllong += '</p><p>' + text + '</p></div>'
+        }
+        else{
+            // keine Warnung vorhanden
+            var textNoWarning = 'Aktuell ist keine Warnung vorhanden.'
+            htmllong += '<div style="background:' + color + '"  border:"10px">';
+            htmllong += '<p></p><h3> '
+            htmllong += textNoWarning + '</h3><p>'  
+            htmllong += '</p><p></p></div>'
+        }
+        
     
         adapter.createState('', '', 'htmlLong', {
             read: true, 
@@ -213,7 +230,7 @@ function updateHTMLWidget(){
             def: htmllong,
             role: 'value'
         });
-    }, 5000);
+    }, 2000);
 }
 
 function getTypeName(type){
