@@ -206,7 +206,7 @@ function updateHTMLWidget(){
         if (level != '1'){
             // Warnung vorhanden
             htmllong += '<div style="background:' + color + '"  border:"10px">';
-            htmllong += '<p></p><h3><img src="' +  icon + '" alt="" width="20" height="20"/> '
+            htmllong += '<h3><img src="' +  icon + '" alt="" width="20" height="20"/> '
             htmllong += typeName + '</h3><p>' + from + ' - ' + to 
             htmllong += '</p><p>' + text + '</p></div>'
         }
@@ -275,6 +275,28 @@ function getTypeName(type){
             break;
         case 0:
             return ''
+            break;
+       default:
+           return 'undefined'
+           break;
+    }
+
+}
+
+function getLevelName(level){
+
+    switch (level) {
+        case 1:
+            return 'Keine Gefahr vorhanden'
+            break;
+        case 2:
+            return 'Das Wetter ist potenziell gefährlich'
+            break;
+        case 3:
+            return 'Das Wetter ist gefährlich'
+            break;
+        case 4:
+            return 'Das Wetter ist sehr gefährlich'
             break;
        default:
            return 'undefined'
@@ -377,7 +399,7 @@ function parseWeather(description,type){
         SearchCrit1 = ContentHeute.indexOf('level:') + 1;
         SearchCrit1 = (typeof SearchCrit1 == 'number' ? SearchCrit1 : 0) + 6;
         SearchCrit2 = SearchCrit1 + 1;
-        var Level = ContentHeute.charAt((SearchCrit1 - 1));
+        var Level = parseInt(ContentHeute.charAt(SearchCrit1 - 1));
         var Color = ''
         if (SearchCrit1 != 0) {
             adapter.createState('', folder, 'level', {
@@ -388,6 +410,15 @@ function parseWeather(description,type){
                 def: Level,
                 role: 'value'
             });
+
+            adapter.createState('', folder, 'levelText', {
+                read: true, 
+                write: true, 
+                name: "Level Text", 
+                type: "string", 
+                def: getTypeName(Level),
+                role: 'value'
+                });
         
             switch (Level) {
              case '1':
