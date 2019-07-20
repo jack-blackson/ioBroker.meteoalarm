@@ -175,10 +175,7 @@ function updateHTMLWidget(){
 
     adapter.getState('today.type', function (err, state) {
         adapter.log.info('Type: ' + state.val)
-        //var typeNumber = Number(state.val)
-        var typeNumber = '';
-        typeNumber = state.val
-        typeName = getTypeName(typeNumber);
+        typeName = getTypeName(parseInt(state.val));
         adapter.log.info('Typename: ' + typeName)
 
     });
@@ -222,46 +219,46 @@ function updateHTMLWidget(){
 function getTypeName(type){
 
     switch (type) {
-        case '1':
+        case 1:
             return 'Wind'
             break;
-        case '2':
+        case 2:
             return 'Schnee & Eis'
             break;
-        case '3':
+        case 3:
             return 'Blitz und Donner'
             break;
-        case '4':
+        case 4:
             return 'Nebel'
             break;
-        case '5':
+        case 5:
             return 'Hohe Temperaturen'
             break;
-        case '6':
+        case 6:
             return 'Niedrige Temperaturen'
             break;
-        case '7':
+        case 7:
             return 'Küstenereigniss'
             break;
-        case '8':
+        case 8:
             return 'Waldbrand'
             break;
-        case '9':
+        case 9:
             return 'Lawinen'
             break;
-        case '10':
+        case 10:
             return 'Regen'
             break;
-        case '11':
+        case 11:
             return 'Unknown'
             break;
-        case '12':
+        case 12:
             return 'Flut'
             break;
-        case '13':
+        case 13:
             return 'Regen-Flut'
             break;
-        case '':
+        case 0:
             return ''
             break;
        default:
@@ -412,12 +409,11 @@ function parseWeather(description,type){
     SearchCrit1 = ContentHeute.indexOf('awt:') + 1;
     SearchCrit1 = (typeof SearchCrit1 == 'number' ? SearchCrit1 : 0) + 4;
     SearchCrit2 = SearchCrit1 + 1;
-    var Typ = '';
-    Typ = ContentHeute.slice((SearchCrit1 - 1), SearchCrit2);
+    var Typ = parseInt(ContentHeute.slice((SearchCrit1 - 1), SearchCrit2));
     if (SearchCrit1 != 0) {
         adapter.log.info('typ ausgelesen: ' + Typ)
         if (Level == '1'){
-            Typ = '';
+            Typ = 0;
         }
         adapter.log.info('typ nach if: ' + Typ)
 
