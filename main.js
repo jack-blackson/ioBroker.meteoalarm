@@ -22,6 +22,7 @@ var DescFilter2 = '';
 var country = '';
 
 let adapter;
+let lang;
 
 setInterval(function() { 
     // alle 10 Minute ausführen 
@@ -47,7 +48,11 @@ function startAdapter(options) {
 
 
 function main() {
-    adapter.log.info('Testübersetzung: '+ i18nHelper.shoppingList['nl'])
+    
+    const obj = await adapter.getForeignObjectAsync(`system.config`);
+    lang = (obj && obj.common && obj.common.language) ? obj.common.language : `en`;
+    adapter.log.info('Testübersetzung: '+ i18nHelper.shoppingList[lang])
+
 
     adapter.setObjectNotExists('today', {
         common: {
