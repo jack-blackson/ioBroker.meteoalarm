@@ -49,7 +49,7 @@ function startAdapter(options) {
 
 function main() {
     
-    const obj = await adapter.getForeignObjectAsync(`system.config`);
+    const obj = adapter.getForeignObjectAsync(`system.config`);
     lang = (obj && obj.common && obj.common.language) ? obj.common.language : `en`;
     adapter.log.info('Testübersetzung: '+ i18nHelper.shoppingList[lang])
 
