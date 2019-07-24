@@ -13,6 +13,7 @@ const utils = require('@iobroker/adapter-core');
 const request = require('request');
 const moment = require('moment');
 var parseString = require('xml2js').parseString;
+const i18nHelper = require(`${__dirname}/lib/i18nHelper`);
 
 var AdapterStarted;
 
@@ -21,7 +22,6 @@ var DescFilter2 = '';
 var country = '';
 
 let adapter;
-startAdapter()
 
 setInterval(function() { 
     // alle 10 Minute ausführen 
@@ -47,6 +47,7 @@ function startAdapter(options) {
 
 
 function main() {
+    adapter.log.info('Testübersetzung: '+ i18nHelper.shoppingList['en'])
 
     adapter.setObjectNotExists('today', {
         common: {
@@ -547,3 +548,11 @@ function getFilters(){
            break;
        }
 }
+
+// If started as allInOne/compact mode => return function to create instance
+if (module && module.parent) {
+    module.exports = startAdapter;
+} else {
+    // or start the instance directly
+    startAdapter();
+} 

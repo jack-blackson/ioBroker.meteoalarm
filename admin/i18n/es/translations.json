@@ -1,0 +1,4 @@
+{
+    "AddPath": "Agregue aquí la ruta al XML desde meteoalarm.eu",
+    "instruction": "Para obtener ayuda, consulte la descripción aquí: https://github.com/jack-blackson/ioBroker.meteoalarm"
+}
