@@ -47,7 +47,7 @@ function startAdapter(options) {
 
 
 function main() {
-    adapter.log.info('Testübersetzung: '+ i18nHelper.shoppingList['en'])
+    adapter.log.info('Testübersetzung: '+ i18nHelper.shoppingList['nl'])
 
     adapter.setObjectNotExists('today', {
         common: {
