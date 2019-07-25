@@ -78,7 +78,6 @@ function main() {
 function requestXML(){
     if (adapter.config.pathXML != '') {
         var url = adapter.config.pathXML
-        adapter.log.info('Testübersetzung: '+ i18nHelper.shoppingList[lang] + ' Sprache: ' + lang)
 
         adapter.log.info('Requesting data from ' + url)
         request.post({
@@ -248,43 +247,43 @@ function getTypeName(type){
 
     switch (type) {
         case 1:
-            return 'Wind'
+            return i18nHelper.typeDesc1[lang]
             break;
         case 2:
-            return 'Schnee & Eis'
+            return i18nHelper.typeDesc2[lang]
             break;
         case 3:
-            return 'Blitz und Donner'
+            return i18nHelper.typeDesc3[lang]
             break;
         case 4:
-            return 'Nebel'
+            return i18nHelper.typeDesc4[lang]
             break;
         case 5:
-            return 'Hohe Temperaturen'
+            return i18nHelper.typeDesc5[lang]
             break;
         case 6:
-            return 'Niedrige Temperaturen'
+            return i18nHelper.typeDesc6[lang]
             break;
         case 7:
-            return 'Küstenereigniss'
+            return i18nHelper.typeDesc7[lang]
             break;
         case 8:
-            return 'Waldbrand'
+            return i18nHelper.typeDesc8[lang]
             break;
         case 9:
-            return 'Lawinen'
+            return i18nHelper.typeDesc9[lang]
             break;
         case 10:
-            return 'Regen'
+            return i18nHelper.typeDesc10[lang]
             break;
         case 11:
             return 'Unknown'
             break;
         case 12:
-            return 'Flut'
+            return i18nHelper.typeDesc12[lang]
             break;
         case 13:
-            return 'Regen-Flut'
+            return i18nHelper.typeDesc13[lang]
             break;
         case 0:
             return ''
@@ -300,16 +299,16 @@ function getLevelName(level){
 
     switch (level) {
         case 1:
-            return 'Keine Gefahr vorhanden'
+            return i18nHelper.levelDesc1[lang]
             break;
         case 2:
-            return 'Das Wetter ist potenziell gefährlich'
+            return i18nHelper.levelDesc2[lang]
             break;
         case 3:
-            return 'Das Wetter ist gefährlich'
+            return i18nHelper.levelDesc3[lang]
             break;
         case 4:
-            return 'Das Wetter ist sehr gefährlich'
+            return i18nHelper.levelDesc4[lang]
             break;
        default:
            return 'undefined'

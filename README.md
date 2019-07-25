@@ -55,8 +55,8 @@ Please go to http://meteoalarm.eu and choose your region. Then go to the RSS sym
 |5|High temperature|
 |6|Low temperature|
 |7|Coast Event|
-|8|Forest fire|
-|9|Avalanches|
+|8|Forrest fire|
+|9|Avalanche|
 |10|Rain|
 |11|Unknown|
 |12|Flood|
@@ -92,7 +92,6 @@ If you don't find your country, please create an issue on github, and I will be 
 
 ## Features to implement
 * Handle multiple alarms on one day
-* Multilanguage
 
 
 ## Changelog
@@ -109,6 +108,7 @@ If you don't find your country, please create an issue on github, and I will be 
 * (jack-blackson) Adjusted colors
 ### 0.5.0 (2019-07-21)
 * (jack-blackson) Handle Timeouts
+* (jack-blackson) Translations for all languages
 
 ## Credits
 Bell in icon designed by Freepik from www.flaticon.com
