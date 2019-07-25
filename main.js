@@ -75,8 +75,22 @@ function main() {
  
 }
 
+function checkURL(){
+    var url = adapter.config.pathXML
+    if (url.includes('meteoalarm.eu/documents/rss')){
+        adapter.log.info('URL korrekt')
+
+        return true
+    }
+    else{
+        adapter.log.info('URL nicht korrekt')
+
+        return false
+    } 
+}
+
 function requestXML(){
-    if ((adapter.config.pathXML != '') && (typeof adapter.config.pathXML != 'undefined')) {
+    if ((adapter.config.pathXML != '') && (typeof adapter.config.pathXML != 'undefined') && (checkURL())) {
         var url = adapter.config.pathXML
 
         adapter.log.info('Requesting data from ' + url)
@@ -115,7 +129,7 @@ function requestXML(){
           });    
         }
     else{
-        adapter.log.error('No path maintained!!')
+        adapter.log.debug('No path maintained!!')
     }
     
 }
