@@ -109,6 +109,7 @@ If you don't find your country, please create an issue on github, and I will be 
 ### 0.5.0 (2019-07-21)
 * (jack-blackson) Handle Timeouts
 * (jack-blackson) Translations for all languages
+* (jack-blackson) URL checks
 
 ## Credits
 Bell in icon designed by Freepik from www.flaticon.com
