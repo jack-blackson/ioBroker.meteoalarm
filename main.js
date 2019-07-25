@@ -27,7 +27,7 @@ let lang;
 setInterval(function() { 
     // alle 10 Minute ausführen 
     requestXML(); 
-}, 60000);
+}, 600000);
 
 
 function startAdapter(options) {
@@ -67,16 +67,12 @@ function main() {
 
     adapter.getForeignObject('system.config', (err, systemConfig) => {
         lang = systemConfig.common.language
-        adapter.log.info('Language: ' + lang)
         requestXML()
     })
 
     //'http://meteoalarm.eu/documents/rss/at/AT002.rss'
     //  http://meteoalarm.eu/documents/rss/de/DE387.rss
-    
-
-    //adapter.config.interval = 600000;
-    //adapter.subscribeStates('*')
+ 
 }
 
 function requestXML(){
