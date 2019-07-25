@@ -26,7 +26,7 @@ let lang;
 
 setInterval(function() { 
     // alle 10 Minute ausführen 
-    main(); 
+    requestXML(); 
 }, 600000);
 
 
@@ -48,12 +48,6 @@ function startAdapter(options) {
 
 
 function main() {
-    adapter.getForeignObject('system.config', (err, systemConfig) => {
-        lang = systemConfig.common.language
-        adapter.log.info('Language: ' + lang)
-    })
-
-
 
     adapter.setObjectNotExists('today', {
         common: {
@@ -71,57 +65,64 @@ function main() {
         'native' : {}
     });
 
+    adapter.getForeignObject('system.config', (err, systemConfig) => {
+        lang = systemConfig.common.language
+        adapter.log.info('Language: ' + lang)
+        requestXML()
+    })
+
     //'http://meteoalarm.eu/documents/rss/at/AT002.rss'
     //  http://meteoalarm.eu/documents/rss/de/DE387.rss
+    
+
+    //adapter.config.interval = 600000;
+    //adapter.subscribeStates('*')
+}
+
+function requestXML(){
     if (adapter.config.pathXML != '') {
-        requestXML(adapter.config.pathXML)
-    }
+        var url = adapter.config.pathXML
+        adapter.log.info('Testübersetzung: '+ i18nHelper.shoppingList[lang] + ' Sprache: ' + lang)
+
+        adapter.log.info('Requesting data from ' + url)
+        request.post({
+            url:     url,
+            timeout: 5000
+          }, function(error, response, body){
+            if (error){
+                if (error.code === 'ETIMEDOUT'){
+                    adapter.log.error('No website response after 5 seconds. Adapter will try again in 10 minutes.')
+                }
+                else(
+                    adapter.log.error(error)
+                )
+            }
+            if (body) {
+                parseString(body, {
+    
+                    explicitArray: false,
+    
+                    mergeAttrs: true
+    
+                }, 
+    
+                function (err, result) {
+    
+                    if (err) {
+    
+                        adapter.log.error("Fehler: " + err);
+    
+                    } else {
+                        processJSON(result)
+                    }
+                });
+            }
+          });    
+        }
     else{
         adapter.log.error('No path maintained!!')
     }
-
-    adapter.config.interval = 600000;
-    adapter.subscribeStates('*')
-}
-
-function requestXML(url){
-
-    adapter.log.info('Testübersetzung: '+ i18nHelper.shoppingList[lang] + ' Sprache: ' + lang)
-
-    adapter.log.info('Requesting data from ' + url)
-    request.post({
-        url:     url,
-        timeout: 5000
-      }, function(error, response, body){
-        if (error){
-            if (error.code === 'ETIMEDOUT'){
-                adapter.log.error('No website response after 5 seconds. Adapter will try again in 10 minutes.')
-            }
-            else(
-                adapter.log.error(error)
-            )
-        }
-        if (body) {
-            parseString(body, {
-
-				explicitArray: false,
-
-				mergeAttrs: true
-
-			}, 
-
-			function (err, result) {
-
-				if (err) {
-
-					adapter.log.error("Fehler: " + err);
-
-				} else {
-                    processJSON(result)
-				}
-			});
-        }
-      });    
+    
 }
 
 function processJSON(content){
