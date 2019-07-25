@@ -76,7 +76,7 @@ function main() {
 }
 
 function requestXML(){
-    if (adapter.config.pathXML != '') {
+    if ((adapter.config.pathXML != '') && (typeof adapter.config.pathXML != 'undefined')) {
         var url = adapter.config.pathXML
 
         adapter.log.info('Requesting data from ' + url)
@@ -224,10 +224,9 @@ function updateHTMLWidget(){
         }
         else{
             // keine Warnung vorhanden
-            var textNoWarning = 'Aktuell ist keine Warnung vorhanden.'
             htmllong += '<div style="background:' + color + '"  border:"10px">';
             htmllong += '<p></p><h3> '
-            htmllong += textNoWarning + '</h3><p>'  
+            htmllong += i18nHelper.NoWarning[lang] + '</h3><p>'  
             htmllong += '</p><p></p></div>'
         }
         
