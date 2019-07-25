@@ -84,7 +84,8 @@ function main() {
 }
 
 function requestXML(url){
-    adapter.log.info('Testübersetzung: '+ i18nHelper.shoppingList[lang])
+
+    adapter.log.info('Testübersetzung: '+ i18nHelper.shoppingList[lang] + ' Sprache: ' + lang)
 
     adapter.log.info('Requesting data from ' + url)
     request.post({
