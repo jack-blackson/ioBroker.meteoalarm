@@ -50,6 +50,7 @@ function startAdapter(options) {
 function main() {
     adapter.getForeignObject('system.config', (err, systemConfig) => {
         lang = systemConfig.common.language
+        adapter.log.info('Language: ' + lang)
     })
 
 
