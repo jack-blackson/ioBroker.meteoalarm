@@ -68,23 +68,16 @@ function main() {
     adapter.getForeignObject('system.config', (err, systemConfig) => {
         lang = systemConfig.common.language
         requestXML()
-    })
-
-    //'http://meteoalarm.eu/documents/rss/at/AT002.rss'
-    //  http://meteoalarm.eu/documents/rss/de/DE387.rss
- 
+    }) 
 }
 
 function checkURL(){
     var url = adapter.config.pathXML
     if (url.includes('meteoalarm.eu/documents/rss')){
-        adapter.log.info('URL korrekt')
-
         return true
     }
     else{
-        adapter.log.info('URL nicht korrekt')
-
+        adapter.log.error('URL incorrect. Please make sure to choose the RSS feed link!')
         return false
     } 
 }
@@ -100,6 +93,9 @@ function requestXML(){
           }, function(error, response, body){
             if (error){
                 if (error.code === 'ETIMEDOUT'){
+                    adapter.log.error('No website response after 5 seconds. Adapter will try again in 10 minutes.')
+                }
+                else if (error.code === 'ESOCKETTIMEDOUT'){
                     adapter.log.error('No website response after 5 seconds. Adapter will try again in 10 minutes.')
                 }
                 else(
