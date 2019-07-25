@@ -48,10 +48,10 @@ function startAdapter(options) {
 
 
 function main() {
-    
-    const obj = adapter.getForeignObjectAsync(`system.config`);
-    lang = (obj && obj.common && obj.common.language) ? obj.common.language : `en`;
-    adapter.log.info('Testübersetzung: '+ i18nHelper.shoppingList[lang])
+    adapter.getForeignObject('system.config', (err, systemConfig) => {
+        lang = systemConfig.common.language
+    })
+
 
 
     adapter.setObjectNotExists('today', {
@@ -84,6 +84,8 @@ function main() {
 }
 
 function requestXML(url){
+    adapter.log.info('Testübersetzung: '+ i18nHelper.shoppingList[lang])
+
     adapter.log.info('Requesting data from ' + url)
     request.post({
         url:     url,
