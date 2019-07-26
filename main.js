@@ -349,8 +349,6 @@ function parseWeather(description,type){
     // Warning Text
     var ContentHeute = description.slice((SearchCrit1 - 1), SearchCrit2);
     SearchCrit1 = ContentHeute.indexOf(DescFilter1) + 1;
-    adapter.log.info("Content heute: " + ContentHeute)
-    adapter.log.info("SearCrit: " + SearchCrit1)
     if (SearchCrit1 != 0){
         SearchCrit1 = (typeof SearchCrit1 == 'number' ? SearchCrit1 : 0) + DescFilter1.length;
         var ContentFromDescFilter1 = ContentHeute.slice((SearchCrit1))
@@ -358,7 +356,6 @@ function parseWeather(description,type){
         SearchCrit2 = (typeof SearchCrit2 == 'number' ? SearchCrit2 : 0) + -1;
         WarnungsText = ContentFromDescFilter1.slice(1, SearchCrit2);
     } 
-    adapter.log.info("WarnungsText: " + WarnungsText)
 
     adapter.createState('', folder, 'text', {
         read: true, 
