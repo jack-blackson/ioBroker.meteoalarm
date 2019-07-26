@@ -2,12 +2,6 @@
 'use strict';
 
 systemDictionary = {
-    'AddPath': {
-        'en': 'Please add here the path to the XML from meteoalarm.eu',
-        'de': 'Bitte fügen Sie hier den Pfad zum XML auf meteoalarm.eu ein'
-    },
-    'instruction': {
-        'en': 'For help, please check the description here: https://github.com/jack-blackson/ioBroker.meteoalarm',
-        'de': 'Für Hilfe, besuchen Sie: https://github.com/jack-blackson/ioBroker.meteoalarm'
-    }
+    "AddPath": {                                     "en": "Please add here the path to the XML from meteoalarm.eu", "de": "Bitte fügen Sie hier den Pfad zum XML auf meteoalarm.eu ein", "ru": "Пожалуйста, добавьте сюда путь к XML от meteoalarm.eu", "pt": "Por favor, adicione aqui o caminho para o XML de meteoalarm.eu", "nl": "Voeg hier het pad naar de XML van meteoalarm.eu toe", "fr": "Veuillez ajouter ici le chemin d'accès au XML depuis meteoalarm.eu", "it": "Aggiungi qui il percorso dell'XML da meteoalarm.eu", "es": "Agregue aquí la ruta al XML desde meteoalarm.eu", "pl": "Dodaj tutaj ścieżkę do XML z meteoalarm.eu",      "zh-cn": "请在这里添加meteoalarm.eu的XML路径"},
+    "instruction": {                                 "en": "For help, please check the description here: https://github.com/jack-blackson/ioBroker.meteoalarm", "de": "Für Hilfe, besuchen Sie: https://github.com/jack-blackson/ioBroker.meteoalarm", "ru": "Для помощи, пожалуйста, проверьте описание здесь: https://github.com/jack-blackson/ioBroker.meteoalarm", "pt": "Para obter ajuda, por favor, verifique a descrição aqui: https://github.com/jack-blackson/ioBroker.meteoalarm", "nl": "Raadpleeg de beschrijving hier voor hulp: https://github.com/jack-blackson/ioBroker.meteoalarm", "fr": "Pour obtenir de l'aide, veuillez consulter la description ici: https://github.com/jack-blackson/ioBroker.meteoalarm", "it": "Per assistenza, controlla la descrizione qui: https://github.com/jack-blackson/ioBroker.meteoalarm", "es": "Para obtener ayuda, consulte la descripción aquí: https://github.com/jack-blackson/ioBroker.meteoalarm", "pl": "Aby uzyskać pomoc, sprawdź opis tutaj: https://github.com/jack-blackson/ioBroker.meteoalarm", "zh-cn": "如需帮助，请查看以下说明：https：//github.com/jack-blackson/ioBroker.meteoalarm"},
 };

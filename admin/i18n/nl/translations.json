@@ -1,0 +1,4 @@
+{
+    "AddPath": "Voeg hier het pad naar de XML van meteoalarm.eu toe",
+    "instruction": "Raadpleeg de beschrijving hier voor hulp: https://github.com/jack-blackson/ioBroker.meteoalarm"
+}

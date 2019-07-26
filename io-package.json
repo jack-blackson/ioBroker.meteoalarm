@@ -1,57 +1,120 @@
 {
     "common": {
-      "name": "meteoalarm",
-      "version": "0.4.0",
-      "news": {
-        "0.1.0": {
-          "en": "Initial version",
-          "de": "Initiale Version "
+        "name": "meteoalarm",
+        "version": "0.5.0",
+        "news": {
+            "0.1.0": {
+                "en": "Initial version",
+                "de": "Initiale Version ",
+                "ru": "Первоначальная версия",
+                "pt": "Versão inicial",
+                "nl": "Eerste versie",
+                "fr": "Version initiale",
+                "it": "Versione iniziale",
+                "es": "Versión inicial",
+                "pl": "Początkowa wersja",
+                "zh-cn": "初始版本"
+            },
+            "0.2.0": {
+                "en": "Add tomorrow data",
+                "de": "Morgen Daten hinzugefügt ",
+                "ru": "Добавить данные завтрашнего дня",
+                "pt": "Adicione os dados de amanhã",
+                "nl": "Voeg morgen gegevens toe",
+                "fr": "Ajouter les données de demain",
+                "it": "Aggiungi i dati di domani",
+                "es": "Agregar los datos de mañana",
+                "pl": "Dodaj dane jutra",
+                "zh-cn": "添加明天的数据"
+            },
+            "0.3.0": {
+                "en": "Add html data",
+                "de": "HTML Datenpunkt hinzugefügt",
+                "ru": "Добавить данные HTML",
+                "pt": "Adicionar dados em html",
+                "nl": "Voeg html-gegevens toe",
+                "fr": "Ajouter des données HTML",
+                "it": "Aggiungi dati HTML",
+                "es": "Añadir datos html",
+                "pl": "Dodaj dane html",
+                "zh-cn": "添加HTML数据"
+            },
+            "0.4.0": {
+                "en": "More countries",
+                "de": "Mehr Länder",
+                "ru": "Больше стран",
+                "pt": "Mais países",
+                "nl": "Meer landen",
+                "fr": "Plus de pays",
+                "it": "Più paesi",
+                "es": "Mas paises",
+                "pl": "Więcej krajów",
+                "zh-cn": "更多国家"
+            },
+            "0.5.0": {
+                "en": "Handle Timeouts",
+                "de": "Timeouts verarbeiten",
+                "ru": "Обработка тайм-аутов",
+                "pt": "Lidar com os tempos limite",
+                "nl": "Time-outs verwerken",
+                "fr": "Gérer les délais d'attente",
+                "it": "Gestire i timeout",
+                "es": "Manejar los tiempos de espera",
+                "pl": "Limity czasu obsługi",
+                "zh-cn": "处理超时"
+            }
         },
-        "0.2.0": {
-          "en": "Add tomorrow data",
-          "de": "Morgen Daten hinzugefügt "
-        },
-        "0.3.0": {
-          "en": "Add html data",
-          "de": "HTML Datenpunkt hinzugefügt"
-        },
-        "0.4.0": {
-          "en": "More countries",
-          "de": "Mehr Länder"
-        }
-      },
-      "title": "Meteoalarm",
-          "titleLang": {
+        "title": "Meteoalarm",
+        "titleLang": {
             "en": "Meteoalarm",
-            "de": "Meteoalarm"
-          },
-          "desc": {
+            "de": "Meteoalarm",
+            "ru": "Meteoalarm",
+            "pt": "Meteoalarm",
+            "nl": "Meteoalarm",
+            "fr": "Meteoalarm",
+            "it": "Meteoalarm",
+            "es": "Meteoalarm",
+            "pl": "Meteoalarm",
+            "zh-cn": "Meteoalarm"
+        },
+        "desc": {
             "en": "Meteoalarm Adapter",
-            "de": "Meteoalarm Adapter"
-          },
-          "authors": [
-              "Jack <blacksonj7@gmail.com>"
-          ],
-          "license":                  "MIT",
-          "platform":                 "Javascript/Node.js",
-          "mode":                     "daemon",
-          "messagebox":               true,
-      "enabled":                  false,
-          "readme":                   "https://github.com/jack-blackson/ioBroker.meteoalarm/master/README.md",
-          "loglevel":                 "info",
-          "restartAdapters":          [
+            "de": "Meteoalarm Adapter",
+            "ru": "Метеосигнализатор",
+            "pt": "Adaptador Meteoalarm",
+            "nl": "Meteoalarm-adapter",
+            "fr": "Adaptateur Meteoalarm",
+            "it": "Adattatore Meteoalarm",
+            "es": "Adaptador Meteoalarm",
+            "pl": "Adapter Meteoalarm",
+            "zh-cn": "Meteoalarm适配器"
+        },
+        "authors": [
+            "Jack <blacksonj7@gmail.com>"
+        ],
+        "license": "MIT",
+        "platform": "Javascript/Node.js",
+        "mode": "daemon",
+        "messagebox": true,
+        "enabled": true,
+        "compact": true,
+        "readme": "https://github.com/jack-blackson/ioBroker.meteoalarm/master/README.md",
+        "loglevel": "info",
+        "restartAdapters": [
             "meteoalarm"
-          ],        
-          "keywords":                 ["meteoalarm"],
-          "icon":                     "meteoalarm.png",
-          "materialize":              true,
-          "extIcon":                  "https://raw.githubusercontent.com/jack-blackson/ioBroker.meteoalarm/master/admin/meteoalarm.png",
-          "type":                     "date-and-time",
-      "singletonHost":            true
-      },
-       "native": {
-          "interval": 120000
-      },
-      "objects": [],
-      "instanceObjects": []
-  }
+        ],
+        "keywords": [
+            "meteoalarm"
+        ],
+        "icon": "meteoalarm.png",
+        "materialize": true,
+        "extIcon": "https://raw.githubusercontent.com/jack-blackson/ioBroker.meteoalarm/master/admin/meteoalarm.png",
+        "type": "date-and-time",
+        "singletonHost": true
+    },
+    "native": {
+        "interval": 120000
+    },
+    "objects": [],
+    "instanceObjects": []
+}

@@ -1,0 +1,4 @@
+{
+    "AddPath": "Please add here the path to the XML from meteoalarm.eu",
+    "instruction": "For help, please check the description here: https://github.com/jack-blackson/ioBroker.meteoalarm"
+}

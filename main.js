@@ -13,6 +13,7 @@ const utils = require('@iobroker/adapter-core');
 const request = require('request');
 const moment = require('moment');
 var parseString = require('xml2js').parseString;
+const i18nHelper = require(`${__dirname}/lib/i18nHelper`);
 
 var AdapterStarted;
 
@@ -21,11 +22,11 @@ var DescFilter2 = '';
 var country = '';
 
 let adapter;
-startAdapter()
+let lang;
 
 setInterval(function() { 
     // alle 10 Minute ausführen 
-    main(); 
+    requestXML(); 
 }, 600000);
 
 
@@ -64,48 +65,69 @@ function main() {
         'native' : {}
     });
 
-    //'http://meteoalarm.eu/documents/rss/at/AT002.rss'
-    //  http://meteoalarm.eu/documents/rss/de/DE387.rss
-    if (adapter.config.pathXML != '') {
-        requestXML(adapter.config.pathXML)
-    }
-    else{
-        adapter.log.error('No path maintained!!')
-    }
-
-    adapter.config.interval = 600000;
-    adapter.subscribeStates('*')
+    adapter.getForeignObject('system.config', (err, systemConfig) => {
+        lang = systemConfig.common.language
+        requestXML()
+    }) 
 }
 
-function requestXML(url){
-    adapter.log.info('Requesting data from ' + url)
-    request.post({
-        url:     url
-      }, function(error, response, body){
-        if (error){
-            adapter.log.error(error)
+function checkURL(){
+    var url = adapter.config.pathXML
+    if (url.includes('meteoalarm.eu/documents/rss')){
+        return true
+    }
+    else{
+        adapter.log.error('URL incorrect. Please make sure to choose the RSS feed link!')
+        return false
+    } 
+}
+
+function requestXML(){
+    if ((adapter.config.pathXML != '') && (typeof adapter.config.pathXML != 'undefined') && (checkURL())) {
+        var url = adapter.config.pathXML
+
+        adapter.log.info('Requesting data from ' + url)
+        request.post({
+            url:     url,
+            timeout: 5000
+          }, function(error, response, body){
+            if (error){
+                if (error.code === 'ETIMEDOUT'){
+                    adapter.log.error('No website response after 5 seconds. Adapter will try again in 10 minutes.')
+                }
+                else if (error.code === 'ESOCKETTIMEDOUT'){
+                    adapter.log.error('No website response after 5 seconds. Adapter will try again in 10 minutes.')
+                }
+                else(
+                    adapter.log.error(error)
+                )
+            }
+            if (body) {
+                parseString(body, {
+    
+                    explicitArray: false,
+    
+                    mergeAttrs: true
+    
+                }, 
+    
+                function (err, result) {
+    
+                    if (err) {
+    
+                        adapter.log.error("Fehler: " + err);
+    
+                    } else {
+                        processJSON(result)
+                    }
+                });
+            }
+          });    
         }
-        if (body) {
-            parseString(body, {
-
-				explicitArray: false,
-
-				mergeAttrs: true
-
-			}, 
-
-			function (err, result) {
-
-				if (err) {
-
-					adapter.log.error("Fehler: " + err);
-
-				} else {
-                    processJSON(result)
-				}
-			});
-        }
-      });    
+    else{
+        adapter.log.debug('No path maintained!!')
+    }
+    
 }
 
 function processJSON(content){
@@ -212,10 +234,9 @@ function updateHTMLWidget(){
         }
         else{
             // keine Warnung vorhanden
-            var textNoWarning = 'Aktuell ist keine Warnung vorhanden.'
             htmllong += '<div style="background:' + color + '"  border:"10px">';
             htmllong += '<p></p><h3> '
-            htmllong += textNoWarning + '</h3><p>'  
+            htmllong += i18nHelper.NoWarning[lang] + '</h3><p>'  
             htmllong += '</p><p></p></div>'
         }
         
@@ -235,43 +256,43 @@ function getTypeName(type){
 
     switch (type) {
         case 1:
-            return 'Wind'
+            return i18nHelper.typeDesc1[lang]
             break;
         case 2:
-            return 'Schnee & Eis'
+            return i18nHelper.typeDesc2[lang]
             break;
         case 3:
-            return 'Blitz und Donner'
+            return i18nHelper.typeDesc3[lang]
             break;
         case 4:
-            return 'Nebel'
+            return i18nHelper.typeDesc4[lang]
             break;
         case 5:
-            return 'Hohe Temperaturen'
+            return i18nHelper.typeDesc5[lang]
             break;
         case 6:
-            return 'Niedrige Temperaturen'
+            return i18nHelper.typeDesc6[lang]
             break;
         case 7:
-            return 'Küstenereigniss'
+            return i18nHelper.typeDesc7[lang]
             break;
         case 8:
-            return 'Waldbrand'
+            return i18nHelper.typeDesc8[lang]
             break;
         case 9:
-            return 'Lawinen'
+            return i18nHelper.typeDesc9[lang]
             break;
         case 10:
-            return 'Regen'
+            return i18nHelper.typeDesc10[lang]
             break;
         case 11:
             return 'Unknown'
             break;
         case 12:
-            return 'Flut'
+            return i18nHelper.typeDesc12[lang]
             break;
         case 13:
-            return 'Regen-Flut'
+            return i18nHelper.typeDesc13[lang]
             break;
         case 0:
             return ''
@@ -287,16 +308,16 @@ function getLevelName(level){
 
     switch (level) {
         case 1:
-            return 'Keine Gefahr vorhanden'
+            return i18nHelper.levelDesc1[lang]
             break;
         case 2:
-            return 'Das Wetter ist potenziell gefährlich'
+            return i18nHelper.levelDesc2[lang]
             break;
         case 3:
-            return 'Das Wetter ist gefährlich'
+            return i18nHelper.levelDesc3[lang]
             break;
         case 4:
-            return 'Das Wetter ist sehr gefährlich'
+            return i18nHelper.levelDesc4[lang]
             break;
        default:
            return 'undefined'
@@ -325,8 +346,6 @@ function parseWeather(description,type){
            break;
        }
 
-
-
     // Warning Text
     var ContentHeute = description.slice((SearchCrit1 - 1), SearchCrit2);
     SearchCrit1 = ContentHeute.indexOf(DescFilter1) + 1;
@@ -337,6 +356,7 @@ function parseWeather(description,type){
         SearchCrit2 = (typeof SearchCrit2 == 'number' ? SearchCrit2 : 0) + -1;
         WarnungsText = ContentFromDescFilter1.slice(1, SearchCrit2);
     } 
+
     adapter.createState('', folder, 'text', {
         read: true, 
         write: false, 
@@ -438,7 +458,7 @@ function parseWeather(description,type){
                 Color = '#FD0204';
                 break;
             default:
-               
+                Color = '#ffffff';
                 break;
             }
             adapter.createState('', folder, 'color', {
@@ -541,3 +561,11 @@ function getFilters(){
            break;
        }
 }
+
+// If started as allInOne/compact mode => return function to create instance
+if (module && module.parent) {
+    module.exports = startAdapter;
+} else {
+    // or start the instance directly
+    startAdapter();
+} 
