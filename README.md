@@ -111,6 +111,8 @@ If you don't find your country, please create an issue on github, and I will be 
 * (jack-blackson) Handle Timeouts
 * (jack-blackson) Translations for all languages
 * (jack-blackson) URL checks
+### 0.6.0 (2019-08-05)
+* (jack-blackson) Store weather icons local in adapter
 
 ## Credits
 Bell in icon designed by Freepik from www.flaticon.com

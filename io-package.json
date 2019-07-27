@@ -1,7 +1,7 @@
 {
     "common": {
         "name": "meteoalarm",
-        "version": "0.5.0",
+        "version": "0.6.0",
         "news": {
             "0.1.0": {
                 "en": "Initial version",
@@ -62,6 +62,18 @@
                 "es": "Manejar los tiempos de espera",
                 "pl": "Limity czasu obsługi",
                 "zh-cn": "处理超时"
+            },
+            "0.6.0": {
+              "en": "Store icons locally",
+              "de": "Symbole lokal speichern",
+              "ru": "Храните иконки локально",
+              "pt": "Armazenar ícones localmente",
+              "nl": "Sla pictogrammen lokaal op",
+              "fr": "Stocker les icônes localement",
+              "it": "Conservare le icone localmente",
+              "es": "Almacenar iconos localmente",
+              "pl": "Przechowuj ikony lokalnie",
+              "zh-cn": "在本地存储图标"
             }
         },
         "title": "Meteoalarm",
