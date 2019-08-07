@@ -25,9 +25,9 @@ let adapter;
 let lang;
 
 setInterval(function() { 
-    // alle 10 Minute ausführen 
+    // alle 30 Minute ausführen 
     requestXML(); 
-}, 600000);
+}, 1800000);
 
 
 function startAdapter(options) {
@@ -89,14 +89,14 @@ function requestXML(){
         adapter.log.info('Requesting data from ' + url)
         request.post({
             url:     url,
-            timeout: 5000
+            timeout: 8000
           }, function(error, response, body){
             if (error){
                 if (error.code === 'ETIMEDOUT'){
-                    adapter.log.error('No website response after 5 seconds. Adapter will try again in 10 minutes.')
+                    adapter.log.error('No website response after 8 seconds. Adapter will try again in 30 minutes.')
                 }
                 else if (error.code === 'ESOCKETTIMEDOUT'){
-                    adapter.log.error('No website response after 5 seconds. Adapter will try again in 10 minutes.')
+                    adapter.log.error('No website response after 8 seconds. Adapter will try again in 30 minutes.')
                 }
                 else(
                     adapter.log.error(error)
@@ -371,7 +371,9 @@ function parseWeather(description,type){
     SearchCrit1 = (typeof SearchCrit1 == 'number' ? SearchCrit1 : 0) + 13;
     SearchCrit2 = ContentHeute.indexOf('alt=') + 1;
     SearchCrit2 = (typeof SearchCrit2 == 'number' ? SearchCrit2 : 0) + -3;
-    var Warnung_img =  'https://' + ContentHeute.slice((SearchCrit1 - 1), SearchCrit2);
+    var Link_temp =  ContentHeute.slice((SearchCrit1 - 1), SearchCrit2);
+    Link_temp = Link_temp.slice(32);
+    var Warnung_img = '/meteoalarm.admin/icons/' + Link_temp
     adapter.createState('', folder, 'icon', {
         read: true, 
         write: false, 
