@@ -372,7 +372,7 @@ function parseWeather(description,type){
     SearchCrit2 = ContentHeute.indexOf('alt=') + 1;
     SearchCrit2 = (typeof SearchCrit2 == 'number' ? SearchCrit2 : 0) + -3;
     var Link_temp =  ContentHeute.slice((SearchCrit1 - 1), SearchCrit2);
-    Link_temp = Link_temp.slice(39);
+    Link_temp = Link_temp.slice(32);
     adapter.log.info('Temp Link: ' + Link_temp)
     var Warnung_img = '/meteoalarm.admin/icons' + Link_temp
     adapter.createState('', folder, 'icon', {
