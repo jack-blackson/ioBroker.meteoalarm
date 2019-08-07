@@ -25,9 +25,9 @@ let adapter;
 let lang;
 
 setInterval(function() { 
-    // alle 10 Minute ausführen 
+    // alle 30 Minute ausführen 
     requestXML(); 
-}, 600000);
+}, 1800000);
 
 
 function startAdapter(options) {
