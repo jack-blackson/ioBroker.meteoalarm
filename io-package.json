@@ -1,7 +1,7 @@
 {
     "common": {
         "name": "meteoalarm",
-        "version": "0.6.0",
+        "version": "1.0.0",
         "news": {
             "0.1.0": {
                 "en": "Initial version",
@@ -121,7 +121,7 @@
         "icon": "meteoalarm.png",
         "materialize": true,
         "extIcon": "https://raw.githubusercontent.com/jack-blackson/ioBroker.meteoalarm/master/admin/meteoalarm.png",
-        "type": "date-and-time",
+        "type": "weather",
         "singletonHost": true
     },
     "native": {
