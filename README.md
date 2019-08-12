@@ -107,6 +107,8 @@ If you don't find your country, please create an issue on github, and I will be 
 * (jack-blackson) URL checks
 ### 0.6.0 (2019-08-05)
 * (jack-blackson) Store weather icons local in adapter
+### 1.0.0 (2019-08-12)
+* (jack-blackson) Release version
 
 ## Credits
 Bell in icon designed by Freepik from www.flaticon.com
