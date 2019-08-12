@@ -74,6 +74,18 @@
               "es": "Almacenar iconos localmente",
               "pl": "Przechowuj ikony lokalnie",
               "zh-cn": "在本地存储图标"
+            },
+            "1.0.0": {
+              "en": "Release Version",
+              "de": "Veröffentlichungsversion",
+              "ru": "Версия выпуска",
+              "pt": "Versão de lançamento",
+              "nl": "Uitgegeven versie",
+              "fr": "Version finale",
+              "it": "Versione di rilascio",
+              "es": "Versión de lanzamiento",
+              "pl": "Wersja wydania",
+              "zh-cn": "发行版"
             }
         },
         "title": "Meteoalarm",
@@ -122,7 +134,7 @@
         "materialize": true,
         "extIcon": "https://raw.githubusercontent.com/jack-blackson/ioBroker.meteoalarm/master/admin/meteoalarm.png",
         "type": "weather",
-        "singletonHost":            false
+        "singletonHost": false
     },
     "native": {
         "interval": 120000,
