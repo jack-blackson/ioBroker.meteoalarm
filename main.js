@@ -41,15 +41,17 @@ function startAdapter(options) {
         }
     });
 
+    AdapterStarted = false;
+
+    adapter = new utils.Adapter(options);
+
     adapter.on(`unload`, callback => {
         adapter.log.info(`Stopping meteoalarm adapter!`);
         clearInterval(Interval);
         callback && callback();
     });
 
-    AdapterStarted = false;
-
-    adapter = new utils.Adapter(options);
+    
 
     return adapter;
 
