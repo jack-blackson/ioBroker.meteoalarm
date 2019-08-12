@@ -75,8 +75,9 @@ function main() {
         lang = systemConfig.common.language
         Interval = setInterval(function() { 
             // alle 30 Minute ausführen 
-            requestXML();; 
+            requestXML();
         }, 1800000); 
+        requestXML()
     }) 
 }
 
