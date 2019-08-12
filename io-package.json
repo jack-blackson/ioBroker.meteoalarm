@@ -121,8 +121,7 @@
         "icon": "meteoalarm.png",
         "materialize": true,
         "extIcon": "https://raw.githubusercontent.com/jack-blackson/ioBroker.meteoalarm/master/admin/meteoalarm.png",
-        "type": "weather",
-        "singletonHost": true
+        "type": "weather"
     },
     "native": {
         "interval": 120000,
