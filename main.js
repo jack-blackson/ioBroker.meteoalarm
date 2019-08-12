@@ -33,11 +33,6 @@ function startAdapter(options) {
         name: 'meteoalarm',
         ready: function() {
             main()
-            Interval = setInterval(function() { 
-                // alle 30 Minute ausführen 
-                requestXML();; 
-            }, 1800000); 
-            main()
         }
     });
 
@@ -78,7 +73,10 @@ function main() {
 
     adapter.getForeignObject('system.config', (err, systemConfig) => {
         lang = systemConfig.common.language
-        requestXML()
+        Interval = setInterval(function() { 
+            // alle 30 Minute ausführen 
+            requestXML();; 
+        }, 1800000); 
     }) 
 }
 
