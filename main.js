@@ -24,18 +24,27 @@ var country = '';
 let adapter;
 let lang;
 
-setInterval(function() { 
-    // alle 30 Minute ausführen 
-    requestXML(); 
-}, 1800000);
-
+var Interval
 
 function startAdapter(options) {
 
     options = options || {};
     Object.assign(options, {
         name: 'meteoalarm',
-        ready: () => main()
+        ready: function() {
+            main()
+            Interval = setInterval(function() { 
+                // alle 30 Minute ausführen 
+                requestXML();; 
+            }, 1800000); 
+            main()
+        }
+    });
+
+    adapter.on(`unload`, callback => {
+        adapter.log.info(`Stopping meteoalarm adapter!`);
+        clearInterval(Interval);
+        callback && callback();
     });
 
     AdapterStarted = false;
@@ -174,11 +183,7 @@ function processJSON(content){
 
     if (DescFilter1 != 'nA'){
         parseWeather(content.rss.channel.item.description,'today')
-        parseWeather(content.rss.channel.item.description,'tomorrow')
-        setTimeout(function() { 
-            updateHTMLWidget()
-        }, 2000);
-        
+        parseWeather(content.rss.channel.item.description,'tomorrow')        
     }
     else{
         // Land ist nicht in der Filterliste (getfilters()) -> daher kann Text nicht gefunden werden
@@ -222,9 +227,7 @@ function updateHTMLWidget(){
     
     adapter.getState('today.text', function (err, state) {
         text = state.val;
-    });
 
-    setTimeout(function() { 
         if (level != '1'){
             // Warnung vorhanden
             htmllong += '<div style="background:' + color + '"  border:"10px">';
@@ -249,7 +252,7 @@ function updateHTMLWidget(){
             def: htmllong,
             role: 'value'
         });
-    }, 2000);
+    });
 }
 
 function getTypeName(type){
@@ -501,7 +504,7 @@ function parseWeather(description,type){
             role: 'value'
             });
     }
-    
+    updateHTMLWidget()
 }
 
 function getFilters(){
