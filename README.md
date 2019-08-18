@@ -109,6 +109,8 @@ If you don't find your country, please create an issue on github, and I will be 
 * (jack-blackson) Store weather icons local in adapter
 ### 1.0.0 (2019-08-12)
 * (jack-blackson) Release version
+### 1.0.1 (2019-08-18)
+* (jack-blackson) Bugfix no alarm icon
 
 ## Credits
 Bell in icon designed by Freepik from www.flaticon.com

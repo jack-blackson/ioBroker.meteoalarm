@@ -370,22 +370,7 @@ function parseWeather(description,type){
         role: 'value'
     });
 
-    // Icon Link:
-    SearchCrit1 = ContentHeute.indexOf('src=') + 1;
-    SearchCrit1 = (typeof SearchCrit1 == 'number' ? SearchCrit1 : 0) + 13;
-    SearchCrit2 = ContentHeute.indexOf('alt=') + 1;
-    SearchCrit2 = (typeof SearchCrit2 == 'number' ? SearchCrit2 : 0) + -3;
-    var Link_temp =  ContentHeute.slice((SearchCrit1 - 1), SearchCrit2);
-    Link_temp = Link_temp.slice(32);
-    var Warnung_img = '/meteoalarm.admin/icons/' + Link_temp
-    adapter.createState('', folder, 'icon', {
-        read: true, 
-        write: false, 
-        name: "Icon", 
-        type: "string", 
-        def: Warnung_img,
-        role: 'value'
-    });
+    
 
     // Warning Text From/To Today
     var Warnung_Von = ''
@@ -505,6 +490,25 @@ function parseWeather(description,type){
             role: 'value'
             });
     }
+    // Icon Link:
+    SearchCrit1 = ContentHeute.indexOf('src=') + 1;
+    SearchCrit1 = (typeof SearchCrit1 == 'number' ? SearchCrit1 : 0) + 13;
+    SearchCrit2 = ContentHeute.indexOf('alt=') + 1;
+    SearchCrit2 = (typeof SearchCrit2 == 'number' ? SearchCrit2 : 0) + -3;
+    var Link_temp =  ContentHeute.slice((SearchCrit1 - 1), SearchCrit2);
+    Link_temp = Link_temp.slice(32);
+    var Warnung_img = '/meteoalarm.admin/icons/' + Link_temp
+    if (Level == 1){
+        Warnung_img = '/meteoalarm.admin/icons/wflag-l1-t1'
+    }
+    adapter.createState('', folder, 'icon', {
+        read: true, 
+        write: false, 
+        name: "Icon", 
+        type: "string", 
+        def: Warnung_img,
+        role: 'value'
+    });
     updateHTMLWidget()
 }
 
