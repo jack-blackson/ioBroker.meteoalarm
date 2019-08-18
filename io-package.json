@@ -1,7 +1,7 @@
 {
     "common": {
         "name": "meteoalarm",
-        "version": "1.0.0",
+        "version": "1.0.1",
         "news": {
             "0.1.0": {
                 "en": "Initial version",
@@ -86,7 +86,19 @@
               "es": "Versión de lanzamiento",
               "pl": "Wersja wydania",
               "zh-cn": "发行版"
-            }
+            },
+            "1.0.1": {
+                "en": "Bugfix \"no alarm\" icon",
+                "de": "Bugfix \"kein Alarm\" -Symbol",
+                "ru": "Исправлена ошибка \"нет тревоги\"",
+                "pt": "Correção \"sem alarme\"",
+                "nl": "Bugfix pictogram \"geen alarm\"",
+                "fr": "Correction d'icône \"pas d'alarme\"",
+                "it": "Bugfix icona \"nessun allarme\"",
+                "es": "Icono de corrección de errores \"sin alarma\"",
+                "pl": "Bugfix ikona „brak alarmu”",
+                "zh-cn": "修正“无警报”图标"
+              }
         },
         "title": "Meteoalarm",
         "titleLang": {
