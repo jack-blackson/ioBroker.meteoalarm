@@ -499,7 +499,7 @@ function parseWeather(description,type){
     Link_temp = Link_temp.slice(32);
     var Warnung_img = '/meteoalarm.admin/icons/' + Link_temp
     if (Level == 1){
-        Warnung_img = '/meteoalarm.admin/icons/wflag-l1-t1'
+        Warnung_img = '/meteoalarm.admin/icons/wflag-l1-t1.jpg'
     }
     adapter.createState('', folder, 'icon', {
         read: true, 
