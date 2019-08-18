@@ -86,7 +86,6 @@ If you don't find your country, please create an issue on github, and I will be 
 
 ## Features to implement
 * Handle multiple alarms on one day
-* Store Icons local to avoid loading them every time the widget reloads
 
 
 ## Changelog
