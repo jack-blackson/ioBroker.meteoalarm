@@ -1,19 +1,91 @@
 {
     "common": {
         "name": "meteoalarm",
-        "version": "1.0.1",
+        "version": "1.0.2",
         "news": {
-            "0.1.0": {
-                "en": "Initial version",
-                "de": "Initiale Version ",
-                "ru": "Первоначальная версия",
-                "pt": "Versão inicial",
-                "nl": "Eerste versie",
-                "fr": "Version initiale",
-                "it": "Versione iniziale",
-                "es": "Versión inicial",
-                "pl": "Początkowa wersja",
-                "zh-cn": "初始版本"
+            "1.0.2": {
+                "en": "Change in release infos",
+                "de": "Änderung der Release-Infos",
+                "ru": "Изменение в выпуске информации",
+                "pt": "Alterar as informações de lançamento",
+                "nl": "Wijziging in release-info",
+                "fr": "Changement dans les infos de sortie",
+                "it": "Modifica delle informazioni sulla versione",
+                "es": "Cambio en la información de lanzamiento",
+                "pl": "Zmiana informacji o wydaniu",
+                "zh-cn": "更新发布信息"
+            },
+            "1.0.1": {
+                "en": "Bugfix \"no alarm\" icon",
+                "de": "Bugfix \"kein Alarm\" -Symbol",
+                "ru": "Исправлена ошибка \"нет тревоги\"",
+                "pt": "Correção \"sem alarme\"",
+                "nl": "Bugfix pictogram \"geen alarm\"",
+                "fr": "Correction d'icône \"pas d'alarme\"",
+                "it": "Bugfix icona \"nessun allarme\"",
+                "es": "Icono de corrección de errores \"sin alarma\"",
+                "pl": "Bugfix ikona „brak alarmu”",
+                "zh-cn": "修正“无警报”图标"
+              },
+              "1.0.0": {
+                "en": "Release Version",
+                "de": "Veröffentlichungsversion",
+                "ru": "Версия выпуска",
+                "pt": "Versão de lançamento",
+                "nl": "Uitgegeven versie",
+                "fr": "Version finale",
+                "it": "Versione di rilascio",
+                "es": "Versión de lanzamiento",
+                "pl": "Wersja wydania",
+                "zh-cn": "发行版"
+              },
+              "0.6.0": {
+                "en": "Store icons locally",
+                "de": "Symbole lokal speichern",
+                "ru": "Храните иконки локально",
+                "pt": "Armazenar ícones localmente",
+                "nl": "Sla pictogrammen lokaal op",
+                "fr": "Stocker les icônes localement",
+                "it": "Conservare le icone localmente",
+                "es": "Almacenar iconos localmente",
+                "pl": "Przechowuj ikony lokalnie",
+                "zh-cn": "在本地存储图标"
+              },
+              "0.5.0": {
+                "en": "Handle Timeouts",
+                "de": "Timeouts verarbeiten",
+                "ru": "Обработка тайм-аутов",
+                "pt": "Lidar com os tempos limite",
+                "nl": "Time-outs verwerken",
+                "fr": "Gérer les délais d'attente",
+                "it": "Gestire i timeout",
+                "es": "Manejar los tiempos de espera",
+                "pl": "Limity czasu obsługi",
+                "zh-cn": "处理超时"
+            },
+              "0.4.0": {
+                "en": "More countries",
+                "de": "Mehr Länder",
+                "ru": "Больше стран",
+                "pt": "Mais países",
+                "nl": "Meer landen",
+                "fr": "Plus de pays",
+                "it": "Più paesi",
+                "es": "Mas paises",
+                "pl": "Więcej krajów",
+                "zh-cn": "更多国家"
+            },
+              "0.3.0": {
+                "en": "Add html data",
+                "de": "HTML Datenpunkt hinzugefügt",
+                "ru": "Добавить данные HTML",
+                "pt": "Adicionar dados em html",
+                "nl": "Voeg html-gegevens toe",
+                "fr": "Ajouter des données HTML",
+                "it": "Aggiungi dati HTML",
+                "es": "Añadir datos html",
+                "pl": "Dodaj dane html",
+                "zh-cn": "添加HTML数据"
             },
             "0.2.0": {
                 "en": "Add tomorrow data",
@@ -27,78 +99,18 @@
                 "pl": "Dodaj dane jutra",
                 "zh-cn": "添加明天的数据"
             },
-            "0.3.0": {
-                "en": "Add html data",
-                "de": "HTML Datenpunkt hinzugefügt",
-                "ru": "Добавить данные HTML",
-                "pt": "Adicionar dados em html",
-                "nl": "Voeg html-gegevens toe",
-                "fr": "Ajouter des données HTML",
-                "it": "Aggiungi dati HTML",
-                "es": "Añadir datos html",
-                "pl": "Dodaj dane html",
-                "zh-cn": "添加HTML数据"
-            },
-            "0.4.0": {
-                "en": "More countries",
-                "de": "Mehr Länder",
-                "ru": "Больше стран",
-                "pt": "Mais países",
-                "nl": "Meer landen",
-                "fr": "Plus de pays",
-                "it": "Più paesi",
-                "es": "Mas paises",
-                "pl": "Więcej krajów",
-                "zh-cn": "更多国家"
-            },
-            "0.5.0": {
-                "en": "Handle Timeouts",
-                "de": "Timeouts verarbeiten",
-                "ru": "Обработка тайм-аутов",
-                "pt": "Lidar com os tempos limite",
-                "nl": "Time-outs verwerken",
-                "fr": "Gérer les délais d'attente",
-                "it": "Gestire i timeout",
-                "es": "Manejar los tiempos de espera",
-                "pl": "Limity czasu obsługi",
-                "zh-cn": "处理超时"
-            },
-            "0.6.0": {
-              "en": "Store icons locally",
-              "de": "Symbole lokal speichern",
-              "ru": "Храните иконки локально",
-              "pt": "Armazenar ícones localmente",
-              "nl": "Sla pictogrammen lokaal op",
-              "fr": "Stocker les icônes localement",
-              "it": "Conservare le icone localmente",
-              "es": "Almacenar iconos localmente",
-              "pl": "Przechowuj ikony lokalnie",
-              "zh-cn": "在本地存储图标"
-            },
-            "1.0.0": {
-              "en": "Release Version",
-              "de": "Veröffentlichungsversion",
-              "ru": "Версия выпуска",
-              "pt": "Versão de lançamento",
-              "nl": "Uitgegeven versie",
-              "fr": "Version finale",
-              "it": "Versione di rilascio",
-              "es": "Versión de lanzamiento",
-              "pl": "Wersja wydania",
-              "zh-cn": "发行版"
-            },
-            "1.0.1": {
-                "en": "Bugfix \"no alarm\" icon",
-                "de": "Bugfix \"kein Alarm\" -Symbol",
-                "ru": "Исправлена ошибка \"нет тревоги\"",
-                "pt": "Correção \"sem alarme\"",
-                "nl": "Bugfix pictogram \"geen alarm\"",
-                "fr": "Correction d'icône \"pas d'alarme\"",
-                "it": "Bugfix icona \"nessun allarme\"",
-                "es": "Icono de corrección de errores \"sin alarma\"",
-                "pl": "Bugfix ikona „brak alarmu”",
-                "zh-cn": "修正“无警报”图标"
-              }
+            "0.1.0": {
+                "en": "Initial version",
+                "de": "Initiale Version ",
+                "ru": "Первоначальная версия",
+                "pt": "Versão inicial",
+                "nl": "Eerste versie",
+                "fr": "Version initiale",
+                "it": "Versione iniziale",
+                "es": "Versión inicial",
+                "pl": "Początkowa wersja",
+                "zh-cn": "初始版本"
+            }
         },
         "title": "Meteoalarm",
         "titleLang": {

@@ -89,27 +89,29 @@ If you don't find your country, please create an issue on github, and I will be 
 
 
 ## Changelog
-### 0.1.0 (2019-07-11)
-* (jack-blackson) initial version
-### 0.2.0 (2019-07-12)
-* (jack-blackson) Added "Tomorrow" data
-### 0.3.0 (2019-07-13)
-* (jack-blackson) Added HTML Widget
-* (jack-blackson) Bugfix icon
-### 0.4.0 (2019-07-20)
-* (jack-blackson) Added data for NL,NO,HR,FI,ES
-* (jack-blackson) Added Type Text, Type is now empty if Level is 1 (No Warning)
-* (jack-blackson) Adjusted colors
+## 1.0.2 (2019-08-25)
+* (jack-blackson) Reordered release infos
+### 1.0.1 (2019-08-18)
+* (jack-blackson) Bugfix no alarm icon
+### 1.0.0 (2019-08-12)
+* (jack-blackson) Release version
+### 0.6.0 (2019-08-05)
+* (jack-blackson) Store weather icons local in adapter
 ### 0.5.0 (2019-07-21)
 * (jack-blackson) Handle Timeouts
 * (jack-blackson) Translations for all languages
 * (jack-blackson) URL checks
-### 0.6.0 (2019-08-05)
-* (jack-blackson) Store weather icons local in adapter
-### 1.0.0 (2019-08-12)
-* (jack-blackson) Release version
-### 1.0.1 (2019-08-18)
-* (jack-blackson) Bugfix no alarm icon
+### 0.4.0 (2019-07-20)
+* (jack-blackson) Added data for NL,NO,HR,FI,ES
+* (jack-blackson) Added Type Text, Type is now empty if Level is 1 (No Warning)
+* (jack-blackson) Adjusted colors
+### 0.3.0 (2019-07-13)
+* (jack-blackson) Added HTML Widget
+* (jack-blackson) Bugfix icon
+### 0.2.0 (2019-07-12)
+* (jack-blackson) Added "Tomorrow" data
+### 0.1.0 (2019-07-11)
+* (jack-blackson) initial version
 
 ## Credits
 Bell in icon designed by Freepik from www.flaticon.com
