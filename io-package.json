@@ -155,7 +155,7 @@
         "license": "MIT",
         "platform": "Javascript/Node.js",
         "mode": "schedule",
-        "schedule": "*/30 * * * *",
+        "schedule": "*/10 * * * *",
         "messagebox": false,
         "enabled": true,
         "compact": true,
