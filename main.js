@@ -15,8 +15,6 @@ const moment = require('moment');
 var parseString = require('xml2js').parseString;
 const i18nHelper = require(`${__dirname}/lib/i18nHelper`);
 
-var AdapterStarted;
-
 var DescFilter1 = '';
 var DescFilter2 = '';
 var country = '';
@@ -35,8 +33,6 @@ function startAdapter(options) {
             main()
         }
     });
-
-    AdapterStarted = false;
 
     adapter = new utils.Adapter(options);
 
@@ -88,6 +84,7 @@ function checkURL(){
     }
     else{
         adapter.log.error('URL incorrect. Please make sure to choose the RSS feed link!')
+        adapter.terminate ? adapter.terminate(0) : process.exit(0);
         return false
     } 
 }
@@ -104,12 +101,15 @@ function requestXML(){
             if (error){
                 if (error.code === 'ETIMEDOUT'){
                     adapter.log.error('No website response after 8 seconds. Adapter will try again at next scheduled run.')
+                    adapter.terminate ? adapter.terminate(0) : process.exit(0);
                 }
                 else if (error.code === 'ESOCKETTIMEDOUT'){
                     adapter.log.error('No website response after 8 seconds. Adapter will try again at next scheduled run.')
+                    adapter.terminate ? adapter.terminate(0) : process.exit(0);
                 }
                 else(
                     adapter.log.error(error)
+                    
                 )
             }
             if (body) {
@@ -126,7 +126,7 @@ function requestXML(){
                     if (err) {
     
                         adapter.log.error("Fehler: " + err);
-    
+                        adapter.terminate ? adapter.terminate(0) : process.exit(0);
                     } else {
                         processJSON(result)
                     }
@@ -136,6 +136,7 @@ function requestXML(){
         }
     else{
         adapter.log.debug('No path maintained!!')
+        adapter.terminate ? adapter.terminate(0) : process.exit(0);
     }
     
 }
@@ -253,6 +254,8 @@ function updateHTMLWidget(){
             def: htmllong,
             role: 'value'
         });
+        adapter.log.debug('All done')
+        adapter.terminate ? adapter.terminate(0) : process.exit(0);
     });
 }
 
