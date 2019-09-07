@@ -103,10 +103,10 @@ function requestXML(){
           }, function(error, response, body){
             if (error){
                 if (error.code === 'ETIMEDOUT'){
-                    adapter.log.error('No website response after 8 seconds. Adapter will try again in 30 minutes.')
+                    adapter.log.error('No website response after 8 seconds. Adapter will try again at next scheduled run.')
                 }
                 else if (error.code === 'ESOCKETTIMEDOUT'){
-                    adapter.log.error('No website response after 8 seconds. Adapter will try again in 30 minutes.')
+                    adapter.log.error('No website response after 8 seconds. Adapter will try again at next scheduled run.')
                 }
                 else(
                     adapter.log.error(error)

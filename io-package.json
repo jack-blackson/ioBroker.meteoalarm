@@ -156,11 +156,11 @@
         "platform": "Javascript/Node.js",
         "mode": "schedule",
         "schedule": "*/10 * * * *",
-        "messagebox": false,
-        "enabled": true,
+            "enabled": true,
         "compact": true,
         "readme": "https://github.com/jack-blackson/ioBroker.meteoalarm/master/README.md",
         "loglevel": "info",
+        "stopBeforeUpdate": true,
         "keywords": [
             "meteoalarm"
         ],
