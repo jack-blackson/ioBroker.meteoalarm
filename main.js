@@ -24,7 +24,7 @@ var country = '';
 let adapter;
 let lang;
 
-var Interval
+//var Interval
 
 function startAdapter(options) {
 
@@ -42,7 +42,7 @@ function startAdapter(options) {
 
     adapter.on(`unload`, callback => {
         adapter.log.info(`Stopping meteoalarm adapter!`);
-        clearInterval(Interval);
+        //clearInterval(Interval);
         callback && callback();
     });
 
@@ -73,10 +73,10 @@ function main() {
 
     adapter.getForeignObject('system.config', (err, systemConfig) => {
         lang = systemConfig.common.language
-        Interval = setInterval(function() { 
+        //Interval = setInterval(function() { 
             // alle 30 Minute ausführen 
-            requestXML();
-        }, 1800000); 
+        //    requestXML();
+        //}, 1800000); 
         requestXML()
     }) 
 }

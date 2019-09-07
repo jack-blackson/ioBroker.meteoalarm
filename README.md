@@ -89,6 +89,8 @@ If you don't find your country, please create an issue on github, and I will be 
 
 
 ## Changelog
+## 1.0.3 (2019-09-16)
+* (jack-blackson) Small bugfixes, change from type "deamon" to "schedule"
 ## 1.0.2 (2019-08-25)
 * (jack-blackson) Reordered release infos
 ### 1.0.1 (2019-08-18)
