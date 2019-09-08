@@ -1,6 +1,6 @@
 {
   "name": "iobroker.meteoalarm",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Meteolaram",
   "main": "main.js",
   "repository": {
@@ -24,9 +24,9 @@
   "dependencies": {
     "@iobroker/testing": "^1.2.0",
     "@iobroker/adapter-core": "^1.0.3",
-    "request": "2.88.0",
-    "xml2js": "0.4.19",
-    "moment": "2.24.0"
+    "request": "^2.88.0",
+    "xml2js": "^0.4.22",
+    "moment": "^2.24.0"
   },
   "scripts": {
     "test": "npm run test:package && npm run test:unit",

@@ -15,8 +15,6 @@ const moment = require('moment');
 var parseString = require('xml2js').parseString;
 const i18nHelper = require(`${__dirname}/lib/i18nHelper`);
 
-var AdapterStarted;
-
 var DescFilter1 = '';
 var DescFilter2 = '';
 var country = '';
@@ -24,7 +22,7 @@ var country = '';
 let adapter;
 let lang;
 
-var Interval
+//var Interval
 
 function startAdapter(options) {
 
@@ -36,13 +34,11 @@ function startAdapter(options) {
         }
     });
 
-    AdapterStarted = false;
-
     adapter = new utils.Adapter(options);
 
     adapter.on(`unload`, callback => {
         adapter.log.info(`Stopping meteoalarm adapter!`);
-        clearInterval(Interval);
+        //clearInterval(Interval);
         callback && callback();
     });
 
@@ -73,10 +69,10 @@ function main() {
 
     adapter.getForeignObject('system.config', (err, systemConfig) => {
         lang = systemConfig.common.language
-        Interval = setInterval(function() { 
+        //Interval = setInterval(function() { 
             // alle 30 Minute ausführen 
-            requestXML();
-        }, 1800000); 
+        //    requestXML();
+        //}, 1800000); 
         requestXML()
     }) 
 }
@@ -88,6 +84,7 @@ function checkURL(){
     }
     else{
         adapter.log.error('URL incorrect. Please make sure to choose the RSS feed link!')
+        adapter.terminate ? adapter.terminate(0) : process.exit(0);
         return false
     } 
 }
@@ -103,13 +100,16 @@ function requestXML(){
           }, function(error, response, body){
             if (error){
                 if (error.code === 'ETIMEDOUT'){
-                    adapter.log.error('No website response after 8 seconds. Adapter will try again in 30 minutes.')
+                    adapter.log.error('No website response after 8 seconds. Adapter will try again at next scheduled run.')
+                    adapter.terminate ? adapter.terminate(0) : process.exit(0);
                 }
                 else if (error.code === 'ESOCKETTIMEDOUT'){
-                    adapter.log.error('No website response after 8 seconds. Adapter will try again in 30 minutes.')
+                    adapter.log.error('No website response after 8 seconds. Adapter will try again at next scheduled run.')
+                    adapter.terminate ? adapter.terminate(0) : process.exit(0);
                 }
                 else(
                     adapter.log.error(error)
+                    
                 )
             }
             if (body) {
@@ -126,7 +126,7 @@ function requestXML(){
                     if (err) {
     
                         adapter.log.error("Fehler: " + err);
-    
+                        adapter.terminate ? adapter.terminate(0) : process.exit(0);
                     } else {
                         processJSON(result)
                     }
@@ -136,6 +136,7 @@ function requestXML(){
         }
     else{
         adapter.log.debug('No path maintained!!')
+        adapter.terminate ? adapter.terminate(0) : process.exit(0);
     }
     
 }
@@ -183,8 +184,15 @@ function processJSON(content){
     });
 
     if (DescFilter1 != 'nA'){
-        parseWeather(content.rss.channel.item.description,'today')
-        parseWeather(content.rss.channel.item.description,'tomorrow')        
+        parseWeather(content.rss.channel.item.description,'today', function(){
+            parseWeather(content.rss.channel.item.description,'tomorrow', function(){
+                setTimeout(function() {
+                    // wait 3 seconds to make sure all is done
+                    updateHTMLWidget()
+                  }, 3000);
+                
+            })
+        })        
     }
     else{
         // Land ist nicht in der Filterliste (getfilters()) -> daher kann Text nicht gefunden werden
@@ -253,6 +261,12 @@ function updateHTMLWidget(){
             def: htmllong,
             role: 'value'
         });
+        setTimeout(function() {
+            // wait 5 seconds to make sure all is done
+            adapter.log.debug('All done')
+            adapter.terminate ? adapter.terminate(0) : process.exit(0);
+          }, 5000);
+        
     });
 }
 
@@ -330,7 +344,7 @@ function getLevelName(level){
 
 }
 
-function parseWeather(description,type){
+function parseWeather(description,type, callback){
     var WarnungsText = '';
     var folder = '';
     var SearchCrit1 = 0;
@@ -508,8 +522,10 @@ function parseWeather(description,type){
         type: "string", 
         def: Warnung_img,
         role: 'value'
+        
     });
-    updateHTMLWidget()
+    adapter.log.debug('Loaded ' + type + ' data')
+    callback()
 }
 
 function getFilters(){

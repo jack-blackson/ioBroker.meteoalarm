@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "meteoalarm",
-        "version": "1.0.2",
+        "version": "1.0.3",
         "news": {
+            "1.0.3": {
+                "en": "Small bugfixes, change from type \"deamon\" to \"schedule\"",
+                "de": "Kleine Bugfixes, Änderung vom Typ \"deamon\" zu \"schedule\"",
+                 "ru": "Небольшие исправления, измените с типа \"deamon\" на \"schedule\"",
+                 "pt": "Pequenas correções, mude do tipo \"deamon\" para \"agendar\"",
+                 "nl": "Kleine bugfixes, verander van type \"deamon\" naar \"schema\"",
+                "fr": "Petites corrections de bugs, changer de type \"deamon\" en \"schedule\"",
+                "it": "Piccole correzioni di bug, passaggio dal tipo \"deamon\" a \"schedulazione\"",
+                "es": "Pequeñas correcciones de errores, cambie de tipo \"deamon\" a \"horario\"",
+                "pl": "Małe poprawki błędów, zmiana z „deamon” na „harmonogram”",
+                "zh-cn": "小错误修正，从“deamon”类型更改为“schedule”"
+            },
             "1.0.2": {
                 "en": "Change in release infos",
                 "de": "Änderung der Release-Infos",
@@ -142,15 +154,13 @@
         ],
         "license": "MIT",
         "platform": "Javascript/Node.js",
-        "mode": "daemon",
-        "messagebox": true,
-        "enabled": true,
+        "mode": "schedule",
+        "schedule": "*/30 * * * *",
+            "enabled": true,
         "compact": true,
         "readme": "https://github.com/jack-blackson/ioBroker.meteoalarm/master/README.md",
         "loglevel": "info",
-        "restartAdapters": [
-            "meteoalarm"
-        ],
+        "stopBeforeUpdate": true,
         "keywords": [
             "meteoalarm"
         ],
