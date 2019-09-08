@@ -184,8 +184,11 @@ function processJSON(content){
     });
 
     if (DescFilter1 != 'nA'){
-        parseWeather(content.rss.channel.item.description,'today')
-        parseWeather(content.rss.channel.item.description,'tomorrow')        
+        parseWeather(content.rss.channel.item.description,'today', function(){
+            parseWeather(content.rss.channel.item.description,'tomorrow', function(){
+                updateHTMLWidget()
+            })
+        })        
     }
     else{
         // Land ist nicht in der Filterliste (getfilters()) -> daher kann Text nicht gefunden werden
@@ -333,7 +336,7 @@ function getLevelName(level){
 
 }
 
-function parseWeather(description,type){
+function parseWeather(description,type, callback){
     var WarnungsText = '';
     var folder = '';
     var SearchCrit1 = 0;
@@ -512,7 +515,7 @@ function parseWeather(description,type){
         def: Warnung_img,
         role: 'value'
     });
-    updateHTMLWidget()
+    callback()
 }
 
 function getFilters(){
