@@ -257,8 +257,12 @@ function updateHTMLWidget(){
             def: htmllong,
             role: 'value'
         });
-        adapter.log.info('All done')
-        adapter.terminate ? adapter.terminate(0) : process.exit(0);
+        setTimeout(function() {
+            // wait 5 seconds to make sure all is done
+            adapter.log.info('All done')
+            adapter.terminate ? adapter.terminate(0) : process.exit(0);
+          }, 5000);
+        
     });
 }
 
