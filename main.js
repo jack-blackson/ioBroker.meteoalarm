@@ -186,7 +186,11 @@ function processJSON(content){
     if (DescFilter1 != 'nA'){
         parseWeather(content.rss.channel.item.description,'today', function(){
             parseWeather(content.rss.channel.item.description,'tomorrow', function(){
-                updateHTMLWidget()
+                setTimeout(function() {
+                    // wait 3 seconds to make sure all is done
+                    updateHTMLWidget()
+                  }, 3000);
+                
             })
         })        
     }
@@ -518,6 +522,7 @@ function parseWeather(description,type, callback){
         type: "string", 
         def: Warnung_img,
         role: 'value'
+        
     });
     adapter.log.debug('Loaded ' + type + ' data')
     callback()
