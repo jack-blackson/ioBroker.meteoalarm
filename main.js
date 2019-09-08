@@ -515,7 +515,7 @@ function parseWeather(description,type, callback){
         def: Warnung_img,
         role: 'value'
     });
-    adapter.log.debug('Loaded ' + type + ' data')
+    adapter.log.info('Loaded ' + type + ' data')
     callback()
 }
 
