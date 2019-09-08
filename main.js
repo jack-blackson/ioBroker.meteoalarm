@@ -259,7 +259,7 @@ function updateHTMLWidget(){
         });
         setTimeout(function() {
             // wait 5 seconds to make sure all is done
-            adapter.log.info('All done')
+            adapter.log.debug('All done')
             adapter.terminate ? adapter.terminate(0) : process.exit(0);
           }, 5000);
         
@@ -519,7 +519,7 @@ function parseWeather(description,type, callback){
         def: Warnung_img,
         role: 'value'
     });
-    adapter.log.info('Loaded ' + type + ' data')
+    adapter.log.debug('Loaded ' + type + ' data')
     callback()
 }
 
