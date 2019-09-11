@@ -89,7 +89,9 @@ If you don't find your country, please create an issue on github, and I will be 
 
 
 ## Changelog
-## 1.0.3 (2019-09-16)
+## 1.0.4 (2019-09-11)
+* (jack-blackson) Travis error
+## 1.0.3 (2019-09-09)
 * (jack-blackson) Small bugfixes, change from type "deamon" to "schedule"
 ## 1.0.2 (2019-08-25)
 * (jack-blackson) Reordered release infos
