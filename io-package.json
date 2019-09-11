@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "meteoalarm",
-        "version": "1.0.3",
+        "version": "1.0.4",
         "news": {
+            "1.0.4": {
+                "en": "Travis error",
+                "de": "Travis-Fehler",
+                "ru": "Ошибка Трэвиса",
+                "pt": "Erro de Travis",
+                "nl": "Travis-fout",
+                "fr": "Erreur Travis",
+                "it": "Errore Travis",
+                "es": "Error de Travis",
+                "pl": "Błąd Travisa",
+                "zh-cn": "特拉维斯错误"
+            },
             "1.0.3": {
                 "en": "Small bugfixes, change from type \"deamon\" to \"schedule\"",
                 "de": "Kleine Bugfixes, Änderung vom Typ \"deamon\" zu \"schedule\"",
