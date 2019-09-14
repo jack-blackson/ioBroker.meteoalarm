@@ -2,11 +2,8 @@
 # ioBroker.meteoalarm
 =================
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/jack-blackson/ioBroker.meteoalarm.svg)](https://greenkeeper.io/) [![NPM version](http://img.shields.io/npm/v/iobroker.meteoalarm.svg)](https://www.npmjs.com/package/iobroker.meteoalarm) [![Build Status Travis](https://travis-ci.com/jack-blackson/ioBroker.meteoalarm.svg?branch=master)](https://travis-ci.com/jack-blackson/ioBroker.meteoalarm) 
-<!--![Number of Installations](http://iobroker.live/badges/bring-installed.svg) ![Number of Installations](http://iobroker.live/badges/bring-stable.svg) 
-[![Downloads](https://img.shields.io/npm/dm/iobroker.bring.svg)](https://www.npmjs.com/package/iobroker.meteoalarm)
+[![Greenkeeper badge](https://badges.greenkeeper.io/jack-blackson/ioBroker.meteoalarm.svg)](https://greenkeeper.io/) [![NPM version](http://img.shields.io/npm/v/iobroker.meteoalarm.svg)](https://www.npmjs.com/package/iobroker.meteoalarm) [![Build Status Travis](https://travis-ci.com/jack-blackson/ioBroker.meteoalarm.svg?branch=master)](https://travis-ci.com/jack-blackson/ioBroker.meteoalarm) [![Downloads](https://img.shields.io/npm/dm/iobroker.meteoalarm.svg)](https://www.npmjs.com/package/iobroker.meteoalarm) ![Number of Installations](http://iobroker.live/badges/meteoalarm-installed.svg) ![Number of Installations](http://iobroker.live/badges/meteoalarm-stable.svg)
 
--->
 [![NPM](https://nodei.co/npm/iobroker.meteoalarm.png?downloads=true)](https://nodei.co/npm/iobroker.meteoalarm.png?downloads=true/)
 
 meteoalarm Adapter for ioBroker
