@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "meteoalarm",
-        "version": "1.0.4",
+        "version": "1.0.5",
         "news": {
+            "1.0.5": {
+                "en": "Small adjustments in logging",
+                "de": "Kleine Anpassungen in der Protokollierung",
+                "ru": "Небольшие корректировки в журнале",
+                "pt": "Pequenos ajustes no registro",
+                "nl": "Kleine aanpassingen in logging",
+                "fr": "Petits ajustements dans la journalisation",
+                "it": "Piccole regolazioni nella registrazione",
+                "es": "Pequeños ajustes en el registro",
+                "pl": "Małe poprawki w logowaniu",
+                "zh-cn": "日志中的小调整"
+            },
             "1.0.4": {
                 "en": "Travis error",
                 "de": "Travis-Fehler",

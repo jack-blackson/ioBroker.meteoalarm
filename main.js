@@ -37,7 +37,6 @@ function startAdapter(options) {
     adapter = new utils.Adapter(options);
 
     adapter.on(`unload`, callback => {
-        adapter.log.info(`Stopping meteoalarm adapter!`);
         //clearInterval(Interval);
         callback && callback();
     });
