@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "meteoalarm",
-        "version": "1.0.5",
+        "version": "1.0.6",
         "news": {
+            "1.0.6": {
+                "en": "Added Switzerland",
+                "de": "Schweiz hinzugefügt",
+                "ru": "Добавлена Швейцария",
+                "pt": "Added Switzerland",
+                "nl": "Zwitserland toegevoegd",
+                "fr": "Suisse ajoutée",
+                "it": "Svizzera aggiunta",
+                "es": "Suiza agregada",
+                "pl": "Dodano Szwajcarię",
+                "zh-cn": "新增瑞士"
+            },
             "1.0.5": {
                 "en": "Small adjustments in logging",
                 "de": "Kleine Anpassungen in der Protokollierung",
