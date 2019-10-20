@@ -580,6 +580,16 @@ function getFilters(){
             DescFilter1 = 'español:';
             DescFilter2 = 'english:';
            break;
+        case 'ch':
+            // Switzerland
+            DescFilter1 = 'english:';
+            DescFilter2 = '</td>';
+           break;
+        case 'sk':
+            // Switzerland
+            DescFilter1 = 'slovenčina:';
+            DescFilter2 = 'english:';
+           break;
         default:
                 DescFilter1 = 'nA';
                 DescFilter2 = 'nA';

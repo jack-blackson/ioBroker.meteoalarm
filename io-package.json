@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "meteoalarm",
-        "version": "1.0.5",
+        "version": "1.0.6",
         "news": {
+            "1.0.6": {
+                "en": "Added Switzerland and Slowakia",
+                "de": "Schweiz und Slowakei hinzugefügt",
+                "ru": "Добавлены Швейцария и Словакия",
+                "pt": "Adicionado Suíça e Slowakia",
+                "nl": "Zwitserland en Slowakia toegevoegd",
+                "fr": "Suisse et Slovaquie ajoutées",
+                "it": "Aggiunti Svizzera e Slowakia",
+                "es": "Suiza agregada y Slowakia",
+                "pl": "Dodano Szwajcarię i Słowację",
+                "zh-cn": "新增了瑞士和Slowakia"
+            },
             "1.0.5": {
                 "en": "Small adjustments in logging",
                 "de": "Kleine Anpassungen in der Protokollierung",
