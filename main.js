@@ -595,6 +595,21 @@ function getFilters(){
             DescFilter1 = 'čeština:';
             DescFilter2 = 'english:';
         break;
+        case 'ie':
+            // Ireland
+            DescFilter1 = 'english:';
+            DescFilter2 = '</td>';
+        break;
+        case 'il':
+            // Israel
+            DescFilter1 = 'english:';
+            DescFilter2 = ' עברית:';
+        break;
+        case 'li':
+            // Lithuania
+            DescFilter1 = 'lietuviu:';
+            DescFilter2 = 'english:';
+        break;
         default:
                 DescFilter1 = 'nA';
                 DescFilter2 = 'nA';
