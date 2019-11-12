@@ -88,6 +88,8 @@ If you don't find your country, please create an issue on github, and I will be 
 
 
 ## Changelog
+## 1.0.7 (2019-10-19)
+* (jack-blackson) Added 
 ## 1.0.6 (2019-10-19)
 * (jack-blackson) Added Switzerland & Slowakia
 ## 1.0.5 (2019-09-22)

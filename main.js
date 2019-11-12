@@ -590,6 +590,11 @@ function getFilters(){
             DescFilter1 = 'slovenčina:';
             DescFilter2 = 'english:';
            break;
+        case 'cz':
+            // Czech Republic
+            DescFilter1 = 'čeština:';
+            DescFilter2 = 'english:';
+        break;
         default:
                 DescFilter1 = 'nA';
                 DescFilter2 = 'nA';
