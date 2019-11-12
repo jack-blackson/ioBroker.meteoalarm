@@ -626,6 +626,16 @@ function getFilters(){
             DescFilter1 = 'Malti:';
             DescFilter2 = '</td>';
         break;
+        case 'rs':
+            // Serbia
+            DescFilter1 = 'српски:';
+            DescFilter2 = '</td>';
+        break;
+        case 'se':
+            // Sweden
+            DescFilter1 = 'svenska:';
+            DescFilter2 = 'english:';
+        break;
         default:
                 DescFilter1 = 'nA';
                 DescFilter2 = 'nA';
