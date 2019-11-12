@@ -196,6 +196,7 @@ function processJSON(content){
     else{
         // Land ist nicht in der Filterliste (getfilters()) -> daher kann Text nicht gefunden werden
         adapter.log.error('The country ' + country +  ' is not set up. Please create a github issue to get it set up.')
+        adapter.terminate ? adapter.terminate(0) : process.exit(0);
     }
 }
 
@@ -590,6 +591,51 @@ function getFilters(){
             DescFilter1 = 'slovenčina:';
             DescFilter2 = 'english:';
            break;
+        case 'cz':
+            // Czech Republic
+            DescFilter1 = 'čeština:';
+            DescFilter2 = 'english:';
+        break;
+        case 'ie':
+            // Ireland
+            DescFilter1 = 'english:';
+            DescFilter2 = '</td>';
+        break;
+        case 'il':
+            // Israel
+            DescFilter1 = 'english:';
+            DescFilter2 = '</td>';
+        break;
+        case 'lt':
+            // Lithuania
+            DescFilter1 = 'lietuviu:';
+            DescFilter2 = 'english:';
+        break;
+        case 'lv':
+            // Latvia
+            DescFilter1 = 'latviešu:';
+            DescFilter2 = '</td>';
+        break;
+        case 'me':
+            // Montenegro
+            DescFilter1 = 'Црногорски:';
+            DescFilter2 = '</td>';
+        break;
+        case 'mt':
+            // Malta
+            DescFilter1 = 'Malti:';
+            DescFilter2 = '</td>';
+        break;
+        case 'rs':
+            // Serbia
+            DescFilter1 = 'српски:';
+            DescFilter2 = '</td>';
+        break;
+        case 'se':
+            // Sweden
+            DescFilter1 = 'svenska:';
+            DescFilter2 = 'english:';
+        break;
         default:
                 DescFilter1 = 'nA';
                 DescFilter2 = 'nA';
