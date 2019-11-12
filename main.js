@@ -604,7 +604,7 @@ function getFilters(){
         case 'il':
             // Israel
             DescFilter1 = 'english:';
-            DescFilter2 = ' עברית:';
+            DescFilter2 = '</td>';
         break;
         case 'lt':
             // Lithuania
@@ -614,6 +614,16 @@ function getFilters(){
         case 'lv':
             // Latvia
             DescFilter1 = 'latviešu:';
+            DescFilter2 = '</td>';
+        break;
+        case 'me':
+            // Montenegro
+            DescFilter1 = 'Црногорски:';
+            DescFilter2 = '</td>';
+        break;
+        case 'mt':
+            // Malta
+            DescFilter1 = 'Malti:';
             DescFilter2 = '</td>';
         break;
         default:
