@@ -4,7 +4,16 @@
         "version": "1.0.7",
         "news": {
             "1.0.7": {
-                
+                "en": "Added Czech Republic, Ireland, Israel, Lithuania, Latvia, Montenegro, Malta, Serbia, Sweden",
+                "de": "Hinzugefügt Tschechische Republik, Irland, Israel, Litauen, Lettland, Montenegro, Malta, Serbien, Schweden",
+                "ru": "Добавлены Чехия, Ирландия, Израиль, Литва, Латвия, Черногория, Мальта, Сербия, Швеция.",
+                "pt": "Adicionado República Tcheca, Irlanda, Israel, Lituânia, Letônia, Montenegro, Malta, Sérvia, Suécia",
+                "nl": "Tsjechië, Ierland, Israël, Litouwen, Letland, Montenegro, Malta, Servië, Zweden toegevoegd",
+                "fr": "Ajouté République tchèque, Irlande, Israël, Lituanie, Lettonie, Monténégro, Malte, Serbie et Suède.",
+                "it": "Aggiunte Repubblica Ceca, Irlanda, Israele, Lituania, Lettonia, Montenegro, Malta, Serbia, Svezia",
+                "es": "Se agregó República Checa, Irlanda, Israel, Lituania, Letonia, Montenegro, Malta, Serbia, Suecia",
+                "pl": "Dodano Czechy, Irlandię, Izrael, Litwę, Łotwę, Czarnogórę, Maltę, Serbię, Szwecję",
+                "zh-cn": "添加了捷克共和国，爱尔兰，以色列，立陶宛，拉脱维亚，黑山，马耳他，塞尔维亚，瑞典"
             },
             "1.0.6": {
                 "en": "Added Switzerland and Slowakia",

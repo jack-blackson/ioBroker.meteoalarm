@@ -66,15 +66,24 @@ Please go to http://meteoalarm.eu and choose your region. Then go to the RSS sym
 ## Supported countries
 * Austria
 * Croatia
+* Czech Republic
 * Finnland
 * Germany
 * Hungary
+* Ireland
+* Israel
 * Italy
+* Latvia
+* Lithuania
+* Malta
+* Montenegro
 * Netherlands
 * Norwege
+* Serbia
 * Slovakia
 * Spain
 * Switzerland
+* Sweden
 
 If you don't find your country, please create an issue on github, and I will be happy to add it
 
