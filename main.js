@@ -636,6 +636,26 @@ function getFilters(){
             DescFilter1 = 'svenska:';
             DescFilter2 = 'english:';
         break;
+        case 'pl':
+            // Poland
+            DescFilter1 = 'polski:';
+            DescFilter2 = 'english:';
+        break;
+        case 'md':
+            // Moldova
+            DescFilter1 = 'româna:';
+            DescFilter2 = '</td>';
+        break;
+        case 'ro':
+            // Romania
+            DescFilter1 = 'româna:';
+            DescFilter2 = 'english:';
+        break;
+        case 'gr':
+            // Greece
+            DescFilter1 = 'Ελληνικά:';
+            DescFilter2 = '</td>';
+        break;
         default:
                 DescFilter1 = 'nA';
                 DescFilter2 = 'nA';

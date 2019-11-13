@@ -97,7 +97,9 @@ If you don't find your country, please create an issue on github, and I will be 
 
 
 ## Changelog
-## 1.0.7 (2019-10-19)
+## 1.0.8 (2019-11-14)
+* (jack-blackson) Added Poland, Moldova, Greece, Romania
+## 1.0.7 (2019-11-13)
 * (jack-blackson) Added Czech Republic, Ireland, Israel, Lithuania, Latvia, Montenegro, Malta, Serbia, Sweden
 ## 1.0.6 (2019-10-19)
 * (jack-blackson) Added Switzerland & Slowakia
