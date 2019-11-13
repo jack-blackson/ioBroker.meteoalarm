@@ -263,7 +263,7 @@ function updateHTMLWidget(){
         });
 
         let weatherDate = moment(new Date()).local().format('YYMMDD')
-        var htmlweathermap = "https://meteoalarm.eu/maps/" + country + '-' + weatherDate + '.gif';
+        var htmlweathermap = "https://meteoalarm.eu/maps/" + country.toUpperCase() + '-' + weatherDate + '.gif';
 
         adapter.createState('', '', 'weatherMapCountry', {
             read: true, 
