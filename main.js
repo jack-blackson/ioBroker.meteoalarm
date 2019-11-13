@@ -261,6 +261,19 @@ function updateHTMLWidget(){
             def: htmllong,
             role: 'value'
         });
+
+        let weatherDate = moment(new Date()).local().format('YYMMDD')
+        var htmlweathermap = "https://meteoalarm.eu/maps/" + country + '-' + weatherDate;
+
+        adapter.createState('', '', 'weatherMapCountry', {
+            read: true, 
+            write: false, 
+            name: "Weather Map Country", 
+            type: "string", 
+            def: htmlweathermap,
+            role: 'value'
+        });
+
         setTimeout(function() {
             // wait 5 seconds to make sure all is done
             adapter.log.debug('All done')
