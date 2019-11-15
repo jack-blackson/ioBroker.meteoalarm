@@ -102,7 +102,7 @@ If you don't find your country, please create an issue on github, and I will be 
 
 
 ## Changelog
-## 1.0.8 (2019-11-14)
+## 1.0.8 (2019-11-15)
 * (jack-blackson) Added Poland, Moldova, Greece, Romania
 * (jack-blackson) Added new Datapoint to get Link to Weather Map
 ## 1.0.7 (2019-11-13)
