@@ -24,6 +24,7 @@ Please go to http://meteoalarm.eu and choose your region. Then go to the RSS sym
 |Location|Alarm Location|
 |Publication Date|Publication Date of the alarm according to the website|
 |HTMLToday|HTML Widget that displays Alarms for today|
+|Weather Map Country|HTML Link to Weather Map of the Alarm Country|
 |Today/Tomorrow|These datapoints are available for today and tomorrow:|
 |   Text|Alarm Text in country specific language|
 |   From|Alarm starting date|
@@ -69,6 +70,7 @@ Please go to http://meteoalarm.eu and choose your region. Then go to the RSS sym
 * Czech Republic
 * Finnland
 * Germany
+* Greece
 * Hungary
 * Ireland
 * Israel
@@ -76,9 +78,12 @@ Please go to http://meteoalarm.eu and choose your region. Then go to the RSS sym
 * Latvia
 * Lithuania
 * Malta
+* Moldova
 * Montenegro
 * Netherlands
 * Norwege
+* Poland
+* Romania
 * Serbia
 * Slovakia
 * Spain
@@ -97,7 +102,10 @@ If you don't find your country, please create an issue on github, and I will be 
 
 
 ## Changelog
-## 1.0.7 (2019-10-19)
+## 1.0.8 (2019-11-15)
+* (jack-blackson) Added Poland, Moldova, Greece, Romania
+* (jack-blackson) Added new Datapoint to get Link to Weather Map
+## 1.0.7 (2019-11-13)
 * (jack-blackson) Added Czech Republic, Ireland, Israel, Lithuania, Latvia, Montenegro, Malta, Serbia, Sweden
 ## 1.0.6 (2019-10-19)
 * (jack-blackson) Added Switzerland & Slowakia

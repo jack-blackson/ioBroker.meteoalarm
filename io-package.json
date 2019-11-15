@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "meteoalarm",
-        "version": "1.0.7",
+        "version": "1.0.8",
         "news": {
+            "1.0.8": {
+                "en": "Added Poland, Moldova, Greece, Romania, Added new Datapoint to get Link to Weather Map",
+                "de": "Hinzugefügt Polen, Moldawien, Griechenland, Rumänien, Neuer Datenpunkt hinzugefügt, um Link zur Wetterkarte zu erhalten",
+                "ru": "Добавлена Польша, Молдова, Греция, Румыния, добавлен новый Datapoint для получения ссылки на карту погоды",
+                "pt": "Adicionado Polônia, Moldávia, Grécia, Romênia, Adicionado novo Datapoint para obter Link para o mapa meteorológico",
+                "nl": "Polen, Moldavië, Griekenland, Roemenië toegevoegd, nieuw Datapunt toegevoegd om Link naar Weerkaart te krijgen",
+                "fr": "Pologne, Moldavie, Grèce, Roumanie, ajout d'un nouveau point de donnée pour obtenir un lien vers la carte météo",
+                "it": "Aggiunti Polonia, Moldavia, Grecia, Romania, Aggiunto nuovo Datapoint per ottenere il collegamento alla mappa meteorologica",
+                "es": "Se agregó Polonia, Moldavia, Grecia, Rumania, se agregó un nuevo punto de datos para obtener un enlace al mapa meteorológico",
+                "pl": "Dodano Polskę, Mołdawię, Grecję, Rumunię, Dodano nowy punkt danych, aby uzyskać link do mapy pogody",
+                "zh-cn": "添加了波兰，摩尔多瓦，希腊，罗马尼亚，添加了新的数据点以获取到天气地图的链接"
+            },
             "1.0.7": {
                 "en": "Added Czech Republic, Ireland, Israel, Lithuania, Latvia, Montenegro, Malta, Serbia, Sweden",
                 "de": "Hinzugefügt Tschechische Republik, Irland, Israel, Litauen, Lettland, Montenegro, Malta, Serbien, Schweden",

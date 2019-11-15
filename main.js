@@ -261,6 +261,19 @@ function updateHTMLWidget(){
             def: htmllong,
             role: 'value'
         });
+
+        let weatherDate = moment(new Date()).local().format('YYMMDD')
+        var htmlweathermap = "https://meteoalarm.eu/maps/" + country.toUpperCase() + '-' + weatherDate + '.gif';
+
+        adapter.createState('', '', 'weatherMapCountry', {
+            read: true, 
+            write: false, 
+            name: "Weather Map Country", 
+            type: "string", 
+            def: htmlweathermap,
+            role: 'value'
+        });
+
         setTimeout(function() {
             // wait 5 seconds to make sure all is done
             adapter.log.debug('All done')
@@ -635,6 +648,26 @@ function getFilters(){
             // Sweden
             DescFilter1 = 'svenska:';
             DescFilter2 = 'english:';
+        break;
+        case 'pl':
+            // Poland
+            DescFilter1 = 'polski:';
+            DescFilter2 = 'english:';
+        break;
+        case 'md':
+            // Moldova
+            DescFilter1 = 'româna:';
+            DescFilter2 = '</td>';
+        break;
+        case 'ro':
+            // Romania
+            DescFilter1 = 'româna:';
+            DescFilter2 = 'english:';
+        break;
+        case 'gr':
+            // Greece
+            DescFilter1 = 'Ελληνικά:';
+            DescFilter2 = '</td>';
         break;
         default:
                 DescFilter1 = 'nA';
