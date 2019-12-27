@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@iobroker/testing": "^1.2.0",
-    "@iobroker/adapter-core": "^1.0.3",
+    "@iobroker/adapter-core": "^2.0.0",
     "request": "^2.88.0",
     "xml2js": "^0.4.22",
     "moment": "^2.24.0"
