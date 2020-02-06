@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "meteoalarm",
-        "version": "1.0.8",
+        "version": "1.0.9",
         "news": {
+            "1.0.9": {
+                "en": "Bugfix Germany",
+                "de": "Bugfix Deutschland",
+                "ru": "Bugfix Германия",
+                "pt": "Bugfix Germany",
+                "nl": "Bugfix Duitsland",
+                "fr": "Bugfix Allemagne",
+                "it": "Bugfix Germania",
+                "es": "Bugfix Germany",
+                "pl": "Bugfix Niemcy",
+                "zh-cn": "Bugfix德国"
+            },
             "1.0.8": {
                 "en": "Added Poland, Moldova, Greece, Romania, Added new Datapoint to get Link to Weather Map",
                 "de": "Hinzugefügt Polen, Moldawien, Griechenland, Rumänien, Neuer Datenpunkt hinzugefügt, um Link zur Wetterkarte zu erhalten",

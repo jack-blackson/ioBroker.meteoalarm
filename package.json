@@ -1,6 +1,6 @@
 {
   "name": "iobroker.meteoalarm",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Meteolaram",
   "main": "main.js",
   "repository": {
@@ -22,8 +22,8 @@
     "url": "https://github.com/jack-blackson/ioBroker.meteoalarm/issues"
   },
   "dependencies": {
-    "@iobroker/testing": "^1.2.0",
-    "@iobroker/adapter-core": "^1.0.3",
+    "@iobroker/testing": "^2.0.2",
+    "@iobroker/adapter-core": "^2.2.1",
     "request": "^2.88.0",
     "xml2js": "^0.4.22",
     "moment": "^2.24.0"
@@ -36,9 +36,9 @@
   },
   "devDependencies": {
     "gulp": "^4.0.0",
-    "mocha": "^6.1.4",
+    "mocha": "^7.0.1",
     "chai": "^4.2.0",
-    "axios": "^0.18.0"
+    "axios": "^0.19.1"
   },
   "readmeFilename": "README.md"
 }

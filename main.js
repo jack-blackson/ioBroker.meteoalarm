@@ -557,7 +557,7 @@ function getFilters(){
         case 'de':
                 // Deutschland
                 DescFilter1 = 'deutsch:';
-                DescFilter2 = '</td>';
+                DescFilter2 = 'english:';
                break;
         case 'it':
             // Italien
