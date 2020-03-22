@@ -87,9 +87,8 @@
 
         function requestXML(){
             var url = 'https://www.meteoalarm.eu/documents/rss/at.rss'
-
             adapter.log.info('Requesting data from ' + url)
-            request.post({
+        request.post({
             url:     url,
             timeout: 8000
           }, function(error, response, body){
@@ -123,14 +122,15 @@
                         adapter.log.error("Fehler: " + err);
                         adapter.terminate ? adapter.terminate(0) : process.exit(0);
                     } else {
-                        showToast(_('received XML for'   + country));
-
-                        //processJSON(result)
+                        processJSON(result)
                     }
                 });
             }
           });    
         }
+   
+        }
+
             
         
 
