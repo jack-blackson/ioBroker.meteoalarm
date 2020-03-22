@@ -62,13 +62,52 @@
             $('#loadRegions').on('click', function () {
                 var $loadRegions = $('#loadRegions');
                 let country = $('#country').val();
-                showToast(_('pressed loadregions for'   + country));
-                console.log("pressed loadregions for  " + country);
+
+                if (typeof (country) == 'undefinded' || country == '') {
+                    //$getDevices.removeClass('disabled');
+                    //$('#loader1').addClass('seenot');
+                    showToast(_('No country selected'));
+                    return
+                }
+                else{
+                    initRegions()
+
+                    
+                }
+
+
+
             });
 
 
 
         }
+
+        function initRegions() {
+            let regions;
+            let text = "";
+            let country = $('#country').val();
+
+            showToast(_('pressed loadregions for'   + country));
+
+            /*
+            try {
+                devices = JSON.parse($('#MiDevice').val())
+            } catch (e) {
+                console.log('cant parse devices');
+                return
+            }
+            if(Array.isArray(devices)){
+                devices.forEach(function (entry) {
+                        text += "<option value='" + JSON.stringify(entry) + "' >" + entry
+                            .model + ' - token: ' + entry.token + ' - ip: ' + (entry.localip ?
+                                entry.localip : '') + '</option>';
+
+                        //check if in config
+                    })
+                    $('#devices').html(text).select();*/
+                    $('#regions').html('test').select();
+            }
 </script>
 <style>
     .m .select-wrapper+label {
