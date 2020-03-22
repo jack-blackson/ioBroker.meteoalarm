@@ -40,6 +40,8 @@
         }
     
         function load(settings, onChange) {
+            const request = require('request');
+
             if (!settings) return;
             $('.value').each(function () {
                 var key = $(this).attr('id');
@@ -70,7 +72,7 @@
                     return
                 }
                 else{
-                    initRegions()
+                    requestXML()
 
                     
                 }
@@ -83,7 +85,57 @@
 
         }
 
-        function initRegions() {
+        function requestXML(){
+            var url = 'https://www.meteoalarm.eu/documents/rss/at.rss'
+
+            adapter.log.info('Requesting data from ' + url)
+            request.post({
+            url:     url,
+            timeout: 8000
+          }, function(error, response, body){
+            if (error){
+                if (error.code === 'ETIMEDOUT'){
+                    adapter.log.error('No website response after 8 seconds. Adapter will try again at next scheduled run.')
+                    adapter.terminate ? adapter.terminate(0) : process.exit(0);
+                }
+                else if (error.code === 'ESOCKETTIMEDOUT'){
+                    adapter.log.error('No website response after 8 seconds. Adapter will try again at next scheduled run.')
+                    adapter.terminate ? adapter.terminate(0) : process.exit(0);
+                }
+                else(
+                    adapter.log.error(error)
+                    
+                )
+            }
+            if (body) {
+                parseString(body, {
+    
+                    explicitArray: false,
+    
+                    mergeAttrs: true
+    
+                }, 
+    
+                function (err, result) {
+    
+                    if (err) {
+    
+                        adapter.log.error("Fehler: " + err);
+                        adapter.terminate ? adapter.terminate(0) : process.exit(0);
+                    } else {
+                        showToast(_('received XML for'   + country));
+
+                        //processJSON(result)
+                    }
+                });
+            }
+          });    
+        }
+            
+        
+
+
+        function fillRegions() {
             let regions;
             let text = "";
             let country = $('#country').val();
