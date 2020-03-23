@@ -24,7 +24,6 @@
 <!-- you have to define 2 functions in the global scope: -->
 <script type="text/javascript">
     var setup = [];
-    const request = require('request');
 
     // the function loadSettings has to exist ...
     function save(callback) {
@@ -66,57 +65,25 @@
                 let country = $('#country').val();
                 //showToast(_('pressed loadregions for'   + country));
                 console.log("pressed loadregions for  " + country);
-                requestXML()
+                requestXML('https://www.meteoalarm.eu/documents/rss/at.rss'){
+                     showToast(_('received callback for'   + country));
+
+                }
             });
 
 
 
         }
-        function requestXML(){
-            var url = 'https://www.meteoalarm.eu/documents/rss/at.rss'
-            adapter.log.info('Requesting data from ' + url)
-            showToast(_('start request for'   + country));
-
-        request.post({
-            url:     url,
-            timeout: 8000
-          }, function(error, response, body){
-            if (error){
-                if (error.code === 'ETIMEDOUT'){
-                    adapter.log.error('No website response after 8 seconds. Adapter will try again at next scheduled run.')
-                    adapter.terminate ? adapter.terminate(0) : process.exit(0);
-                }
-                else if (error.code === 'ESOCKETTIMEDOUT'){
-                    adapter.log.error('No website response after 8 seconds. Adapter will try again at next scheduled run.')
-                    adapter.terminate ? adapter.terminate(0) : process.exit(0);
-                }
-                else(
-                    adapter.log.error(error)
-                    
-                )
+        function requestXML(theUrl, callback)
+            {
+           var xmlHttp = new XMLHttpRequest();
+           xmlHttp.onreadystatechange = function() { 
+           if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+               callback(xmlHttp.responseText);
             }
-            if (body) {
-                parseString(body, {
-    
-                    explicitArray: false,
-    
-                    mergeAttrs: true
-    
-                }, 
-    
-                function (err, result) {
-    
-                    if (err) {
-                        showToast(_('Fehler:  '+ err));
-                        adapter.log.error("Fehler: " + err);
-                        adapter.terminate ? adapter.terminate(0) : process.exit(0);
-                    } else {
-                        showToast(_('received xml for'   + country));
-                    }
-                });
-            }
-          });    
-        }
+            xmlHttp.open("GET", theUrl, true); // true for asynchronous 
+            xmlHttp.send(null);
+}
 </script>
 <style>
     .m .select-wrapper+label {
