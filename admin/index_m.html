@@ -61,6 +61,7 @@
 
             $('#loadRegions').on('click', function () {
                 var $loadRegions = $('#loadRegions');
+                var $regionList = $('#regions')
                 $('#loader1').removeClass('seenot');
                 $loadRegions.addClass('disabled');
                 var $loadRegions = $('#loadRegions');
@@ -80,7 +81,7 @@
                         i += 1
                         console.log(i)
                     });
-                    $('#regions').html(text).select()
+                    $('#regionList').html(text).select()
                     showToast(_(i + ' regions updated'));
                     $loadRegions.removeClass('disabled');
                     $('#loader1').addClass('seenot');
