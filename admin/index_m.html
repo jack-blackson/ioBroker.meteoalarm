@@ -64,7 +64,7 @@
             $('#loadRegions').on('click', function () {
                 var $loadRegions = $('#loadRegions');
                 let country = $('#country').val();
-                showToast(_('pressed loadregions for'   + country));
+                //showToast(_('pressed loadregions for'   + country));
                 console.log("pressed loadregions for  " + country);
                 requestXML()
             });
@@ -105,7 +105,7 @@
                 function (err, result) {
     
                     if (err) {
-    
+                        showToast(_('Fehler:  '+ err));
                         adapter.log.error("Fehler: " + err);
                         adapter.terminate ? adapter.terminate(0) : process.exit(0);
                     } else {
