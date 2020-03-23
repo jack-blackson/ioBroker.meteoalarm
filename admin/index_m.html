@@ -66,35 +66,32 @@
                 //showToast(_('pressed loadregions for'   + country));
                 console.log("pressed loadregions for  " + country);
 
-                //let xml = requestXML('https://www.meteoalarm.eu/documents/rss/at.rss')
-                //let name = $(xml).find("title").text();
-
-                //showToast(_('received callback: '   + name)); 
-                showToast(_('received callback: '   + httpGet('https://www.meteoalarm.eu/documents/rss/at.rss'))); 
-
+                httpGet('https://cors-anywhere.herokuapp.com/https://www.meteoalarm.eu/documents/rss/at.rss', function(returnValue) {
+                    console.log(returnValue);
+                    let xml = returnValue
+                    let text = "";
+                    //let name = $(xml).find("title").text();
+                    //console.log(name);
+                    //showToast(_('received callback: '   + httpGet('https://www.meteoalarm.eu/documents/rss/at.rss')));
+                    var items = $(xml).find("title");
+                    for (var i = 0; i < items.length; i++) {
+                        text += $(xml).find("title").text()
+                    }
+                    $('#regions').html(text).select()
+                    
+                });
             });
         }
 
-        function httpGet(theUrl)
+        function httpGet(theUrl, callback)
         {
+            theUrl =  'https://cors-anywhere.herokuapp.com/' + theUrl
             var xmlHttp = new XMLHttpRequest();
-            xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+            xmlHttp.open( "GET", theUrl, false ); 
             xmlHttp.send( null );
-            return xmlHttp.statusText;
-        }       
+            callback(xmlHttp.statusText);
+        }           
 
-
-
-        function requestXML(theUrl, callback)
-        {
-           var xmlHttp = new XMLHttpRequest();
-           xmlHttp.onreadystatechange = function() { 
-           if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-               return callback(xmlHttp.statusText);
-            }
-            xmlHttp.open("GET", theUrl, true); // true for asynchronous 
-            xmlHttp.send(null);
-        }
 </script>
 <style>
     .m .select-wrapper+label {
