@@ -65,25 +65,20 @@
                 let country = $('#country').val();
                 //showToast(_('pressed loadregions for'   + country));
                 console.log("pressed loadregions for  " + country);
-                requestXML('https://www.meteoalarm.eu/documents/rss/at.rss'){
-                     showToast(_('received callback for'   + country));
-
-                }
+                showToast(_('received callback: '   + requestXML('https://www.meteoalarm.eu/documents/rss/at.rss'))); 
             });
-
-
-
         }
+
         function requestXML(theUrl, callback)
-            {
+        {
            var xmlHttp = new XMLHttpRequest();
            xmlHttp.onreadystatechange = function() { 
            if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-               callback(xmlHttp.responseText);
+               return callback(xmlHttp.responseText);
             }
             xmlHttp.open("GET", theUrl, true); // true for asynchronous 
             xmlHttp.send(null);
-}
+        }
 </script>
 <style>
     .m .select-wrapper+label {
