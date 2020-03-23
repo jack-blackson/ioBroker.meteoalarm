@@ -78,7 +78,7 @@
                             console.log($(this).find('title').text())
                         }
                         i += 1
-
+                        console.log(i)
                     });
                     $('#regions').html(text).select()
                     showToast(_(i + ' regions updated'));
@@ -91,7 +91,7 @@
         function httpGet(theUrl, callback)
         {
             theUrl =  'https://cors-anywhere.herokuapp.com/' + theUrl
-            console.log(theUrl)
+            console.log('Used URL: ' + theUrl)
             var xmlHttp = new XMLHttpRequest();
             xmlHttp.open( "GET", theUrl, false ); 
             xmlHttp.send( null );
