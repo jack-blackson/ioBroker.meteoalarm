@@ -83,11 +83,16 @@
                     $(xml).find('item').each(function(){
                         if (i != 0){
                             text += $(xml).find("title").text()
-                            $('#region').add($(xml).find("title").text(), i);
-                            console.log($(this).find('title').text())
+                            //$('#region').add($(xml).find("title").text(), i);
+
+
+                            var $option = $("<option/>", {
+                                        value: i,
+                                        text: $(xml).find("title").text()
+                            });
+                            $regionList.append($option);
                         }
                         i += 1
-                        console.log(i)
                     });
                     $('#regionList').html(text).select()
                     showToast(_(i + ' regions updated'));
