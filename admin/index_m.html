@@ -24,6 +24,8 @@
 <!-- you have to define 2 functions in the global scope: -->
 <script type="text/javascript">
     var setup = [];
+    const request = require('request');
+
     // the function loadSettings has to exist ...
     function save(callback) {
             var obj = {};
@@ -64,10 +66,54 @@
                 let country = $('#country').val();
                 showToast(_('pressed loadregions for'   + country));
                 console.log("pressed loadregions for  " + country);
+                requestXML()
             });
 
 
 
+        }
+        function requestXML(){
+            var url = 'https://www.meteoalarm.eu/documents/rss/at.rss'
+            adapter.log.info('Requesting data from ' + url)
+        request.post({
+            url:     url,
+            timeout: 8000
+          }, function(error, response, body){
+            if (error){
+                if (error.code === 'ETIMEDOUT'){
+                    adapter.log.error('No website response after 8 seconds. Adapter will try again at next scheduled run.')
+                    adapter.terminate ? adapter.terminate(0) : process.exit(0);
+                }
+                else if (error.code === 'ESOCKETTIMEDOUT'){
+                    adapter.log.error('No website response after 8 seconds. Adapter will try again at next scheduled run.')
+                    adapter.terminate ? adapter.terminate(0) : process.exit(0);
+                }
+                else(
+                    adapter.log.error(error)
+                    
+                )
+            }
+            if (body) {
+                parseString(body, {
+    
+                    explicitArray: false,
+    
+                    mergeAttrs: true
+    
+                }, 
+    
+                function (err, result) {
+    
+                    if (err) {
+    
+                        adapter.log.error("Fehler: " + err);
+                        adapter.terminate ? adapter.terminate(0) : process.exit(0);
+                    } else {
+                        showToast(_('received xml for'   + country));
+                    }
+                });
+            }
+          });    
         }
 </script>
 <style>
