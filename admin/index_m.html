@@ -70,13 +70,14 @@
                     console.log(returnValue);
                     let xml = returnValue
                     let text = "";
+                    
                     //let name = $(xml).find("title").text();
                     //console.log(name);
                     //showToast(_('received callback: '   + httpGet('https://www.meteoalarm.eu/documents/rss/at.rss')));
-                    var items = $(xml).find("title");
-                    for (var i = 0; i < items.length; i++) {
+                    $(xml).find('item').each(function(){
                         text += $(xml).find("title").text()
-                    }
+                        console.log($(this).find('title').text()) // even if data.push is been called before this tempObj will still changes data[i] (because of the same reference thing, got it???)
+                    });
                     $('#regions').html(text).select()
                     
                 });
