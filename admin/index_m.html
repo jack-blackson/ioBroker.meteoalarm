@@ -91,6 +91,7 @@
         function httpGet(theUrl, callback)
         {
             theUrl =  'https://cors-anywhere.herokuapp.com/' + theUrl
+            console.log(theUrl)
             var xmlHttp = new XMLHttpRequest();
             xmlHttp.open( "GET", theUrl, false ); 
             xmlHttp.send( null );
