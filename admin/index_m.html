@@ -59,6 +59,13 @@
             });
             onChange(false);
 
+            $('#regions').change(function () {
+                //let tmp = JSON.parse($(this).val());
+                console.log("changed region")
+                //setValue('token', tmp.token, onChange);
+                setValue('pathXML', 'TESTWERT', onChange);
+            });
+
             $('#loadRegions').on('click', function () {
                 var $loadRegions = $('#loadRegions');
                 var $regionList = $('#regions')
@@ -76,6 +83,7 @@
                     $(xml).find('item').each(function(){
                         if (i != 0){
                             text += $(xml).find("title").text()
+                            $('#region').add($(xml).find("title").text(), i);
                             console.log($(this).find('title').text())
                         }
                         i += 1
