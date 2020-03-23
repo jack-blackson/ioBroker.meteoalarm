@@ -70,10 +70,20 @@
                 //let name = $(xml).find("title").text();
 
                 //showToast(_('received callback: '   + name)); 
-                showToast(_('received callback: '   + requestXML('https://www.meteoalarm.eu/documents/rss/at.rss'))); 
+                showToast(_('received callback: '   + httpGet('https://www.meteoalarm.eu/documents/rss/at.rss'))); 
 
             });
         }
+
+        function httpGet(theUrl)
+        {
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+            xmlHttp.send( null );
+            return xmlHttp.statusText;
+        }       
+
+
 
         function requestXML(theUrl, callback)
         {
