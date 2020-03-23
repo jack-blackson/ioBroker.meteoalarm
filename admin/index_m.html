@@ -75,6 +75,8 @@
         function requestXML(){
             var url = 'https://www.meteoalarm.eu/documents/rss/at.rss'
             adapter.log.info('Requesting data from ' + url)
+            showToast(_('start request for'   + country));
+
         request.post({
             url:     url,
             timeout: 8000
