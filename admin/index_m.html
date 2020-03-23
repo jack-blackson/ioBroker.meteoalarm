@@ -59,27 +59,30 @@
             });
             onChange(false);
 
-
             $('#loadRegions').on('click', function () {
+                $('#loader1').removeClass('seenot');
+                $loadRegions.addClass('disabled');
                 var $loadRegions = $('#loadRegions');
                 let country = $('#country').val();
-                //showToast(_('pressed loadregions for'   + country));
                 console.log("pressed loadregions for  " + country);
                 let url = 'https://www.meteoalarm.eu/documents/rss/' + country + '.rss'
                 httpGet(url, function(returnValue) {
                     console.log(returnValue);
                     let xml = returnValue
                     let text = "";
-                    
-                    //let name = $(xml).find("title").text();
-                    //console.log(name);
-                    //showToast(_('received callback: '   + httpGet('https://www.meteoalarm.eu/documents/rss/at.rss')));
+                    var i = 0
                     $(xml).find('item').each(function(){
-                        text += $(xml).find("title").text()
-                        console.log($(this).find('title').text()) // even if data.push is been called before this tempObj will still changes data[i] (because of the same reference thing, got it???)
+                        if (i != 0){
+                            text += $(xml).find("title").text()
+                            console.log($(this).find('title').text())
+                            i += 1
+                        }
+                         
                     });
                     $('#regions').html(text).select()
-                    showToast(_('regions updated'));
+                    showToast(_(i + ' regions updated'));
+                    $loadRegions.removeClass('disabled');
+                    $('#loader1').addClass('seenot');
                 });
             });
         }
@@ -98,6 +101,21 @@
     .m .select-wrapper+label {
         top: 100%;
     }
+
+    .loader {
+            border: 4px solid #b8d1f3;
+            /* Light grey */
+            border-top: 4px solid #3498db;
+            /* Blue */
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            animation: spin 2s linear infinite;
+        }
+
+        .seenot {
+            display: none;
+        }
 </style>
 </head>
 <body>
@@ -122,6 +140,9 @@
         </div>
         <div class="col s5 m3 l2">
             <a id="loadRegions" class=" btn-small translate">load regions<span></span></a>
+        </div>
+        <div class="col s2 ">
+            <div class="loader seenot" id="loader1"> </div>
         </div>
     </div>
     <div class="row">
