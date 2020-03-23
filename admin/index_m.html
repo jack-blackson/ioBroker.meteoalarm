@@ -24,6 +24,8 @@
 <!-- you have to define 2 functions in the global scope: -->
 <script type="text/javascript">
     var setup = [];
+    var regionArray = [];
+    var regionLinkArray = [];
 
     // the function loadSettings has to exist ...
     function save(callback) {
@@ -60,15 +62,15 @@
             onChange(false);
 
             $('#regions').change(function () {
-                //let tmp = JSON.parse($(this).val());
-                console.log("changed region")
-                //setValue('token', tmp.token, onChange);
-                setValue('pathXML', 'TESTWERT', onChange);
+                console.log("changed region to " + regionArray[this] + regionLinkArray[this])
+                setValue('pathXML', regionLinkArray[this] , onChange);
             });
 
             $('#loadRegions').on('click', function () {
                 var $loadRegions = $('#loadRegions');
                 var $regionList = $('#regions')
+                regionArray = [];
+                regionLinkArray = [];
                 $('#loader1').removeClass('seenot');
                 $loadRegions.addClass('disabled');
                 var $loadRegions = $('#loadRegions');
@@ -91,6 +93,8 @@
                                         text: $(xml).find("title").text()
                             });
                             $('#regions').append($option);
+                            regionArray.push($(xml).find("title").text());
+                            regionLinkArray.push($(xml).find("link").text());
                         }
                         i += 1
                     });
