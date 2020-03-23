@@ -66,10 +66,12 @@
                 //showToast(_('pressed loadregions for'   + country));
                 console.log("pressed loadregions for  " + country);
 
-                let xml = requestXML('https://www.meteoalarm.eu/documents/rss/at.rss')
-                let name = $(xml).find("title").text();
+                //let xml = requestXML('https://www.meteoalarm.eu/documents/rss/at.rss')
+                //let name = $(xml).find("title").text();
 
-                showToast(_('received callback: '   + name)); 
+                //showToast(_('received callback: '   + name)); 
+                showToast(_('received callback: '   + requestXML('https://www.meteoalarm.eu/documents/rss/at.rss'))); 
+
             });
         }
 
@@ -78,7 +80,7 @@
            var xmlHttp = new XMLHttpRequest();
            xmlHttp.onreadystatechange = function() { 
            if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-               return callback(xmlHttp.responseXML);
+               return callback(xmlHttp.statusText);
             }
             xmlHttp.open("GET", theUrl, true); // true for asynchronous 
             xmlHttp.send(null);
