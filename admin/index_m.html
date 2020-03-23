@@ -76,9 +76,9 @@
                         if (i != 0){
                             text += $(xml).find("title").text()
                             console.log($(this).find('title').text())
-                            i += 1
                         }
-                         
+                        i += 1
+
                     });
                     $('#regions').html(text).select()
                     showToast(_(i + ' regions updated'));
