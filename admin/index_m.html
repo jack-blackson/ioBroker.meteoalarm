@@ -65,7 +65,11 @@
                 let country = $('#country').val();
                 //showToast(_('pressed loadregions for'   + country));
                 console.log("pressed loadregions for  " + country);
-                showToast(_('received callback: '   + requestXML('https://www.meteoalarm.eu/documents/rss/at.rss'))); 
+
+                let xml = requestXML('https://www.meteoalarm.eu/documents/rss/at.rss')
+                let name = $(xml).find("title").text();
+
+                showToast(_('received callback: '   + name)); 
             });
         }
 
