@@ -40,8 +40,6 @@
         }
     
         function load(settings, onChange) {
-            const request = require('request');
-
             if (!settings) return;
             $('.value').each(function () {
                 var key = $(this).attr('id');
@@ -64,103 +62,13 @@
             $('#loadRegions').on('click', function () {
                 var $loadRegions = $('#loadRegions');
                 let country = $('#country').val();
-
-                if (typeof (country) == 'undefinded' || country == '') {
-                    //$getDevices.removeClass('disabled');
-                    //$('#loader1').addClass('seenot');
-                    showToast(_('No country selected'));
-                    return
-                }
-                else{
-                    requestXML()
-
-                    
-                }
-
-
-
+                showToast(_('pressed loadregions for'   + country));
+                console.log("pressed loadregions for  " + country);
             });
 
 
 
         }
-        /*
-        function requestXML(){
-            var url = 'https://www.meteoalarm.eu/documents/rss/at.rss'
-            adapter.log.info('Requesting data from ' + url)
-        request.post({
-            url:     url,
-            timeout: 8000
-          }, function(error, response, body){
-            if (error){
-                if (error.code === 'ETIMEDOUT'){
-                    adapter.log.error('No website response after 8 seconds. Adapter will try again at next scheduled run.')
-                    adapter.terminate ? adapter.terminate(0) : process.exit(0);
-                }
-                else if (error.code === 'ESOCKETTIMEDOUT'){
-                    adapter.log.error('No website response after 8 seconds. Adapter will try again at next scheduled run.')
-                    adapter.terminate ? adapter.terminate(0) : process.exit(0);
-                }
-                else(
-                    adapter.log.error(error)
-                    
-                )
-            }
-            if (body) {
-                parseString(body, {
-    
-                    explicitArray: false,
-    
-                    mergeAttrs: true
-    
-                }, 
-    
-                function (err, result) {
-    
-                    if (err) {
-    
-                        adapter.log.error("Fehler: " + err);
-                        adapter.terminate ? adapter.terminate(0) : process.exit(0);
-                    } else {
-                        showToast(_('received xml for'   + country));
-                    }
-                });
-            }
-          });    
-        }
-   
-        
-
-            
-        
-
-        
-        function fillRegions() {
-            let regions;
-            let text = "";
-            let country = $('#country').val();
-
-            showToast(_('pressed loadregions for'   + country));
-
-            
-            try {
-                devices = JSON.parse($('#MiDevice').val())
-            } catch (e) {
-                console.log('cant parse devices');
-                return
-            }
-            if(Array.isArray(devices)){
-                devices.forEach(function (entry) {
-                        text += "<option value='" + JSON.stringify(entry) + "' >" + entry
-                            .model + ' - token: ' + entry.token + ' - ip: ' + (entry.localip ?
-                                entry.localip : '') + '</option>';
-
-                        //check if in config
-                    })
-                    $('#devices').html(text).select();
-                    $('#regions').html('test').select();
-        }
-        */
 </script>
 <style>
     .m .select-wrapper+label {
