@@ -66,12 +66,12 @@
                 setValue('pathXML', regionLinkArray[this] , onChange);
             });
 
-            /*
+            
             document.addEventListener('DOMContentLoaded', function() {
                 var elems = document.querySelectorAll('select');
                 var instances = M.FormSelect.init(elems, options);
             });
-            */
+            
 
             $('#loadRegions').on('click', function () {
                 var $loadRegions = $('#loadRegions');
@@ -101,18 +101,14 @@
                             });
                             //$('#regions').append($option);
                             $('#regions').append('Test');
-                            //M.updateText
                             regionArray.push($(xml).find("title").text());
                             regionLinkArray.push($(xml).find("link").text());
                         }
                         i += 1
                     });
-                    //$('#regionList').html(text).select()
-                    //$("select").$regionList("destroy").$regionList();
                     $regionList.append('Test1');
-                    $('.mdb-select').material_select();
+                    instance.destroy();
                     //$('#regions').select()
-                    //$regionList.destroy()
 
                     showToast(_(i + ' regions updated'));
                     $loadRegions.removeClass('disabled');
@@ -202,7 +198,7 @@
     </div>
     <div class="row">
         <div class="col s12 m12 l12 input-field">
-            <select class="mdb-select " id="regions" type="text">
+            <select class="value" id="regions" type="text">
                 <option value="" disabled selected class="translate">Please select Country first</option>
             </select>
             <label class="translate" for="regions">regions</label>
