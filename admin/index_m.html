@@ -66,6 +66,12 @@
                 setValue('pathXML', regionLinkArray[this] , onChange);
             });
 
+            document.addEventListener('DOMContentLoaded', function() {
+                var elems = document.querySelectorAll('select');
+                var instances = M.FormSelect.init(elems, options);
+            });
+
+
             $('#loadRegions').on('click', function () {
                 var $loadRegions = $('#loadRegions');
                 var $regionList = $('#regions')
@@ -94,7 +100,7 @@
                             });
                             //$('#regions').append($option);
                             $('#regions').append('Test');
-
+                            M.updateText
                             regionArray.push($(xml).find("title").text());
                             regionLinkArray.push($(xml).find("link").text());
                         }
@@ -105,7 +111,7 @@
                     $regionList.append('Test1');
 
                     //$('#regions').select()
-                    $regionList.destroy()
+                    //$regionList.destroy()
 
                     showToast(_(i + ' regions updated'));
                     $loadRegions.removeClass('disabled');
