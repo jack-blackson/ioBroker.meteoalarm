@@ -104,7 +104,8 @@
                     //$("select").$regionList("destroy").$regionList();
                     $('#regions').append('Test1');
 
-                    $('#regions').select()
+                    //$('#regions').select()
+                    $regionList.destroy()
 
                     showToast(_(i + ' regions updated'));
                     $loadRegions.removeClass('disabled');
