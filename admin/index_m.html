@@ -98,7 +98,10 @@
                         }
                         i += 1
                     });
-                    $('#regionList').html(text).select()
+                    //$('#regionList').html(text).select()
+                    //$("select").$regionList("destroy").$regionList();
+                    $('#regions').select()
+
                     showToast(_(i + ' regions updated'));
                     $loadRegions.removeClass('disabled');
                     $('#loader1').addClass('seenot');
