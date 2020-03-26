@@ -26,11 +26,13 @@
     var setup = [];
     var regionArray = [];
     var regionLinkArray = [];
-
+    /*
     document.addEventListener('DOMContentLoaded', function() {
                 var elems = document.querySelectorAll('select');
                 var instances = M.FormSelect.init(elems, options);
     });
+    */
+
 
     // the function loadSettings has to exist ...
     function save(callback) {
@@ -109,7 +111,13 @@
                         i += 1
                     });
                     $regionList.append('Test1');
+
+                    let instance =  M.FormSelect.getInstance($('#regions'));
+
                     instance.destroy();
+
+                    instances = M.FormSelect.init($('#regions'));
+                    //instance.destroy();
                     //$('#regions').select()
 
                     showToast(_(i + ' regions updated'));
