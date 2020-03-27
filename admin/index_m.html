@@ -70,17 +70,9 @@
             onChange(false);
 
             $('#regions').change(function () {
-                //console.log('Ausgewählt: ' + $(this).val())
-                //console.log('AusgewähltKey: ' + $(this).key())
-
-                console.log("changed region to " + regionArray[$(this).val()] + regionLinkArray[$(this).val()])
                 $('#pathXML').val(regionLinkArray[$(this).val()]).trigger('change');
                 M.updateTextFields();
             });
-
-            
-            
-            
 
             $('#loadRegions').on('click', function () {
                 var $loadRegions = $('#loadRegions');
@@ -111,7 +103,11 @@
                             });
                             $('#regions').append($option);
                             regionArray.push($(this).find("title").text());
-                            regionLinkArray.push($(this).find("link").text());
+
+                            let origLink = $(this).find("link").text()
+                            let linkPartPos = origLink.indexOf('/0/0/') + 5
+                            let newLink = 'https://www.meteoalarm.eu/documents/rss/' + country + '/' + origLink.slice(linkPartPos, linkPartPos + 5) + '.rss'
+                            regionLinkArray.push(newLink);
                         }
                         i += 1
                     });
@@ -130,7 +126,6 @@
         function httpGet(theUrl, callback)
         {
             theUrl =  'https://cors-anywhere.herokuapp.com/' + theUrl
-            console.log('Used URL: ' + theUrl)
             var xmlHttp = new XMLHttpRequest();
             xmlHttp.open( "GET", theUrl, false ); 
             xmlHttp.send( null );
