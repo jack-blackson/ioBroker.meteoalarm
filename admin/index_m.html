@@ -69,12 +69,12 @@
             onChange(false);
 
             $('#regions').change(function () {
-                console.log('AusgewähltVal: ' + $(this).val())
-                console.log('AusgewähltKey: ' + $(this).key())
+                //console.log('Ausgewählt: ' + $(this).val())
+                //console.log('AusgewähltKey: ' + $(this).key())
 
-                //console.log("changed region to " + regionArray[this] + regionLinkArray[this])
-                //setValue('pathXML', regionLinkArray[this] , onChange);
-                $('#pathXML').val(regionLinkArray[2]).trigger('change');
+                console.log("changed region to " + regionArray[$(this).val()] + regionLinkArray[$(this).val()])
+                //setValue('pathXML', regionLinkArray[$(this).val()] , onChange);
+                $('#pathXML').val(regionLinkArray[$(this).val()]).trigger('change');
                 M.updateTextFields();
             });
 
@@ -91,16 +91,13 @@
                 $loadRegions.addClass('disabled');
                 var $loadRegions = $('#loadRegions');
                 let country = $('#country').val();
-                console.log("pressed loadregions for  " + country);
                 let url = 'https://www.meteoalarm.eu/documents/rss/' + country + '.rss'
                 httpGet(url, function(returnValue) {
-                    console.log(returnValue);
                     let xml = returnValue
                     let text = "";
                     var i = 0
                     $(xml).find('item').each(function(){
                         if (i != 0){
-                            console.log($(this).find("title").text())
                             var $option = $("<option/>", {
                                         value: i,
                                         text: $(this).find("title").text()
