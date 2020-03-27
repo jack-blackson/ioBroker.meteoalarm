@@ -71,7 +71,7 @@
             $('#regions').change(function () {
                 console.log("changed region to " + regionArray[this] + regionLinkArray[this])
                 //setValue('pathXML', regionLinkArray[this] , onChange);
-                $('#pathXML').val(regionLinkArray[this]).trigger('change');
+                $('#pathXML').val(regionLinkArray[2]).trigger('change');
                 M.updateTextFields();
             });
 
