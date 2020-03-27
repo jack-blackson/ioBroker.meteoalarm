@@ -69,6 +69,7 @@
             onChange(false);
 
             $('#regions').change(function () {
+                console.log('Ausgewählt: ' + $('select').material_select())
                 console.log("changed region to " + regionArray[this] + regionLinkArray[this])
                 //setValue('pathXML', regionLinkArray[this] , onChange);
                 $('#pathXML').val(regionLinkArray[2]).trigger('change');
@@ -113,7 +114,7 @@
 
                     instance.destroy();
                     instances = M.FormSelect.init($('#regions'));
-
+                    instance.open()
                     showToast(_(i + ' regions updated'));
                     $loadRegions.removeClass('disabled');
                     $('#loader1').addClass('seenot');
