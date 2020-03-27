@@ -96,9 +96,16 @@
                     let xml = returnValue
                     let text = "";
                     var i = 0
+                    $("regions").val("");
+                    var $option = $("<option/>", {
+                                        value: 0,
+                                        text: 'Choose region'
+                            });
+                    $('#regions').append($option);
                     $(xml).find('item').each(function(){
+                        
                         if (i != 0){
-                            var $option = $("<option/>", {
+                            $option = $("<option/>", {
                                         value: i,
                                         text: $(this).find("title").text()
                             });
