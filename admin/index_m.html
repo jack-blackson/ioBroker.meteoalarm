@@ -74,7 +74,6 @@
                 //console.log('AusgewähltKey: ' + $(this).key())
 
                 console.log("changed region to " + regionArray[$(this).val()] + regionLinkArray[$(this).val()])
-                //setValue('pathXML', regionLinkArray[$(this).val()] , onChange);
                 $('#pathXML').val(regionLinkArray[$(this).val()]).trigger('change');
                 M.updateTextFields();
             });
@@ -97,8 +96,6 @@
                     let xml = returnValue
                     let text = "";
                     var i = 0
-                    //$("regions").val("");
-                    //$('#regions').empty()
                     $('#regions').empty().html(' ');
                     var $option = $("<option/>", {
                                         value: 0,
