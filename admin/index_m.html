@@ -69,8 +69,10 @@
             onChange(false);
 
             $('#regions').change(function () {
-                console.log('Ausgewählt: ' + $('select').material_select())
-                console.log("changed region to " + regionArray[this] + regionLinkArray[this])
+                console.log('AusgewähltVal: ' + $(this).val())
+                console.log('AusgewähltKey: ' + $(this).key())
+
+                //console.log("changed region to " + regionArray[this] + regionLinkArray[this])
                 //setValue('pathXML', regionLinkArray[this] , onChange);
                 $('#pathXML').val(regionLinkArray[2]).trigger('change');
                 M.updateTextFields();
