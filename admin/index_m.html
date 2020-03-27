@@ -104,21 +104,21 @@
                                         text: $(xml).find("title").text()
                             });
                             $('#regions').append($option);
-                            $('#regions').append('Test');
+                            //$('#regions').append('Test');
                             regionArray.push($(xml).find("title").text());
                             regionLinkArray.push($(xml).find("link").text());
                         }
                         i += 1
                     });
-                    $regionList.append('Test1');
+                    //$regionList.append('Test1');
 
                     let instance =  M.FormSelect.getInstance($('#regions'));
 
                     
-                    $regionList.append('Test1');
-                    $('#regions').append('Test');
-                    console.log('$Regionlist' + $regionList.text)
-                    console.log('#Regions' + $('#regions').text)
+                    //$regionList.append('Test1');
+                    //$('#regions').append('Test');
+                    //console.log('$Regionlist' + $regionList.text)
+                    //console.log('#Regions' + $('#regions').text)
                     instance.destroy();
                     instances = M.FormSelect.init($('#regions'));
                     //instance.destroy();
