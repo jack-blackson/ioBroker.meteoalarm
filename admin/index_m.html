@@ -70,7 +70,9 @@
 
             $('#regions').change(function () {
                 console.log("changed region to " + regionArray[this] + regionLinkArray[this])
-                setValue('pathXML', regionLinkArray[this] , onChange);
+                //setValue('pathXML', regionLinkArray[this] , onChange);
+                $('#pathXML').val('test').trigger('change');
+                M.updateTextFields();
             });
 
             
@@ -95,34 +97,22 @@
                     var i = 0
                     $(xml).find('item').each(function(){
                         if (i != 0){
-                            //text += $(xml).find("title").text()
-                            //$('#region').add($(xml).find("title").text(), i);
-
                             console.log($(this).find("title").text())
                             var $option = $("<option/>", {
                                         value: i,
                                         text: $(this).find("title").text()
                             });
                             $('#regions').append($option);
-                            //$('#regions').append('Test');
                             regionArray.push($(this).find("title").text());
                             regionLinkArray.push($(this).find("link").text());
                         }
                         i += 1
                     });
-                    //$regionList.append('Test1');
 
                     let instance =  M.FormSelect.getInstance($('#regions'));
 
-                    
-                    //$regionList.append('Test1');
-                    //$('#regions').append('Test');
-                    //console.log('$Regionlist' + $regionList.text)
-                    //console.log('#Regions' + $('#regions').text)
                     instance.destroy();
                     instances = M.FormSelect.init($('#regions'));
-                    //instance.destroy();
-                    //$('#regions').select()
 
                     showToast(_(i + ' regions updated'));
                     $loadRegions.removeClass('disabled');
