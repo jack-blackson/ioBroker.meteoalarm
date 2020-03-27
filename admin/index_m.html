@@ -103,7 +103,7 @@
                                         value: i,
                                         text: $(xml).find("title").text()
                             });
-                            //$('#regions').append($option);
+                            $('#regions').append($option);
                             $('#regions').append('Test');
                             regionArray.push($(xml).find("title").text());
                             regionLinkArray.push($(xml).find("link").text());
@@ -112,13 +112,15 @@
                     });
                     $regionList.append('Test1');
 
-                    let instance =  M.FormSelect.getInstance($('value'));
+                    let instance =  M.FormSelect.getInstance($('#regions'));
 
-                    instance.destroy();
+                    
                     $regionList.append('Test1');
                     $('#regions').append('Test');
-
-                    instances = M.FormSelect.init($('value'));
+                    console.log('$Regionlist' + $regionList.text)
+                    console.log('#Regions' + $('#regions').text)
+                    instance.destroy();
+                    instances = M.FormSelect.init($('#regions'));
                     //instance.destroy();
                     //$('#regions').select()
 
@@ -211,7 +213,7 @@
     <div class="row">
         <div class="col s12 m12 l12 input-field">
             <select class="value" id="regions" type="text">
-                <option value="" disabled selected class="translate">Please select Country first</option>
+                <option value="" disabled selected class="translate">Please select country first</option>
             </select>
             <label class="translate" for="regions">regions</label>
         </div>
