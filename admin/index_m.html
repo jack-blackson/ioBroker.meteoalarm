@@ -95,18 +95,18 @@
                     var i = 0
                     $(xml).find('item').each(function(){
                         if (i != 0){
-                            text += $(xml).find("title").text()
+                            //text += $(xml).find("title").text()
                             //$('#region').add($(xml).find("title").text(), i);
 
 
                             var $option = $("<option/>", {
                                         value: i,
-                                        text: $(xml).find("title").text()
+                                        text: $(this).find("title").text()
                             });
                             $('#regions').append($option);
                             //$('#regions').append('Test');
-                            regionArray.push($(xml).find("title").text());
-                            regionLinkArray.push($(xml).find("link").text());
+                            regionArray.push($(this).find("title").text());
+                            regionLinkArray.push($(this).find("link").text());
                         }
                         i += 1
                     });
