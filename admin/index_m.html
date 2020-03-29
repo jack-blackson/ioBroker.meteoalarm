@@ -120,7 +120,7 @@
 
         function getVariableTranslation(){
         var language = ''
-        adapter.getForeignObject('system.config', (err, systemConfig) => {
+        getForeignObject('system.config', (err, systemConfig) => {
             language = systemConfig.common.language
 
         switch (language) {
