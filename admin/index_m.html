@@ -31,6 +31,7 @@
     
     // the function loadSettings has to exist ...
     function save(callback) {
+
             var obj = {};
             $('.value').each(function () {
                 var $this = $(this);
@@ -45,6 +46,7 @@
         }
     
         function load(settings, onChange) {
+            getVariableTranslation()
             if (!settings) return;
             $('.value').each(function () {
                 var key = $(this).attr('id');
@@ -125,6 +127,50 @@
             xmlHttp.send( null );
             callback(xmlHttp.responseXML);
         }           
+
+        function getVariableTranslation(){
+        var language = ''
+        system.getForeignObject('system.config', (err, systemConfig) => {
+            language = systemConfig.common.language
+
+        switch (language) {
+            case 'de':
+                textLoadRegions = 'Regionen geladen';
+                break;
+            case 'en':
+                textLoadRegions = 'Regions loaded';
+                break;
+            case 'ru':
+                textLoadRegions = 'Регионы загружены';
+                break;
+            case 'pt':
+                textLoadRegions = 'Regiões carregadas';
+                break;
+            case 'nl':
+                textLoadRegions = 'Gebieden geladen';
+                break;
+            case 'fr':
+                textLoadRegions = 'Régions chargées';
+                break;
+            case 'it':
+                textLoadRegions = 'Regioni caricate';
+                break;
+            case 'es':
+                textLoadRegions = 'Regiones cargadas';
+                break;
+            case 'pl':
+                textLoadRegions = 'Regiony załadowane';
+                break;
+            case 'zh-cn':
+                textLoadRegions = '加载区域';
+                break;    
+            default:
+                textLoadRegions = 'Regions loaded';
+                    break;
+          }
+
+    });
+}
 
 </script>
 <style>
