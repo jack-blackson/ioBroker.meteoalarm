@@ -81,7 +81,7 @@ Please go to http://meteoalarm.eu and choose your region. Then go to the RSS sym
 * Moldova
 * Montenegro
 * Netherlands
-* Norwege
+* Norway
 * Poland
 * Romania
 * Serbia
