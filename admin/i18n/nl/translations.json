@@ -1,4 +1,9 @@
 {
+    "AddLinkAutomatically": "Genereer de link door land en regio te kiezen",
+    "AddLinkManually": "Download de link van de meteoalarm-website",
     "AddPath": "Voeg hier het pad naar de XML van meteoalarm.eu toe",
-    "instruction": "Raadpleeg de beschrijving hier voor hulp: https://github.com/jack-blackson/ioBroker.meteoalarm"
+    "country": "Land",
+    "instruction": "Raadpleeg de beschrijving hier voor hulp: https://github.com/jack-blackson/ioBroker.meteoalarm",
+    "instructionLoading": "Selecteer eerst het land en klik op: laad regio",
+    "loadRegions": "Laad regio's"
 }

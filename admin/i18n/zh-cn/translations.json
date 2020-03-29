@@ -1,4 +1,9 @@
 {
+    "AddLinkAutomatically": "通过选择国家和地区来生成链接",
+    "AddLinkManually": "从meteoalarm网站获取链接",
     "AddPath": "请在这里添加meteoalarm.eu的XML路径",
-    "instruction": "如需帮助，请查看以下说明：https：//github.com/jack-blackson/ioBroker.meteoalarm"
+    "country": "国家",
+    "instruction": "如需帮助，请查看以下说明：https：//github.com/jack-blackson/ioBroker.meteoalarm",
+    "instructionLoading": "请首先选择国家，然后单击：加载区域",
+    "loadRegions": "加载区域"
 }

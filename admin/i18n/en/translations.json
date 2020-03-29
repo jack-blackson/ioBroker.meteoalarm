@@ -1,4 +1,9 @@
 {
-    "AddPath": "Please add here the path to the XML from meteoalarm.eu",
-    "instruction": "For help, please check the description here: https://github.com/jack-blackson/ioBroker.meteoalarm"
+    "AddLinkAutomatically": "Generate the link by choosing country and region",
+    "AddLinkManually": "Get the link from the meteoalarm website",
+    "AddPath": "Add the XML path manually from meteoalarm.eu",
+    "country": "Country",
+    "instruction": "For help, please check the description here: https://github.com/jack-blackson/ioBroker.meteoalarm",
+    "instructionLoading": "Please select country first and click: load region",
+    "loadRegions": "Load regions"
 }

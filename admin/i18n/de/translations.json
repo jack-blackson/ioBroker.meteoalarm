@@ -1,4 +1,9 @@
 {
+    "AddLinkAutomatically": "Generieren Sie den Link, indem Sie Land und Region auswählen",
+    "AddLinkManually": "Holen Sie sich den Link von der Meteoalarm-Website",
     "AddPath": "Bitte fügen Sie hier den Pfad zum XML auf meteoalarm.eu ein",
-    "instruction": "Für Hilfe, besuchen Sie: https://github.com/jack-blackson/ioBroker.meteoalarm"
+    "country": "Land",
+    "instruction": "Für Hilfe, besuchen Sie: https://github.com/jack-blackson/ioBroker.meteoalarm",
+    "instructionLoading": "Bitte wählen Sie zuerst das Land aus und klicken Sie auf: Region laden",
+    "loadRegions": "Regionen laden"
 }
