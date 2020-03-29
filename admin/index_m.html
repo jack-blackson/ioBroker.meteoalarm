@@ -87,7 +87,7 @@
                     $('#regions').empty().html(' ');
                     var $option = $("<option/>", {
                                         value: 0,
-                                        text: 'Choose region'
+                                        text: textChooseRegion
                             });
                     $('#regions').append($option);
                     $(xml).find('item').each(function(){
@@ -112,7 +112,7 @@
 
                     instance.destroy();
                     instances = M.FormSelect.init($('#regions'));
-                    //showToast(_(textLoadRegions + ': ' + i));
+                    showToast(_(textLoadRegions + ': ' + i));
                     $loadRegions.removeClass('disabled');
                     $('#loader1').addClass('seenot');
                 });
@@ -129,7 +129,7 @@
         }           
 
         function getVariableTranslation(){
-        var language = this.language
+        var language = this.language.text()
         console.log('Sprache: ' + language)
         //system.getForeignObject('system.config', (err, systemConfig) => {
             //language = systemConfig.common.language
@@ -137,36 +137,47 @@
         switch (language) {
             case 'de':
                 textLoadRegions = 'Regionen geladen';
+                textChooseRegion = 'Region auswählen';
                 break;
             case 'en':
                 textLoadRegions = 'Regions loaded';
+                textChooseRegion = 'Choose region';
                 break;
             case 'ru':
                 textLoadRegions = 'Регионы загружены';
+                textChooseRegion = 'Выберите регион';
                 break;
             case 'pt':
                 textLoadRegions = 'Regiões carregadas';
+                textChooseRegion = 'Escolha a região';
                 break;
             case 'nl':
                 textLoadRegions = 'Gebieden geladen';
+                textChooseRegion = 'Kies regio';
                 break;
             case 'fr':
                 textLoadRegions = 'Régions chargées';
+                textChooseRegion = 'Choisissez la région';
                 break;
             case 'it':
                 textLoadRegions = 'Regioni caricate';
+                textChooseRegion = 'Scegli la regione';
                 break;
             case 'es':
                 textLoadRegions = 'Regiones cargadas';
+                textChooseRegion = 'Elige región';
                 break;
             case 'pl':
                 textLoadRegions = 'Regiony załadowane';
+                textChooseRegion = 'Wybierz region';
                 break;
             case 'zh-cn':
-                textLoadRegions = '加载区域';
+                textLoadRegions = '加载区域';                
+                textChooseRegion = '选择地区';
                 break;    
             default:
                 textLoadRegions = 'Regions loaded';
+                textChooseRegion = 'Choose region';
                     break;
           }
 
