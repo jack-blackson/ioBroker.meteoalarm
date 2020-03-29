@@ -31,5 +31,6 @@
     "country": "Land",
     "instruction": "Raadpleeg de beschrijving hier voor hulp: https://github.com/jack-blackson/ioBroker.meteoalarm",
     "instructionLoading": "Selecteer eerst het land en klik op: laad regio",
-    "loadRegions": "Laad regio's"
+    "loadRegions": "Laad regio's",
+    "regions": "Regio's"
 }

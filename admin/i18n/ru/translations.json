@@ -31,5 +31,6 @@
     "country": "Страна",
     "instruction": "Для помощи, пожалуйста, проверьте описание здесь: https://github.com/jack-blackson/ioBroker.meteoalarm",
     "instructionLoading": "Пожалуйста, сначала выберите страну и нажмите: загрузить регион",
-    "loadRegions": "Загрузить регионы"
+    "loadRegions": "Загрузить регионы",
+    "regions": "районы"
 }

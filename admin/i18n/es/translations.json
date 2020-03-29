@@ -31,5 +31,6 @@
     "country": "País",
     "instruction": "Para obtener ayuda, consulte la descripción aquí: https://github.com/jack-blackson/ioBroker.meteoalarm",
     "instructionLoading": "Seleccione primero el país y haga clic en: cargar región",
-    "loadRegions": "Regiones de carga"
+    "loadRegions": "Regiones de carga",
+    "regions": "Regiones"
 }

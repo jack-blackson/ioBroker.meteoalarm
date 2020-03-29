@@ -31,5 +31,6 @@
     "country": "国家",
     "instruction": "如需帮助，请查看以下说明：https：//github.com/jack-blackson/ioBroker.meteoalarm",
     "instructionLoading": "请首先选择国家，然后单击：加载区域",
-    "loadRegions": "加载区域"
+    "loadRegions": "加载区域",
+    "regions": "地区"
 }

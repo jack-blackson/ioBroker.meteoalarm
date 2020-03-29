@@ -19,8 +19,7 @@
     "Moldova": "Moldawien",
     "Montenegro": "Montenegro",
     "Netherlands": "Niederlande",
-    "Norway": "Norwege",
-    "Norwege": "",
+    "Norway": "Norwegen",
     "Poland": "Polen",
     "Romania": "Rumänien",
     "Serbia": "Serbien",
@@ -31,5 +30,6 @@
     "country": "Land",
     "instruction": "Für Hilfe, besuchen Sie: https://github.com/jack-blackson/ioBroker.meteoalarm",
     "instructionLoading": "Bitte wählen Sie zuerst das Land aus und klicken Sie auf: Region laden",
-    "loadRegions": "Regionen laden"
+    "loadRegions": "Regionen laden",
+    "regions": "Regionen"
 }
