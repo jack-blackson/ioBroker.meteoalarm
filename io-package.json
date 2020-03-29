@@ -3,6 +3,18 @@
         "name": "meteoalarm",
         "version": "1.1.0",
         "news": {
+            "1.1.0": {
+                "en": "Restructuring of settings, generate link automatically",
+                "de": "Umstrukturierung der Einstellungen, Link automatisch generieren",
+                "ru": "Реструктуризация настроек, автоматическая генерация ссылки",
+                "pt": "Reestruturação de configurações, gerar link automaticamente",
+                "nl": "Herstructurering van instellingen, automatisch link genereren",
+                "fr": "Restructuration des paramètres, génération automatique du lien",
+                "it": "Ristrutturazione delle impostazioni, genera automaticamente il collegamento",
+                "es": "Reestructuración de configuraciones, generar enlace automáticamente",
+                "pl": "Restrukturyzacja ustawień, automatyczne generowanie linku",
+                "zh-cn": "重组设置，自动生成链接"
+            },
             "1.0.9": {
                 "en": "Bugfix Germany",
                 "de": "Bugfix Deutschland",

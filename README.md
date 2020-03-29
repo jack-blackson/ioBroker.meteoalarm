@@ -102,6 +102,8 @@ If you don't find your country, please create an issue on github, and I will be 
 
 
 ## Changelog
+## 1.1.0 (2020-03-29)
+* (jack-blackson) Bugfix Germany
 ## 1.0.9 (2020-02-06)
 * (jack-blackson) Bugfix Germany
 ## 1.0.8 (2019-11-15)
