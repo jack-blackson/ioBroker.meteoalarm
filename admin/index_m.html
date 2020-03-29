@@ -28,6 +28,8 @@
     var regionLinkArray = [];
     var textLoadRegions = '';
     var textChooseRegion = '';
+    let adapter;
+
     
     // the function loadSettings has to exist ...
     function save(callback) {
@@ -46,7 +48,7 @@
         }
     
         function load(settings, onChange) {
-            getVariableTranslation()
+            //getVariableTranslation()
             if (!settings) return;
             $('.value').each(function () {
                 var key = $(this).attr('id');
