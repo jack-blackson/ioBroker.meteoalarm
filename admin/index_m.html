@@ -89,7 +89,7 @@
                     $('#regions').empty().html(' ');
                     var $option = $("<option/>", {
                                         value: 0,
-                                        text: textChooseRegion
+                                        text: '--------'
                             });
                     $('#regions').append($option);
                     $(xml).find('item').each(function(){
@@ -114,7 +114,7 @@
 
                     instance.destroy();
                     instances = M.FormSelect.init($('#regions'));
-                    showToast(_(textLoadRegions + ': ' + i));
+                    //showToast(_(textLoadRegions + ': ' + i));
                     $loadRegions.removeClass('disabled');
                     $('#loader1').addClass('seenot');
                 });
@@ -131,6 +131,7 @@
         }           
 
         function getVariableTranslation(){
+            // not working at the moment, as I can not determine the language code
         var language = adapter.language.text()
         console.log('Sprache: ' + language)
         //system.getForeignObject('system.config', (err, systemConfig) => {
