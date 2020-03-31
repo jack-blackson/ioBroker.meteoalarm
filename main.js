@@ -29,6 +29,7 @@ function startAdapter(options) {
     options = options || {};
     Object.assign(options, {
         name: 'meteoalarm',
+        useFormatDate: true,
         ready: function() {
             main()
         }

@@ -24,8 +24,15 @@
 <!-- you have to define 2 functions in the global scope: -->
 <script type="text/javascript">
     var setup = [];
+    var regionArray = [];
+    var regionLinkArray = [];
+    var textLoadRegions = '';
+    var textChooseRegion = '';
+
+    
     // the function loadSettings has to exist ...
     function save(callback) {
+
             var obj = {};
             $('.value').each(function () {
                 var $this = $(this);
@@ -40,6 +47,7 @@
         }
     
         function load(settings, onChange) {
+            //getVariableTranslation()
             if (!settings) return;
             $('.value').each(function () {
                 var key = $(this).attr('id');
@@ -57,12 +65,147 @@
                 }
             });
             onChange(false);
+
+            $('#regions').change(function () {
+                $('#pathXML').val(regionLinkArray[$(this).val()-1]).trigger('change');
+                M.updateTextFields();
+            });
+
+            $('#loadRegions').on('click', function () {
+                var $loadRegions = $('#loadRegions');
+                var $regionList = $('#regions')
+                regionArray = [];
+                regionLinkArray = [];
+                $('#loader1').removeClass('seenot');
+                $loadRegions.addClass('disabled');
+                var $loadRegions = $('#loadRegions');
+                let country = $('#country').val();
+                let url = 'https://www.meteoalarm.eu/documents/rss/' + country + '.rss'
+                httpGet(url, function(returnValue) {
+                    let xml = returnValue
+                    let text = "";
+                    var i = 0
+                    $('#regions').empty().html(' ');
+                    var $option = $("<option/>", {
+                                        value: 0,
+                                        text: '--------'
+                            });
+                    $('#regions').append($option);
+                    $(xml).find('item').each(function(){
+                        
+                        if (i != 0){
+                            $option = $("<option/>", {
+                                        value: i,
+                                        text: $(this).find("title").text()
+                            });
+                            $('#regions').append($option);
+                            regionArray.push($(this).find("title").text());
+
+                            let origLink = $(this).find("link").text()
+                            let linkPartPos = origLink.indexOf('/0/0/') + 5
+                            let newLink = 'https://www.meteoalarm.eu/documents/rss/' + country + '/' + origLink.slice(linkPartPos, linkPartPos + 5) + '.rss'
+                            regionLinkArray.push(newLink);
+                        }
+                        i += 1
+                    });
+
+                    let instance =  M.FormSelect.getInstance($('#regions'));
+
+                    instance.destroy();
+                    instances = M.FormSelect.init($('#regions'));
+                    //showToast(_(textLoadRegions + ': ' + i));
+                    $loadRegions.removeClass('disabled');
+                    $('#loader1').addClass('seenot');
+                });
+            });
         }
+
+        function httpGet(theUrl, callback)
+        {
+            theUrl =  'https://cors-anywhere.herokuapp.com/' + theUrl
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.open( "GET", theUrl, false ); 
+            xmlHttp.send( null );
+            callback(xmlHttp.responseXML);
+        }           
+
+        function getVariableTranslation(){
+            // not working at the moment, as I can not determine the language code
+        var language = adapter.language.text()
+        console.log('Sprache: ' + language)
+        //system.getForeignObject('system.config', (err, systemConfig) => {
+            //language = systemConfig.common.language
+
+        switch (language) {
+            case 'de':
+                textLoadRegions = 'Regionen geladen';
+                textChooseRegion = 'Region auswählen';
+                break;
+            case 'en':
+                textLoadRegions = 'Regions loaded';
+                textChooseRegion = 'Choose region';
+                break;
+            case 'ru':
+                textLoadRegions = 'Регионы загружены';
+                textChooseRegion = 'Выберите регион';
+                break;
+            case 'pt':
+                textLoadRegions = 'Regiões carregadas';
+                textChooseRegion = 'Escolha a região';
+                break;
+            case 'nl':
+                textLoadRegions = 'Gebieden geladen';
+                textChooseRegion = 'Kies regio';
+                break;
+            case 'fr':
+                textLoadRegions = 'Régions chargées';
+                textChooseRegion = 'Choisissez la région';
+                break;
+            case 'it':
+                textLoadRegions = 'Regioni caricate';
+                textChooseRegion = 'Scegli la regione';
+                break;
+            case 'es':
+                textLoadRegions = 'Regiones cargadas';
+                textChooseRegion = 'Elige región';
+                break;
+            case 'pl':
+                textLoadRegions = 'Regiony załadowane';
+                textChooseRegion = 'Wybierz region';
+                break;
+            case 'zh-cn':
+                textLoadRegions = '加载区域';                
+                textChooseRegion = '选择地区';
+                break;    
+            default:
+                textLoadRegions = 'Regions loaded';
+                textChooseRegion = 'Choose region';
+                    break;
+          }
+
+    //});
+}
+
 </script>
 <style>
     .m .select-wrapper+label {
         top: 100%;
     }
+
+    .loader {
+            border: 4px solid #b8d1f3;
+            /* Light grey */
+            border-top: 4px solid #3498db;
+            /* Blue */
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            animation: spin 2s linear infinite;
+        }
+
+        .seenot {
+            display: none;
+        }
 </style>
 </head>
 <body>
@@ -74,7 +217,58 @@
             </div>
         </div>
     </div>
-    
+    <div class="col s12">
+        <h6 class="title translate" data-lang="AddLinkAutomatically">AddLinkAutomatically</h6>
+    </div>
+    <div class="row">
+        <div class="input-field col s12 m4 l2 ">
+            <select class="value " id="country" type="text">
+                <option value="" disabled selected class="translate">ChooseCountry</option>
+                <option value="at" class="translate">Austria</option>                
+                <option value="hr" class="translate">Croatia</option>
+                <option value="cz" class="translate">Czech Republic</option>
+                <option value="fi" class="translate">Finnland</option>
+                <option value="de" class="translate">Germany</option>
+                <option value="gr" class="translate">Greece</option>
+                <option value="hu" class="translate">Hungary</option>
+                <option value="ie" class="translate">Ireland</option>
+                <option value="il" class="translate">Israel</option>
+                <option value="it" class="translate">Italy</option>
+                <option value="lv" class="translate">Latvia</option>
+                <option value="lt" class="translate">Lithuania</option>
+                <option value="mt" class="translate">Malta</option>
+                <option value="md" class="translate">Moldova</option>
+                <option value="me" class="translate">Montenegro</option>
+                <option value="nl" class="translate">Netherlands</option>
+                <option value="no" class="translate">Norway</option>
+                <option value="pl" class="translate">Poland</option>
+                <option value="ro" class="translate">Romania</option>
+                <option value="rs" class="translate">Serbia</option>
+                <option value="si" class="translate">Slovakia</option>
+                <option value="es" class="translate">Spain</option>
+                <option value="ch" class="translate">Switzerland</option>
+                <option value="se" class="translate">Sweden</option>
+            </select>
+            <label class="translate" for="country">country</label>
+        </div>
+        <div class="col s5 m3 l2">
+            <a id="loadRegions" class=" btn-small"><span class="translate">loadRegions</span></a>
+        </div>
+        <div class="col s2 ">
+            <div class="loader seenot" id="loader1"> </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12 m12 l12 input-field">
+            <select class="value" id="regions" type="text">
+                <option value="" disabled selected class="translate">instructionLoading</option>
+            </select>
+            <label class="translate" for="regions">regions</label>
+        </div>
+    </div>
+    <div class="col s12">
+        <h6 class="title translate" data-lang="AddLinkManually">AddLinkManually</h6>
+    </div>
     <div class="row">
         <div class="input-field col s12">
             <input type="text" id="pathXML" class="value" />
