@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "meteoalarm",
-        "version": "1.1.0",
+        "version": "1.1.1",
         "news": {
+            "1.1.1": {
+                "en": "HTML Widget bugfix",
+                "de": "Bugfix für HTML-Widgets",
+                "ru": "Исправление ошибки HTML-виджета",
+                "pt": "Correção de bug do widget HTML",
+                "nl": "Bugfix voor HTML-widget",
+                "fr": "Correction d'un bug du widget HTML",
+                "it": "Correzione di bug del widget HTML",
+                "es": "Corrección de errores del widget HTML",
+                "pl": "Naprawiony błąd widżetu HTML",
+                "zh-cn": "HTML Widget错误修正"
+            },
             "1.1.0": {
                 "en": "Restructuring of settings, generate link automatically",
                 "de": "Umstrukturierung der Einstellungen, Link automatisch generieren",
