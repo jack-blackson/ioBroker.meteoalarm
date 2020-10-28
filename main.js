@@ -243,7 +243,7 @@ function updateHTMLWidget(){
             htmllong += '<div style="background:' + color + '"  border:"10px">';
             htmllong += '<div style="display: flex; align-items: center">'
             htmllong += '<img src="' +  icon + '" alt="" width="20" height="20"/> '
-            htmllong += '<h3 style="margin-left: 10px;">' + typeName + '</h3> </div>' + from + ' - ' + to 
+            htmllong += '<h3 style="margin-left: 10px;margin-top: 5px;margin-bottom: 5px;">' + typeName + '</h3> </div>' + from + ' - ' + to 
             htmllong += '</p><p>' + text + '</p></div>'
         }
         else{
