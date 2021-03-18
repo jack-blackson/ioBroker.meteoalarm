@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "meteoalarm",
-        "version": "1.1.1",
+        "version": "1.1.2",
         "news": {
+            "1.1.2": {
+              "en": "Bugfix for new JavaScript Version",
+              "de": "Bugfix für neue JavaScript-Version",
+              "ru": "Исправление для новой версии JavaScript",
+              "pt": "Correção de bug para nova versão de JavaScript",
+              "nl": "Bugfix voor nieuwe JavaScript-versie",
+              "fr": "Correction de bug pour la nouvelle version de JavaScript",
+              "it": "Correzione di bug per la nuova versione di JavaScript",
+              "es": "Corrección de errores para la nueva versión de JavaScript",
+              "pl": "Poprawka błędu dla nowej wersji JavaScript",
+              "zh-cn": "新的JavaScript版本的错误修正"
+            },
             "1.1.1": {
                 "en": "HTML Widget bugfix",
                 "de": "Bugfix für HTML-Widgets",
