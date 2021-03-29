@@ -294,7 +294,7 @@
             "native": {}
         },
         {
-            "_id": "tomorow",
+            "_id": "tomorrow",
             "type": "channel",
             "common": {
                 "role": "tomorrow",

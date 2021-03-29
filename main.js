@@ -422,7 +422,7 @@ function parseWeather(description,type, callback){
     });
     */
 
-    adapter.setState({device: '' , channel: folder,state: 'weatherMapCountry'}, {val: WarnungsText, ack: true});
+    adapter.setState({device: '' , channel: folder,state: 'text'}, {val: WarnungsText, ack: true});
 
     
 
