@@ -80,7 +80,7 @@
                 $loadRegions.addClass('disabled');
                 var $loadRegions = $('#loadRegions');
                 let country = $('#country').val();
-                let url = 'http://www.meteoalarm.eu/documents/rss/' + country + '.rss'
+                let url = 'https://www.meteoalarm.eu/documents/rss/' + country + '.rss'
                 httpGet(url, function(returnValue) {
                     let xml = returnValue
                     let text = "";
@@ -103,7 +103,7 @@
 
                             let origLink = $(this).find("link").text()
                             let linkPartPos = origLink.indexOf('/0/0/') + 5
-                            let newLink = 'http://www.meteoalarm.eu/documents/rss/' + country + '/' + origLink.slice(linkPartPos, linkPartPos + 5) + '.rss'
+                            let newLink = 'https://www.meteoalarm.eu/documents/rss/' + country + '/' + origLink.slice(linkPartPos, linkPartPos + 5) + '.rss'
                             regionLinkArray.push(newLink);
                         }
                         i += 1
@@ -217,55 +217,6 @@
             <div class="input-field col s3">
                 <img src="meteoalarm.png" class="logo">
             </div>
-        </div>
-    </div>
-    <div class="col s12">
-        <h6 class="title translate" data-lang="AddLinkAutomatically">AddLinkAutomatically</h6>
-    </div>
-    <div class="row">
-        <div class="input-field col s12 m4 l2 ">
-            <select class="value " id="country" type="text">
-                <option value="" disabled selected class="translate">ChooseCountry</option>
-                <option value="at" class="translate">Austria</option>                
-                <option value="hr" class="translate">Croatia</option>
-                <option value="cz" class="translate">Czech Republic</option>
-                <option value="fi" class="translate">Finnland</option>
-                <option value="de" class="translate">Germany</option>
-                <option value="gr" class="translate">Greece</option>
-                <option value="hu" class="translate">Hungary</option>
-                <option value="ie" class="translate">Ireland</option>
-                <option value="il" class="translate">Israel</option>
-                <option value="it" class="translate">Italy</option>
-                <option value="lv" class="translate">Latvia</option>
-                <option value="lt" class="translate">Lithuania</option>
-                <option value="mt" class="translate">Malta</option>
-                <option value="md" class="translate">Moldova</option>
-                <option value="me" class="translate">Montenegro</option>
-                <option value="nl" class="translate">Netherlands</option>
-                <option value="no" class="translate">Norway</option>
-                <option value="pl" class="translate">Poland</option>
-                <option value="ro" class="translate">Romania</option>
-                <option value="rs" class="translate">Serbia</option>
-                <option value="si" class="translate">Slovakia</option>
-                <option value="es" class="translate">Spain</option>
-                <option value="ch" class="translate">Switzerland</option>
-                <option value="se" class="translate">Sweden</option>
-            </select>
-            <label class="translate" for="country">country</label>
-        </div>
-        <div class="col s5 m3 l2">
-            <a id="loadRegions" class=" btn-small"><span class="translate">loadRegions</span></a>
-        </div>
-        <div class="col s2 ">
-            <div class="loader seenot" id="loader1"> </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col s12 m12 l12 input-field">
-            <select class="value" id="regions" type="text">
-                <option value="" disabled selected class="translate">instructionLoading</option>
-            </select>
-            <label class="translate" for="regions">regions</label>
         </div>
     </div>
     <div class="col s12">
