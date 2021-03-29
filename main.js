@@ -51,6 +51,7 @@ function startAdapter(options) {
 
 function main() {
 
+    /*
     adapter.setObjectNotExists('today', {
         common: {
               name: 'today'
@@ -67,6 +68,7 @@ function main() {
         'native' : {}
     });
 
+    */
 
     adapter.getForeignObject('system.config', (err, systemConfig) => {
         lang = systemConfig.common.language
@@ -158,6 +160,8 @@ function processJSON(content){
     */
     adapter.log.info('Received data for ' + JSON.stringify(content.rss.channel.item.title))
 
+    adapter.setState({device: '' , channel: '',state: 'link'}, {val: JSON.stringify(content.rss.channel.item.link), ack: true});
+/*
     adapter.createState('', '', 'link', {
         read: true, 
         write: false, 
@@ -166,8 +170,9 @@ function processJSON(content){
         def: JSON.stringify(content.rss.channel.item.link),
         role: 'value'
     });
-        
+      */  
     var newdate = moment(new Date()).local().format('DD.MM.YYYY HH:mm')
+    /*
     adapter.createState('', '', 'lastUpdate', {
         read: true, 
         write: false, 
@@ -176,7 +181,10 @@ function processJSON(content){
         def: newdate,
         role: 'value'
     });
+*/
+    adapter.setState({device: '' , channel: '',state: 'lastUpdate'}, {val: newdate, ack: true});
 
+    /*
     adapter.createState('', '', 'publicationDate', {
         read: true, 
         write: false, 
@@ -185,6 +193,10 @@ function processJSON(content){
         def: JSON.stringify(content.rss.channel.item.pubDate),
         role: 'value'
     });
+    */
+
+    adapter.setState({device: '' , channel: '',state: 'publicationDate'}, {val: JSON.stringify(content.rss.channel.item.pubDate), ack: true});
+
 
     if (DescFilter1 != 'nA'){
         parseWeather(content.rss.channel.item.description,'today', function(){
@@ -257,7 +269,7 @@ function updateHTMLWidget(){
             htmllong += '</p><p></p></div>'
         }
         
-    
+        /*
         adapter.createState('', '', 'htmlToday', {
             read: true, 
             write: false, 
@@ -266,10 +278,13 @@ function updateHTMLWidget(){
             def: htmllong,
             role: 'value'
         });
+        */
+        adapter.setState({device: '' , channel: '',state: 'htmlToday'}, {val: htmllong, ack: true});
+
 
         let weatherDate = moment(new Date()).local().format('YYMMDD')
         var htmlweathermap = "https://meteoalarm.eu/maps/" + country.toUpperCase() + '-' + weatherDate + '.gif';
-
+        /*
         adapter.createState('', '', 'weatherMapCountry', {
             read: true, 
             write: false, 
@@ -278,6 +293,9 @@ function updateHTMLWidget(){
             def: htmlweathermap,
             role: 'value'
         });
+        */
+        adapter.setState({device: '' , channel: '',state: 'weatherMapCountry'}, {val: htmlweathermap, ack: true});
+
 
         setTimeout(function() {
             // wait 5 seconds to make sure all is done
@@ -393,6 +411,7 @@ function parseWeather(description,type, callback){
         WarnungsText = ContentFromDescFilter1.slice(1, SearchCrit2);
     } 
 
+    /*
     adapter.createState('', folder, 'text', {
         read: true, 
         write: false, 
@@ -401,6 +420,9 @@ function parseWeather(description,type, callback){
         def: WarnungsText,
         role: 'value'
     });
+    */
+
+    adapter.setState({device: '' , channel: folder,state: 'weatherMapCountry'}, {val: WarnungsText, ack: true});
 
     
 
@@ -421,6 +443,7 @@ function parseWeather(description,type, callback){
         Warnung_Bis = ContentHeute.slice((SearchCrit1 - 1), SearchCrit2);
     }
     
+    /*
     adapter.createState('', folder, 'from', {
         read: true, 
         write: false, 
@@ -429,6 +452,10 @@ function parseWeather(description,type, callback){
         def: Warnung_Von,
         role: 'value'
     });
+    */
+    adapter.setState({device: '' , channel: folder,state: 'from'}, {val: Warnung_Von, ack: true});
+
+/*
     adapter.createState('', folder, 'to', {
         read: true, 
         write: false, 
@@ -437,6 +464,9 @@ function parseWeather(description,type, callback){
         def: Warnung_Bis,
         role: 'value'
     });
+*/
+    adapter.setState({device: '' , channel: folder,state: 'to'}, {val: Warnung_Bis, ack: true});
+
 
         // Warning Text  Level
         SearchCrit1 = ContentHeute.indexOf('level:') + 1;
@@ -445,6 +475,7 @@ function parseWeather(description,type, callback){
         var Level = parseInt(ContentHeute.charAt(SearchCrit1 - 1));
         var Color = ''
         if (SearchCrit1 != 0) {
+            /*
             adapter.createState('', folder, 'level', {
                 read: true, 
                 write: false, 
@@ -453,7 +484,11 @@ function parseWeather(description,type, callback){
                 def: Level,
                 role: 'value'
             });
+            */
 
+            adapter.setState({device: '' , channel: folder,state: 'level'}, {val: Level, ack: true});
+
+            /*
             adapter.createState('', folder, 'levelText', {
                 read: true, 
                 write: false, 
@@ -462,6 +497,10 @@ function parseWeather(description,type, callback){
                 def: getLevelName(Level),
                 role: 'value'
                 });
+            */
+
+            adapter.setState({device: '' , channel: folder,state: 'levelText'}, {val: getLevelName(Level), ack: true});
+
         
             switch (Level) {
              case 1:
@@ -484,6 +523,8 @@ function parseWeather(description,type, callback){
                 Color = '#ffffff';
                 break;
             }
+
+            /*
             adapter.createState('', folder, 'color', {
                 read: true, 
                 write: false, 
@@ -492,6 +533,10 @@ function parseWeather(description,type, callback){
                 def: Color,
                 role: 'value'
             });
+            */
+
+            adapter.setState({device: '' , channel: folder,state: 'color'}, {val: Color, ack: true});
+
         }
 
     //Warning Text Type
@@ -504,6 +549,7 @@ function parseWeather(description,type, callback){
             Typ = 0;
         }
 
+        /*
         adapter.createState('', folder, 'type', {
             read: true, 
             write: false, 
@@ -512,7 +558,12 @@ function parseWeather(description,type, callback){
             def: Typ,
             role: 'value'
         });
+        */
 
+        adapter.setState({device: '' , channel: folder,state: 'type'}, {val: Typ, ack: true});
+
+
+        /*
         adapter.createState('', folder, 'typeText', {
             read: true, 
             write: false, 
@@ -521,6 +572,11 @@ function parseWeather(description,type, callback){
             def: getTypeName(Typ),
             role: 'value'
             });
+            */
+            adapter.setState({device: '' , channel: folder,state: 'typeText'}, {val: getTypeName(Typ), ack: true});
+
+        
+        
     }
     // Icon Link:
     SearchCrit1 = ContentHeute.indexOf('src=') + 1;
@@ -533,6 +589,8 @@ function parseWeather(description,type, callback){
     if (Level == 1){
         Warnung_img = '/meteoalarm.admin/icons/wflag-l1-t1.jpg'
     }
+
+    /*
     adapter.createState('', folder, 'icon', {
         read: true, 
         write: false, 
@@ -542,6 +600,10 @@ function parseWeather(description,type, callback){
         role: 'value'
         
     });
+    */
+
+    adapter.setState({device: '' , channel: folder,state: 'icon'}, {val: Warnung_img, ack: true});
+
     adapter.log.debug('Loaded ' + type + ' data')
     callback()
 }
