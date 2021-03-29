@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "meteoalarm",
-        "version": "1.1.1",
+        "version": "1.1.2",
         "news": {
+            "1.1.2": {
+              "en": "Bugfix for new JavaScript Version",
+              "de": "Bugfix für neue JavaScript-Version",
+              "ru": "Исправление для новой версии JavaScript",
+              "pt": "Correção de bug para nova versão de JavaScript",
+              "nl": "Bugfix voor nieuwe JavaScript-versie",
+              "fr": "Correction de bug pour la nouvelle version de JavaScript",
+              "it": "Correzione di bug per la nuova versione di JavaScript",
+              "es": "Corrección de errores para la nueva versión de JavaScript",
+              "pl": "Poprawka błędu dla nowej wersji JavaScript",
+              "zh-cn": "新的JavaScript版本的错误修正"
+            },
             "1.1.1": {
                 "en": "HTML Widget bugfix",
                 "de": "Bugfix für HTML-Widgets",
@@ -271,5 +283,312 @@
         "pathXML": ""
     },
     "objects": [],
-    "instanceObjects": []
+    "instanceObjects": [
+        {
+            "_id": "today",
+            "type": "channel",
+            "common": {
+                "role": "today",
+                "name": ""
+            },
+            "native": {}
+        },
+        {
+            "_id": "tomorrow",
+            "type": "channel",
+            "common": {
+                "role": "tomorrow",
+                "name": ""
+            },
+            "native": {}
+        },
+        {"_id": "htmlToday",
+            "type": "state",
+            "common": {
+                "name": "HTML Widget Today",
+                "type": "string",
+                "role": "value",
+                "read": true,
+                "write": false,
+                "def": ""
+            },
+            "native": {} 
+        },
+        {"_id": "lastUpdate",
+            "type": "state",
+            "common": {
+                "name": "Last Data Update",
+                "type": "string",
+                "role": "value",
+                "read": true,
+                "write": false,
+                "def": ""
+            },
+            "native": {} 
+        },
+        {"_id": "link",
+            "type": "state",
+            "common": {
+                "name": "RSS Feed Link",
+                "type": "string",
+                "role": "value",
+                "read": true,
+                "write": false,
+                "def": ""
+            },
+            "native": {} 
+        },
+        {"_id": "location",
+            "type": "state",
+            "common": {
+                "name": "Location",
+                "type": "string",
+                "role": "value",
+                "read": true,
+                "write": false,
+                "def": ""
+            },
+            "native": {} 
+        },
+        {"_id": "publicationDate",
+            "type": "state",
+            "common": {
+                "name": "Publication Date",
+                "type": "string",
+                "role": "value",
+                "read": true,
+                "write": false,
+                "def": ""
+            },
+            "native": {} 
+        },
+        {"_id": "weatherMapCountry",
+            "type": "state",
+            "common": {
+                "name": "HTML Widget Today",
+                "type": "string",
+                "role": "value",
+                "read": true,
+                "write": false,
+                "def": ""
+            },
+            "native": {} 
+        },
+        {"_id": "today.color",
+            "type": "state",
+            "common": {
+                "name": "Color",
+                "type": "string",
+                "role": "value",
+                "read": true,
+                "write": false,
+                "def": ""
+            },
+            "native": {} 
+        },
+        {"_id": "today.from",
+            "type": "state",
+            "common": {
+                "name": "Warning From",
+                "type": "string",
+                "role": "value",
+                "read": true,
+                "write": false,
+                "def": ""
+            },
+            "native": {} 
+        },
+        {"_id": "today.icon",
+            "type": "state",
+            "common": {
+                "name": "Warning Icon",
+                "type": "string",
+                "role": "value",
+                "read": true,
+                "write": false,
+                "def": ""
+            },
+            "native": {} 
+        },
+        {"_id": "today.level",
+            "type": "state",
+            "common": {
+                "name": "Warning Level",
+                "type": "string",
+                "role": "value",
+                "read": true,
+                "write": false,
+                "def": ""
+            },
+            "native": {} 
+        },
+        {"_id": "today.levelText",
+            "type": "state",
+            "common": {
+                "name": "Level Text",
+                "type": "string",
+                "role": "value",
+                "read": true,
+                "write": false,
+                "def": ""
+            },
+            "native": {} 
+        },
+        {"_id": "today.text",
+            "type": "state",
+            "common": {
+                "name": "Text",
+                "type": "string",
+                "role": "value",
+                "read": true,
+                "write": false,
+                "def": ""
+            },
+            "native": {} 
+        },
+        {"_id": "today.to",
+            "type": "state",
+            "common": {
+                "name": "Warning To",
+                "type": "string",
+                "role": "value",
+                "read": true,
+                "write": false,
+                "def": ""
+            },
+            "native": {} 
+        },
+        {"_id": "today.type",
+            "type": "state",
+            "common": {
+                "name": "Type",
+                "type": "string",
+                "role": "value",
+                "read": true,
+                "write": false,
+                "def": ""
+            },
+            "native": {} 
+        },
+        {"_id": "today.typeText",
+            "type": "state",
+            "common": {
+                "name": "Type Text",
+                "type": "string",
+                "role": "value",
+                "read": true,
+                "write": false,
+                "def": ""
+            },
+            "native": {} 
+        },
+        {"_id": "tomorrow.color",
+            "type": "state",
+            "common": {
+                "name": "Color",
+                "type": "string",
+                "role": "value",
+                "read": true,
+                "write": false,
+                "def": ""
+            },
+            "native": {} 
+        },
+        {"_id": "tomorrow.from",
+            "type": "state",
+            "common": {
+                "name": "Warning From",
+                "type": "string",
+                "role": "value",
+                "read": true,
+                "write": false,
+                "def": ""
+            },
+            "native": {} 
+        },
+        {"_id": "tomorrow.icon",
+            "type": "state",
+            "common": {
+                "name": "Warning Icon",
+                "type": "string",
+                "role": "value",
+                "read": true,
+                "write": false,
+                "def": ""
+            },
+            "native": {} 
+        },
+        {"_id": "tomorrow.level",
+            "type": "state",
+            "common": {
+                "name": "Warning Level",
+                "type": "string",
+                "role": "value",
+                "read": true,
+                "write": false,
+                "def": ""
+            },
+            "native": {} 
+        },
+        {"_id": "tomorrow.levelText",
+            "type": "state",
+            "common": {
+                "name": "Level Text",
+                "type": "string",
+                "role": "value",
+                "read": true,
+                "write": false,
+                "def": ""
+            },
+            "native": {} 
+        },
+        {"_id": "tomorrow.text",
+            "type": "state",
+            "common": {
+                "name": "Text",
+                "type": "string",
+                "role": "value",
+                "read": true,
+                "write": false,
+                "def": ""
+            },
+            "native": {} 
+        },
+        {"_id": "tomorrow.to",
+            "type": "state",
+            "common": {
+                "name": "Warning To",
+                "type": "string",
+                "role": "value",
+                "read": true,
+                "write": false,
+                "def": ""
+            },
+            "native": {} 
+        },
+        {"_id": "tomorrow.type",
+            "type": "state",
+            "common": {
+                "name": "Type",
+                "type": "string",
+                "role": "value",
+                "read": true,
+                "write": false,
+                "def": ""
+            },
+            "native": {} 
+        },
+        {"_id": "tomorrow.typeText",
+            "type": "state",
+            "common": {
+                "name": "Type Text",
+                "type": "string",
+                "role": "value",
+                "read": true,
+                "write": false,
+                "def": ""
+            },
+            "native": {} 
+        }
+    ]
 }

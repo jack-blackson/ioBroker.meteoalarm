@@ -105,6 +105,8 @@ If you don't find your country, please create an issue on github, and I will be 
 
 
 ## Changelog
+## 1.1.2 (2021-03-29)
+* (jack-blackson) Bugfix for not working data update, removed link autogeneration due to CORS errors
 ## 1.1.1 (2020-10-28)
 * (jack-blackson) Bugfix HTML Data
 ## 1.1.0 (2020-03-29)
