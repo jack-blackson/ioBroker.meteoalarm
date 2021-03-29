@@ -80,7 +80,7 @@
                 $loadRegions.addClass('disabled');
                 var $loadRegions = $('#loadRegions');
                 let country = $('#country').val();
-                let url = 'https://www.meteoalarm.eu/documents/rss/' + country + '.rss'
+                let url = 'http://www.meteoalarm.eu/documents/rss/' + country + '.rss'
                 httpGet(url, function(returnValue) {
                     let xml = returnValue
                     let text = "";
