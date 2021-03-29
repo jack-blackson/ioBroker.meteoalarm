@@ -103,7 +103,7 @@
 
                             let origLink = $(this).find("link").text()
                             let linkPartPos = origLink.indexOf('/0/0/') + 5
-                            let newLink = 'https://www.meteoalarm.eu/documents/rss/' + country + '/' + origLink.slice(linkPartPos, linkPartPos + 5) + '.rss'
+                            let newLink = 'http://www.meteoalarm.eu/documents/rss/' + country + '/' + origLink.slice(linkPartPos, linkPartPos + 5) + '.rss'
                             regionLinkArray.push(newLink);
                         }
                         i += 1
@@ -122,7 +122,7 @@
 
         function httpGet(theUrl, callback)
         {
-            theUrl =  'https://cors.bridged.cc/<' + theUrl + '>';
+            //theUrl =  'https://cors.bridged.cc/<' + theUrl + '>';
             //theUrl = theUrl
 
             var xmlHttp = new XMLHttpRequest();
