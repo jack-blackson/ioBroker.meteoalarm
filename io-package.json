@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "meteoalarm",
-        "version": "1.1.2",
+        "version": "1.1.3",
         "news": {
+            "1.1.3": {
+                "en": "Error fixes adapter checker",
+                "de": "Fehler behebt Adapterprüfung",
+                "ru": "Исправления ошибок адаптера проверки",
+                "pt": "Erro corrige verificador de adaptador",
+                "nl": "Fout lost adapterchecker op",
+                "fr": "Erreur corrige le vérificateur d'adaptateur",
+                "it": "L'errore risolve il controllo dell'adattatore",
+                "es": "El error corrige el verificador del adaptador",
+                "pl": "Błąd rozwiązuje narzędzie sprawdzania adaptera",
+                "zh-cn": "错误修复了适配器检查器"
+              },
             "1.1.2": {
               "en": "Bugfix for new JavaScript Version",
               "de": "Bugfix für neue JavaScript-Version",
@@ -276,6 +288,8 @@
         "materialize": true,
         "extIcon": "https://raw.githubusercontent.com/jack-blackson/ioBroker.meteoalarm/master/admin/meteoalarm.png",
         "type": "weather",
+        "connectionType": "local",
+        "dataSource": "push",
         "singletonHost": false
     },
     "native": {
