@@ -145,7 +145,8 @@ function requestXML(){
 function processJSON(content){
 
     getFilters()
-
+    adapter.setstate({state: 'location'}, {val: JSON.stringify(content.rss.channel.item.title), ack: true});
+    /*
     adapter.createState('', '', 'location', {
         read: true, 
         write: false, 
@@ -154,6 +155,7 @@ function processJSON(content){
         def: JSON.stringify(content.rss.channel.item.title),
         role: 'value'
     });
+    */
     adapter.log.info('Received data for ' + JSON.stringify(content.rss.channel.item.title))
 
     adapter.createState('', '', 'link', {
