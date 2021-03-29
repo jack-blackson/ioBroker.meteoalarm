@@ -303,6 +303,7 @@
             "native": {}
         },
         {"_id": "htmlToday",
+            "type": "state",
             "common": {
                 "name": "HTML Widget Today",
                 "type": "string",
@@ -314,6 +315,7 @@
             "native": {} 
         },
         {"_id": "lastUpdate",
+            "type": "state",
             "common": {
                 "name": "Last Data Update",
                 "type": "string",
@@ -325,6 +327,7 @@
             "native": {} 
         },
         {"_id": "link",
+            "type": "state",
             "common": {
                 "name": "RSS Feed Link",
                 "type": "string",
@@ -336,6 +339,7 @@
             "native": {} 
         },
         {"_id": "location",
+            "type": "state",
             "common": {
                 "name": "Location",
                 "type": "string",
@@ -347,6 +351,7 @@
             "native": {} 
         },
         {"_id": "publicationDate",
+            "type": "state",
             "common": {
                 "name": "Publication Date",
                 "type": "string",
@@ -358,6 +363,7 @@
             "native": {} 
         },
         {"_id": "weatherMapCountry",
+            "type": "state",
             "common": {
                 "name": "HTML Widget Today",
                 "type": "string",
@@ -369,6 +375,7 @@
             "native": {} 
         },
         {"_id": "today.color",
+            "type": "state",
             "common": {
                 "name": "Color",
                 "type": "string",
@@ -380,6 +387,7 @@
             "native": {} 
         },
         {"_id": "today.from",
+            "type": "state",
             "common": {
                 "name": "Warning From",
                 "type": "string",
@@ -391,6 +399,7 @@
             "native": {} 
         },
         {"_id": "today.icon",
+            "type": "state",
             "common": {
                 "name": "Warning Icon",
                 "type": "string",
@@ -402,6 +411,7 @@
             "native": {} 
         },
         {"_id": "today.level",
+            "type": "state",
             "common": {
                 "name": "Warning Level",
                 "type": "string",
@@ -413,6 +423,7 @@
             "native": {} 
         },
         {"_id": "today.levelText",
+            "type": "state",
             "common": {
                 "name": "Level Text",
                 "type": "string",
@@ -424,6 +435,7 @@
             "native": {} 
         },
         {"_id": "today.text",
+            "type": "state",
             "common": {
                 "name": "Text",
                 "type": "string",
@@ -435,6 +447,7 @@
             "native": {} 
         },
         {"_id": "today.to",
+            "type": "state",
             "common": {
                 "name": "Warning To",
                 "type": "string",
@@ -446,6 +459,7 @@
             "native": {} 
         },
         {"_id": "today.type",
+            "type": "state",
             "common": {
                 "name": "Type",
                 "type": "string",
@@ -457,6 +471,7 @@
             "native": {} 
         },
         {"_id": "today.typeText",
+            "type": "state",
             "common": {
                 "name": "Type Text",
                 "type": "string",
@@ -468,6 +483,7 @@
             "native": {} 
         },
         {"_id": "tomorrow.color",
+            "type": "state",
             "common": {
                 "name": "Color",
                 "type": "string",
@@ -479,6 +495,7 @@
             "native": {} 
         },
         {"_id": "tomorrow.from",
+            "type": "state",
             "common": {
                 "name": "Warning From",
                 "type": "string",
@@ -490,6 +507,7 @@
             "native": {} 
         },
         {"_id": "tomorrow.icon",
+            "type": "state",
             "common": {
                 "name": "Warning Icon",
                 "type": "string",
@@ -501,6 +519,7 @@
             "native": {} 
         },
         {"_id": "tomorrow.level",
+            "type": "state",
             "common": {
                 "name": "Warning Level",
                 "type": "string",
@@ -512,6 +531,7 @@
             "native": {} 
         },
         {"_id": "tomorrow.levelText",
+            "type": "state",
             "common": {
                 "name": "Level Text",
                 "type": "string",
@@ -523,6 +543,7 @@
             "native": {} 
         },
         {"_id": "tomorrow.text",
+            "type": "state",
             "common": {
                 "name": "Text",
                 "type": "string",
@@ -534,6 +555,7 @@
             "native": {} 
         },
         {"_id": "tomorrow.to",
+            "type": "state",
             "common": {
                 "name": "Warning To",
                 "type": "string",
@@ -545,6 +567,7 @@
             "native": {} 
         },
         {"_id": "tomorrow.type",
+            "type": "state",
             "common": {
                 "name": "Type",
                 "type": "string",
@@ -556,6 +579,7 @@
             "native": {} 
         },
         {"_id": "tomorrow.typeText",
+            "type": "state",
             "common": {
                 "name": "Type Text",
                 "type": "string",
