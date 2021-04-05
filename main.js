@@ -103,15 +103,15 @@ function requestXML(){
           }, function(error, response, body){
             if (error){
                 if (error.code === 'ETIMEDOUT'){
-                    adapter.log.error('No website response after 8 seconds. Adapter will try again at next scheduled run.')
+                    adapter.log.error('Error ETIMEOUT: No website response after 8 seconds. Adapter will try again at next scheduled run.')
                     adapter.terminate ? adapter.terminate(0) : process.exit(0);
                 }
                 else if (error.code === 'ESOCKETTIMEDOUT'){
-                    adapter.log.error('No website response after 8 seconds. Adapter will try again at next scheduled run.')
+                    adapter.log.error('Error ESOCKETTIMEDOUT: No website response after 8 seconds. Adapter will try again at next scheduled run.')
                     adapter.terminate ? adapter.terminate(0) : process.exit(0);
                 }
                 else if (error.code === 'ENOTFOUND'){
-                    adapter.log.error('No website response after 8 seconds. Adapter will try again at next scheduled run.')
+                    adapter.log.error('Error ENOTFOUND: No website response after 8 seconds. Adapter will try again at next scheduled run.')
                     adapter.terminate ? adapter.terminate(0) : process.exit(0);
                 }
                 else(
