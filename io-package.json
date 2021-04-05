@@ -1,19 +1,19 @@
 {
     "common": {
         "name": "meteoalarm",
-        "version": "1.1.3",
+        "version": "1.1.4",
         "news": {
             "1.1.3": {
-                "en": "Error fixes adapter checker",
-                "de": "Fehler behebt Adapterprüfung",
-                "ru": "Исправления ошибок адаптера проверки",
-                "pt": "Erro corrige verificador de adaptador",
-                "nl": "Fout lost adapterchecker op",
-                "fr": "Erreur corrige le vérificateur d'adaptateur",
-                "it": "L'errore risolve il controllo dell'adattatore",
-                "es": "El error corrige el verificador del adaptador",
-                "pl": "Błąd rozwiązuje narzędzie sprawdzania adaptera",
-                "zh-cn": "错误修复了适配器检查器"
+                "en": "Handle invalid URL",
+                "de": "Behandeln Sie ungültige URLs",
+                "ru": "Обработать недопустимый URL",
+                "pt": "Lidar com URL inválido",
+                "nl": "Verwerk ongeldige URL",
+                "fr": "Gérer une URL non valide",
+                "it": "Gestisci URL non validi",
+                "es": "Manejar URL no válida",
+                "pl": "Obsługuj nieprawidłowy adres URL",
+                "zh-cn": "处理无效的URL"
               },
             "1.1.2": {
               "en": "Bugfix for new JavaScript Version",

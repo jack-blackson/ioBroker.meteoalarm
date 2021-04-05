@@ -110,9 +110,13 @@ function requestXML(){
                     adapter.log.error('No website response after 8 seconds. Adapter will try again at next scheduled run.')
                     adapter.terminate ? adapter.terminate(0) : process.exit(0);
                 }
+                else if (error.code === 'ENOTFOUND'){
+                    adapter.log.error('No website response after 8 seconds. Adapter will try again at next scheduled run.')
+                    adapter.terminate ? adapter.terminate(0) : process.exit(0);
+                }
                 else(
                     adapter.log.error(error)
-                    
+
                 )
             }
             if (body) {
