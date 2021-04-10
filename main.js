@@ -69,7 +69,6 @@ function main() {
     });
 
     */
-    huhu();
     adapter.getForeignObject('system.config', (err, systemConfig) => {
         lang = systemConfig.common.language
         //Interval = setInterval(function() { 
