@@ -51,30 +51,13 @@ function startAdapter(options) {
 
 function main() {
 
-    /*
-    adapter.setObjectNotExists('today', {
-        common: {
-              name: 'today'
-        },
-        type: 'channel',
-        'native' : {}
-    });
-
-    adapter.setObjectNotExists('tomorrow', {
-        common: {
-              name: 'tomorrow'
-        },
-        type: 'channel',
-        'native' : {}
-    });
-
-    */
     adapter.getForeignObject('system.config', (err, systemConfig) => {
-        lang = systemConfig.common.language
-        //Interval = setInterval(function() { 
-            // alle 30 Minute ausführen 
-        //    requestXML();
-        //}, 1800000); 
+        if (!systemConfig.common.language){
+            lang = 'en'
+        }
+        else{
+            lang = systemConfig.common.language
+        }
         requestXML()
     }) 
 }

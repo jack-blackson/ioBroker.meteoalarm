@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "meteoalarm",
-        "version": "1.1.4",
+        "version": "1.1.5",
         "news": {
+            "1.1.5": {
+                "en": "Bugfix JS-Controller 3.3.1 errors, error handling no language defined",
+                "de": "Bugfix JS-Controller 3.3.1 Fehler, Fehlerbehandlung keine Sprache definiert",
+                "ru": "Исправление ошибок JS-Controller 3.3.1, обработка ошибок не определен язык",
+                "pt": "Bugfix JS-Controller 3.3.1 erros, tratamento de erros sem linguagem definida",
+                "nl": "Bugfix JS-Controller 3.3.1 fouten, foutafhandeling geen taal gedefinieerd",
+                "fr": "Bugfix JS-Controller 3.3.1 erreurs, gestion des erreurs aucune langue définie",
+                "it": "Bugfix JS-Controller 3.3.1 errori, gestione degli errori nessuna lingua definita",
+                "es": "Bugfix JS-Controller 3.3.1 errores, manejo de errores sin lenguaje definido",
+                "pl": "Bugfix JS-Controller 3.3.1 błędy, obsługa błędów brak zdefiniowanego języka",
+                "zh-cn": "Bugfix JS-Controller 3.3.1错误，错误处理未定义语言"
+              },
             "1.1.4": {
                 "en": "Handling of network errors, added Sentry",
                 "de": "Behandlung von Netzwerkfehlern, hinzugefügt Sentry",
@@ -374,7 +386,7 @@
             "type": "state",
             "common": {
                 "name": "Warning Level",
-                "type": "string",
+                "type": "number",
                 "role": "value",
                 "read": true,
                 "write": false,
@@ -422,7 +434,7 @@
             "type": "state",
             "common": {
                 "name": "Type",
-                "type": "string",
+                "type": "number",
                 "role": "value",
                 "read": true,
                 "write": false,
@@ -482,7 +494,7 @@
             "type": "state",
             "common": {
                 "name": "Warning Level",
-                "type": "string",
+                "type": "number",
                 "role": "value",
                 "read": true,
                 "write": false,
@@ -530,7 +542,7 @@
             "type": "state",
             "common": {
                 "name": "Type",
-                "type": "string",
+                "type": "number",
                 "role": "value",
                 "read": true,
                 "write": false,
