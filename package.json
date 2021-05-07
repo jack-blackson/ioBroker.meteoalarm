@@ -38,7 +38,7 @@
     "prepare": "npm run snyk-protect"
   },
   "devDependencies": {
-    "gulp": "^4.0.0",
+    "gulp": "^4.0.2",
     "mocha": "^7.1.2",
     "chai": "^4.2.0",
     "axios": ">=0.21.1"
