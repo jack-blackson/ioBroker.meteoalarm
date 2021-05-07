@@ -40,5 +40,5 @@
     "chai": "^4.2.0",
     "axios": ">=0.21.1"
   },
-  "readmeFilename": "README.md",
+  "readmeFilename": "README.md"
 }
