@@ -107,7 +107,7 @@ If you don't find your country, please create an issue on github, and I will be 
 
 
 ## Changelog
-## 1.1.6 (2021-05-07)
+## 1.1.7 (2021-05-07)
 * (jack-blackson) Package Updates
 ## 1.1.5 (2021-05-02)
 * (jack-blackson) Bugfix JS-Controller 3.3.1 errors, error handling no language defined
