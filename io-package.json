@@ -1,9 +1,9 @@
 {
     "common": {
         "name": "meteoalarm",
-        "version": "1.1.7",
+        "version": "1.1.8",
         "news": {
-            "1.1.7": {
+            "1.1.8": {
                 "en": "Package Updates",
                 "de": "Pakete Aktualisiert",
                 "ru": "Обновления пакета",
