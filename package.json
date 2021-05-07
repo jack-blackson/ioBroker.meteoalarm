@@ -26,16 +26,13 @@
     "@iobroker/adapter-core": "^2.3.0",
     "request": "^2.88.0",
     "xml2js": "^0.4.22",
-    "moment": "^2.24.0",
-    "snyk": "^1.585.0"
+    "moment": "^2.24.0"
   },
   "scripts": {
     "test": "npm run test:package && npm run test:unit",
     "test:package": "mocha test/package --exit",
     "test:unit": "mocha test/unit --exit",
-    "test:integration": "mocha test/integration --exit",
-    "snyk-protect": "snyk protect",
-    "prepare": "npm run snyk-protect"
+    "test:integration": "mocha test/integration --exit"
   },
   "devDependencies": {
     "gulp": "^4.0.2",
@@ -44,5 +41,4 @@
     "axios": ">=0.21.1"
   },
   "readmeFilename": "README.md",
-  "snyk": true
 }
