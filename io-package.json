@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "meteoalarm",
-        "version": "1.1.5",
+        "version": "1.1.6",
         "news": {
+            "1.1.6": {
+                "en": "Package Updates",
+                "de": "Paketaktualisierungen",
+                "ru": "Обновления пакета",
+                "pt": "Atualizações de pacote",
+                "nl": "Pakketupdates",
+                "fr": "Mises à jour du package",
+                "it": "Aggiornamenti del pacchetto",
+                "es": "Actualizaciones de paquetes",
+                "pl": "Aktualizacje pakietów",
+                "zh-cn": "软件包更新"
+              },
             "1.1.5": {
                 "en": "Bugfix JS-Controller 3.3.1 errors, error handling no language defined",
                 "de": "Bugfix JS-Controller 3.3.1 Fehler, Fehlerbehandlung keine Sprache definiert",
