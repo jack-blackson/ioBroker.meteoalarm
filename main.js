@@ -429,7 +429,8 @@ function parseWeather(description,type, callback){
     SearchCrit2 = (typeof SearchCrit2 == 'number' ? SearchCrit2 : 0) + -3;
     var Link_temp =  ContentHeute.slice((SearchCrit1 - 1), SearchCrit2);
     Link_temp = Link_temp.slice(32);
-    var Warnung_img = '/meteoalarm.admin/icons/' + Link_temp
+    //var Warnung_img = '/meteoalarm.admin/icons/' + Link_temp
+    var Warnung_img = '/meteoalarm.admin/icons/wflag-t3.png'
     if (Level == 1){
         Warnung_img = '/meteoalarm.admin/icons/wflag-l1-t1.jpg'
     }
