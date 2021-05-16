@@ -32,5 +32,6 @@
     "instruction": "Для помощи, пожалуйста, проверьте описание здесь: https://github.com/jack-blackson/ioBroker.meteoalarm",
     "instructionLoading": "Пожалуйста, сначала выберите страну и нажмите: загрузить регион",
     "loadRegions": "Загрузить регионы",
+    "noBackgroundColor": "В виджете HTML нет цвета фона",
     "regions": "районы"
 }

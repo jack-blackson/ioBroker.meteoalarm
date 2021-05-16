@@ -32,5 +32,6 @@
     "instruction": "Per assistenza, controlla la descrizione qui: https://github.com/jack-blackson/ioBroker.meteoalarm",
     "instructionLoading": "Seleziona prima il paese e fai clic su: carica regione",
     "loadRegions": "Carica regioni",
+    "noBackgroundColor": "Nessun colore di sfondo nel widget HTML",
     "regions": "Regioni"
 }

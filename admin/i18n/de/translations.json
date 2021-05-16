@@ -20,6 +20,7 @@
     "Montenegro": "Montenegro",
     "Netherlands": "Niederlande",
     "Norway": "Norwegen",
+    "Norwege": "",
     "Poland": "Polen",
     "Romania": "Rumänien",
     "Serbia": "Serbien",
@@ -31,5 +32,6 @@
     "instruction": "Für Hilfe, besuchen Sie: https://github.com/jack-blackson/ioBroker.meteoalarm",
     "instructionLoading": "Bitte wählen Sie zuerst das Land aus und klicken Sie auf: Region laden",
     "loadRegions": "Regionen laden",
+    "noBackgroundColor": "Keine Hintergrundfarbe im HTML-Widget",
     "regions": "Regionen"
 }
