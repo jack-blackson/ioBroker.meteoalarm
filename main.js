@@ -219,7 +219,7 @@ function updateHTMLWidget(){
             if (!adapter.config.noBackgroundColor){
                 htmllong +=  'style="background:' + color + '"';  
             }
-            htmllong += 'border:"10px">';
+            htmllong += ' border:"10px">';
             htmllong += '<p></p><h3> '
             htmllong += i18nHelper.NoWarning[lang] + '</h3><p>'  
             htmllong += '</p><p></p></div>'

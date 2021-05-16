@@ -376,6 +376,58 @@
             "native": {}
         },
         {
+        "_id": "warningColorLevel1",
+        "type": "state",
+        "common": {
+            "name": "HEX Value Warning Color Level 1",
+            "type": "string",
+            "role": "value",
+            "read": true,
+            "write": false,
+            "def": "#01DF3A"
+        },
+        "native": {}
+        },
+        {
+        "_id": "warningColorLevel2",
+        "type": "state",
+        "common": {
+            "name": "HEX Value Warning Color Level 2",
+            "type": "string",
+            "role": "value",
+            "read": true,
+            "write": false,
+            "def": "#FEFE04"
+        },
+        "native": {}
+        },
+        {
+        "_id": "warningColorLevel3",
+        "type": "state",
+        "common": {
+            "name": "HEX Value Warning Color Level 3",
+            "type": "string",
+            "role": "value",
+            "read": true,
+            "write": false,
+            "def": "#FECA36"
+        },
+        "native": {}
+        },
+        {
+        "_id": "warningColorLevel4",
+        "type": "state",
+            "common": {
+                "name": "HEX Value Warning Color Level 4",
+                "type": "string",
+                "role": "value",
+                "read": true,
+                "write": false,
+                "def": "#FD0204"
+        },
+        "native": {}
+        },
+        {
             "_id": "today.color",
             "type": "state",
             "common": {
