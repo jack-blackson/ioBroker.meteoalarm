@@ -35,8 +35,9 @@
     "noBackgroundColor": "No background color in HTML widget",
     "regions": "Regions",
     "layout": "Layout Adjustments",
-    "warningColorLevel1": "No Warning",
-    "warningColorLevel2": "Potentially Dangerous",
-    "warningColorLevel3": "Dangerous",
-    "warningColorLevel4": "Very Dangerous"
+    "TextwarningColorLevel1": "No Warning",
+    "TextwarningColorLevel2": "Potentially Dangerous",
+    "TextwarningColorLevel3": "Dangerous",
+    "TextwarningColorLevel4": "Very Dangerous",
+    "ColorDefinition": "Define Colors for the HTML Widget Background and the color object"
 }

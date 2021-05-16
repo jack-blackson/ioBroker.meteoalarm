@@ -386,19 +386,19 @@ function parseWeather(description,type, callback){
             switch (Level) {
              case 1:
                 // Grün
-                Color = '#01DF3A';
+                Color = adapter.config.warningColorLevel1;
                 break;
             case 2:
                 // Gelb
-                Color = '#FEFE04';
+                Color = adapter.config.warningColorLevel2;
                 break;
             case 3:
                 // Orange
-                Color = '#FECA36';
+                Color = adapter.config.warningColorLevel3;
                 break;
             case 4:
                 // Rot
-                Color = '#FD0204';
+                Color = adapter.config.warningColorLevel4;
                 break;
             default:
                 Color = '#ffffff';
