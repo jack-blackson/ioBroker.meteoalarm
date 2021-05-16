@@ -205,7 +205,7 @@ function updateHTMLWidget(){
             // Warnung vorhanden
             htmllong += '<div '
             if (!adapter.config.noBackgroundColor){
-                'style="background:' + color + '"';  
+                htmllong += 'style="background:' + color + '"';  
             }
             htmllong += ' border:"10px">';
             htmllong += '<div style="display: flex; align-items: center">'
@@ -217,7 +217,7 @@ function updateHTMLWidget(){
             // keine Warnung vorhanden
             htmllong += '<div ';
             if (!adapter.config.noBackgroundColor){
-                'style="background:' + color + '"';  
+                htmllong +=  'style="background:' + color + '"';  
             }
             htmllong += 'border:"10px">';
             htmllong += '<p></p><h3> '
