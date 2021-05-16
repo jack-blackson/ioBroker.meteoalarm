@@ -209,7 +209,11 @@ function updateHTMLWidget(){
         }
         else{
             // keine Warnung vorhanden
-            htmllong += '<div style="background:' + color + '"  border:"10px">';
+            htmllong += '<div ';
+            if (adapter.config.noBackgroundColor){
+                'style="background:' + color + '"';  
+            }
+            htmllong += 'border:"10px">';
             htmllong += '<p></p><h3> '
             htmllong += i18nHelper.NoWarning[lang] + '</h3><p>'  
             htmllong += '</p><p></p></div>'
