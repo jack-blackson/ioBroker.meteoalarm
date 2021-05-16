@@ -196,6 +196,8 @@ function updateHTMLWidget(){
         to = state.val;
     });
     
+    adapter.log.debug('Setup Status noBackground Color:' + adapter.config.noBackgroundColor)
+
     adapter.getState('today.text', function (err, state) {
         text = state.val;
 
