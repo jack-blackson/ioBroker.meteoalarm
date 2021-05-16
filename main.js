@@ -201,7 +201,11 @@ function updateHTMLWidget(){
 
         if (level != '1'){
             // Warnung vorhanden
-            htmllong += '<div style="background:' + color + '"  border:"10px">';
+            htmllong += '<div '
+            if (adapter.config.noBackgroundColor){
+                'style="background:' + color + '"';  
+            }
+            htmllong += ' border:"10px">';
             htmllong += '<div style="display: flex; align-items: center">'
             htmllong += '<img src="' +  icon + '" alt="" width="20" height="20"/> '
             htmllong += '<h3 style="margin-left: 10px;margin-top: 5px;margin-bottom: 5px;">' + typeName + '</h3> </div>' + from + ' - ' + to 
