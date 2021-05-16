@@ -202,7 +202,7 @@ function updateHTMLWidget(){
         if (level != '1'){
             // Warnung vorhanden
             htmllong += '<div '
-            if (adapter.config.noBackgroundColor){
+            if (!adapter.config.noBackgroundColor){
                 'style="background:' + color + '"';  
             }
             htmllong += ' border:"10px">';
@@ -214,7 +214,7 @@ function updateHTMLWidget(){
         else{
             // keine Warnung vorhanden
             htmllong += '<div ';
-            if (adapter.config.noBackgroundColor){
+            if (!adapter.config.noBackgroundColor){
                 'style="background:' + color + '"';  
             }
             htmllong += 'border:"10px">';

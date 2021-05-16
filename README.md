@@ -107,7 +107,13 @@ If you don't find your country, please create an issue on github, and I will be 
 
 
 ## Changelog
-## 1.1.10 (2021-05-09)
+
+## 1.2.0 (2021-05-16)
+* (jack-blackson) New Setup: 
+                    "No Background Color in HTML Widget": Ability to use the HTML Widget without background color (e.g. if you want to use the color object to fill your whole widget, not just the html widget)
+                    "Define Warning colors"
+
+## 1.1.11 (2021-05-09)
 * (jack-blackson) Package Updates
 ## 1.1.9 (2021-05-07)
 * (jack-blackson) Package Updates
