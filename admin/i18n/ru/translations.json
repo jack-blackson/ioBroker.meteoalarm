@@ -4,6 +4,7 @@
     "AddPath": "Пожалуйста, добавьте сюда путь к XML от meteoalarm.eu",
     "Austria": "Австрия",
     "ChooseCountry": "Выберите страну",
+    "ColorDefinition": "Определите цвета для фона HTML-виджета и объекта цвета",
     "Croatia": "Хорватия",
     "Czech Republic": "Республика Чехия",
     "Finnland": "Finnland",
@@ -28,10 +29,16 @@
     "Spain": "Испания",
     "Sweden": "Швеция",
     "Switzerland": "Швейцария",
+    "TextwarningColorLevel1": "Нет предупреждения",
+    "TextwarningColorLevel2": "Потенциально опасно",
+    "TextwarningColorLevel3": "Опасный",
+    "TextwarningColorLevel4": "Очень опасно",
     "country": "Страна",
     "instruction": "Для помощи, пожалуйста, проверьте описание здесь: https://github.com/jack-blackson/ioBroker.meteoalarm",
     "instructionLoading": "Пожалуйста, сначала выберите страну и нажмите: загрузить регион",
+    "layout": "Настройки макета",
     "loadRegions": "Загрузить регионы",
     "noBackgroundColor": "В виджете HTML нет цвета фона",
-    "regions": "районы"
+    "regions": "районы",
+    "whiteIcons": "Используйте белые значки для виджетов"
 }

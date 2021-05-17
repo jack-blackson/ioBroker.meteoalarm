@@ -4,6 +4,7 @@
     "AddPath": "Por favor, adicione aqui o caminho para o XML de meteoalarm.eu",
     "Austria": "Áustria",
     "ChooseCountry": "Escolha o país",
+    "ColorDefinition": "Definir cores para o fundo do widget HTML e o objeto de cor",
     "Croatia": "Croácia",
     "Czech Republic": "República Checa",
     "Finnland": "Finlândia",
@@ -28,10 +29,16 @@
     "Spain": "Espanha",
     "Sweden": "Suécia",
     "Switzerland": "Suíça",
+    "TextwarningColorLevel1": "Nenhum aviso",
+    "TextwarningColorLevel2": "Potencialmente perigoso",
+    "TextwarningColorLevel3": "Perigoso",
+    "TextwarningColorLevel4": "Muito perigoso",
     "country": "País",
     "instruction": "Para obter ajuda, por favor, verifique a descrição aqui: https://github.com/jack-blackson/ioBroker.meteoalarm",
     "instructionLoading": "Selecione primeiro o país e clique em: carregar região",
+    "layout": "Ajustes de layout",
     "loadRegions": "Carregar regiões",
     "noBackgroundColor": "Sem cor de fundo no widget HTML",
-    "regions": "Regiões"
+    "regions": "Regiões",
+    "whiteIcons": "Use ícones brancos para widgets"
 }
