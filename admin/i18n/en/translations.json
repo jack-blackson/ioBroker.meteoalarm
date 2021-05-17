@@ -39,5 +39,7 @@
     "TextwarningColorLevel2": "Potentially Dangerous",
     "TextwarningColorLevel3": "Dangerous",
     "TextwarningColorLevel4": "Very Dangerous",
-    "ColorDefinition": "Define Colors for the HTML Widget Background and the color object"
+    "ColorDefinition": "Define Colors for the HTML Widget Background and the color object",
+    "whiteIcons": "Use white Icons for Widgets"
+
 }
