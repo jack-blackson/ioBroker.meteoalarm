@@ -442,7 +442,7 @@ function parseWeather(description,type, callback){
         Warnung_img += 'wflag-t3.png' // TODO!!!!!
     }
     else{
-        Warnung_img += 'wflag-t3.png' // TODO!!!!!
+        Warnung_img += 't' + Typ + '.png'
 
     }
 
