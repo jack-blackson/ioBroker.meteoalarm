@@ -39,6 +39,7 @@
     "layout": "布局调整",
     "loadRegions": "加载区域",
     "noBackgroundColor": "HTML小部件中没有背景色",
+    "noIcons": "在HTML窗口小部件中不显示图标",
     "regions": "地区",
     "whiteIcons": "对小部件使用白色图标"
 }

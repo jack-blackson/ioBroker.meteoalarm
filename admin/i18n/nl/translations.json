@@ -39,6 +39,7 @@
     "layout": "Aanpassingen van de lay-out",
     "loadRegions": "Laad regio's",
     "noBackgroundColor": "Geen achtergrondkleur in HTML-widget",
+    "noIcons": "Pictogram niet weergeven in HTML-widget",
     "regions": "Regio's",
     "whiteIcons": "Gebruik witte pictogrammen voor widgets"
 }

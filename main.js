@@ -209,7 +209,9 @@ function updateHTMLWidget(){
             }
             htmllong += ' border:"10px">';
             htmllong += '<div style="display: flex; align-items: center">'
-            htmllong += '<img src="' +  icon + '" alt="" width="20" height="20"/> '
+            if (!adapter.config.noIcons){
+                htmllong += '<img src="' +  icon + '" alt="" width="20" height="20"/> '
+            }
             htmllong += '<h3 style="margin-left: 10px;margin-top: 5px;margin-bottom: 5px;">' + typeName + '</h3> </div>' + from + ' - ' + to 
             htmllong += '</p><p>' + text + '</p></div>'
         }
@@ -423,12 +425,12 @@ function parseWeather(description,type, callback){
         adapter.setState({device: '' , channel: folder,state: 'typeText'}, {val: getTypeName(Typ), ack: true});
     }
     // Icon Link:
-    SearchCrit1 = ContentHeute.indexOf('src=') + 1;
-    SearchCrit1 = (typeof SearchCrit1 == 'number' ? SearchCrit1 : 0) + 13;
-    SearchCrit2 = ContentHeute.indexOf('alt=') + 1;
-    SearchCrit2 = (typeof SearchCrit2 == 'number' ? SearchCrit2 : 0) + -3;
-    var Link_temp =  ContentHeute.slice((SearchCrit1 - 1), SearchCrit2);
-    Link_temp = Link_temp.slice(32);
+    //SearchCrit1 = ContentHeute.indexOf('src=') + 1;
+    //SearchCrit1 = (typeof SearchCrit1 == 'number' ? SearchCrit1 : 0) + 13;
+    //SearchCrit2 = ContentHeute.indexOf('alt=') + 1;
+    //SearchCrit2 = (typeof SearchCrit2 == 'number' ? SearchCrit2 : 0) + -3;
+    //var Link_temp =  ContentHeute.slice((SearchCrit1 - 1), SearchCrit2);
+    //Link_temp = Link_temp.slice(32);
     //var Warnung_img = '/meteoalarm.admin/icons/' + Link_temp
     var Warnung_img = '';
     if (adapter.config.whiteIcons){

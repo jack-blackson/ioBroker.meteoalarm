@@ -39,6 +39,7 @@
     "layout": "Layoutanpassungen",
     "loadRegions": "Regionen laden",
     "noBackgroundColor": "Keine Hintergrundfarbe im HTML-Widget",
+    "noIcons": "Symbol im HTML-Widget nicht anzeigen",
     "regions": "Regionen",
     "whiteIcons": "Verwenden Sie weiße Symbole für Widgets"
 }

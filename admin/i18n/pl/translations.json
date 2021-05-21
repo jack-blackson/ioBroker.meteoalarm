@@ -39,6 +39,7 @@
     "layout": "Layout Adjustments",
     "loadRegions": "Załaduj regiony",
     "noBackgroundColor": "Brak koloru tła w widżecie HTML",
+    "noIcons": "Nie pokazuj ikony w widżecie HTML",
     "regions": "Regiony",
     "whiteIcons": "Użyj białych ikon dla widżetów"
 }

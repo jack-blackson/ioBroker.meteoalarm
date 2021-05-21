@@ -39,6 +39,7 @@
     "layout": "Layout Adjustments",
     "loadRegions": "Load regions",
     "noBackgroundColor": "No background color in HTML widget",
+    "noIcons": "Don't show icon in HTML Widget",
     "regions": "Regions",
     "whiteIcons": "White Icons for Widgets"
 }
