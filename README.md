@@ -113,6 +113,7 @@ If you don't find your country, please create an issue on github, and I will be 
                     "No Background Color in HTML Widget": Ability to use the HTML Widget without background color (e.g. if you want to use the color object to fill your whole widget, not just the html widget)
                     "Define Warning colors": Ability to define the colors for the various alarm levels in HEX code. Used for HTML widget and also for the color object to manually assign it to another widget
                     "Use white icons": Use white icons instead of black ones
+                    "No Icons": Don't show icon in HTML widget - if you want to show the icon seperatly, or just the icon
 * (jack-blackson) New Icons
 
 ## 1.1.11 (2021-05-09)
