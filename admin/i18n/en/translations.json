@@ -4,7 +4,7 @@
     "AddPath": "Add the XML path manually from meteoalarm.eu",
     "Austria": "Austria",
     "ChooseCountry": "Choose country",
-    "ColorDefinition": "Define Colors for the HTML Widget Background and the color object",
+    "ColorDefinition": "Define Colors for the HTML Widget Background and the color objects",
     "Croatia": "Croatia",
     "Czech Republic": "Czech Republic",
     "Finnland": "Finnland",
@@ -40,5 +40,5 @@
     "loadRegions": "Load regions",
     "noBackgroundColor": "No background color in HTML widget",
     "regions": "Regions",
-    "whiteIcons": "Use white Icons for Widgets"
+    "whiteIcons": "White Icons for Widgets"
 }
