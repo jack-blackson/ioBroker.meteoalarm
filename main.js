@@ -433,19 +433,14 @@ function parseWeather(description,type, callback){
     //Link_temp = Link_temp.slice(32);
     //var Warnung_img = '/meteoalarm.admin/icons/' + Link_temp
     var Warnung_img = '';
-    if (adapter.config.whiteIcons){
-        Warnung_img += '/meteoalarm.admin/icons/white/'
-    }
-    else{
-        Warnung_img += '/meteoalarm.admin/icons/black/'
-    }
-
-    if (Level == 1){
-        Warnung_img += 'wflag-t3.png' // TODO!!!!!
-    }
-    else{
+    if (Level != 1){
+        if (adapter.config.whiteIcons){
+            Warnung_img += '/meteoalarm.admin/icons/white/'
+        }
+        else{
+            Warnung_img += '/meteoalarm.admin/icons/black/'
+        }
         Warnung_img += 't' + Typ + '.png'
-
     }
 
     adapter.setState({device: '' , channel: folder,state: 'icon'}, {val: Warnung_img, ack: true});
