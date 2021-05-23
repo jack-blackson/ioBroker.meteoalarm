@@ -4,6 +4,7 @@
     "AddPath": "请在这里添加meteoalarm.eu的XML路径",
     "Austria": "奥地利",
     "ChooseCountry": "选择国家",
+    "ColorDefinition": "为HTML窗口小部件背景和颜色对象定义颜色",
     "Croatia": "克罗地亚",
     "Czech Republic": "捷克共和国",
     "Finnland": "芬兰",
@@ -28,9 +29,17 @@
     "Spain": "西班牙",
     "Sweden": "瑞典",
     "Switzerland": "瑞士",
+    "TextwarningColorLevel1": "没有警告",
+    "TextwarningColorLevel2": "潜在危险",
+    "TextwarningColorLevel3": "危险的",
+    "TextwarningColorLevel4": "非常危险",
     "country": "国家",
     "instruction": "如需帮助，请查看以下说明：https：//github.com/jack-blackson/ioBroker.meteoalarm",
     "instructionLoading": "请首先选择国家，然后单击：加载区域",
+    "layout": "布局调整",
     "loadRegions": "加载区域",
-    "regions": "地区"
+    "noBackgroundColor": "HTML小部件中没有背景色",
+    "noIcons": "在HTML窗口小部件中不显示图标",
+    "regions": "地区",
+    "whiteIcons": "对小部件使用白色图标"
 }

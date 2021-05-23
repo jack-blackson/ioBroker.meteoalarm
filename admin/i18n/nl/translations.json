@@ -4,6 +4,7 @@
     "AddPath": "Voeg hier het pad naar de XML van meteoalarm.eu toe",
     "Austria": "Oostenrijk",
     "ChooseCountry": "Kies land",
+    "ColorDefinition": "Definieer kleuren voor de HTML-widgetachtergrond en het kleurobject",
     "Croatia": "Kroatië",
     "Czech Republic": "Tsjechië",
     "Finnland": "Finland",
@@ -28,9 +29,18 @@
     "Spain": "Spanje",
     "Sweden": "Zweden",
     "Switzerland": "Zwitserland",
+    "TextwarningColorLevel1": "Geen waarschuwing",
+    "TextwarningColorLevel2": "Mogelijk gevaarlijk",
+    "TextwarningColorLevel3": "Gevaarlijk",
+    "TextwarningColorLevel4": "Zeer gevaarlijk",
     "country": "Land",
     "instruction": "Raadpleeg de beschrijving hier voor hulp: https://github.com/jack-blackson/ioBroker.meteoalarm",
     "instructionLoading": "Selecteer eerst het land en klik op: laad regio",
+    "layout": "Aanpassingen van de lay-out",
     "loadRegions": "Laad regio's",
-    "regions": "Regio's"
+    "noBackgroundColor": "Geen achtergrondkleur in HTML-widget",
+    "noIcons": "Pictogram niet weergeven in HTML-widget",
+    "regions": "Regio's",
+    "whiteIcons": "Gebruik witte pictogrammen voor widgets"
 }
+

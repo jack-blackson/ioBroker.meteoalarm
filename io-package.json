@@ -1,7 +1,7 @@
 {
     "common": {
         "name": "meteoalarm",
-        "version": "1.1.11",
+        "version": "1.2.0",
         "news": {
             "1.1.11": {
                 "en": "Package Updates",
@@ -14,7 +14,7 @@
                 "es": "Actualizaciones de paquetes",
                 "pl": "Aktualizacje pakietów",
                 "zh-cn": "软件包更新"
-              },
+            },
             "1.1.9": {
                 "en": "Package Updates",
                 "de": "Pakete Aktualisiert",
@@ -26,7 +26,7 @@
                 "es": "Actualizaciones de paquetes",
                 "pl": "Aktualizacje pakietów",
                 "zh-cn": "软件包更新"
-              },
+            },
             "1.1.5": {
                 "en": "Bugfix JS-Controller 3.3.1 errors, error handling no language defined",
                 "de": "Bugfix JS-Controller 3.3.1 Fehler, Fehlerbehandlung keine Sprache definiert",
@@ -38,7 +38,7 @@
                 "es": "Bugfix JS-Controller 3.3.1 errores, manejo de errores sin lenguaje definido",
                 "pl": "Bugfix JS-Controller 3.3.1 błędy, obsługa błędów brak zdefiniowanego języka",
                 "zh-cn": "Bugfix JS-Controller 3.3.1错误，错误处理未定义语言"
-              },
+            },
             "1.1.4": {
                 "en": "Handling of network errors, added Sentry",
                 "de": "Behandlung von Netzwerkfehlern, hinzugefügt Sentry",
@@ -50,7 +50,7 @@
                 "es": "Manejo de errores de red, Sentry agregado",
                 "pl": "Obsługa błędów sieciowych, dodano Sentry",
                 "zh-cn": "处理网络错误，增加了Sentry"
-              },
+            },
             "1.1.3": {
                 "en": "Error fixes adapter checker",
                 "de": "Fehler behebt Adapterprüfung",
@@ -62,18 +62,18 @@
                 "es": "El error corrige el verificador del adaptador",
                 "pl": "Błąd rozwiązuje narzędzie sprawdzania adaptera",
                 "zh-cn": "错误修复了适配器检查器"
-              },
+            },
             "1.1.2": {
-              "en": "Bugfix for new JavaScript Version",
-              "de": "Bugfix für neue JavaScript-Version",
-              "ru": "Исправление для новой версии JavaScript",
-              "pt": "Correção de bug para nova versão de JavaScript",
-              "nl": "Bugfix voor nieuwe JavaScript-versie",
-              "fr": "Correction de bug pour la nouvelle version de JavaScript",
-              "it": "Correzione di bug per la nuova versione di JavaScript",
-              "es": "Corrección de errores para la nueva versión de JavaScript",
-              "pl": "Poprawka błędu dla nowej wersji JavaScript",
-              "zh-cn": "新的JavaScript版本的错误修正"
+                "en": "Bugfix for new JavaScript Version",
+                "de": "Bugfix für neue JavaScript-Version",
+                "ru": "Исправление для новой версии JavaScript",
+                "pt": "Correção de bug para nova versão de JavaScript",
+                "nl": "Bugfix voor nieuwe JavaScript-versie",
+                "fr": "Correction de bug pour la nouvelle version de JavaScript",
+                "it": "Correzione di bug per la nuova versione di JavaScript",
+                "es": "Corrección de errores para la nueva versión de JavaScript",
+                "pl": "Poprawka błędu dla nowej wersji JavaScript",
+                "zh-cn": "新的JavaScript版本的错误修正"
             },
             "1.1.1": {
                 "en": "HTML Widget bugfix",
@@ -272,11 +272,14 @@
                 "dsn": "https://336269261940428d9f3093e61a6e06c6@sentry.iobroker.net/124"
             }
         }
-        
     },
     "native": {
         "interval": 120000,
-        "pathXML": ""
+        "pathXML": "",
+        "warningColorLevel1": "#01DF3A",
+        "warningColorLevel2": "#FEFE04",
+        "warningColorLevel3": "#FECA36",
+        "warningColorLevel4": "#FD0204"
     },
     "objects": [],
     "instanceObjects": [
@@ -298,7 +301,8 @@
             },
             "native": {}
         },
-        {"_id": "htmlToday",
+        {
+            "_id": "htmlToday",
             "type": "state",
             "common": {
                 "name": "HTML Widget Today",
@@ -308,9 +312,10 @@
                 "write": false,
                 "def": ""
             },
-            "native": {} 
+            "native": {}
         },
-        {"_id": "lastUpdate",
+        {
+            "_id": "lastUpdate",
             "type": "state",
             "common": {
                 "name": "Last Data Update",
@@ -320,9 +325,10 @@
                 "write": false,
                 "def": ""
             },
-            "native": {} 
+            "native": {}
         },
-        {"_id": "link",
+        {
+            "_id": "link",
             "type": "state",
             "common": {
                 "name": "RSS Feed Link",
@@ -332,9 +338,10 @@
                 "write": false,
                 "def": ""
             },
-            "native": {} 
+            "native": {}
         },
-        {"_id": "location",
+        {
+            "_id": "location",
             "type": "state",
             "common": {
                 "name": "Location",
@@ -344,9 +351,10 @@
                 "write": false,
                 "def": ""
             },
-            "native": {} 
+            "native": {}
         },
-        {"_id": "publicationDate",
+        {
+            "_id": "publicationDate",
             "type": "state",
             "common": {
                 "name": "Publication Date",
@@ -356,9 +364,10 @@
                 "write": false,
                 "def": ""
             },
-            "native": {} 
+            "native": {}
         },
-        {"_id": "weatherMapCountry",
+        {
+            "_id": "weatherMapCountry",
             "type": "state",
             "common": {
                 "name": "HTML Widget Today",
@@ -368,9 +377,10 @@
                 "write": false,
                 "def": ""
             },
-            "native": {} 
+            "native": {}
         },
-        {"_id": "today.color",
+        {
+            "_id": "today.color",
             "type": "state",
             "common": {
                 "name": "Color",
@@ -380,9 +390,10 @@
                 "write": false,
                 "def": ""
             },
-            "native": {} 
+            "native": {}
         },
-        {"_id": "today.from",
+        {
+            "_id": "today.from",
             "type": "state",
             "common": {
                 "name": "Warning From",
@@ -392,9 +403,10 @@
                 "write": false,
                 "def": ""
             },
-            "native": {} 
+            "native": {}
         },
-        {"_id": "today.icon",
+        {
+            "_id": "today.icon",
             "type": "state",
             "common": {
                 "name": "Warning Icon",
@@ -404,9 +416,10 @@
                 "write": false,
                 "def": ""
             },
-            "native": {} 
+            "native": {}
         },
-        {"_id": "today.level",
+        {
+            "_id": "today.level",
             "type": "state",
             "common": {
                 "name": "Warning Level",
@@ -416,9 +429,10 @@
                 "write": false,
                 "def": ""
             },
-            "native": {} 
+            "native": {}
         },
-        {"_id": "today.levelText",
+        {
+            "_id": "today.levelText",
             "type": "state",
             "common": {
                 "name": "Level Text",
@@ -428,9 +442,10 @@
                 "write": false,
                 "def": ""
             },
-            "native": {} 
+            "native": {}
         },
-        {"_id": "today.text",
+        {
+            "_id": "today.text",
             "type": "state",
             "common": {
                 "name": "Text",
@@ -440,9 +455,10 @@
                 "write": false,
                 "def": ""
             },
-            "native": {} 
+            "native": {}
         },
-        {"_id": "today.to",
+        {
+            "_id": "today.to",
             "type": "state",
             "common": {
                 "name": "Warning To",
@@ -452,9 +468,10 @@
                 "write": false,
                 "def": ""
             },
-            "native": {} 
+            "native": {}
         },
-        {"_id": "today.type",
+        {
+            "_id": "today.type",
             "type": "state",
             "common": {
                 "name": "Type",
@@ -464,9 +481,10 @@
                 "write": false,
                 "def": ""
             },
-            "native": {} 
+            "native": {}
         },
-        {"_id": "today.typeText",
+        {
+            "_id": "today.typeText",
             "type": "state",
             "common": {
                 "name": "Type Text",
@@ -476,9 +494,10 @@
                 "write": false,
                 "def": ""
             },
-            "native": {} 
+            "native": {}
         },
-        {"_id": "tomorrow.color",
+        {
+            "_id": "tomorrow.color",
             "type": "state",
             "common": {
                 "name": "Color",
@@ -488,9 +507,10 @@
                 "write": false,
                 "def": ""
             },
-            "native": {} 
+            "native": {}
         },
-        {"_id": "tomorrow.from",
+        {
+            "_id": "tomorrow.from",
             "type": "state",
             "common": {
                 "name": "Warning From",
@@ -500,9 +520,10 @@
                 "write": false,
                 "def": ""
             },
-            "native": {} 
+            "native": {}
         },
-        {"_id": "tomorrow.icon",
+        {
+            "_id": "tomorrow.icon",
             "type": "state",
             "common": {
                 "name": "Warning Icon",
@@ -512,9 +533,10 @@
                 "write": false,
                 "def": ""
             },
-            "native": {} 
+            "native": {}
         },
-        {"_id": "tomorrow.level",
+        {
+            "_id": "tomorrow.level",
             "type": "state",
             "common": {
                 "name": "Warning Level",
@@ -524,9 +546,10 @@
                 "write": false,
                 "def": ""
             },
-            "native": {} 
+            "native": {}
         },
-        {"_id": "tomorrow.levelText",
+        {
+            "_id": "tomorrow.levelText",
             "type": "state",
             "common": {
                 "name": "Level Text",
@@ -536,9 +559,10 @@
                 "write": false,
                 "def": ""
             },
-            "native": {} 
+            "native": {}
         },
-        {"_id": "tomorrow.text",
+        {
+            "_id": "tomorrow.text",
             "type": "state",
             "common": {
                 "name": "Text",
@@ -548,9 +572,10 @@
                 "write": false,
                 "def": ""
             },
-            "native": {} 
+            "native": {}
         },
-        {"_id": "tomorrow.to",
+        {
+            "_id": "tomorrow.to",
             "type": "state",
             "common": {
                 "name": "Warning To",
@@ -560,9 +585,10 @@
                 "write": false,
                 "def": ""
             },
-            "native": {} 
+            "native": {}
         },
-        {"_id": "tomorrow.type",
+        {
+            "_id": "tomorrow.type",
             "type": "state",
             "common": {
                 "name": "Type",
@@ -572,9 +598,10 @@
                 "write": false,
                 "def": ""
             },
-            "native": {} 
+            "native": {}
         },
-        {"_id": "tomorrow.typeText",
+        {
+            "_id": "tomorrow.typeText",
             "type": "state",
             "common": {
                 "name": "Type Text",
@@ -584,7 +611,7 @@
                 "write": false,
                 "def": ""
             },
-            "native": {} 
+            "native": {}
         }
     ]
 }

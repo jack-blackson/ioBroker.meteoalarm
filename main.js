@@ -196,20 +196,33 @@ function updateHTMLWidget(){
         to = state.val;
     });
     
+    adapter.log.debug('Setup Status noBackground Color:' + adapter.config.noBackgroundColor)
+
     adapter.getState('today.text', function (err, state) {
         text = state.val;
 
         if (level != '1'){
             // Warnung vorhanden
-            htmllong += '<div style="background:' + color + '"  border:"10px">';
+            htmllong += '<div '
+            if (!adapter.config.noBackgroundColor){
+                htmllong += 'style="background:' + color + '"';  
+            }
+            htmllong += ' border:"10px">';
             htmllong += '<div style="display: flex; align-items: center">'
-            htmllong += '<img src="' +  icon + '" alt="" width="20" height="20"/> '
-            htmllong += '<h3 style="margin-left: 10px;margin-top: 5px;margin-bottom: 5px;">' + typeName + '</h3> </div>' + from + ' - ' + to 
-            htmllong += '</p><p>' + text + '</p></div>'
+            if (!adapter.config.noIcons){
+                htmllong += '<img src="' +  icon + '" alt="" width="20" height="20"/> '
+            }
+            htmllong += '<h3 style="margin-left: 10px;margin-top: 5px;margin-bottom: 5px;">' + typeName + '</h3> </div>' 
+            htmllong += '<div style="margin-left: 10px; margin-right: 5px">' + from + ' - ' + to 
+            htmllong += '</p><p>' + text + '</p></div></div>'
         }
         else{
             // keine Warnung vorhanden
-            htmllong += '<div style="background:' + color + '"  border:"10px">';
+            htmllong += '<div ';
+            if (!adapter.config.noBackgroundColor){
+                htmllong +=  'style="background:' + color + '"';  
+            }
+            htmllong += ' border:"10px">';
             htmllong += '<p></p><h3> '
             htmllong += i18nHelper.NoWarning[lang] + '</h3><p>'  
             htmllong += '</p><p></p></div>'
@@ -376,19 +389,19 @@ function parseWeather(description,type, callback){
             switch (Level) {
              case 1:
                 // Grün
-                Color = '#01DF3A';
+                Color = adapter.config.warningColorLevel1;
                 break;
             case 2:
                 // Gelb
-                Color = '#FEFE04';
+                Color = adapter.config.warningColorLevel2;
                 break;
             case 3:
                 // Orange
-                Color = '#FECA36';
+                Color = adapter.config.warningColorLevel3;
                 break;
             case 4:
                 // Rot
-                Color = '#FD0204';
+                Color = adapter.config.warningColorLevel4;
                 break;
             default:
                 Color = '#ffffff';
@@ -413,15 +426,22 @@ function parseWeather(description,type, callback){
         adapter.setState({device: '' , channel: folder,state: 'typeText'}, {val: getTypeName(Typ), ack: true});
     }
     // Icon Link:
-    SearchCrit1 = ContentHeute.indexOf('src=') + 1;
-    SearchCrit1 = (typeof SearchCrit1 == 'number' ? SearchCrit1 : 0) + 13;
-    SearchCrit2 = ContentHeute.indexOf('alt=') + 1;
-    SearchCrit2 = (typeof SearchCrit2 == 'number' ? SearchCrit2 : 0) + -3;
-    var Link_temp =  ContentHeute.slice((SearchCrit1 - 1), SearchCrit2);
-    Link_temp = Link_temp.slice(32);
-    var Warnung_img = '/meteoalarm.admin/icons/' + Link_temp
-    if (Level == 1){
-        Warnung_img = '/meteoalarm.admin/icons/wflag-l1-t1.jpg'
+    //SearchCrit1 = ContentHeute.indexOf('src=') + 1;
+    //SearchCrit1 = (typeof SearchCrit1 == 'number' ? SearchCrit1 : 0) + 13;
+    //SearchCrit2 = ContentHeute.indexOf('alt=') + 1;
+    //SearchCrit2 = (typeof SearchCrit2 == 'number' ? SearchCrit2 : 0) + -3;
+    //var Link_temp =  ContentHeute.slice((SearchCrit1 - 1), SearchCrit2);
+    //Link_temp = Link_temp.slice(32);
+    //var Warnung_img = '/meteoalarm.admin/icons/' + Link_temp
+    var Warnung_img = '';
+    if (Level != 1){
+        if (adapter.config.whiteIcons){
+            Warnung_img += '/meteoalarm.admin/icons/white/'
+        }
+        else{
+            Warnung_img += '/meteoalarm.admin/icons/black/'
+        }
+        Warnung_img += 't' + Typ + '.png'
     }
 
     adapter.setState({device: '' , channel: folder,state: 'icon'}, {val: Warnung_img, ack: true});
