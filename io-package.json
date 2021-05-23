@@ -3,6 +3,18 @@
         "name": "meteoalarm",
         "version": "1.2.0",
         "news": {
+            "1.2.0": {
+                "en": "Added new settings to adjust the HTML widget, added new icons",
+                "de": "Neue Einstellungen zum Anpassen des HTML-Widgets hinzugefügt, neue Symbole hinzugefügt",
+                "ru": "Добавлены новые настройки для настройки виджета HTML, добавлены новые значки",
+                "pt": "Adicionadas novas configurações para ajustar o widget HTML, novos ícones adicionados",
+                "nl": "Nieuwe instellingen toegevoegd om de HTML-widget aan te passen, nieuwe pictogrammen toegevoegd",
+                "fr": "Ajout de nouveaux paramètres pour ajuster le widget HTML, ajout de nouvelles icônes",
+                "it": "Aggiunte nuove impostazioni per regolare il widget HTML, aggiunte nuove icone",
+                "es": "Se agregaron nuevas configuraciones para ajustar el widget HTML, se agregaron nuevos íconos",
+                "pl": "Dodano nowe ustawienia, aby dostosować widżet HTML, dodano nowe ikony",
+                "zh-cn": "添加了新的设置来调整HTML小部件，添加了新的图标"
+            },
             "1.1.11": {
                 "en": "Package Updates",
                 "de": "Pakete Aktualisiert",
