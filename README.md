@@ -69,6 +69,9 @@ Ability to define the colors for the various alarm levels in HEX code. Used for 
 "Use white icons": 
 Use white icons instead of black ones
 
+"No symbols in widget":
+Don't use the symbol in the HTML widget. You can still access it in the objects. This is usefill if you want to show the icon seperatly from the widget - e.g. in a bigger size.
+
 ## Alarm Levels
 |Alarm Level|Description|                                                                       
 |:---:|:---:|
