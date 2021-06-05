@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "meteoalarm",
-        "version": "1.2.0",
+        "version": "1.2.1",
         "news": {
+            "1.2.1": {
+                "en": "Small bugfix, added Luxembourg",
+                "de": "Kleiner Bugfix, Luxemburg hinzugefügt",
+                "ru": "Небольшое исправление, добавлен Люксембург",
+                "pt": "Pequena correção de bug adicionada em Luxemburgo",
+                "nl": "Kleine bugfix, Luxemburg toegevoegd",
+                "fr": "Petite correction de bug, ajout du Luxembourg",
+                "it": "Piccolo bugfix, aggiunto Lussemburgo",
+                "es": "Pequeña corrección de errores, añadido Luxemburgo",
+                "pl": "Mała poprawka, dodano Luksemburg",
+                "zh-cn": "小错误修正，添加卢森堡"
+            },
             "1.2.0": {
                 "en": "Added new settings to adjust the HTML widget, added new icons",
                 "de": "Neue Einstellungen zum Anpassen des HTML-Widgets hinzugefügt, neue Symbole hinzugefügt",

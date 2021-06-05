@@ -533,6 +533,11 @@ function getFilters(){
             DescFilter1 = 'lietuviu:';
             DescFilter2 = 'english:';
         break;
+        case 'lu':
+            // Luxembourg
+            DescFilter1 = 'deutsch:';
+            DescFilter2 = 'english:';
+        break;
         case 'lv':
             // Latvia
             DescFilter1 = 'latviešu:';
