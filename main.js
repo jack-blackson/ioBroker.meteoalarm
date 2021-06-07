@@ -157,7 +157,7 @@ function processJSON(content){
             })    
         }
         else{
-            adapter.log.error('Invalid XML - please check link. Choose region!')
+            adapter.log.error('Invalid XML - please check link in adapter settings. Choose region!')
             adapter.terminate ? adapter.terminate(0) : process.exit(0);
         }            
     }

@@ -120,7 +120,7 @@ If you don't find your country, please create an issue on github, and I will be 
 
 ## Changelog
 ## 1.2.1 (2021-06-05)
-* (jack-blackson) Bugfix
+* (jack-blackson) Bugfix to handle incorrect XML (if country instead of region is used)
 * (jack-blackson) Added Luxembourg
 ## 1.2.0 (2021-05-16)
 * (jack-blackson) New Setup: "No Background Color in HTML Widget", "Define Warning colors" and "Use white icons"
