@@ -145,15 +145,21 @@ function processJSON(content){
 
 
     if (DescFilter1 != 'nA'){
-        parseWeather(content.rss.channel.item.description,'today', function(){
-            parseWeather(content.rss.channel.item.description,'tomorrow', function(){
-                setTimeout(function() {
-                    // wait 3 seconds to make sure all is done
-                    updateHTMLWidget()
-                  }, 3000);
-                
-            })
-        })        
+        if (typeof content.rss.channel.item.description != 'undefined'){
+            parseWeather(content.rss.channel.item.description,'today', function(){
+                parseWeather(content.rss.channel.item.description,'tomorrow', function(){
+                    setTimeout(function() {
+                        // wait 3 seconds to make sure all is done
+                        updateHTMLWidget()
+                      }, 3000);
+                    
+                })
+            })    
+        }
+        else{
+            adapter.log.error('Invalid XML - please check link in adapter settings. Choose region!')
+            adapter.terminate ? adapter.terminate(0) : process.exit(0);
+        }            
     }
     else{
         // Land ist nicht in der Filterliste (getfilters()) -> daher kann Text nicht gefunden werden
@@ -531,6 +537,11 @@ function getFilters(){
         case 'lt':
             // Lithuania
             DescFilter1 = 'lietuviu:';
+            DescFilter2 = 'english:';
+        break;
+        case 'lu':
+            // Luxembourg
+            DescFilter1 = 'deutsch:';
             DescFilter2 = 'english:';
         break;
         case 'lv':
