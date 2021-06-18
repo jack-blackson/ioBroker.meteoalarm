@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "meteoalarm",
-        "version": "1.2.1",
+        "version": "2.0.0",
         "news": {
+            "2.0.0": {
+                "en": "Switch to new Meteoalarm Platform meteoalarm.org",
+                "de": "Wechseln zur neuen Meteoalarm-Plattform meteoalarm.org",
+                "ru": "Перейти на новую платформу Meteoalarm meteoalarm.org",
+                "pt": "Mudar para a nova plataforma Meteoalarm meteoalarm.org",
+                "nl": "Overschakelen naar het nieuwe Meteoalarm Platform meteoalarm.org",
+                "fr": "Passer à la nouvelle plate-forme Meteoalarm meteoalarm.org",
+                "it": "Passa alla nuova piattaforma Meteoalarm meteoalarm.org",
+                "es": "Cambiar a la nueva plataforma Meteoalarm meteoalarm.org",
+                "pl": "Przejdź na nową platformę Meteoalarm meteoalarm.org",
+                "zh-cn": "切换到新的 Meteoalarm 平台 meteoalarm.org"
+            },
             "1.2.1": {
                 "en": "Small bugfix, added Luxembourg",
                 "de": "Kleiner Bugfix, Luxemburg hinzugefügt",
@@ -275,7 +287,7 @@
         "license": "MIT",
         "platform": "Javascript/Node.js",
         "mode": "schedule",
-        "schedule": "*/30 * * * *",
+        "schedule": "*/10 * * * *",
         "enabled": true,
         "compact": true,
         "readme": "https://github.com/jack-blackson/ioBroker.meteoalarm/master/README.md",
