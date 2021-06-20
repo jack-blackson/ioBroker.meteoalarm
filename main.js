@@ -197,8 +197,8 @@ function getCountryLink(country){
 
 function requestAtom(){
     var countryConfig = "AT" // get from config later - TEMP
-    var urlAtom = getCountryLink(countryConfig)
-    //var urlAtom = 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-rss-austria'
+    //var urlAtom = getCountryLink(countryConfig)
+    var urlAtom = 'https://vol.at'
 
     adapter.log.info('Requesting data from ' + urlAtom)
     request.post({
