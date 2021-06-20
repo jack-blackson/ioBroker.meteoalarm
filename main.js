@@ -58,9 +58,9 @@ function main() {
         else{
             lang = systemConfig.common.language
         }
-        requestXML()
+        //requestXML()
 
-        //requestAtom()
+        requestAtom()
     }) 
 }
 
@@ -205,7 +205,6 @@ function requestAtom(){
     adapter.log.info('Requesting data from ' + urlAtom)
     request.post({
         url:     urlAtom,
-        headers: {'User-Agent': 'request'}, 
        json: true,
         timeout: 8000
       }, function(error, response, body){
@@ -227,15 +226,13 @@ function requestAtom(){
 
             )
         }
-        adapter.log.info('statusCode:', response && response.statusCode)
-        adapter.log.info('body: ' + body)
 
         if (body) {
             var cleanedString = body.replace("\ufeff", "");
             parseString(cleanedString, {
 
                 explicitArray: false,
-                preserveWhitespace: true,
+                //preserveWhitespace: true,
                 mergeAttrs: true
 
             }, 
