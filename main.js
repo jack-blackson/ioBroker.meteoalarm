@@ -222,7 +222,7 @@ function requestAtom(){
 
             )
         }
-        adapter.log.info('result: ' + response)
+        adapter.log.info('result: ' + response.statuscode)
         adapter.log.info('body: ' + body)
 
         if (body) {
