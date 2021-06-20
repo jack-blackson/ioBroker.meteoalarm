@@ -223,7 +223,8 @@ function requestAtom(){
             )
         }
         if (body) {
-            parseString(body, {
+            var cleanedString = body.replace("\ufeff", "");
+            parseString(cleanedString, {
 
                 explicitArray: false,
 
