@@ -203,6 +203,7 @@ function requestAtom(){
     adapter.log.info('Requesting data from ' + urlAtom)
     request.post({
         url:     urlAtom,
+        method: 'GET',
         json: true,
         timeout: 8000
       }, function(error, response, body){
