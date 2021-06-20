@@ -207,6 +207,8 @@ function requestAtom(){
         url:     urlAtom,
         //contentType: 'application/atom+xml',
        //json: true,
+       encoding: 'utf-8',
+       followAllRedirects: true,
         timeout: 8000
       }, function(error, response, body){
         if (error){
