@@ -58,7 +58,9 @@ function main() {
         else{
             lang = systemConfig.common.language
         }
-        requestAtom()
+        requestXML()
+
+        //requestAtom()
     }) 
 }
 
@@ -283,6 +285,8 @@ function requestXML(){
                 )
             }
             if (body) {
+                adapter.log.info('statusCode:', response && response.statusCode)
+
                 parseString(body, {
     
                     explicitArray: false,
