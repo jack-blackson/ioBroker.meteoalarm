@@ -205,6 +205,7 @@ function requestAtom(){
     adapter.log.info('Requesting data from ' + urlAtom)
     request.post({
         url:     urlAtom,
+        contentType: 'application/atom+xml',
        //json: true,
         timeout: 8000
       }, function(error, response, body){
