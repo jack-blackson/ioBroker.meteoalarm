@@ -205,7 +205,7 @@ function requestAtom(){
     adapter.log.info('Requesting data from ' + urlAtom)
     request.post({
         url:     urlAtom,
-        contentType: 'application/atom+xml',
+        //contentType: 'application/atom+xml',
        //json: true,
         timeout: 8000
       }, function(error, response, body){
@@ -233,9 +233,9 @@ function requestAtom(){
             adapter.log.info(cleanedString)
             parseString(cleanedString, {
 
-                explicitArray: false,
+                //explicitArray: false
                 //preserveWhitespace: true,
-                mergeAttrs: true
+                //mergeAttrs: true
 
             }, 
 
