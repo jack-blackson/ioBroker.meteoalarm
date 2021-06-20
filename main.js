@@ -58,7 +58,7 @@ function main() {
         else{
             lang = systemConfig.common.language
         }
-        requestXML()
+        requestAtom()
     }) 
 }
 
@@ -72,6 +72,180 @@ function checkURL(){
         adapter.terminate ? adapter.terminate(0) : process.exit(0);
         return false
     } 
+}
+
+function getCountryLink(country){
+    var link = ''
+    switch (country) {
+        // Alpha-2 Codes https://de.wikipedia.org/wiki/ISO-3166-1-Kodierliste
+        case 'AT':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-austria';
+            break;
+        case 'BE':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-belgium';
+            break;
+        case 'BA':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-bosnia-herzegovina';
+            break;
+        case 'BG':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-bulgaria';
+            break;
+        case 'HR':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-croatia'
+            break;
+        case 'CY':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-cyprus'
+            break;
+        case 'CZ':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-czechia'
+            break;
+        case 'DK':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-denmark'
+            break;
+        case 'EE':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-estonia'
+            break;
+        case 'FI':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-finland'
+            break;
+        case 'FR':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-france'
+            break;
+        case 'DE':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-germany'
+            break;
+         case 'FR':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-france'
+            break;
+         case 'GR':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-greece'
+            break;
+        case 'HU':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-hungary'
+            break;
+        case 'IS':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-iceland'
+            break;
+        case 'IE':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-ireland'
+            break;
+        case 'IS':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-israel'
+            break;
+        case 'IT':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-italy'
+            break;
+        case 'LV':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-latvia'
+            break;
+        case 'LT':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-lithuania'
+            break;
+        case 'LU':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-luxembourg'
+            break;
+        case 'MT':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-malta'
+            break;
+        case 'MD':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-moldova'
+            break;
+        case 'MT':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-montenegro'
+            break;
+        case 'NL':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-netherlands'
+            break;
+         case 'NO':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-norway'
+            break;
+         case 'PL':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-poland'
+            break;
+        case 'PT':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-portugal'
+            break;
+        case 'RO':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-romania'
+            break;
+        case 'RS':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-serbia'
+            break;
+        case 'SK':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-slovakia'
+            break;
+        case 'SI':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-slovenia'
+            break;
+        case 'ES':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-spain'
+            break;
+        case 'SE':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-sweden'
+            break;
+        case 'CH':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-switzerland'
+            break;
+         case 'UK':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-united-kingdom'
+            break;                           
+       default:
+           return ''
+           break;
+    }
+}
+
+function requestAtom(){
+    var countryConfig = "AT" // get from config later - TEMP
+    var urlAtom = getCountryLink(countryConfig)
+
+    adapter.log.info('Requesting data from ' + urlAtom)
+    request.post({
+        url:     urlAtom,
+        timeout: 8000
+      }, function(error, response, body){
+        if (error){
+            if (error.code === 'ETIMEDOUT'){
+                adapter.log.error('Error ETIMEOUT: No website response after 8 seconds. Adapter will try again at next scheduled run.')
+                adapter.terminate ? adapter.terminate(0) : process.exit(0);
+            }
+            else if (error.code === 'ESOCKETTIMEDOUT'){
+                adapter.log.error('Error ESOCKETTIMEDOUT: No website response after 8 seconds. Adapter will try again at next scheduled run.')
+                adapter.terminate ? adapter.terminate(0) : process.exit(0);
+            }
+            else if (error.code === 'ENOTFOUND'){
+                adapter.log.error('Error ENOTFOUND: No website response after 8 seconds. Adapter will try again at next scheduled run.')
+                adapter.terminate ? adapter.terminate(0) : process.exit(0);
+            }
+            else(
+                adapter.log.error(error)
+
+            )
+        }
+        if (body) {
+            parseString(body, {
+
+                explicitArray: false,
+
+                mergeAttrs: true
+
+            }, 
+
+            function (err, result) {
+
+                if (err) {
+
+                    adapter.log.error("Fehler: " + err);
+                    adapter.terminate ? adapter.terminate(0) : process.exit(0);
+                } else {
+                    //processJSON(result)
+                    adapter.log.info('Ready to parse atom')
+                }
+            });
+        }
+      });    
+    
+    
 }
 
 function requestXML(){
@@ -431,14 +605,7 @@ function parseWeather(description,type, callback){
         adapter.setState({device: '' , channel: folder,state: 'type'}, {val: Typ, ack: true});
         adapter.setState({device: '' , channel: folder,state: 'typeText'}, {val: getTypeName(Typ), ack: true});
     }
-    // Icon Link:
-    //SearchCrit1 = ContentHeute.indexOf('src=') + 1;
-    //SearchCrit1 = (typeof SearchCrit1 == 'number' ? SearchCrit1 : 0) + 13;
-    //SearchCrit2 = ContentHeute.indexOf('alt=') + 1;
-    //SearchCrit2 = (typeof SearchCrit2 == 'number' ? SearchCrit2 : 0) + -3;
-    //var Link_temp =  ContentHeute.slice((SearchCrit1 - 1), SearchCrit2);
-    //Link_temp = Link_temp.slice(32);
-    //var Warnung_img = '/meteoalarm.admin/icons/' + Link_temp
+
     var Warnung_img = '';
     if (Level != 1){
         if (adapter.config.whiteIcons){
