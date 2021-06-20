@@ -222,8 +222,11 @@ function requestAtom(){
 
             )
         }
+        adapter.log.info('result: ' + response)
+        adapter.log.info('body: ' + body)
+
         if (body) {
-            var cleanedString = body.tostring().replace("\ufeff", "");
+            var cleanedString = body.replace("\ufeff", "");
             parseString(cleanedString, {
 
                 explicitArray: false,
