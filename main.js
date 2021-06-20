@@ -202,6 +202,7 @@ function requestAtom(){
     adapter.log.info('Requesting data from ' + urlAtom)
     request.post({
         url:     urlAtom,
+        json: true,
         timeout: 8000
       }, function(error, response, body){
         if (error){
