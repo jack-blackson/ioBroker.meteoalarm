@@ -246,6 +246,8 @@ function requestAtom(){
                 } else {
                     //processJSON(result)
                     adapter.log.info('Ready to parse atom')
+                    adapter.terminate ? adapter.terminate(0) : process.exit(0);
+
                 }
             });
         }
