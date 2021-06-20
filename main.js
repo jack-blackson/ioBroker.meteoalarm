@@ -227,7 +227,7 @@ function requestAtom(){
             parseString(cleanedString, {
 
                 explicitArray: false,
-
+                preserveWhitespace: true,
                 mergeAttrs: true
 
             }, 
