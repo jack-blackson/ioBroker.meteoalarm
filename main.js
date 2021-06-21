@@ -117,7 +117,7 @@ function requestAtom(){
             if (body) {
                 var cleanedString = body.replace("\ufeff", "");
                 parseString(cleanedString, {
- 
+                    mergeAttrs: true
                 }, 
     
                 function (err, result) {
