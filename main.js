@@ -20,6 +20,7 @@ var DescFilter2 = '';
 var country = '';
 var countryConfig = '';
 var regionConfig = '';
+var countEntries = 0;
 
 
 let adapter;
@@ -111,6 +112,7 @@ function requestAtom(){
             )
         }
         if (response.statusCode == 200){
+            countEntries = 0;
             adapter.log.info('Status Code:' + response.statusCode)
             if (body) {
                 var cleanedString = body.replace("\ufeff", "");
@@ -180,7 +182,7 @@ function requestDetails(detailsLink){
                         adapter.terminate ? adapter.terminate(0) : process.exit(0);
                     } else {
                         adapter.log.info('Ready to parse atom')
-                        processDetails(result)
+                        const done = processDetails(result)
                         adapter.terminate ? adapter.terminate(0) : process.exit(0);
                     }
                 });
@@ -279,10 +281,22 @@ function processAtom(content){
 
 }
 
-function processDetails(content){
+async function processDetails(content){
     //adapter.log.info('Received Details data for ' + JSON.stringify(content.feed.id))
     var i = 0
     adapter.log.info(content.alert.info[0].description)
+
+    const promises = await adapter.createStateAsync('', 'alarms.'+countEntries, "lastUpdate", {
+        read: true, 
+        write: true, 
+        name: 'Alarm', 
+        type: "string", 
+        def: content.alert.info[0].description,
+        role: 'value'
+      })
+
+    //adapter.setState({device: '' , channel: 'alarms',state: countEntries.'lastUpdate'}, {val: content.alert.info[0].description, ack: true});
+
     /*
     var now = new Date();
     content.feed.entry.forEach(function (element){
