@@ -283,9 +283,8 @@ function processAtom(content){
 
 async function processDetails(content){
     //adapter.log.info('Received Details data for ' + JSON.stringify(content.feed.id))
-    var i = 0
     adapter.log.info(content.alert.info[0].description)
-
+    countEntries += 1
     const promises = await adapter.createStateAsync('', 'alarms.'+countEntries, "lastUpdate", {
         read: true, 
         write: true, 
