@@ -206,7 +206,6 @@ function processAtom(content){
         adapter.log.info('Region: ' + element.areaDesc_)
         adapter.log.info('Region1: ' + element.areaDesc_)
         adapter.log.info('Region2: ' + element.areaDesc$)
-        adapter.log.info('Region3: ' + element.cap:areaDesc)
 
         adapter.log.info('Region4: ' + element.areaDesc_)
 
