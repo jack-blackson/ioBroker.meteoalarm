@@ -80,8 +80,11 @@ function checkURL(){
 
 function requestAtom(){
     var countryConfig = "AT" // get from config later - TEMP
-    var urlAtom = getCountryLink(countryConfig)
+    //var urlAtom = getCountryLink(countryConfig)
     //var urlAtom = 'https://hub.meteoalarm.org/warnings/feeds-austria/9291828f-0698-4631-af7a-c91392f480bc'
+    var urlAtom = 'https://vol.at'
+
+
 
     adapter.log.info('Requesting data from ' + urlAtom)
     request.post({
