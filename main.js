@@ -212,6 +212,8 @@ function processAtom(content){
             adapter.log.info('effective: ' + element['cap:effective'])
             adapter.log.info('expires: ' + element['cap:expires'])
             adapter.log.info('identifier: ' + element['cap:identifier'])
+            adapter.log.info('link: ' + element.link[0])
+
             i += 1;
         }
     
