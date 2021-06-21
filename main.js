@@ -81,19 +81,10 @@ function checkURL(){
 function requestAtom(){
     var countryConfig = "AT" // get from config later - TEMP
     var urlAtom = getCountryLink(countryConfig)
-    //var urlAtom = 'https://hub.meteoalarm.org/warnings/feeds-austria/9291828f-0698-4631-af7a-c91392f480bc'
-    //var urlAtom = 'https://meteoalarm.eu/documents/rss/at/AT008.rss'
-
-
 
     adapter.log.info('Requesting data from ' + urlAtom)
     request.get({
         url:     urlAtom,
-        //headers: {'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.62 Safari/537.36'},
-        //contentType: 'application/atom+xml',
-       //json: true,
-       //encoding: 'utf-8',
-       //followAllRedirects: true,
         timeout: 8000
       }, function(error, response, body){
         if (error){
@@ -121,11 +112,7 @@ function requestAtom(){
             if (body) {
                 var cleanedString = body.replace("\ufeff", "");
                 parseString(cleanedString, {
-    
-                    //explicitArray: false
-                    //preserveWhitespace: true,
-                    //mergeAttrs: true
-    
+ 
                 }, 
     
                 function (err, result) {
@@ -135,10 +122,9 @@ function requestAtom(){
                         adapter.log.error("Fehler: " + err);
                         adapter.terminate ? adapter.terminate(0) : process.exit(0);
                     } else {
-                        //processJSON(result)
+                        processAtom(result)
                         adapter.log.info('Ready to parse atom')
                         adapter.terminate ? adapter.terminate(0) : process.exit(0);
-    
                     }
                 });
             }
@@ -147,12 +133,7 @@ function requestAtom(){
             adapter.log.warn('Status Code:' + response.statusCode)
             adapter.terminate ? adapter.terminate(0) : process.exit(0);
         }
-
-
-
       });    
-    
-    
 }
 
 function requestXML(){
@@ -212,6 +193,11 @@ function requestXML(){
     }
     
 }
+
+function processAtom(content){
+    adapter.log.info('Received Atom data for ' + JSON.stringify(content.feed.id))
+}
+
 
 function processJSON(content){
 
