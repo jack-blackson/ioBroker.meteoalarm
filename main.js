@@ -207,6 +207,7 @@ function processAtom(content){
             adapter.log.info('Region: ' + element['cap:areaDesc'])
             adapter.log.info('effective: ' + element['cap:effective'])
             adapter.log.info('expires: ' + element['cap:expires'])
+            adapter.log.info('identifier: ' + element['cap:identifier'])
 
         }
     
