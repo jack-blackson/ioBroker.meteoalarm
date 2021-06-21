@@ -18,6 +18,9 @@ const i18nHelper = require(`${__dirname}/lib/i18nHelper`);
 var DescFilter1 = '';
 var DescFilter2 = '';
 var country = '';
+var countryConfig = '';
+var regionConfig = '';
+
 
 let adapter;
 let lang;
@@ -79,7 +82,9 @@ function checkURL(){
 
 
 function requestAtom(){
-    var countryConfig = "AT" // get from config later - TEMP
+    countryConfig = "AT" // get from config later - TEMP
+    regionConfig = "Burgenland" // get from config later - TEMP
+
     var urlAtom = getCountryLink(countryConfig)
 
     adapter.log.info('Requesting data from ' + urlAtom)
@@ -198,6 +203,7 @@ function processAtom(content){
     adapter.log.info('Received Atom data for ' + JSON.stringify(content.feed.id))
     content.feed.entry.forEach(function (element){
         adapter.log.info('Title: ' + element.title)
+        adapter.log.info('Region: ' + element.areaDesc.__text)
 
     });
 }
