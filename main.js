@@ -301,6 +301,7 @@ async function processDetails(content){
                 name: 'Alarm'
             },
             type: 'state',
+            def: content.alert.info[0].description,
             'native' : {}
         })
         /*
