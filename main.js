@@ -182,7 +182,7 @@ function requestDetails(detailsLink){
                         adapter.terminate ? adapter.terminate(0) : process.exit(0);
                     } else {
                         adapter.log.info('Ready to parse atom')
-                        const done = processDetails(result)
+                        const promises = processDetails(result)
                         adapter.terminate ? adapter.terminate(0) : process.exit(0);
                     }
                 });
@@ -285,7 +285,18 @@ async function processDetails(content){
     //adapter.log.info('Received Details data for ' + JSON.stringify(content.feed.id))
     adapter.log.info(content.alert.info[0].description)
     countEntries += 1
-    const promises = await adapter.createStateAsync('alarms', countEntries, "lastUpdate", {
+
+    const promises = await Promise.all([
+
+    adapter.setObjectNotExistsAsync('alarms.' + countEntries, {
+        common: {
+              name: 'Alarm'
+        },
+        type: 'channel',
+        'native' : {}
+    }),
+
+    adapter.createStateAsync('alarms', countEntries, "lastUpdate", {
         read: true, 
         write: true, 
         name: 'Alarm', 
@@ -293,6 +304,8 @@ async function processDetails(content){
         def: content.alert.info[0].description,
         role: 'value'
       })
+
+    ])
 
     //adapter.setState({device: '' , channel: 'alarms',state: countEntries.'lastUpdate'}, {val: content.alert.info[0].description, ack: true});
 
