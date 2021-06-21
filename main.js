@@ -296,6 +296,14 @@ async function processDetails(content){
             'native' : {}
         }),
 
+        adapter.setObjectNotExistsAsync('alarms.' + countEntries + '.lastUpdate', {
+            common: {
+                name: 'Alarm'
+            },
+            type: 'state',
+            'native' : {}
+        })
+        /*
         adapter.createStateAsync('alarms', countEntries, 'lastUpdate', {
             read: true, 
             write: true, 
@@ -305,7 +313,7 @@ async function processDetails(content){
             def: 'test',
 
             role: 'value'
-        })
+        })*/
 
     ])
     
