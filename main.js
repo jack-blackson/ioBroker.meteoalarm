@@ -288,28 +288,27 @@ async function processDetails(content){
 
     const promises = await Promise.all([
 
-    adapter.setObjectNotExistsAsync('alarms.' + countEntries, {
-        common: {
-              name: 'Alarm'
-        },
-        type: 'channel',
-        'native' : {}
-    })
+        adapter.setObjectNotExistsAsync('alarms.' + countEntries, {
+            common: {
+                name: 'Alarm'
+            },
+            type: 'channel',
+            'native' : {}
+        }),
 
-])
-    /*
+        adapter.createStateAsync('alarms', countEntries, "lastUpdate", {
+            read: true, 
+            write: true, 
+            name: 'Alarm', 
+            type: "string", 
+            //def: content.alert.info[0].description,
+            def: 'test',
 
-    adapter.createStateAsync('alarms', countEntries, "lastUpdate", {
-        read: true, 
-        write: true, 
-        name: 'Alarm', 
-        type: "string", 
-        def: content.alert.info[0].description,
-        role: 'value'
-      })
+            role: 'value'
+        })
 
     ])
-    */
+    
 
     //adapter.setState({device: '' , channel: 'alarms',state: countEntries.'lastUpdate'}, {val: content.alert.info[0].description, ack: true});
 
