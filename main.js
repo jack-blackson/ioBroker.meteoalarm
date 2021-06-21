@@ -298,10 +298,11 @@ async function processDetails(content){
 
         adapter.setObjectNotExistsAsync('alarms.' + countEntries + '.lastUpdate', {
             common: {
-                name: 'Alarm'
+                name: 'Alarm',
+                def: content.alert.info[0].description,
+                type: 'string'
             },
             type: 'state',
-            def: content.alert.info[0].description,
             'native' : {}
         })
         /*
