@@ -122,8 +122,8 @@ function requestAtom(){
                         adapter.log.error("Fehler: " + err);
                         adapter.terminate ? adapter.terminate(0) : process.exit(0);
                     } else {
-                        processAtom(result)
                         adapter.log.info('Ready to parse atom')
+                        processAtom(result)
                         adapter.terminate ? adapter.terminate(0) : process.exit(0);
                     }
                 });
@@ -196,6 +196,10 @@ function requestXML(){
 
 function processAtom(content){
     adapter.log.info('Received Atom data for ' + JSON.stringify(content.feed.id))
+    content.feed.entry.forEach(function (element){
+        adapter.log.info('Title: ' + element.title)
+
+    });
 }
 
 
