@@ -294,7 +294,10 @@ async function processDetails(content){
         },
         type: 'channel',
         'native' : {}
-    }),
+    })
+
+])
+    /*
 
     adapter.createStateAsync('alarms', countEntries, "lastUpdate", {
         read: true, 
@@ -306,6 +309,7 @@ async function processDetails(content){
       })
 
     ])
+    */
 
     //adapter.setState({device: '' , channel: 'alarms',state: countEntries.'lastUpdate'}, {val: content.alert.info[0].description, ack: true});
 
