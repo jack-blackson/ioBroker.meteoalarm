@@ -76,126 +76,7 @@ function checkURL(){
     } 
 }
 
-function getCountryLink(country){
-    var link = ''
-    switch (country) {
-        // Alpha-2 Codes https://de.wikipedia.org/wiki/ISO-3166-1-Kodierliste
-        case 'AT':
-            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-austria';
-            break;
-        case 'BE':
-            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-belgium';
-            break;
-        case 'BA':
-            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-bosnia-herzegovina';
-            break;
-        case 'BG':
-            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-bulgaria';
-            break;
-        case 'HR':
-            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-croatia'
-            break;
-        case 'CY':
-            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-cyprus'
-            break;
-        case 'CZ':
-            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-czechia'
-            break;
-        case 'DK':
-            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-denmark'
-            break;
-        case 'EE':
-            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-estonia'
-            break;
-        case 'FI':
-            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-finland'
-            break;
-        case 'FR':
-            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-france'
-            break;
-        case 'DE':
-            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-germany'
-            break;
-         case 'FR':
-            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-france'
-            break;
-         case 'GR':
-            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-greece'
-            break;
-        case 'HU':
-            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-hungary'
-            break;
-        case 'IS':
-            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-iceland'
-            break;
-        case 'IE':
-            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-ireland'
-            break;
-        case 'IS':
-            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-israel'
-            break;
-        case 'IT':
-            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-italy'
-            break;
-        case 'LV':
-            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-latvia'
-            break;
-        case 'LT':
-            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-lithuania'
-            break;
-        case 'LU':
-            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-luxembourg'
-            break;
-        case 'MT':
-            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-malta'
-            break;
-        case 'MD':
-            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-moldova'
-            break;
-        case 'MT':
-            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-montenegro'
-            break;
-        case 'NL':
-            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-netherlands'
-            break;
-         case 'NO':
-            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-norway'
-            break;
-         case 'PL':
-            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-poland'
-            break;
-        case 'PT':
-            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-portugal'
-            break;
-        case 'RO':
-            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-romania'
-            break;
-        case 'RS':
-            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-serbia'
-            break;
-        case 'SK':
-            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-slovakia'
-            break;
-        case 'SI':
-            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-slovenia'
-            break;
-        case 'ES':
-            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-spain'
-            break;
-        case 'SE':
-            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-sweden'
-            break;
-        case 'CH':
-            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-switzerland'
-            break;
-         case 'UK':
-            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-united-kingdom'
-            break;                           
-       default:
-           return ''
-           break;
-    }
-}
+
 
 function requestAtom(){
     var countryConfig = "AT" // get from config later - TEMP
@@ -205,6 +86,7 @@ function requestAtom(){
     adapter.log.info('Requesting data from ' + urlAtom)
     request.post({
         url:     urlAtom,
+        headers: {'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.62 Safari/537.36'},
         //contentType: 'application/atom+xml',
        //json: true,
        //encoding: 'utf-8',
@@ -775,6 +657,127 @@ function getFilters(){
                 DescFilter2 = 'nA';
            break;
        }
+}
+
+function getCountryLink(country){
+    var link = ''
+    switch (country) {
+        // Alpha-2 Codes https://de.wikipedia.org/wiki/ISO-3166-1-Kodierliste
+        case 'AT':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-austria';
+            break;
+        case 'BE':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-belgium';
+            break;
+        case 'BA':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-bosnia-herzegovina';
+            break;
+        case 'BG':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-bulgaria';
+            break;
+        case 'HR':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-croatia'
+            break;
+        case 'CY':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-cyprus'
+            break;
+        case 'CZ':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-czechia'
+            break;
+        case 'DK':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-denmark'
+            break;
+        case 'EE':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-estonia'
+            break;
+        case 'FI':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-finland'
+            break;
+        case 'FR':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-france'
+            break;
+        case 'DE':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-germany'
+            break;
+         case 'FR':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-france'
+            break;
+         case 'GR':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-greece'
+            break;
+        case 'HU':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-hungary'
+            break;
+        case 'IS':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-iceland'
+            break;
+        case 'IE':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-ireland'
+            break;
+        case 'IS':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-israel'
+            break;
+        case 'IT':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-italy'
+            break;
+        case 'LV':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-latvia'
+            break;
+        case 'LT':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-lithuania'
+            break;
+        case 'LU':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-luxembourg'
+            break;
+        case 'MT':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-malta'
+            break;
+        case 'MD':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-moldova'
+            break;
+        case 'MT':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-montenegro'
+            break;
+        case 'NL':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-netherlands'
+            break;
+         case 'NO':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-norway'
+            break;
+         case 'PL':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-poland'
+            break;
+        case 'PT':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-portugal'
+            break;
+        case 'RO':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-romania'
+            break;
+        case 'RS':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-serbia'
+            break;
+        case 'SK':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-slovakia'
+            break;
+        case 'SI':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-slovenia'
+            break;
+        case 'ES':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-spain'
+            break;
+        case 'SE':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-sweden'
+            break;
+        case 'CH':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-switzerland'
+            break;
+         case 'UK':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-united-kingdom'
+            break;                           
+       default:
+           return ''
+           break;
+    }
 }
 
 // If started as allInOne/compact mode => return function to create instance
