@@ -204,7 +204,10 @@ function processAtom(content){
     content.feed.entry.forEach(function (element){
         if (element['cap:areaDesc'] = regionConfig){
             adapter.log.info('Title: ' + element.title)
-            adapter.log.info('Region2: ' + element['cap:areaDesc'])
+            adapter.log.info('Region: ' + element['cap:areaDesc'])
+            adapter.log.info('effective: ' + element['cap:effective'])
+            adapter.log.info('expires: ' + element['cap:expires'])
+
         }
     
     });
