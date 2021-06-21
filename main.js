@@ -299,11 +299,12 @@ async function processDetails(content){
         adapter.setObjectNotExistsAsync('alarms.' + countEntries + '.lastUpdate', {
             common: {
                 name: 'Alarm',
-                def: content.alert.info[0].description,
                 type: 'string'
             },
             type: 'state',
-            'native' : {}
+            'native' : {},
+            function(){
+                adapter.setState('alarms.' + countEntries + '.lastUpdate',content.alert.info[0].description}
         })
         /*
         adapter.createStateAsync('alarms', countEntries, 'lastUpdate', {
