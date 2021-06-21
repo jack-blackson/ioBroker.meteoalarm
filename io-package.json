@@ -200,6 +200,15 @@
     "objects": [],
     "instanceObjects": [
         {
+            "_id": "alarms",
+            "type": "channel",
+            "common": {
+                "role": "alarms",
+                "name": ""
+            },
+            "native": {}
+        },
+        {
             "_id": "today",
             "type": "channel",
             "common": {
