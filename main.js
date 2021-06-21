@@ -296,7 +296,7 @@ async function processDetails(content){
             'native' : {}
         }),
 
-        adapter.createStateAsync('alarms', countEntries, "lastUpdate", {
+        adapter.createStateAsync('alarms', countEntries, 'lastUpdate', {
             read: true, 
             write: true, 
             name: 'Alarm', 
