@@ -110,8 +110,6 @@ function requestAtom(){
 
             )
         }
-
-
         if (response.statusCode == 200){
             adapter.log.info('Status Code:' + response.statusCode)
             if (body) {
@@ -141,6 +139,61 @@ function requestAtom(){
       });    
 }
 
+function requestDetails(detailsLink){
+
+    adapter.log.info('Requesting data from ' + detailsLink)
+    request.get({
+        url:     detailsLink,
+        timeout: 8000
+      }, function(error, response, body){
+        if (error){
+            if (error.code === 'ETIMEDOUT'){
+                adapter.log.warn('Error ETIMEOUT: No website response after 8 seconds. Adapter will try again at next scheduled run.')
+                adapter.terminate ? adapter.terminate(0) : process.exit(0);
+            }
+            else if (error.code === 'ESOCKETTIMEDOUT'){
+                adapter.log.warn('Error ESOCKETTIMEDOUT: No website response after 8 seconds. Adapter will try again at next scheduled run.')
+                adapter.terminate ? adapter.terminate(0) : process.exit(0);
+            }
+            else if (error.code === 'ENOTFOUND'){
+                adapter.log.warn('Error ENOTFOUND: No website response after 8 seconds. Adapter will try again at next scheduled run.')
+                adapter.terminate ? adapter.terminate(0) : process.exit(0);
+            }
+            else(
+                adapter.log.error(error)
+
+            )
+        }
+        if (response.statusCode == 200){
+            adapter.log.info('Status Code:' + response.statusCode)
+            if (body) {
+                var cleanedString = body.replace("\ufeff", "");
+                parseString(cleanedString, {
+                    //mergeAttrs: true
+                }, 
+    
+                function (err, result) {
+    
+                    if (err) {
+    
+                        adapter.log.error("Fehler: " + err);
+                        adapter.terminate ? adapter.terminate(0) : process.exit(0);
+                    } else {
+                        adapter.log.info('Ready to parse atom')
+                        processDetails(result)
+                        adapter.terminate ? adapter.terminate(0) : process.exit(0);
+                    }
+                });
+            }
+        }
+        else{
+            adapter.log.warn('Status Code:' + response.statusCode)
+            adapter.terminate ? adapter.terminate(0) : process.exit(0);
+        }
+      });    
+}
+
+/*
 function requestXML(){
     if ((adapter.config.pathXML != '') && (typeof adapter.config.pathXML != 'undefined') && (checkURL())) {
         var url = adapter.config.pathXML
@@ -198,6 +251,8 @@ function requestXML(){
     }
     
 }
+*/
+
 
 function processAtom(content){
     adapter.log.info('Received Atom data for ' + JSON.stringify(content.feed.id))
@@ -213,7 +268,9 @@ function processAtom(content){
             adapter.log.info('expires: ' + element['cap:expires'])
             adapter.log.info('identifier: ' + element['cap:identifier'])
             adapter.log.info('link: ' + element.link[0].$.href)
+            var detailsLink = element.link[0].$.href
 
+            requestDetails(detailsLink)
             i += 1;
         }
     
@@ -222,6 +279,36 @@ function processAtom(content){
 
 }
 
+function processDetails(content){
+    //adapter.log.info('Received Details data for ' + JSON.stringify(content.feed.id))
+    var i = 0
+    adapter.log.info(content.alert.info[0].description)
+    /*
+    var now = new Date();
+    content.feed.entry.forEach(function (element){
+        var expiresDate = new Date(element['cap:expires']);
+        if (element['cap:areaDesc'] == regionConfig && expiresDate >= now){
+            adapter.log.info('Title: ' + element.title)
+            adapter.log.info('Region: ' + element['cap:areaDesc'])
+            adapter.log.info('Type: ' + element['cap:message_type'])
+            adapter.log.info('effective: ' + element['cap:effective'])
+            adapter.log.info('expires: ' + element['cap:expires'])
+            adapter.log.info('identifier: ' + element['cap:identifier'])
+            adapter.log.info('link: ' + element.link[0].$.href)
+            var detailsLink = element.link[0].$.href
+
+            requestDetails(detailsLink)
+            i += 1;
+        }
+    
+    });
+    adapter.log.info('Entries found: ' + i)
+    */
+}
+
+
+
+/*
 
 function processJSON(content){
 
@@ -260,6 +347,8 @@ function processJSON(content){
         adapter.terminate ? adapter.terminate(0) : process.exit(0);
     }
 }
+
+*/
 
 function updateHTMLWidget(){
     var htmllong = '';
