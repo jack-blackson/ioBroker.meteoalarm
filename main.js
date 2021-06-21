@@ -112,33 +112,41 @@ function requestAtom(){
             )
         }
 
-        adapter.log.info('Status Code:' + response.statusCode)
 
-
-        if (body) {
-            var cleanedString = body.replace("\ufeff", "");
-            parseString(cleanedString, {
-
-                //explicitArray: false
-                //preserveWhitespace: true,
-                //mergeAttrs: true
-
-            }, 
-
-            function (err, result) {
-
-                if (err) {
-
-                    adapter.log.error("Fehler: " + err);
-                    adapter.terminate ? adapter.terminate(0) : process.exit(0);
-                } else {
-                    //processJSON(result)
-                    adapter.log.info('Ready to parse atom')
-                    adapter.terminate ? adapter.terminate(0) : process.exit(0);
-
-                }
-            });
+        if (response.statusCode == '200'){
+            adapter.log.info('Status Code:' + response.statusCode)
+            if (body) {
+                var cleanedString = body.replace("\ufeff", "");
+                parseString(cleanedString, {
+    
+                    //explicitArray: false
+                    //preserveWhitespace: true,
+                    //mergeAttrs: true
+    
+                }, 
+    
+                function (err, result) {
+    
+                    if (err) {
+    
+                        adapter.log.error("Fehler: " + err);
+                        adapter.terminate ? adapter.terminate(0) : process.exit(0);
+                    } else {
+                        //processJSON(result)
+                        adapter.log.info('Ready to parse atom')
+                        adapter.terminate ? adapter.terminate(0) : process.exit(0);
+    
+                    }
+                });
+            }
         }
+        else{
+            adapter.log.warn();('Status Code:' + response.statusCode)
+            adapter.terminate ? adapter.terminate(0) : process.exit(0);
+        }
+
+
+
       });    
     
     
