@@ -203,7 +203,7 @@ function processAtom(content){
     adapter.log.info('Received Atom data for ' + JSON.stringify(content.feed.id))
     var i = 0
     content.feed.entry.forEach(function (element){
-        if (element['cap:areaDesc'] = regionConfig){
+        if (element['cap:areaDesc'] == regionConfig){
             adapter.log.info('Title: ' + element.title)
             adapter.log.info('Region: ' + element['cap:areaDesc'])
             adapter.log.info('effective: ' + element['cap:effective'])
