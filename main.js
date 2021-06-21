@@ -203,7 +203,7 @@ function processAtom(content){
     adapter.log.info('Received Atom data for ' + JSON.stringify(content.feed.id))
     content.feed.entry.forEach(function (element){
         adapter.log.info('Title: ' + element.title)
-        adapter.log.info('Region: ' + element.areaDesc.__text)
+        adapter.log.info('Region: ' + element.areaDesc.text)
 
     });
 }
