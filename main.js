@@ -202,13 +202,11 @@ function requestXML(){
 function processAtom(content){
     adapter.log.info('Received Atom data for ' + JSON.stringify(content.feed.id))
     content.feed.entry.forEach(function (element){
-        adapter.log.info('Title: ' + element.title)
-        adapter.log.info('Region: ' + element.areaDesc_)
-        adapter.log.info('Region1: ' + element.areaDesc_)
-        adapter.log.info('Region2: ' + element['cap:areaDesc'])
-
-        adapter.log.info('Region4: ' + element.areaDesc_)
-
+        if (element['cap:areaDesc'] = regionConfig){
+            adapter.log.info('Title: ' + element.title)
+            adapter.log.info('Region2: ' + element['cap:areaDesc'])
+        }
+    
     });
 }
 
