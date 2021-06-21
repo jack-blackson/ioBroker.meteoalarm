@@ -141,7 +141,7 @@ function requestAtom(){
             }
         }
         else{
-            adapter.log.warn();('Status Code:' + response.statusCode)
+            adapter.log.warn('Status Code:' + response.statusCode)
             adapter.terminate ? adapter.terminate(0) : process.exit(0);
         }
 
