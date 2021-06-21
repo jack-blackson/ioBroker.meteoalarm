@@ -299,7 +299,10 @@ async function processDetails(content){
         adapter.setObjectNotExistsAsync('alarms.' + countEntries + '.lastUpdate', {
             common: {
                 name: 'Alarm',
-                type: 'string'
+                type: 'string',
+				role: 'value',
+				read: true,
+				write: true,
             },
             type: 'state',
             'native' : {},
