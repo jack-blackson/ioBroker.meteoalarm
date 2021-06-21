@@ -304,7 +304,7 @@ async function processDetails(content){
             type: 'state',
             'native' : {},
             function(){
-                adapter.setState('alarms.' + countEntries + '.lastUpdate','test')}
+                adapter.setState({ state: 'alarms.' + countEntries + '.lastUpdate'}, {val: 'test', ack: true}}
         })
         /*
         adapter.createStateAsync('alarms', countEntries, 'lastUpdate', {
