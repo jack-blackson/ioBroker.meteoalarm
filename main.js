@@ -113,7 +113,7 @@ function requestAtom(){
         }
 
 
-        if (response.statusCode == '200'){
+        if (response.statusCode == 200){
             adapter.log.info('Status Code:' + response.statusCode)
             if (body) {
                 var cleanedString = body.replace("\ufeff", "");
