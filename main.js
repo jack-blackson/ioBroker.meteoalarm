@@ -80,8 +80,8 @@ function checkURL(){
 
 function requestAtom(){
     var countryConfig = "AT" // get from config later - TEMP
-    //var urlAtom = getCountryLink(countryConfig)
-    var urlAtom = 'https://hub.meteoalarm.org/warnings/feeds-austria/9291828f-0698-4631-af7a-c91392f480bc'
+    var urlAtom = getCountryLink(countryConfig)
+    //var urlAtom = 'https://hub.meteoalarm.org/warnings/feeds-austria/9291828f-0698-4631-af7a-c91392f480bc'
 
     adapter.log.info('Requesting data from ' + urlAtom)
     request.post({
@@ -112,9 +112,11 @@ function requestAtom(){
             )
         }
 
+        adapter.log.info('Status Code:' + response.statusCode)
+
+
         if (body) {
             var cleanedString = body.replace("\ufeff", "");
-            adapter.log.info(cleanedString)
             parseString(cleanedString, {
 
                 //explicitArray: false
