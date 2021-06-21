@@ -117,7 +117,7 @@ function requestAtom(){
             if (body) {
                 var cleanedString = body.replace("\ufeff", "");
                 parseString(cleanedString, {
-                    mergeAttrs: true
+                    //mergeAttrs: true
                 }, 
     
                 function (err, result) {
@@ -204,6 +204,11 @@ function processAtom(content){
     content.feed.entry.forEach(function (element){
         adapter.log.info('Title: ' + element.title)
         adapter.log.info('Region: ' + element.areaDesc_)
+        adapter.log.info('Region1: ' + element.areaDesc_)
+        adapter.log.info('Region2: ' + element.areaDesc$)
+        adapter.log.info('Region3: ' + element.cap:areaDesc)
+
+        adapter.log.info('Region4: ' + element.areaDesc_)
 
     });
 }
