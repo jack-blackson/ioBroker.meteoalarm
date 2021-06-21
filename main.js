@@ -204,7 +204,8 @@ function processAtom(content){
     var i = 0
     var now = new Date();
     content.feed.entry.forEach(function (element){
-        if (element['cap:areaDesc'] == regionConfig && element['cap:expires'] >= now){
+        var expiresDate = new Date(element['cap:expires']);
+        if (element['cap:areaDesc'] == regionConfig && expiresDate >= now){
             adapter.log.info('Title: ' + element.title)
             adapter.log.info('Region: ' + element['cap:areaDesc'])
             adapter.log.info('effective: ' + element['cap:effective'])
