@@ -87,7 +87,10 @@ function requestAtom(){
     request.post({
         url:     urlAtom,
         //headers: {'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.62 Safari/537.36'},
-        contentType: 'application/atom+xml',
+        //contentType: 'application/atom+xml',
+        headers: {
+            'User-Agent': 'Request-Promise'
+        },
        //json: true,
        //encoding: 'utf-8',
        //followAllRedirects: true,
