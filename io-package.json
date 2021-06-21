@@ -201,7 +201,7 @@
     "instanceObjects": [
         {
             "_id": "alarms",
-            "type": "channel",
+            "type": "device",
             "common": {
                 "role": "alarms",
                 "name": ""
