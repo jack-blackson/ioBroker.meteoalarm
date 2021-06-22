@@ -229,7 +229,8 @@ async function processDetails(content){
     countEntries += 1
     var expiresDate = new Date(content.alert.info[0].expires)
     var effectiveDate = new Date(content.alert.info[0].effective)
-    const created = await createAlarms(countEntries)
+    let created = createAlarms(countEntries)
+    let done = await created
     const promises = await Promise.all([
 
 
