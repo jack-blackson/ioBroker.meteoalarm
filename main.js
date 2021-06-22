@@ -195,67 +195,6 @@ function requestDetails(detailsLink){
       });    
 }
 
-/*
-function requestXML(){
-    if ((adapter.config.pathXML != '') && (typeof adapter.config.pathXML != 'undefined') && (checkURL())) {
-        var url = adapter.config.pathXML
-
-        adapter.log.info('Requesting data from ' + url)
-        request.post({
-            url:     url,
-            timeout: 8000
-          }, function(error, response, body){
-            if (error){
-                if (error.code === 'ETIMEDOUT'){
-                    adapter.log.error('Error ETIMEOUT: No website response after 8 seconds. Adapter will try again at next scheduled run.')
-                    adapter.terminate ? adapter.terminate(0) : process.exit(0);
-                }
-                else if (error.code === 'ESOCKETTIMEDOUT'){
-                    adapter.log.error('Error ESOCKETTIMEDOUT: No website response after 8 seconds. Adapter will try again at next scheduled run.')
-                    adapter.terminate ? adapter.terminate(0) : process.exit(0);
-                }
-                else if (error.code === 'ENOTFOUND'){
-                    adapter.log.error('Error ENOTFOUND: No website response after 8 seconds. Adapter will try again at next scheduled run.')
-                    adapter.terminate ? adapter.terminate(0) : process.exit(0);
-                }
-                else(
-                    adapter.log.error(error)
-
-                )
-            }
-            if (body) {
-                adapter.log.info('statusCode:', response && response.statusCode)
-
-                parseString(body, {
-    
-                    explicitArray: false,
-    
-                    mergeAttrs: true
-    
-                }, 
-    
-                function (err, result) {
-    
-                    if (err) {
-    
-                        adapter.log.error("Fehler: " + err);
-                        adapter.terminate ? adapter.terminate(0) : process.exit(0);
-                    } else {
-                        processJSON(result)
-                    }
-                });
-            }
-          });    
-        }
-    else{
-        adapter.log.debug('No path maintained!!')
-        adapter.terminate ? adapter.terminate(0) : process.exit(0);
-    }
-    
-}
-*/
-
-
 function processAtom(content){
     adapter.log.info('Received Atom data for ' + JSON.stringify(content.feed.id))
     var i = 0
@@ -288,9 +227,9 @@ async function processDetails(content){
     const created = createAlarms(countEntries)
     const promises = await Promise.all([
 
-      adapter.setStateAsync({ state: 'alarms.' + countEntries + '.event'}, {val: content.alert.info[0].event, ack: true}),
+      adapter.setStateAsync({ state: 'alarms.' + countEntries + '.event'}, {val: content.alert.info[0].event['_'], ack: true}),
       adapter.setStateAsync({ state: 'alarms.' + countEntries + '.description'}, {val: content.alert.info[0].description, ack: true}),
-      adapter.setStateAsync({ state: 'alarms.' + countEntries + '.link'}, {val: content.alert.info[0].link, ack: true})
+      adapter.setStateAsync({ state: 'alarms.' + countEntries + '.link'}, {val: content.alert.info[0].web, ack: true})
 
 
     ])
