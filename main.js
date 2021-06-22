@@ -229,11 +229,9 @@ async function processDetails(content, countInt){
     adapter.log.info(content.alert.info[0].description)
     var expiresDate = new Date(content.alert.info[0].expires)
     var effectiveDate = new Date(content.alert.info[0].effective)
-    adapter.log.info('Before Create Alarms for ' + countEntries)
 
     let created = createAlarms(countInt)
     let done = await created
-    adapter.log.info('After Create Alarms for ' + countInt)
 
     const promises = await Promise.all([
 
@@ -247,29 +245,7 @@ async function processDetails(content, countInt){
 
 
     ])
-    adapter.log.info('After Set State for ' + countInt)
 
-    /*
-    var now = new Date();
-    content.feed.entry.forEach(function (element){
-        var expiresDate = new Date(element['cap:expires']);
-        if (element['cap:areaDesc'] == regionConfig && expiresDate >= now){
-            adapter.log.info('Title: ' + element.title)
-            adapter.log.info('Region: ' + element['cap:areaDesc'])
-            adapter.log.info('Type: ' + element['cap:message_type'])
-            adapter.log.info('effective: ' + element['cap:effective'])
-            adapter.log.info('expires: ' + element['cap:expires'])
-            adapter.log.info('identifier: ' + element['cap:identifier'])
-            adapter.log.info('link: ' + element.link[0].$.href)
-            var detailsLink = element.link[0].$.href
-
-            requestDetails(detailsLink)
-            i += 1;
-        }
-    
-    });
-    adapter.log.info('Entries found: ' + i)
-    */
 }
 
 async function createAlarms(AlarmNumber){
@@ -320,7 +296,7 @@ async function createAlarms(AlarmNumber){
             common: {
                 name: 'Date Alarm gets effective',
                 type: 'string',
-				role: 'date',
+				role: 'value.datetime',
 				read: true,
 				write: true
             },
@@ -331,7 +307,7 @@ async function createAlarms(AlarmNumber){
             common: {
                 name: 'Date Alarm expires',
                 type: 'string',
-				role: 'date',
+				role: 'value.datetime',
 				read: true,
 				write: true
             },
