@@ -332,7 +332,7 @@ async function processDetails(content){
 async function createAlarms(AlarmNumber){
     const promises = await Promise.all([
 
-        adapter.setObjectNotExistsAsync('alarms.' + countEntries, {
+        adapter.setObjectNotExistsAsync('alarms.' + AlarmNumber, {
             common: {
                 name: 'Alarm'
             },
@@ -340,7 +340,7 @@ async function createAlarms(AlarmNumber){
             'native' : {}
         }),
 
-        adapter.setObjectNotExistsAsync('alarms.' + countEntries + '.lastUpdate', {
+        adapter.setObjectNotExistsAsync('alarms.' + AlarmNumber + '.lastUpdate', {
             common: {
                 name: 'Last Update',
                 type: 'string',
