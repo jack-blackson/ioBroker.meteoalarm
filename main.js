@@ -311,7 +311,7 @@ async function createAlarms(AlarmNumber){
             common: {
                 name: 'Date Alarm gets effective',
                 type: 'string',
-				role: 'value',
+				role: 'date',
 				read: true,
 				write: true
             },
@@ -322,7 +322,7 @@ async function createAlarms(AlarmNumber){
             common: {
                 name: 'Date Alarm expires',
                 type: 'string',
-				role: 'value',
+				role: 'date',
 				read: true,
 				write: true
             },
