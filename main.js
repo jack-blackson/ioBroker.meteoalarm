@@ -171,6 +171,9 @@ function requestDetails(detailsLink){
             if (body) {
                 var cleanedString = body.replace("\ufeff", "");
                 parseString(cleanedString, {
+                    explicitArray: false,
+    
+                    mergeAttrs: true
                     //mergeAttrs: true
                 }, 
     
@@ -227,7 +230,7 @@ async function processDetails(content){
     const created = createAlarms(countEntries)
     const promises = await Promise.all([
 
-      adapter.setStateAsync({ state: 'alarms.' + countEntries + '.event'}, {val:  JSON.stringify(content.alert.info[0].event), ack: true}),
+      adapter.setStateAsync({ state: 'alarms.' + countEntries + '.event'}, {val:  JSON.stringify(content.alert.info[0].event.val), ack: true}),
       adapter.setStateAsync({ state: 'alarms.' + countEntries + '.description'}, {val: JSON.stringify(content.alert.info[0].description), ack: true}),
       adapter.setStateAsync({ state: 'alarms.' + countEntries + '.link'}, {val: JSON.stringify(content.alert.info[0].web), ack: true})
 
