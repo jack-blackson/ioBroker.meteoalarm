@@ -236,7 +236,7 @@ async function processDetails(content){
       adapter.setStateAsync({ state: 'alarms.' + countEntries + '.event'}, {val:  JSON.stringify(content.alert.info[0].event), ack: true}),
       adapter.setStateAsync({ state: 'alarms.' + countEntries + '.description'}, {val: JSON.stringify(content.alert.info[0].description), ack: true}),
       adapter.setStateAsync({ state: 'alarms.' + countEntries + '.link'}, {val: JSON.stringify(content.alert.info[0].web), ack: true}),
-      adapter.setStateAsync({ state: 'alarms.' + countEntries + '.expires'}, {val: expiresDate, ack: true}),
+      adapter.setStateAsync({ state: 'alarms.' + countEntries + '.expires'}, {val: JSON.stringify(expiresDate), ack: true}),
       adapter.setStateAsync({ state: 'alarms.' + countEntries + '.effective'}, {val: effectiveDate, ack: true}),
       adapter.setStateAsync({ state: 'alarms.' + countEntries + '.sender'}, {val: JSON.stringify(content.alert.info[0].senderName), ack: true})
 
