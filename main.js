@@ -235,7 +235,7 @@ async function processDetails(content){
       adapter.setStateAsync({ state: 'alarms.' + countEntries + '.link'}, {val: JSON.stringify(content.alert.info[0].web), ack: true}),
       adapter.setStateAsync({ state: 'alarms.' + countEntries + '.expires'}, {val: JSON.stringify(content.alert.info[0].expires), ack: true}),
       adapter.setStateAsync({ state: 'alarms.' + countEntries + '.effective'}, {val: JSON.stringify(content.alert.info[0].effective), ack: true}),
-      adapter.setStateAsync({ state: 'alarms.' + countEntries + '.sender'}, {val: JSON.stringify(content.alert.info[0].sender), ack: true})
+      adapter.setStateAsync({ state: 'alarms.' + countEntries + '.sender'}, {val: JSON.stringify(content.alert.info[0].senderName), ack: true})
 
 
     ])
@@ -310,7 +310,7 @@ async function createAlarms(AlarmNumber){
         adapter.setObjectNotExistsAsync('alarms.' + AlarmNumber + '.effective', {
             common: {
                 name: 'Date Alarm gets effective',
-                type: 'date',
+                type: 'string',
 				role: 'value',
 				read: true,
 				write: true
@@ -321,7 +321,7 @@ async function createAlarms(AlarmNumber){
         adapter.setObjectNotExistsAsync('alarms.' + AlarmNumber + '.expires', {
             common: {
                 name: 'Date Alarm expires',
-                type: 'date',
+                type: 'string',
 				role: 'value',
 				read: true,
 				write: true
