@@ -285,30 +285,10 @@ async function processDetails(content){
     //adapter.log.info('Received Details data for ' + JSON.stringify(content.feed.id))
     adapter.log.info(content.alert.info[0].description)
     countEntries += 1
-
+    const created = createAlarms(countEntries)
     const promises = await Promise.all([
 
-        adapter.setObjectNotExistsAsync('alarms.' + countEntries, {
-            common: {
-                name: 'Alarm'
-            },
-            type: 'channel',
-            'native' : {}
-        }),
-
-        adapter.setObjectNotExistsAsync('alarms.' + countEntries + '.lastUpdate', {
-            common: {
-                name: 'Last Update',
-                type: 'string',
-				role: 'value',
-				read: true,
-				write: true
-            },
-            type: 'state',
-            'native' : {},
-            function(){
-                adapter.setState({ state: 'alarms.' + countEntries + '.lastUpdate'}, {val: 'test', ack: true})}
-        })
+      adapter.setStateAsync({ state: 'alarms.' + countEntries + '.lastUpdate'}, {val: 'test', ack: true})
         /*
         adapter.createStateAsync('alarms', countEntries, 'lastUpdate', {
             read: true, 
@@ -349,7 +329,31 @@ async function processDetails(content){
     */
 }
 
+async function createAlarms(AlarmNumber){
+    const promises = await Promise.all([
 
+        adapter.setObjectNotExistsAsync('alarms.' + countEntries, {
+            common: {
+                name: 'Alarm'
+            },
+            type: 'channel',
+            'native' : {}
+        }),
+
+        adapter.setObjectNotExistsAsync('alarms.' + countEntries + '.lastUpdate', {
+            common: {
+                name: 'Last Update',
+                type: 'string',
+				role: 'value',
+				read: true,
+				write: true
+            },
+            type: 'state',
+            'native' : {}
+        })
+    ])
+
+}
 
 /*
 
