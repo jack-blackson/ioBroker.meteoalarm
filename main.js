@@ -185,7 +185,8 @@ function requestDetails(detailsLink){
                         adapter.terminate ? adapter.terminate(0) : process.exit(0);
                     } else {
                         adapter.log.info('Ready to parse atom')
-                        const promises = processDetails(result)
+                        countEntries += 1
+                        const promises = processDetails(result,countEntries)
                         adapter.terminate ? adapter.terminate(0) : process.exit(0);
                     }
                 });
@@ -223,31 +224,30 @@ function processAtom(content){
 
 }
 
-async function processDetails(content){
+async function processDetails(content, countInt){
     //adapter.log.info('Received Details data for ' + JSON.stringify(content.feed.id))
     adapter.log.info(content.alert.info[0].description)
-    countEntries += 1
     var expiresDate = new Date(content.alert.info[0].expires)
     var effectiveDate = new Date(content.alert.info[0].effective)
     adapter.log.info('Before Create Alarms for ' + countEntries)
 
-    let created = createAlarms(countEntries)
+    let created = createAlarms(countInt)
     let done = await created
-    adapter.log.info('After Create Alarms for ' + countEntries)
+    adapter.log.info('After Create Alarms for ' + countInt)
 
     const promises = await Promise.all([
 
 
-      adapter.setStateAsync({ state: 'alarms.' + countEntries + '.event'}, {val:  JSON.stringify(content.alert.info[0].event), ack: true}),
-      adapter.setStateAsync({ state: 'alarms.' + countEntries + '.description'}, {val: JSON.stringify(content.alert.info[0].description), ack: true}),
-      adapter.setStateAsync({ state: 'alarms.' + countEntries + '.link'}, {val: JSON.stringify(content.alert.info[0].web), ack: true}),
-      adapter.setStateAsync({ state: 'alarms.' + countEntries + '.expires'}, {val: JSON.stringify(expiresDate), ack: true}),
-      adapter.setStateAsync({ state: 'alarms.' + countEntries + '.effective'}, {val: effectiveDate, ack: true}),
-      adapter.setStateAsync({ state: 'alarms.' + countEntries + '.sender'}, {val: JSON.stringify(content.alert.info[0].senderName), ack: true})
+      adapter.setStateAsync({ state: 'alarms.' + countInt + '.event'}, {val:  JSON.stringify(content.alert.info[0].event), ack: true}),
+      adapter.setStateAsync({ state: 'alarms.' + countInt + '.description'}, {val: JSON.stringify(content.alert.info[0].description), ack: true}),
+      adapter.setStateAsync({ state: 'alarms.' + countInt + '.link'}, {val: JSON.stringify(content.alert.info[0].web), ack: true}),
+      adapter.setStateAsync({ state: 'alarms.' + countInt + '.expires'}, {val: JSON.stringify(expiresDate), ack: true}),
+      adapter.setStateAsync({ state: 'alarms.' + countInt + '.effective'}, {val: effectiveDate, ack: true}),
+      adapter.setStateAsync({ state: 'alarms.' + countInt + '.sender'}, {val: JSON.stringify(content.alert.info[0].senderName), ack: true})
 
 
     ])
-    adapter.log.info('After Set State for ' + countEntries)
+    adapter.log.info('After Set State for ' + countInt)
 
     /*
     var now = new Date();
