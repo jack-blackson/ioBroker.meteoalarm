@@ -288,24 +288,13 @@ async function processDetails(content){
     const created = createAlarms(countEntries)
     const promises = await Promise.all([
 
-      adapter.setStateAsync({ state: 'alarms.' + countEntries + '.lastUpdate'}, {val: 'test', ack: true})
-        /*
-        adapter.createStateAsync('alarms', countEntries, 'lastUpdate', {
-            read: true, 
-            write: true, 
-            name: 'Alarm', 
-            type: "string", 
-            //def: content.alert.info[0].description,
-            def: 'test',
+      adapter.setStateAsync({ state: 'alarms.' + countEntries + '.event'}, {val: content.alert.info[0].event, ack: true}),
+      adapter.setStateAsync({ state: 'alarms.' + countEntries + '.description'}, {val: content.alert.info[0].description, ack: true}),
+      adapter.setStateAsync({ state: 'alarms.' + countEntries + '.link'}, {val: content.alert.info[0].link, ack: true})
 
-            role: 'value'
-        })*/
 
     ])
     
-
-    //adapter.setState({device: '' , channel: 'alarms',state: countEntries.'lastUpdate'}, {val: content.alert.info[0].description, ack: true});
-
     /*
     var now = new Date();
     content.feed.entry.forEach(function (element){
@@ -340,9 +329,31 @@ async function createAlarms(AlarmNumber){
             'native' : {}
         }),
 
-        adapter.setObjectNotExistsAsync('alarms.' + AlarmNumber + '.lastUpdate', {
+        adapter.setObjectNotExistsAsync('alarms.' + AlarmNumber + '.event', {
             common: {
-                name: 'Last Update',
+                name: 'Event',
+                type: 'string',
+				role: 'value',
+				read: true,
+				write: true
+            },
+            type: 'state',
+            'native' : {}
+        }),
+        adapter.setObjectNotExistsAsync('alarms.' + AlarmNumber + '.description', {
+            common: {
+                name: 'Description',
+                type: 'string',
+				role: 'value',
+				read: true,
+				write: true
+            },
+            type: 'state',
+            'native' : {}
+        }),
+        adapter.setObjectNotExistsAsync('alarms.' + AlarmNumber + '.link', {
+            common: {
+                name: 'Link',
                 type: 'string',
 				role: 'value',
 				read: true,
@@ -351,6 +362,11 @@ async function createAlarms(AlarmNumber){
             type: 'state',
             'native' : {}
         })
+
+
+
+
+
     ])
 
 }
