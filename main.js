@@ -63,8 +63,8 @@ function main() {
             lang = systemConfig.common.language
         }
         //requestXML()
-
-        requestAtom()
+        
+        const allDone = requestAtom()
     }) 
 }
 
@@ -82,9 +82,11 @@ function checkURL(){
 
 
 
-function requestAtom(){
+async function requestAtom(){
     countryConfig = "AT" // get from config later - TEMP
-    regionConfig = "Burgenland" // get from config later - TEMP
+    regionConfig = "Burgenland1" // get from config later - TEMP
+
+    const deleted = await deleteAllAlarms();
 
     var urlAtom = getCountryLink(countryConfig)
 
@@ -225,7 +227,6 @@ function processAtom(content){
 }
 
 async function processDetails(content, countInt){
-    //adapter.log.info('Received Details data for ' + JSON.stringify(content.feed.id))
     adapter.log.info(content.alert.info[0].description)
     var expiresDate = new Date(content.alert.info[0].expires)
     var effectiveDate = new Date(content.alert.info[0].effective)
@@ -240,12 +241,18 @@ async function processDetails(content, countInt){
       adapter.setStateAsync({ state: 'alarms.' + countInt + '.description'}, {val: JSON.stringify(content.alert.info[0].description), ack: true}),
       adapter.setStateAsync({ state: 'alarms.' + countInt + '.link'}, {val: JSON.stringify(content.alert.info[0].web), ack: true}),
       adapter.setStateAsync({ state: 'alarms.' + countInt + '.expires'}, {val: JSON.stringify(expiresDate), ack: true}),
-      adapter.setStateAsync({ state: 'alarms.' + countInt + '.effective'}, {val: effectiveDate, ack: true}),
+      adapter.setStateAsync({ state: 'alarms.' + countInt + '.effective'}, {val: JSON.stringify(effectiveDate), ack: true}),
       adapter.setStateAsync({ state: 'alarms.' + countInt + '.sender'}, {val: JSON.stringify(content.alert.info[0].senderName), ack: true})
 
 
     ])
 
+}
+
+async function deleteAllAlarms(){
+    const promises = await Promise.all([
+        adapter.deleteDeviceAsync('alarms')
+    ])
 }
 
 async function createAlarms(AlarmNumber){
