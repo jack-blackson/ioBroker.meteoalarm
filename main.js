@@ -232,7 +232,10 @@ async function processDetails(content){
 
       adapter.setStateAsync({ state: 'alarms.' + countEntries + '.event'}, {val:  JSON.stringify(content.alert.info[0].event), ack: true}),
       adapter.setStateAsync({ state: 'alarms.' + countEntries + '.description'}, {val: JSON.stringify(content.alert.info[0].description), ack: true}),
-      adapter.setStateAsync({ state: 'alarms.' + countEntries + '.link'}, {val: JSON.stringify(content.alert.info[0].web), ack: true})
+      adapter.setStateAsync({ state: 'alarms.' + countEntries + '.link'}, {val: JSON.stringify(content.alert.info[0].web), ack: true}),
+      adapter.setStateAsync({ state: 'alarms.' + countEntries + '.expires'}, {val: JSON.stringify(content.alert.info[0].expires), ack: true}),
+      adapter.setStateAsync({ state: 'alarms.' + countEntries + '.effective'}, {val: JSON.stringify(content.alert.info[0].effective), ack: true}),
+      adapter.setStateAsync({ state: 'alarms.' + countEntries + '.sender'}, {val: JSON.stringify(content.alert.info[0].sender), ack: true})
 
 
     ])
@@ -286,6 +289,39 @@ async function createAlarms(AlarmNumber){
             common: {
                 name: 'Description',
                 type: 'string',
+				role: 'value',
+				read: true,
+				write: true
+            },
+            type: 'state',
+            'native' : {}
+        }),
+        adapter.setObjectNotExistsAsync('alarms.' + AlarmNumber + '.sender', {
+            common: {
+                name: 'Sender of the Alarm',
+                type: 'string',
+				role: 'value',
+				read: true,
+				write: true
+            },
+            type: 'state',
+            'native' : {}
+        }),
+        adapter.setObjectNotExistsAsync('alarms.' + AlarmNumber + '.effective', {
+            common: {
+                name: 'Date Alarm gets effective',
+                type: 'date',
+				role: 'value',
+				read: true,
+				write: true
+            },
+            type: 'state',
+            'native' : {}
+        }),
+        adapter.setObjectNotExistsAsync('alarms.' + AlarmNumber + '.expires', {
+            common: {
+                name: 'Date Alarm expires',
+                type: 'date',
 				role: 'value',
 				read: true,
 				write: true
