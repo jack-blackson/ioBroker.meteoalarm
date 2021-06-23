@@ -241,12 +241,8 @@ async function processDetails(content, countInt){
     var type = content.alert.info[0].parameter[1].value
     var n = type.indexOf(";");
     type = type.substring(0, n)
-    adapter.log.info(level)
-    adapter.log.info(type)
-
 
     const promises = await Promise.all([
-
 
       adapter.setStateAsync({ state: 'alarms.' + countInt + '.event'}, {val:  JSON.stringify(content.alert.info[0].event), ack: true}),
       adapter.setStateAsync({ state: 'alarms.' + countInt + '.description'}, {val: JSON.stringify(content.alert.info[0].description), ack: true}),
@@ -557,46 +553,46 @@ function updateHTMLWidget(){
 function getTypeName(type){
 
     switch (type) {
-        case 1:
+        case '1':
             return i18nHelper.typeDesc1[lang]
             break;
-        case 2:
+        case '2':
             return i18nHelper.typeDesc2[lang]
             break;
-        case 3:
+        case '3':
             return i18nHelper.typeDesc3[lang]
             break;
-        case 4:
+        case '4':
             return i18nHelper.typeDesc4[lang]
             break;
-        case 5:
+        case '5':
             return i18nHelper.typeDesc5[lang]
             break;
-        case 6:
+        case '6':
             return i18nHelper.typeDesc6[lang]
             break;
-        case 7:
+        case '7':
             return i18nHelper.typeDesc7[lang]
             break;
-        case 8:
+        case '8':
             return i18nHelper.typeDesc8[lang]
             break;
-        case 9:
+        case '9':
             return i18nHelper.typeDesc9[lang]
             break;
-        case 10:
+        case '10':
             return i18nHelper.typeDesc10[lang]
             break;
-        case 11:
+        case '11':
             return 'Unknown'
             break;
-        case 12:
+        case '12':
             return i18nHelper.typeDesc12[lang]
             break;
-        case 13:
+        case '13':
             return i18nHelper.typeDesc13[lang]
             break;
-        case 0:
+        case '0':
             return ''
             break;
        default:
@@ -609,16 +605,16 @@ function getTypeName(type){
 function getLevelName(level){
 
     switch (level) {
-        case 1:
+        case '1':
             return i18nHelper.levelDesc1[lang]
             break;
-        case 2:
+        case '2':
             return i18nHelper.levelDesc2[lang]
             break;
-        case 3:
+        case '3':
             return i18nHelper.levelDesc3[lang]
             break;
-        case 4:
+        case '4':
             return i18nHelper.levelDesc4[lang]
             break;
        default:
