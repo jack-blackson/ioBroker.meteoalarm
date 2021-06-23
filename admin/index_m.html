@@ -63,7 +63,13 @@
 				var $this = $(this);
 				if ($this.attr('type') === 'checkbox') {
 					obj[$this.attr('id')] = $this.prop('checked');
-				} else {
+				} else if ($this.attr('type') === 'number') {
+					obj[$this.attr('id')] = parseFloat($this.val());
+				} else if ($this.hasClass("isNumeric")){
+					obj[$this.attr('id')] = parseInt($this.val());
+				} else if ($this.attr('type') === 'radio'){
+					obj['provider'] = parseInt($("input:radio[name ='provider']:checked").val());
+				} else { 
 					obj[$this.attr('id')] = $this.val();
 				}
 			});
@@ -106,10 +112,10 @@
     <div class="input-field">
         <select class="country" id="country">
             <option value="AT" class="translate">Austria</option>
-            <option value=1 class="translate">fs_format_landscape</option>
-            <option value=2 class="translate">fs_format_portrait</option>
+            <option value="DE" class="translate">Germany</option>
+            <option value="IT" class="translate">Italy</option>
         </select>
-        <label for="syno_format" class="translate">fs_format</label>
+        <label for="country" class="translate">CountrySelect    </label>
     </div>
 
 
