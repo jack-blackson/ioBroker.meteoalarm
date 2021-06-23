@@ -78,6 +78,7 @@ async function setParameters(link){
         adapter.log.info('Found old setup');
 
         var country = link.substring(40, 42)
+        country = country.toUppercase()
         adapter.log.info('Country set to ' + country);
 
     }
