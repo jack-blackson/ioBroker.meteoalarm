@@ -77,7 +77,7 @@ async function setParameters(link){
     if (link.includes('https://www.meteoalarm.eu/documents/rss/')){
         adapter.log.info('Found old setup');
 
-        var country = link.substring(40, 2)
+        var country = link.substring(40, 42)
         adapter.log.info('Country set to ' + country);
 
     }
