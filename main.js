@@ -87,6 +87,20 @@ async function setParameters(link){
       
           ])
     }
+    else if(link.includes('https://meteoalarm.eu/documents/rss/')){
+        adapter.log.info('Found old setup');
+
+        var country = link.substring(36, 38)
+        country.toUpperCase()
+        adapter.log.info('Country set to ' + country);
+        const promises = await Promise.all([
+
+            adapter.setStateAsync({ state: 'config.country'}, {val: country, ack: true})
+      
+      
+          ])
+
+    }
     else{
         adapter.log.error('Please check the setup to make sure app settings are correct!')
     }
