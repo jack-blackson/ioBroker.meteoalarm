@@ -236,8 +236,11 @@ async function processDetails(content, countInt){
     let done = await created
 
     var level = content.alert.info[0].parameter[0].value
+    var n = level.indexOf(";");
+    level = level.substring(0, n)
     var type = content.alert.info[0].parameter[1].value
-
+    var n = type.indexOf(";");
+    type = type.substring(0, n)
     adapter.log.info(level)
     adapter.log.info(type)
 
