@@ -66,7 +66,7 @@ function main() {
 
         if (adapter.config.pathXML != ""){
             // check if users are migrating from version < 2.0
-            setParameters(adapter.config.pathXML)
+            let  done = setParameters(adapter.config.pathXML)
         }
         
         const allDone = requestAtom()
@@ -115,15 +115,14 @@ async function requestAtom(){
 
     adapter.log.info('Requesting data for country ' + countryConfig + ' and region ' + regionConfig)
 
-    adapter.setState({ state: 'location'}, {val:  JSON.stringify(regionConfig), ack: true})
-
-
     const deleted = await deleteAllAlarms();
 
     var urlAtom = getCountryLink(countryConfig)
+    if (urlAtom){
+        adapter.log.info('Requesting data from ' + urlAtom)
+        adapter.setState({ state: 'location'}, {val:  JSON.stringify(regionConfig), ack: true})
 
-    adapter.log.info('Requesting data from ' + urlAtom)
-    request.get({
+        request.get({
         url:     urlAtom,
         timeout: 8000
       }, function(error, response, body){
@@ -173,6 +172,12 @@ async function requestAtom(){
             adapter.terminate ? adapter.terminate(0) : process.exit(0);
         }
       });    
+
+    }
+    else{
+        adapter.log.error('No country selected. Please check setup!')
+    }
+    
 }
 
 function requestDetails(detailsLink){
