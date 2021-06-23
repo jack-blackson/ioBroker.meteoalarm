@@ -63,12 +63,12 @@ function main() {
             lang = systemConfig.common.language
         }
         //requestXML()
-
+        /*
         if (adapter.config.pathXML != ""){
             // check if users are migrating from version < 2.0
             let  done = setParameters(adapter.config.pathXML)
         }
-        
+        */
         const allDone = requestAtom()
     }) 
 }
