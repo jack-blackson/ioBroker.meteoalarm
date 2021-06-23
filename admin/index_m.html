@@ -44,9 +44,9 @@
                 }
             });
             callback(obj);
-        }
+    }
     
-        function load(settings, onChange) {
+    function load(settings, onChange) {
             //getVariableTranslation()
             if (!settings) return;
             $('.value').each(function () {
@@ -64,7 +64,8 @@
                     });
                 }
             });
-            onChange(false);}
+            onChange(false);
+    }
             /*
             $('#regions').change(function () {
                 $('#pathXML').val(regionLinkArray[$(this).val()-1]).trigger('change');
@@ -119,7 +120,7 @@
                 });
             });
             */
-        }
+        
 
         /*
         function httpGet(theUrl, callback)
