@@ -84,8 +84,9 @@ function checkURL(){
 
 async function requestAtom(){
     countryConfig = "AT" // get from config later - TEMP
-    regionConfig = "Burgenland1" // get from config later - TEMP
+    regionConfig = "Burgenland" // get from config later - TEMP
 
+    adapter.log.info('Requesting data for country ' + countryConfig + ' and region ' + regionConfig)
     const deleted = await deleteAllAlarms();
 
     var urlAtom = getCountryLink(countryConfig)
