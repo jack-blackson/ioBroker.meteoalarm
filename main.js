@@ -78,7 +78,7 @@ async function setParameters(link){
         adapter.log.info('Found old setup');
 
         var country = link.substring(40, 42)
-        country.toUppercase()
+        country.toUpperCase()
         adapter.log.info('Country set to ' + country);
         const promises = await Promise.all([
 
