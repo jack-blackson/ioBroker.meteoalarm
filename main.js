@@ -84,7 +84,7 @@ async function setParameters(link){
     else{
         adapter.log.error('Please check the setup to make sure app settings are correct!')
     }
-    https://www.meteoalarm.eu/documents/rss/lu/LU001.rss
+    //https://www.meteoalarm.eu/documents/rss/lu/LU001.rss
 
 }
 
