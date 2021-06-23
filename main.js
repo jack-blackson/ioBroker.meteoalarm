@@ -79,31 +79,33 @@ async function setParameters(link){
 
         var country = link.substring(40, 42)
         country.toUpperCase()
-        adapter.log.info('Country set to ' + country);
         const promises = await Promise.all([
 
             adapter.setStateAsync({ state: 'config.country'}, {val: country, ack: true})
       
       
           ])
+          adapter.log.info('Country set to ' + country);
+
     }
     else if(link.includes('https://meteoalarm.eu/documents/rss/')){
         adapter.log.info('Found old setup');
 
         var country = link.substring(36, 38)
         country.toUpperCase()
-        adapter.log.info('Country set to ' + country);
         const promises = await Promise.all([
 
-            adapter.setStateAsync({ state: 'config.country'}, {val: country, ack: true})
-      
-      
+            adapter.setObjectNotExistsAsync({ state: 'config.country'}, {val: country, ack: true})
           ])
+          adapter.log.info('Country set to ' + country);
+
 
     }
     else{
         adapter.log.error('Please check the setup to make sure app settings are correct!')
-    }
+        adapter.terminate ? adapter.terminate(0) : process.exit(0);
+
+    }   
     //https://www.meteoalarm.eu/documents/rss/lu/LU001.rss
 
 }
@@ -176,6 +178,8 @@ async function requestAtom(){
     }
     else{
         adapter.log.error('No country selected. Please check setup!')
+        adapter.terminate ? adapter.terminate(0) : process.exit(0);
+
     }
     
 }

@@ -211,24 +211,6 @@
             "native": {}
         },
         {
-            "_id": "today",
-            "type": "channel",
-            "common": {
-                "role": "today",
-                "name": ""
-            },
-            "native": {}
-        },
-        {
-            "_id": "tomorrow",
-            "type": "channel",
-            "common": {
-                "role": "tomorrow",
-                "name": ""
-            },
-            "native": {}
-        },
-        {
             "_id": "htmlToday",
             "type": "state",
             "common": {
