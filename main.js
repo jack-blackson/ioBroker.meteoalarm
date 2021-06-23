@@ -63,23 +63,30 @@ function main() {
             lang = systemConfig.common.language
         }
         //requestXML()
+
+        if (adapter.config.pathXML != ""){
+            // check if users are migrating from version < 2.0
+            setParameters(adapter.config.pathXML)
+        }
         
         const allDone = requestAtom()
     }) 
 }
 
-function checkURL(){
-    var url = adapter.config.pathXML
-    if (url.includes('meteoalarm.eu/documents/rss')){
-        return true
+async function setParameters(link){
+    if (link.includes('https://www.meteoalarm.eu/documents/rss/')){
+        adapter.log.info('Found old setup');
+
+        var country = link.substring(40, 2)
+        adapter.log.info('Country set to ' + country);
+
     }
     else{
-        adapter.log.error('URL incorrect. Please make sure to choose the RSS feed link!')
-        adapter.terminate ? adapter.terminate(0) : process.exit(0);
-        return false
-    } 
-}
+        adapter.log.error('Please check the setup to make sure app settings are correct!')
+    }
+    https://www.meteoalarm.eu/documents/rss/lu/LU001.rss
 
+}
 
 
 async function requestAtom(){
@@ -87,6 +94,10 @@ async function requestAtom(){
     regionConfig = "Burgenland" // get from config later - TEMP
 
     adapter.log.info('Requesting data for country ' + countryConfig + ' and region ' + regionConfig)
+
+    adapter.setState({ state: 'location'}, {val:  JSON.stringify(regionConfig), ack: true})
+
+
     const deleted = await deleteAllAlarms();
 
     var urlAtom = getCountryLink(countryConfig)
@@ -187,7 +198,7 @@ function requestDetails(detailsLink){
                         adapter.log.error("Fehler: " + err);
                         adapter.terminate ? adapter.terminate(0) : process.exit(0);
                     } else {
-                        adapter.log.info('Ready to parse atom')
+                        adapter.log.debug('Ready to parse atom')
                         countEntries += 1
                         const promises = processDetails(result,countEntries)
                         adapter.terminate ? adapter.terminate(0) : process.exit(0);
@@ -203,25 +214,21 @@ function requestDetails(detailsLink){
 }
 
 function processAtom(content){
-    adapter.log.info('Received Atom data for ' + JSON.stringify(content.feed.id))
+    adapter.log.debug('Received Atom data for ' + JSON.stringify(content.feed.id))
+
+    var newdate = moment(new Date()).local().format('DD.MM.YYYY HH:mm')
+
+    adapter.setState({device: '' , channel: '',state: 'lastUpdate'}, {val: newdate, ack: true});
+
     var i = 0
     var now = new Date();
     content.feed.entry.forEach(function (element){
         var expiresDate = new Date(element['cap:expires']);
         if (element['cap:areaDesc'] == regionConfig && expiresDate >= now){
-            //adapter.log.info('Title: ' + element.title)
-            //adapter.log.info('Region: ' + element['cap:areaDesc'])
-            //adapter.log.info('Type: ' + element['cap:message_type'])
-            //adapter.log.info('effective: ' + element['cap:effective'])
-            //adapter.log.info('expires: ' + element['cap:expires'])
-            //adapter.log.info('identifier: ' + element['cap:identifier'])
-            //adapter.log.info('link: ' + element.link[0].$.href)
             var detailsLink = element.link[0].$.href
-
             requestDetails(detailsLink)
             i += 1;
         }
-    
     });
     adapter.log.info('Entries found: ' + i)
 
