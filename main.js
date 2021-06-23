@@ -235,7 +235,7 @@ async function processDetails(content, countInt){
     let created = createAlarms(countInt)
     let done = await created
 
-    var level = content.alert.info[0].parameter.valuename['awareness_level']
+    var level = content.alert.info[0].parameter.valuename
     adapter.log.info(level)
 
     const promises = await Promise.all([
