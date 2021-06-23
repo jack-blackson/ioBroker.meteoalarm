@@ -80,7 +80,12 @@ async function setParameters(link){
         var country = link.substring(40, 42)
         country = country.toUppercase()
         adapter.log.info('Country set to ' + country);
+        const promises = await Promise.all([
 
+            adapter.setStateAsync({ state: 'config.country'}, {val: country, ack: true})
+      
+      
+          ])
     }
     else{
         adapter.log.error('Please check the setup to make sure app settings are correct!')
@@ -91,7 +96,7 @@ async function setParameters(link){
 
 
 async function requestAtom(){
-    countryConfig = "AT" // get from config later - TEMP
+    countryConfig = adapter.config.country
     regionConfig = "Burgenland" // get from config later - TEMP
 
     adapter.log.info('Requesting data for country ' + countryConfig + ' and region ' + regionConfig)
