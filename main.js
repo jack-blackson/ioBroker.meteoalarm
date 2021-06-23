@@ -266,12 +266,8 @@ async function processDetails(content, countInt){
       adapter.setStateAsync({ state: 'alarms.' + countInt + '.type'}, {val: JSON.stringify(type), ack: true}),
       adapter.setStateAsync({ state: 'alarms.' + countInt + '.typeText'}, {val: JSON.stringify(getTypeName(type)), ack: true}),
       adapter.setStateAsync({ state: 'alarms.' + countInt + '.icon'}, {val: JSON.stringify(Warnung_img), ack: true}),
-      adapter.setStateAsync({ state: 'alarms.' + countInt + '.color'}, {val: JSON.stringify(content.alert.info[0].senderName), ack: true})
+      adapter.setStateAsync({ state: 'alarms.' + countInt + '.color'}, {val: JSON.stringify(getColor(level)), ack: true})
 
-
-    /*
-
-*/
 
     ])
 
@@ -426,13 +422,7 @@ async function createAlarms(AlarmNumber){
             type: 'state',
             'native' : {}
         })
-
-
-
-
-
     ])
-
 }
 
 /*
