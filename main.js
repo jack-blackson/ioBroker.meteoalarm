@@ -242,6 +242,17 @@ async function processDetails(content, countInt){
     var n = type.indexOf(";");
     type = type.substring(0, n)
 
+    var Warnung_img = ''
+    if (level != 1){
+        if (adapter.config.whiteIcons){
+            Warnung_img += '/meteoalarm.admin/icons/white/'
+        }
+        else{
+            Warnung_img += '/meteoalarm.admin/icons/black/'
+        }
+        Warnung_img += 't' + type + '.png'
+    }
+
     const promises = await Promise.all([
 
       adapter.setStateAsync({ state: 'alarms.' + countInt + '.event'}, {val:  JSON.stringify(content.alert.info[0].event), ack: true}),
@@ -253,12 +264,12 @@ async function processDetails(content, countInt){
       adapter.setStateAsync({ state: 'alarms.' + countInt + '.level'}, {val: JSON.stringify(level), ack: true}),
       adapter.setStateAsync({ state: 'alarms.' + countInt + '.levelText'}, {val: JSON.stringify(getLevelName(level)), ack: true}),
       adapter.setStateAsync({ state: 'alarms.' + countInt + '.type'}, {val: JSON.stringify(type), ack: true}),
-      adapter.setStateAsync({ state: 'alarms.' + countInt + '.typeText'}, {val: JSON.stringify(getTypeName(type)), ack: true})
+      adapter.setStateAsync({ state: 'alarms.' + countInt + '.typeText'}, {val: JSON.stringify(getTypeName(type)), ack: true}),
+      adapter.setStateAsync({ state: 'alarms.' + countInt + '.icon'}, {val: JSON.stringify(Warnung_img), ack: true}),
+      adapter.setStateAsync({ state: 'alarms.' + countInt + '.color'}, {val: JSON.stringify(content.alert.info[0].senderName), ack: true})
 
 
     /*
-      adapter.setStateAsync({ state: 'alarms.' + countInt + '.color'}, {val: JSON.stringify(content.alert.info[0].senderName), ack: true})
-      adapter.setStateAsync({ state: 'alarms.' + countInt + '.icon'}, {val: JSON.stringify(content.alert.info[0].senderName), ack: true})
 
 */
 
@@ -745,6 +756,32 @@ function parseWeather(description,type, callback){
 
     adapter.log.debug('Loaded ' + type + ' data')
     callback()
+}
+
+function getColor(level){
+    var Color = ''
+               
+            switch (level) {
+             case '1':
+                // Grün
+                return adapter.config.warningColorLevel1;
+                break;
+            case '2':
+                // Gelb
+                return adapter.config.warningColorLevel2;
+                break;
+            case '3':
+                // Orange
+                return adapter.config.warningColorLevel3;
+                break;
+            case '4':
+                // Rot
+                return adapter.config.warningColorLevel4;
+                break;
+            default:
+                return '#ffffff';
+                break;
+            }
 }
 
 function getFilters(){
