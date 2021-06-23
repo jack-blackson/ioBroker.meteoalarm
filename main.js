@@ -236,7 +236,11 @@ async function processDetails(content, countInt){
     let done = await created
 
     var level = content.alert.info[0].parameter.valueName
+    var parameter = content.alert.info[0].parameter
+
     adapter.log.info(level)
+    adapter.log.info(parameter)
+    adapter.log.info(JSON.stringify(parameter))
 
     const promises = await Promise.all([
 
