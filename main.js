@@ -242,7 +242,7 @@ async function processDetails(content, countInt){
     adapter.log.info(parameter)
     adapter.log.info(JSON.stringify(parameter))
     adapter.log.info(JSON.stringify(parameter.value))
-    adapter.log.info(JSON.stringify(parameter.[0].value))
+    adapter.log.info(JSON.stringify(parameter[0].value))
 
     adapter.log.info(JSON.stringify(parameter.awareness_level))
     adapter.log.info(JSON.stringify(parameter.awareness_level.value))
