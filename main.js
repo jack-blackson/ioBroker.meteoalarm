@@ -253,17 +253,17 @@ async function processDetails(content, countInt){
       adapter.setStateAsync({ state: 'alarms.' + countInt + '.link'}, {val: JSON.stringify(content.alert.info[0].web), ack: true}),
       adapter.setStateAsync({ state: 'alarms.' + countInt + '.expires'}, {val: JSON.stringify(expiresDate), ack: true}),
       adapter.setStateAsync({ state: 'alarms.' + countInt + '.effective'}, {val: JSON.stringify(effectiveDate), ack: true}),
-      adapter.setStateAsync({ state: 'alarms.' + countInt + '.sender'}, {val: JSON.stringify(content.alert.info[0].senderName), ack: true})
-
+      adapter.setStateAsync({ state: 'alarms.' + countInt + '.sender'}, {val: JSON.stringify(content.alert.info[0].senderName), ack: true}),
+      adapter.setStateAsync({ state: 'alarms.' + countInt + '.level'}, {val: JSON.stringify(level), ack: true}),
+      adapter.setStateAsync({ state: 'alarms.' + countInt + '.levelText'}, {val: JSON.stringify(getLevelName(level)), ack: true}),
+      adapter.setStateAsync({ state: 'alarms.' + countInt + '.type'}, {val: JSON.stringify(type), ack: true}),
+      adapter.setStateAsync({ state: 'alarms.' + countInt + '.typeText'}, {val: JSON.stringify(getTypeName(type)), ack: true})
 
 
     /*
       adapter.setStateAsync({ state: 'alarms.' + countInt + '.color'}, {val: JSON.stringify(content.alert.info[0].senderName), ack: true})
       adapter.setStateAsync({ state: 'alarms.' + countInt + '.icon'}, {val: JSON.stringify(content.alert.info[0].senderName), ack: true})
-      adapter.setStateAsync({ state: 'alarms.' + countInt + '.level'}, {val: JSON.stringify(content.alert.info[0].senderName), ack: true})
-      adapter.setStateAsync({ state: 'alarms.' + countInt + '.levelText'}, {val: JSON.stringify(content.alert.info[0].senderName), ack: true})
-      adapter.setStateAsync({ state: 'alarms.' + countInt + '.type'}, {val: JSON.stringify(content.alert.info[0].senderName), ack: true})
-      adapter.setStateAsync({ state: 'alarms.' + countInt + '.typeText'}, {val: JSON.stringify(content.alert.info[0].senderName), ack: true})
+
 */
 
     ])
