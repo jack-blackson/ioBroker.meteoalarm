@@ -8,6 +8,8 @@
 <script type="text/javascript" src="../../js/translate.js"></script>
 <script type="text/javascript" src="../../lib/js/materialize.js"></script>
 <script type="text/javascript" src="../../js/adapter-settings.js"></script>
+
+
 <script type="text/javascript" src="words.js"></script>
 
 
@@ -54,6 +56,31 @@
 			// reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
 			if (M) M.updateTextFields();
 		}
+
+        // adjust to 
+        //$(document).on("change","input[type=radio]",function(){
+		//	ChangeSource();
+		//});
+
+		function ChangeSource(){
+			switch(parseInt($("input:radio[name ='provider']:checked").val())){
+				case 3:
+					$("#syno_settings").hide();
+					$("#fs_settings").show();
+					break;
+				case 4:
+					$("#fs_settings").hide();	
+					$("#syno_settings").show();
+					break;
+				default:
+					$("#fs_settings").hide();
+					$("#syno_settings").hide();
+			} 
+		}
+
+
+
+
 
 		// This will be called by the admin adapter when the user presses the save button
 		function save(callback) {
@@ -108,16 +135,16 @@
         </div>
     </div>
     
-
-    <div class="input-field">
-        <select class="country" id="country">
-            <option value="AT" class="translate">Austria</option>
-            <option value="DE" class="translate">Germany</option>
-            <option value="IT" class="translate">Italy</option>
-        </select>
-        <label for="country" class="translate">CountrySelect    </label>
+    <div class="row">
+        <div class="input-field">
+            <select class="country" id="country">
+                <option value="AT" class="translate">Austria</option>
+                <option value="DE" class="translate">Germany</option>
+                <option value="IT" class="translate">Italy</option>
+            </select>
+            <label for="country" class="translate">CountrySelect    </label>
+        </div>
     </div>
-
 
 
     <div class="row">
