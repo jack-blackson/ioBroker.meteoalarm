@@ -235,17 +235,12 @@ async function processDetails(content, countInt){
     let created = createAlarms(countInt)
     let done = await created
 
-    var level = content.alert.info[0].parameter.valueName
-    var parameter = content.alert.info[0].parameter
+    var level = content.alert.info[0].parameter[0].value
+    var type = content.alert.info[0].parameter[1].value
 
     adapter.log.info(level)
-    adapter.log.info(parameter)
-    adapter.log.info(JSON.stringify(parameter))
-    //adapter.log.info(JSON.stringify(parameter.value))
-    adapter.log.info(JSON.stringify(parameter[0].value))
+    adapter.log.info(type)
 
-    //adapter.log.info(JSON.stringify(parameter.awareness_level))
-    //adapter.log.info(JSON.stringify(parameter.awareness_level.value))
 
     const promises = await Promise.all([
 
