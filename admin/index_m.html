@@ -65,8 +65,17 @@
 		//});
 
         $('#country').on('change', function () {
+            alert( 'Changed!!' );
             loadRegions()
+
         })
+
+        $('country').on('change', function () {
+            alert( 'Changed1!!' );
+            loadRegions()
+
+        })
+
 
         //$('#select-region').change();
 
