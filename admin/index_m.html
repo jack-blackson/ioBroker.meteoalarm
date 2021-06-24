@@ -57,12 +57,14 @@
 			if (M) M.updateTextFields();
 		}
 
-        // adjust to 
-        //$(document).on("change","input[type=radio]",function(){
-		//	ChangeSource();
-		//});
+        // Trigger to load regions 
+        $(document).on("change","input[type=select-region]",function(){
+			loadRegions();
+		});
 
-		function ChangeSource(){
+		function loadRegions(){
+            console.log('Start funciton loadRegions')
+            /*
 			switch(parseInt($("input:radio[name ='provider']:checked").val())){
 				case 3:
 					$("#syno_settings").hide();
@@ -76,6 +78,7 @@
 					$("#fs_settings").hide();
 					$("#syno_settings").hide();
 			} 
+            */
 		}
 
 
@@ -137,7 +140,7 @@
     
  
     <div class="row">
-        <div class="input-field">
+        <div class="select-region">
             <select class="value" id="country">
                 <option value="" class="translate">ChooseCountry</option>
                 <option value="AT" class="translate">Austria</option>
