@@ -57,6 +57,12 @@
 			onChange(false);
 			// reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
 			if (M) M.updateTextFields();
+
+
+            $('#country').on('change', function () {
+            alert( 'Changed!!' );
+            loadRegions()
+            });
 		}
 
         // Trigger to load regions 
@@ -64,17 +70,8 @@
 			//loadRegions();
 		//});
 
-        $('#country').on('change', function () {
-            alert( 'Changed!!' );
-            loadRegions()
+        
 
-        })
-
-        $('country').on('change', function () {
-            alert( 'Changed1!!' );
-            loadRegions()
-
-        })
 
 
         //$('#select-region').change();
