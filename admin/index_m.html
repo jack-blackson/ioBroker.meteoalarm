@@ -61,11 +61,15 @@
 
         // Trigger to load regions 
         $(document).on("change","select[id=select-region]",function(){
-			loadRegions();
+			//loadRegions();
 		});
 
+        $('#select-region').on('change', function () {
+            loadRegions()
+        })
+
 		function loadRegions(){
-            console.log('Start funciton loadRegions')
+            console.log('Start function loadRegions')
             /*
 			switch(parseInt($("input:radio[name ='provider']:checked").val())){
 				case 3:
