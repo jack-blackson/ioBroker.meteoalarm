@@ -35,6 +35,8 @@
     // the function loadSettings has to exist ...
 	function load(settings, onChange) {
 			// example: select elements with id=key and class=value and insert value
+            console.log('Settings loaded')
+
 			if (!settings) return;
 			$('.value').each(function () {
 				var $key = $(this);
