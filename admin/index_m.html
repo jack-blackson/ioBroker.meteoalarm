@@ -60,15 +60,15 @@
 		}
 
         // Trigger to load regions 
-        $(document).on("change","select[id=select-region]",function(){
+        //$(document).on("change","select[id=select-region]",function(){
 			//loadRegions();
-		});
+		//});
 
-        $('#select-region').on('change', function () {
+        $('#country').on('change', function () {
             loadRegions()
         })
 
-        $('#select-region').change();
+        //$('#select-region').change();
 
 		function loadRegions(){
             console.log('Start function loadRegions')
