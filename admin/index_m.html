@@ -70,7 +70,8 @@
             $.getJSON( "geocodes.json" , function( result ){
                 console.log(result.crs.properties.name);
                 var features = result.features
-                console.log(features[0].properties.name)
+                console.log('Name: ' + features[0].properties.name)
+                console.log('Einträge: ' + features.length)
                 //console.log(result);
                 
                 //$.each(result.features, function(i, item) {
