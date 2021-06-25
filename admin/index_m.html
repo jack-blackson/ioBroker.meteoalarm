@@ -69,6 +69,8 @@
             
             $.getJSON( "geocodes.json" , function( result ){
                 console.log(result.crs.properties.name);
+                var features = result.features
+                console.log(features[0].properties.name)
                 //console.log(result);
                 
                 //$.each(result.features, function(i, item) {
@@ -77,13 +79,7 @@
                 
                 
              });
-             
-            
 		}
-
-
-
-
 
 		// This will be called by the admin adapter when the user presses the save button
 		function save(callback) {
