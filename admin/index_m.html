@@ -112,10 +112,15 @@
                     //    $("region").val(initValue);
 
                     //});
+                    $("#region").removeAttr('selected');
+                    $("#region").val(initValue);
+                    /*
+                    $('region[value="initValue"]').prop({defaultSelected: true});
                     $("region").filter(function() {
                             //may want to use $.trim in here
                             return $(this).text() == initValue;
                     }).prop('selected', true);
+                    */
 		}
 
 		// This will be called by the admin adapter when the user presses the save button
