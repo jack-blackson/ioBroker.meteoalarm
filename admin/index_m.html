@@ -69,9 +69,10 @@
             $.getJSON( "geocodes.json" , function( result ){
                 console.log(result.crs.properties.name);
                 //console.log(result);
-                $.each(result.feature, function(i, item) {
+                $.each(result.features, function(i, item) {
                     console.log(data[i].properties.name);
                     });​
+                
              });
             /*
 			switch(parseInt($("input:radio[name ='provider']:checked").val())){
