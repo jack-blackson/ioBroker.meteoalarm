@@ -44,8 +44,10 @@ console.log('Init Region1: ' + $('#region').children("option:selected").val())
 			$('.value').each(function () {
 				var $key = $(this);
 				var id = $key.attr('id');
+                var value = $key.attr('value');
+
                 console.log('ID: ' + id)
-                console.log('key: ' + key)
+                console.log('value: ' + value)
 				if ($key.attr('type') === 'checkbox') {
 					// do not call onChange direct, because onChange could expect some arguments
 					$key.prop('checked', settings[id])
