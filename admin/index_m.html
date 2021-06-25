@@ -54,7 +54,7 @@
 			});
 			onChange(false);
 
-            loadRegions(country.val())
+            loadRegions($('#region').children("option:selected").val())
 
 			// reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
 			if (M) M.updateTextFields();
