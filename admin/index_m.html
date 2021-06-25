@@ -58,26 +58,17 @@
 			// reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
 			if (M) M.updateTextFields();
 
-
+            // Trigger to load regions 
             $('#country').on('change', function () {
-            alert( 'Changed!!' );
-            loadRegions()
+                loadRegions()
             });
 		}
 
-        // Trigger to load regions 
-        //$(document).on("change","select[id=select-region]",function(){
-			//loadRegions();
-		//});
-
-        
-
-
-
-        //$('#select-region').change();
-
 		function loadRegions(){
             console.log('Start function loadRegions')
+            $.getJSON( "geocodes.json" , function( result ){
+                console.log(crs.properties.name);
+             });
             /*
 			switch(parseInt($("input:radio[name ='provider']:checked").val())){
 				case 3:
