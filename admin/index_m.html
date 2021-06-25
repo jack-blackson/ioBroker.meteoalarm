@@ -71,7 +71,9 @@
                 console.log(result.crs.properties.name);
                 var features = result.features
                 console.log('Name: ' + features[0].properties.name)
-                console.log('Einträge: ' + features.length)
+                console.log('Country: ' + features[0].properties.country)
+                var NoOfEntries = features.length
+                console.log('Einträge: ' + NoOfEntries)
                 //console.log(result);
                 
                 //$.each(result.features, function(i, item) {
