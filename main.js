@@ -113,7 +113,7 @@ async function setParameters(link){
 
 async function requestAtom(){
     countryConfig = adapter.config.country
-    regionConfig = "Burgenland" // get from config later - TEMP
+    regionConfig = adapter.config.region
 
     adapter.log.info('Requesting data for country ' + countryConfig + ' and region ' + regionConfig)
 
@@ -987,9 +987,6 @@ function getCountryLink(country){
             break;
         case 'DE':
             return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-germany'
-            break;
-         case 'FR':
-            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-france'
             break;
          case 'GR':
             return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-greece'
