@@ -36,7 +36,7 @@
 	function load(settings, onChange) {
 			// example: select elements with id=key and class=value and insert value
             console.log('Settings loaded')
-
+            loadRegions()
 			if (!settings) return;
 			$('.value').each(function () {
 				var $key = $(this);
@@ -69,10 +69,8 @@
             
             $.getJSON( "geocodes.json" , function( result ){
                 var features = result.features
-                //console.log('Name: ' + features[0].properties.name)
-                //console.log('Country: ' + features[0].properties.country)
                 var NoOfEntries = features.length
-                console.log('Einträge: ' + NoOfEntries)
+                //console.log('Einträge: ' + NoOfEntries)
                 $('#region').empty().html(' ');
                 var $option = $("<option/>", {
                                         value: 0,
@@ -83,7 +81,7 @@
                     var country = features[i].properties.country
                     var region = features[i].properties.name
                     if (country == $('#country').children("option:selected").val()){
-                        console.log('Region: ' + region)
+                        //console.log('Region: ' + region)
                         $option = $("<option/>", {
                                         value: i,
                                         text: region
