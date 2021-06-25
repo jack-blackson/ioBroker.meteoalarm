@@ -45,8 +45,6 @@
 				var id = $key.attr('id');
                 var value = $key.attr('val');
 
-                console.log('set: ' + settings.region)
-
 				if ($key.attr('type') === 'checkbox') {
 					// do not call onChange direct, because onChange could expect some arguments
 					$key.prop('checked', settings[id])
