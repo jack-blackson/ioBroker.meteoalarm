@@ -74,6 +74,7 @@
                 //console.log('Country: ' + features[0].properties.country)
                 var NoOfEntries = features.length
                 console.log('Einträge: ' + NoOfEntries)
+                console.log('Country to find: ' + $('#country'))
                 for(var i = 0; i < NoOfEntries; i++) {
                     var country = features[i].properties.country
                     var region = features[i].properties.name
