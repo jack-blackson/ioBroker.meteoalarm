@@ -94,7 +94,6 @@
                     var country = features[i].properties.country
                     var region = features[i].properties.name
                     if (country == $('#country').children("option:selected").val()){
-                        //console.log('Region: ' + region)
                         $option = $("<option/>", {
                                         value: region,
                                         text: region
@@ -102,13 +101,13 @@
                             $('#region').append($option);
                     }
                 }
-                console.log('Done');
                 
                 let instance =  M.FormSelect.getInstance($('#region'));
 
                 instance.destroy();
                 instances = M.FormSelect.init($('#region'));
                 if (initValue){
+                    console.log('Set field to ' + initValue)
                     $("region").val(initValue);
                 }
              });
