@@ -36,6 +36,8 @@
 	function load(settings, onChange) {
 			// example: select elements with id=key and class=value and insert value
 			if (!settings) return;
+            loadRegions()
+
 			$('.value').each(function () {
 				var $key = $(this);
 				var id = $key.attr('id');
@@ -53,13 +55,12 @@
 				}
 			});
 			onChange(false);
-            console.log('Init Region: ' + $('#region').value)
-            console.log('Init Region: ' + $('#region'))
-            console.log('Init Region: ' + $('#region').text())
+            console.log('Init Region1: ' + $('#region').value)
+            console.log('Init Region2: ' + $('#region'))
+            console.log('Init Region3: ' + $('#region').text())
 
             //console.log('Init Region: ' + region)
 
-            loadRegions($('#region').children("option:selected").val())
 
 			// reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
 			if (M) M.updateTextFields();
