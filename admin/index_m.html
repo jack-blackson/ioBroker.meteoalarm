@@ -70,11 +70,18 @@
             $.getJSON( "geocodes.json" , function( result ){
                 console.log(result.crs.properties.name);
                 var features = result.features
-                console.log('Name: ' + features[0].properties.name)
-                console.log('Country: ' + features[0].properties.country)
+                //console.log('Name: ' + features[0].properties.name)
+                //console.log('Country: ' + features[0].properties.country)
                 var NoOfEntries = features.length
                 console.log('Einträge: ' + NoOfEntries)
                 for(var i = 0; i < NoOfEntries; i++) {
+                    var country = features[i].properties.country
+                    var region = features[i].properties.name
+                    if (country == $('#country')){
+                        console.log('Region: ' + region)
+                        //console.log('Country: ' + features[i].properties.country)
+                    }
+
                     //console.log('Name: ' + features[i].properties.name)
                     //console.log('Country: ' + features[i].properties.country)
                 }
