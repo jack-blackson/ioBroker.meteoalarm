@@ -112,8 +112,11 @@
                     //    $("region").val(initValue);
 
                     //});
-                    $("#region option[text=" + initValue +"]").get(0).selected = true;                }
-             });
+                    $("region").filter(function() {
+                        //may want to use $.trim in here
+                        return $(this).text() == initValue;
+                        }).attr('selected', true);
+                    });
 		}
 
 		// This will be called by the admin adapter when the user presses the save button
