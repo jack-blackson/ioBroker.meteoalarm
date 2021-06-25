@@ -113,10 +113,9 @@
 
                     //});
                     $("region").filter(function() {
-                        //may want to use $.trim in here
-                        return $(this).text() == initValue;
-                        }).attr('selected', true);
-                    });
+                            //may want to use $.trim in here
+                            return $(this).text() == initValue;
+                    }).prop('selected', true);
 		}
 
 		// This will be called by the admin adapter when the user presses the save button
