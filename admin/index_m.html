@@ -36,7 +36,7 @@
 	function load(settings, onChange) {
 			// example: select elements with id=key and class=value and insert value
             console.log('Settings loaded')
-            loadRegions(country).val
+            loadRegions(country.val)
 			if (!settings) return;
 			$('.value').each(function () {
 				var $key = $(this);
