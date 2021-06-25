@@ -36,18 +36,15 @@
 	function load(settings, onChange) {
 			// example: select elements with id=key and class=value and insert value
 			if (!settings) return;
-            loadRegions()
-            console.log('Init Country: ' + $('#country').children("option:selected").val())
-
-console.log('Init Region1: ' + $('#region').children("option:selected").val())
+            if (settings.region){
+                loadRegions(settings.region)
+            }
 
 			$('.value').each(function () {
 				var $key = $(this);
 				var id = $key.attr('id');
                 var value = $key.attr('val');
 
-                console.log('ID: ' + id)
-                console.log('value: ' + value)
                 console.log('set: ' + settings.region)
 
 				if ($key.attr('type') === 'checkbox') {
