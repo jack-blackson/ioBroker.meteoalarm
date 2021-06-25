@@ -37,6 +37,9 @@
 			// example: select elements with id=key and class=value and insert value
 			if (!settings) return;
             loadRegions()
+            console.log('Init Country: ' + $('#country').children("option:selected").val())
+
+console.log('Init Region1: ' + $('#region').children("option:selected").val())
 
 			$('.value').each(function () {
 				var $key = $(this);
@@ -55,13 +58,8 @@
 				}
 			});
 			onChange(false);
-            console.log('Init Country: ' + $('#country').children("option:selected").val())
 
-            console.log('Init Region1: ' + $('#region').children("option:selected").val())
-            console.log('Init Region2: ' + $('#region'))
-            console.log('Init Region3: ' + $('#region').text())
 
-            //console.log('Init Region: ' + region)
 
 
 			// reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
@@ -216,12 +214,6 @@
                 <option value="" class="translate">ChooseRegion</option>
             </select>
             <label for="region" class="translate">region_select</label>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col s12">
-            <span class="translate">instruction</span>
         </div>
     </div>
 
