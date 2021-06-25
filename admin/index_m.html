@@ -53,7 +53,7 @@
 				}
 			});
 			onChange(false);
-            console.log('Init Region: ' + $('#region').val())
+            console.log('Init Region: ' + $('#region').value)
             console.log('Init Region: ' + $('#region'))
             console.log('Init Region: ' + $('#region').text())
 
@@ -68,6 +68,8 @@
             $('#country').on('change', function () {
                 loadRegions("")
             });
+
+
             console.log('Settings loaded')
 
 		}
