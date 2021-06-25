@@ -73,12 +73,12 @@
                 //console.log('Country: ' + features[0].properties.country)
                 var NoOfEntries = features.length
                 console.log('Einträge: ' + NoOfEntries)
-                $('#regions').empty().html(' ');
+                $('#region').empty().html(' ');
                 var $option = $("<option/>", {
                                         value: 0,
                                         text: '--------'
                             });
-                $('#regions').append($option);
+                $('#region').append($option);
                 for(var i = 0; i < NoOfEntries; i++) {
                     var country = features[i].properties.country
                     var region = features[i].properties.name
@@ -88,15 +88,15 @@
                                         value: i,
                                         text: region
                             });
-                            $('#regions').append($option);
+                            $('#region').append($option);
                     }
                 }
                 console.log('Done');
                 
-                let instance =  M.FormSelect.getInstance($('#regions'));
+                let instance =  M.FormSelect.getInstance($('#region'));
 
                 instance.destroy();
-                instances = M.FormSelect.init($('#regions'));
+                instances = M.FormSelect.init($('#region'));
              });
 		}
 
