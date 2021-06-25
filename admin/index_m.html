@@ -65,34 +65,38 @@
 		}
 
 		function loadRegions(){
-            console.log('Start function loadRegions')
+            console.log('Start loadRegions')
             
             $.getJSON( "geocodes.json" , function( result ){
-                console.log(result.crs.properties.name);
                 var features = result.features
                 //console.log('Name: ' + features[0].properties.name)
                 //console.log('Country: ' + features[0].properties.country)
                 var NoOfEntries = features.length
                 console.log('Einträge: ' + NoOfEntries)
-                console.log('Country to find: ' + $('#country').children("option:selected").val())
+                $('#regions').empty().html(' ');
+                var $option = $("<option/>", {
+                                        value: 0,
+                                        text: '--------'
+                            });
+                $('#regions').append($option);
                 for(var i = 0; i < NoOfEntries; i++) {
                     var country = features[i].properties.country
                     var region = features[i].properties.name
                     if (country == $('#country').children("option:selected").val()){
                         console.log('Region: ' + region)
-                        //console.log('Country: ' + features[i].properties.country)
+                        $option = $("<option/>", {
+                                        value: i,
+                                        text: region
+                            });
+                            $('#regions').append($option);
                     }
-
-                    //console.log('Name: ' + features[i].properties.name)
-                    //console.log('Country: ' + features[i].properties.country)
                 }
                 console.log('Done');
                 
-                //$.each(result.features, function(i, item) {
-                    //console.log(item[i].properties.name);
-                //});​
-                
-                
+                let instance =  M.FormSelect.getInstance($('#regions'));
+
+                instance.destroy();
+                instances = M.FormSelect.init($('#regions'));
              });
 		}
 
@@ -152,7 +156,7 @@
  
     <div class="row">
         <div class="input-field">
-            <select class="value select-region" id="country">
+            <select class="value select-country" id="country">
                 <option value="" class="translate">ChooseCountry</option>
                 <option value="AT" class="translate">Austria</option>
                 <option value="CH" class="translate">Switzerland</option>
@@ -188,6 +192,15 @@
                 <option value="UK" class="translate">UK</option>
             </select>
             <label for="country" class="translate">country_select</label>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="input-field">
+            <select class="value select-region" id="region">
+                <option value="" class="translate">ChooseRegion</option>
+            </select>
+            <label for="region" class="translate">region_select</label>
         </div>
     </div>
 
