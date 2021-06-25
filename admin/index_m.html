@@ -108,11 +108,11 @@
                 instances = M.FormSelect.init($('#region'));
                 if (initValue){
                     console.log('Set field to ' + initValue)
-                    $(document).ready(function() {
-                        $("region").val(initValue);
+                    //$(document).ready(function() {
+                    //    $("region").val(initValue);
 
-                    });
-                }
+                    //});
+                    $("#region option[text=" + initValue +"]").get(0).selected = true;                }
              });
 		}
 
