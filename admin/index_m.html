@@ -67,7 +67,9 @@
 		function loadRegions(){
             console.log('Start function loadRegions')
             $.getJSON( "geocodes.json" , function( result ){
-                console.log(crs.properties.name);
+                console.log(result.crs.properties.name);
+                console.log(result);
+
              });
             /*
 			switch(parseInt($("input:radio[name ='provider']:checked").val())){
