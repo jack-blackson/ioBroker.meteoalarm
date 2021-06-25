@@ -74,11 +74,11 @@
                 //console.log('Country: ' + features[0].properties.country)
                 var NoOfEntries = features.length
                 console.log('Einträge: ' + NoOfEntries)
-                console.log('Country to find: ' + $('#country').val)
+                console.log('Country to find: ' + $('#country').children("option:selected").val())
                 for(var i = 0; i < NoOfEntries; i++) {
                     var country = features[i].properties.country
                     var region = features[i].properties.name
-                    if (country == $('#country').val){
+                    if (country == $('#country').children("option:selected").val()){
                         console.log('Region: ' + region)
                         //console.log('Country: ' + features[i].properties.country)
                     }
