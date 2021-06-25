@@ -36,7 +36,7 @@
 	function load(settings, onChange) {
 			// example: select elements with id=key and class=value and insert value
             console.log('Settings loaded')
-            loadRegions()
+            loadRegions(country)
 			if (!settings) return;
 			$('.value').each(function () {
 				var $key = $(this);
@@ -60,12 +60,13 @@
 
             // Trigger to load regions 
             $('#country').on('change', function () {
-                loadRegions()
+                loadRegions("")
             });
 		}
 
-		function loadRegions(){
+		function loadRegions(initValue){
             console.log('Start loadRegions')
+            console.log('Init Value: ' + initValue)
             
             $.getJSON( "geocodes.json" , function( result ){
                 var features = result.features
@@ -95,6 +96,9 @@
 
                 instance.destroy();
                 instances = M.FormSelect.init($('#region'));
+                if (initValue){
+                    $("region").val(initValue);
+                }
              });
 		}
 
