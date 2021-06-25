@@ -35,8 +35,6 @@
     // the function loadSettings has to exist ...
 	function load(settings, onChange) {
 			// example: select elements with id=key and class=value and insert value
-            console.log('Settings loaded')
-            loadRegions(country.val)
 			if (!settings) return;
 			$('.value').each(function () {
 				var $key = $(this);
@@ -55,6 +53,9 @@
 				}
 			});
 			onChange(false);
+
+            loadRegions(country)
+
 			// reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
 			if (M) M.updateTextFields();
 
@@ -62,6 +63,8 @@
             $('#country').on('change', function () {
                 loadRegions("")
             });
+            console.log('Settings loaded')
+
 		}
 
 		function loadRegions(initValue){
