@@ -90,18 +90,27 @@
                                         text: '--------'
                             });
                 $('#region').append($option);
+                var regionArray = []
                 for(var i = 0; i < NoOfEntries; i++) {
                     var country = features[i].properties.country
                     var region = features[i].properties.name
                     if (country == $('#country').children("option:selected").val()){
-                        $option = $("<option/>", {
-                                        value: region,
-                                        text: region
-                            });
-                            $('#region').append($option);
+                        region.push(region)
                     }
                 }
                 
+                regionArray.sort();
+                var NoOfEntries = regionArray.length
+                for(var i = 0; i < NoOfEntries; i++) {
+                    $option = $("<option/>", {
+                                        value: regionArray[i],
+                                        text: regionArray[i]
+                            });
+                            $('#region').append($option);
+                }
+
+                
+
                 let instance =  M.FormSelect.getInstance($('#region'));
 
                 if (initValue){
