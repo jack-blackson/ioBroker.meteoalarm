@@ -115,13 +115,13 @@ async function requestAtom(){
     countryConfig = adapter.config.country
     regionConfig = adapter.config.region
 
-    adapter.log.info('Requesting data for country ' + countryConfig + ' and region ' + regionConfig)
+    adapter.log.debug('Requesting data for country ' + countryConfig + ' and region ' + regionConfig)
 
 
     const deleted = await deleteAllAlarms();
 
     if (regionConfig  == "0"|| regionConfig  == ""){
-        adapter.log.warn('Please select a valid regionin setup!')
+        adapter.log.error('Please select a valid region in setup!')
         adapter.terminate ? adapter.terminate(0) : process.exit(0);
     }
 
@@ -169,7 +169,6 @@ async function requestAtom(){
                         adapter.log.error("Fehler: " + err);
                         adapter.terminate ? adapter.terminate(0) : process.exit(0);
                     } else {
-                        adapter.log.info('Ready to parse atom')
                         processAtom(result)
                         adapter.terminate ? adapter.terminate(0) : process.exit(0);
                     }
@@ -194,7 +193,7 @@ async function requestAtom(){
   
 function requestDetails(detailsLink){
 
-    adapter.log.info('Requesting data from ' + detailsLink)
+    adapter.log.debug('Requesting data from ' + detailsLink)
     request.get({
         url:     detailsLink,
         timeout: 8000
@@ -218,7 +217,7 @@ function requestDetails(detailsLink){
             )
         }
         if (response.statusCode == 200){
-            adapter.log.info('Status Code:' + response.statusCode)
+            adapter.log.debug('Status Code:' + response.statusCode)
             if (body) {
                 //var cleanedString = body.replace("\ufeff", "");
                 parseString(body, {
@@ -266,7 +265,7 @@ function processAtom(content){
             i += 1;
         }
     });
-    adapter.log.info('Entries found: ' + i)
+    adapter.log.debug('Entries found: ' + i)
 
 }
 
