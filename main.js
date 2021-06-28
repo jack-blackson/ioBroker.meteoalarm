@@ -117,7 +117,14 @@ async function requestAtom(){
 
     adapter.log.info('Requesting data for country ' + countryConfig + ' and region ' + regionConfig)
 
+
     const deleted = await deleteAllAlarms();
+
+    if (regionConfig  == "0"){
+        adapter.log.warn('Please select a valid regionin setup!')
+        adapter.terminate ? adapter.terminate(0) : process.exit(0);
+    }
+
 
     var urlAtom = getCountryLink(countryConfig)
     if (urlAtom){
