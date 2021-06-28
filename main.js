@@ -21,6 +21,7 @@ var country = '';
 var countryConfig = '';
 var regionConfig = '';
 var countEntries = 0;
+var typeArray = [];
 
 
 let adapter;
@@ -194,6 +195,9 @@ async function requestAtom(){
 function requestDetails(detailsLink){
 
     adapter.log.debug('Requesting data from ' + detailsLink)
+
+    typeArray = []
+
     request.get({
         url:     detailsLink,
         timeout: 8000
@@ -235,8 +239,16 @@ function requestDetails(detailsLink){
                     } else {
                         adapter.log.debug('Ready to parse atom')
                         countEntries += 1
-                        const promises = processDetails(result,countEntries)
-                        adapter.terminate ? adapter.terminate(0) : process.exit(0);
+                        var type = result.alert.info[0].parameter[1].value
+                        adapter.log.info('Type: ' + type)
+                        if (typeArray.indexOf(type) > -1) {
+                            //In the array - skip
+                        } else {
+                            //Not in the array
+                            typeArray.push(type)
+                            const promises = processDetails(result,countEntries)
+                            //adapter.terminate ? adapter.terminate(0) : process.exit(0);
+                        }
                     }
                 });
             }
