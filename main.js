@@ -184,6 +184,12 @@ async function requestAtom(){
     
 }
 
+function replacer(key, value) {
+    // Replace "" from json string
+    return value.replace(/^"|"$/g, '');
+  }
+  
+
 function requestDetails(detailsLink){
 
     adapter.log.info('Requesting data from ' + detailsLink)
@@ -291,18 +297,18 @@ async function processDetails(content, countInt){
 
     const promises = await Promise.all([
 
-      adapter.setStateAsync({ state: 'alarms.' + countInt + '.event'}, {val:  JSON.stringify(content.alert.info[0].event), ack: true}),
-      adapter.setStateAsync({ state: 'alarms.' + countInt + '.description'}, {val: JSON.stringify(content.alert.info[0].description), ack: true}),
-      adapter.setStateAsync({ state: 'alarms.' + countInt + '.link'}, {val: JSON.stringify(content.alert.info[0].web), ack: true}),
-      adapter.setStateAsync({ state: 'alarms.' + countInt + '.expires'}, {val: JSON.stringify(expiresDate), ack: true}),
-      adapter.setStateAsync({ state: 'alarms.' + countInt + '.effective'}, {val: JSON.stringify(effectiveDate), ack: true}),
-      adapter.setStateAsync({ state: 'alarms.' + countInt + '.sender'}, {val: JSON.stringify(content.alert.info[0].senderName), ack: true}),
-      adapter.setStateAsync({ state: 'alarms.' + countInt + '.level'}, {val: JSON.stringify(level), ack: true}),
-      adapter.setStateAsync({ state: 'alarms.' + countInt + '.levelText'}, {val: JSON.stringify(getLevelName(level)), ack: true}),
-      adapter.setStateAsync({ state: 'alarms.' + countInt + '.type'}, {val: JSON.stringify(type), ack: true}),
-      adapter.setStateAsync({ state: 'alarms.' + countInt + '.typeText'}, {val: JSON.stringify(getTypeName(type)), ack: true}),
-      adapter.setStateAsync({ state: 'alarms.' + countInt + '.icon'}, {val: JSON.stringify(Warnung_img), ack: true}),
-      adapter.setStateAsync({ state: 'alarms.' + countInt + '.color'}, {val: JSON.stringify(getColor(level)), ack: true})
+      adapter.setStateAsync({ state: 'alarms.' + countInt + '.event'}, {val:  JSON.stringify(content.alert.info[0].event,replacer), ack: true}),
+      adapter.setStateAsync({ state: 'alarms.' + countInt + '.description'}, {val: JSON.stringify(content.alert.info[0].description,replacer), ack: true}),
+      adapter.setStateAsync({ state: 'alarms.' + countInt + '.link'}, {val: JSON.stringify(content.alert.info[0].web,replacer), ack: true}),
+      adapter.setStateAsync({ state: 'alarms.' + countInt + '.expires'}, {val: JSON.stringify(expiresDate,replacer), ack: true}),
+      adapter.setStateAsync({ state: 'alarms.' + countInt + '.effective'}, {val: JSON.stringify(effectiveDate,replacer), ack: true}),
+      adapter.setStateAsync({ state: 'alarms.' + countInt + '.sender'}, {val: JSON.stringify(content.alert.info[0].senderName,replacer), ack: true}),
+      adapter.setStateAsync({ state: 'alarms.' + countInt + '.level'}, {val: JSON.stringify(level,replacer), ack: true}),
+      adapter.setStateAsync({ state: 'alarms.' + countInt + '.levelText'}, {val: JSON.stringify(getLevelName(level),replacer), ack: true}),
+      adapter.setStateAsync({ state: 'alarms.' + countInt + '.type'}, {val: JSON.stringify(type,replacer), ack: true}),
+      adapter.setStateAsync({ state: 'alarms.' + countInt + '.typeText'}, {val: JSON.stringify(getTypeName(type),replacer), ack: true}),
+      adapter.setStateAsync({ state: 'alarms.' + countInt + '.icon'}, {val: JSON.stringify(Warnung_img,replacer), ack: true}),
+      adapter.setStateAsync({ state: 'alarms.' + countInt + '.color'}, {val: JSON.stringify(getColor(level),replacer), ack: true})
     ])
 
 }
