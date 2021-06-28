@@ -222,7 +222,6 @@ function requestDetails(detailsLink){
                 parseString(cleanedString, {
                     explicitArray: false,
     
-                    mergeAttrs: true
                     //mergeAttrs: true
                 }, 
     
