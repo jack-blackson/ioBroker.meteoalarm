@@ -265,8 +265,6 @@ function processAtom(content){
 
 async function processDetails(content, countInt){
     adapter.log.info(content.alert.info[0].description)
-    var expiresDate = new Date(content.alert.info[0].expires)
-    var effectiveDate = new Date(content.alert.info[0].effective)
 
     let created = createAlarms(countInt)
     let done = await created
@@ -295,7 +293,7 @@ async function processDetails(content, countInt){
         adapter.setStateAsync({ state: 'alarms.' + countInt + '.description'}, {val: content.alert.info[0].description, ack: true}),
         adapter.setStateAsync({ state: 'alarms.' + countInt + '.link'}, {val: content.alert.info[0].web, ack: true}),
         adapter.setStateAsync({ state: 'alarms.' + countInt + '.expires'}, {val: content.alert.info[0].expires, ack: true}),
-        adapter.setStateAsync({ state: 'alarms.' + countInt + '.effective'}, {val: effectiveDate, ack: true}),
+        adapter.setStateAsync({ state: 'alarms.' + countInt + '.effective'}, {val: content.alert.info[0].effective, ack: true}),
         adapter.setStateAsync({ state: 'alarms.' + countInt + '.sender'}, {val: content.alert.info[0].senderName, ack: true}),
         adapter.setStateAsync({ state: 'alarms.' + countInt + '.level'}, {val: level, ack: true}),
         adapter.setStateAsync({ state: 'alarms.' + countInt + '.levelText'}, {val: getLevelName(level), ack: true}),
