@@ -438,7 +438,8 @@ async function createAlarms(AlarmNumber){
             common: {
                 name: 'Date Alarm expires',
                 type: 'string',
-				role: 'value.datetime',
+				//role: 'value.datetime',
+                role: 'value',
 				read: true,
 				write: true
             },
