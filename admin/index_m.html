@@ -104,26 +104,11 @@
                 
                 let instance =  M.FormSelect.getInstance($('#region'));
 
-
                 if (initValue){
-                    console.log('Set field to ' + initValue)
-                    //$(document).ready(function() {
-                    //    $("region").val(initValue);
-
-                    //});
-                    //$("#region").removeAttr('selected');
                     $("#region").val(initValue);
-                    instance.destroy();
-                instances = M.FormSelect.init($('#region'));
-                                    //M.updateTextFields();
-                    /*
-                    $('region[value="initValue"]').prop({defaultSelected: true});
-                    $("region").filter(function() {
-                            //may want to use $.trim in here
-                            return $(this).text() == initValue;
-                    }).prop('selected', true);
-                    */
                 }
+                instance.destroy();
+                instances = M.FormSelect.init($('#region'));
             })
 		}
 
