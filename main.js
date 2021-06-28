@@ -128,7 +128,7 @@ async function requestAtom(){
 
     var urlAtom = getCountryLink(countryConfig)
     if (urlAtom){
-        adapter.log.info('Requesting data from ' + urlAtom)
+        adapter.log.debug('Requesting data from ' + urlAtom)
         adapter.setState({ state: 'location'}, {val:  regionConfig, ack: true})
 
         request.get({
@@ -155,7 +155,7 @@ async function requestAtom(){
         }
         if (response.statusCode == 200){
             countEntries = 0;
-            adapter.log.info('Status Code:' + response.statusCode)
+            adapter.log.debug('Status Code Atom:' + response.statusCode)
             if (body) {
                 var cleanedString = body.replace("\ufeff", "");
                 parseString(cleanedString, {
@@ -176,7 +176,7 @@ async function requestAtom(){
             }
         }
         else{
-            adapter.log.warn('Status Code:' + response.statusCode)
+            adapter.log.warn('Status Code XML:' + response.statusCode)
             adapter.terminate ? adapter.terminate(0) : process.exit(0);
         }
       });    
@@ -270,7 +270,6 @@ function processAtom(content){
 }
 
 async function processDetails(content, countInt){
-    adapter.log.info(content.alert.info[0].description)
 
     let created = createAlarms(countInt)
     let done = await created
