@@ -120,7 +120,7 @@ async function requestAtom(){
 
     const deleted = await deleteAllAlarms();
 
-    if (regionConfig  == "0"){
+    if (regionConfig  == "0"|| regionConfig  == ""){
         adapter.log.warn('Please select a valid regionin setup!')
         adapter.terminate ? adapter.terminate(0) : process.exit(0);
     }
