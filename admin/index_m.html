@@ -95,10 +95,12 @@
                     var country = features[i].properties.country
                     var region = features[i].properties.name
                     if (country == $('#country').children("option:selected").val()){
-                        region.push(region)
+                        regionArray.push(region)
                     }
                 }
                 
+                console.log(regionArray)
+
                 regionArray.sort();
                 var NoOfEntries = regionArray.length
                 for(var i = 0; i < NoOfEntries; i++) {
