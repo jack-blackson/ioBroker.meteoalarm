@@ -296,7 +296,8 @@ async function processDetails(content, countInt){
 
     const promises = await Promise.all([
 
-      adapter.setStateAsync({ state: 'alarms.' + countInt + '.event'}, {val:  JSON.stringify(content.alert.info[0].event).replace(/\\"/g, '"'), ack: true}),
+    adapter.setStateAsync({ state: 'alarms.' + countInt + '.event'}, {val:  content.alert.info[0].event, ack: true}),
+      //adapter.setStateAsync({ state: 'alarms.' + countInt + '.event'}, {val:  JSON.stringify(content.alert.info[0].event).replace(/\\"/g, '"'), ack: true}),
       adapter.setStateAsync({ state: 'alarms.' + countInt + '.description'}, {val: JSON.stringify(content.alert.info[0].description,replacer), ack: true}),
       adapter.setStateAsync({ state: 'alarms.' + countInt + '.link'}, {val: JSON.stringify(content.alert.info[0].web,replacer), ack: true}),
       adapter.setStateAsync({ state: 'alarms.' + countInt + '.expires'}, {val: JSON.stringify(expiresDate,replacer), ack: true}),
