@@ -1005,7 +1005,7 @@ function getCountryLink(country){
         case 'IE':
             return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-ireland'
             break;
-        case 'IS':
+        case 'IL':
             return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-israel'
             break;
         case 'IT':
