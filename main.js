@@ -218,8 +218,8 @@ function requestDetails(detailsLink){
         if (response.statusCode == 200){
             adapter.log.info('Status Code:' + response.statusCode)
             if (body) {
-                var cleanedString = body.replace("\ufeff", "");
-                parseString(cleanedString, {
+                //var cleanedString = body.replace("\ufeff", "");
+                parseString(body, {
                     explicitArray: false,
     
                     //mergeAttrs: true
