@@ -70,7 +70,6 @@ function main() {
         adapter.log.debug('2: Before Request Atom')
 
         const atomResult = requestAtom()
-        adapter.log.debug(' Links: ' + detailsURL)
         
         adapter.log.debug('11: After Request Atom')
         
@@ -171,6 +170,8 @@ function requestAtom(){
 
                         //await processAtom(result)
                         //const done = processAtom(result)
+                        adapter.log.debug(' Links: ' + detailsURL)
+
                         adapter.log.debug('5: Processed Atom')
                         return
                     }
