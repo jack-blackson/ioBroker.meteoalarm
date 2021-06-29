@@ -155,7 +155,7 @@ async function requestAtom(){
   
 async function requestDetails(detailsLink){
 
-    adapter.log.debug('Requesting data from ' + detailsLink)
+    adapter.log.debug('Requesting details from ' + detailsLink)
 
     typeArray = []
 
@@ -249,7 +249,7 @@ async function processDetails(content, countInt){
 
     let created = createAlarms(countInt)
     let done = await created
-
+    adapter.log.debug('created alarm (first await)')
     var level = content.alert.info[0].parameter[0].value
     var n = level.indexOf(";");
     level = level.substring(0, n)
@@ -283,6 +283,7 @@ async function processDetails(content, countInt){
         adapter.setStateAsync({ state: 'alarms.' + countInt + '.icon'}, {val: Warnung_img, ack: true}),
         adapter.setStateAsync({ state: 'alarms.' + countInt + '.color'}, {val: getColor(level), ack: true})
     ])
+    adapter.log.debug('Processed Detail (2nd await)')
 
 }
 
