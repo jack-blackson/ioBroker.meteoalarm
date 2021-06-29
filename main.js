@@ -70,6 +70,7 @@ function main() {
         adapter.log.debug('2: Before Request Atom')
 
         const atomResult = requestAtom()
+        adapter.log.debug(' Links: ' + detailsURL)
         
         adapter.log.debug('11: After Request Atom')
         
