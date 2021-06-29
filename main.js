@@ -63,11 +63,13 @@ function main() {
         else{
             lang = systemConfig.common.language
         }
-
+        adapter.log.debug('1: Before Delete Alarms')
         const deleted = deleteAllAlarms();
 
+        adapter.log.debug('2: Before Request Atom')
+
         const allDone = requestAtom()
-        adapter.log.debug('Abfragen fertig')
+        adapter.log.debug('11: After Request Atom')
         adapter.terminate ? adapter.terminate(0) : process.exit(0);
 
     }) 
@@ -77,7 +79,7 @@ async function requestAtom(){
     countryConfig = adapter.config.country
     regionConfig = adapter.config.region
 
-    adapter.log.debug('Requesting data for country ' + countryConfig + ' and region ' + regionConfig)
+    adapter.log.debug('Requesting atom data for country ' + countryConfig + ' and region ' + regionConfig)
 
 
 
@@ -130,8 +132,10 @@ async function requestAtom(){
                         adapter.log.error("Fehler: " + err);
                         adapter.terminate ? adapter.terminate(0) : process.exit(0);
                     } else {
+                        adapter.log.debug('3: Before Process Atom')
+
                         const done = processAtom(result)
-                        adapter.log.debug('Atom processed')
+                        adapter.log.debug('10: After Process Atom')
                         return
                     }
                 });
@@ -207,8 +211,10 @@ async function requestDetails(detailsLink){
                         } else {
                             //Not in the array
                             typeArray.push(type)
+                            adapter.log.debug('5: Before Process Details')
+
                             const promises = processDetails(result,countEntries)
-                            adapter.log.debug('Process Detail done')
+                            adapter.log.debug('8: After Process Details')
                             return
                             //adapter.terminate ? adapter.terminate(0) : process.exit(0);
                         }
@@ -237,7 +243,11 @@ async function processAtom(content){
         var expiresDate = new Date(element['cap:expires']);
         if (element['cap:areaDesc'] == regionConfig && expiresDate >= now){
             var detailsLink = element.link[0].$.href
+            adapter.log.debug('4: Before Request Details')
+
             const done =  requestDetails(detailsLink)
+            adapter.log.debug('9: After Request Details')
+
             i += 1;
         }
     });
@@ -250,7 +260,7 @@ async function processDetails(content, countInt){
 
     let created = createAlarms(countInt)
     let done = await created
-    adapter.log.debug('created alarm (first await)')
+    adapter.log.debug('6: After Create Alarm')
     var level = content.alert.info[0].parameter[0].value
     var n = level.indexOf(";");
     level = level.substring(0, n)
@@ -284,7 +294,7 @@ async function processDetails(content, countInt){
         adapter.setStateAsync({ state: 'alarms.' + countInt + '.icon'}, {val: Warnung_img, ack: true}),
         adapter.setStateAsync({ state: 'alarms.' + countInt + '.color'}, {val: getColor(level), ack: true})
     ])
-    adapter.log.debug('Processed Detail (2nd await)')
+    adapter.log.debug('7: After Set Alarm')
 
 }
 
