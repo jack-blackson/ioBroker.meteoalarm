@@ -208,6 +208,7 @@ async function requestDetails(detailsLink){
                             //Not in the array
                             typeArray.push(type)
                             const promises = processDetails(result,countEntries)
+                            adapter.log.debug('Process Detail done')
                             return
                             //adapter.terminate ? adapter.terminate(0) : process.exit(0);
                         }
