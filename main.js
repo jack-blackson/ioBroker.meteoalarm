@@ -22,6 +22,7 @@ var countryConfig = '';
 var regionConfig = '';
 var countEntries = 0;
 var typeArray = [];
+var detailsURL = []
 
 
 let adapter;
@@ -135,7 +136,7 @@ async function requestAtom(){
                         adapter.log.error("Fehler: " + err);
                         adapter.terminate ? adapter.terminate(0) : process.exit(0);
                     } else {
-                        adapter.log.debug('3: Before Process Atom')
+                        adapter.log.debug('4: Process Atom')
 
                         //adapter.log.debug('Received Atom data for ' + JSON.stringify(content.feed.id))
 
@@ -149,10 +150,10 @@ async function requestAtom(){
                             var expiresDate = new Date(element['cap:expires']);
                             if (element['cap:areaDesc'] == regionConfig && expiresDate >= now){
                                 var detailsLink = element.link[0].$.href
-                                adapter.log.debug('4: Before Request Details')
-                    
-                                const done =  requestDetails(detailsLink)
-                                adapter.log.debug('9: After Request Details')
+                                //adapter.log.debug('4: Before Request Details')
+                                detailsURL.push = detailsLink
+                                //const done =  requestDetails(detailsLink)
+                                //adapter.log.debug('9: After Request Details')
                     
                                 i += 1;
                             }
@@ -169,7 +170,7 @@ async function requestAtom(){
 
                         //await processAtom(result)
                         //const done = processAtom(result)
-                        adapter.log.debug('10: After Process Atom')
+                        adapter.log.debug('5: Processed Atom')
                         return
                     }
                 });
