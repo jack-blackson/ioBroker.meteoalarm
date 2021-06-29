@@ -64,50 +64,14 @@ function main() {
             lang = systemConfig.common.language
         }
 
+        const deleted = deleteAllAlarms();
+
         const allDone = requestAtom()
         adapter.log.debug('Abfragen fertig')
         adapter.terminate ? adapter.terminate(0) : process.exit(0);
 
     }) 
 }
-
-async function setParameters(link){
-    if (link.includes('https://www.meteoalarm.eu/documents/rss/')){
-        adapter.log.info('Found old setup');
-
-        var country = link.substring(40, 42)
-        country.toUpperCase()
-        const promises = await Promise.all([
-
-            adapter.setStateAsync({ state: 'config.country'}, {val: country, ack: true})
-      
-      
-          ])
-          adapter.log.info('Country set to ' + country);
-
-    }
-    else if(link.includes('https://meteoalarm.eu/documents/rss/')){
-        adapter.log.info('Found old setup');
-
-        var country = link.substring(36, 38)
-        country.toUpperCase()
-        const promises = await Promise.all([
-
-            adapter.setObjectNotExistsAsync({ state: 'config.country'}, {val: country, ack: true})
-          ])
-          adapter.log.info('Country set to ' + country);
-
-
-    }
-    else{
-        adapter.log.error('Please check the setup to make sure app settings are correct!')
-        adapter.terminate ? adapter.terminate(0) : process.exit(0);
-
-    }   
-    //https://www.meteoalarm.eu/documents/rss/lu/LU001.rss
-
-}
-
 
 async function requestAtom(){
     countryConfig = adapter.config.country
@@ -116,7 +80,6 @@ async function requestAtom(){
     adapter.log.debug('Requesting data for country ' + countryConfig + ' and region ' + regionConfig)
 
 
-    const deleted = await deleteAllAlarms();
 
     if (regionConfig  == "0"|| regionConfig  == ""){
         adapter.log.error('Please select a valid region in setup!')
