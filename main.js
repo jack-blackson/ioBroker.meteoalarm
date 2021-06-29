@@ -68,8 +68,17 @@ function main() {
 
         adapter.log.debug('2: Before Request Atom')
 
-        const allDone = requestAtom()
-        adapter.log.debug('11: After Request Atom')
+        var atomResult = requestAtom()
+        
+        adapter.log.debug('3: After Request Atom')
+        adapter.log.debug('4: Before Process Atom')
+
+        const done = processAtom(atomResult)
+        adapter.log.debug('10: After Process Atom')
+
+
+
+
         adapter.terminate ? adapter.terminate(0) : process.exit(0);
 
     }) 
@@ -85,7 +94,8 @@ async function requestAtom(){
 
     if (regionConfig  == "0"|| regionConfig  == ""){
         adapter.log.error('Please select a valid region in setup!')
-        adapter.terminate ? adapter.terminate(0) : process.exit(0);
+        return
+        //adapter.terminate ? adapter.terminate(0) : process.exit(0);
     }
 
 
@@ -132,11 +142,8 @@ async function requestAtom(){
                         adapter.log.error("Fehler: " + err);
                         adapter.terminate ? adapter.terminate(0) : process.exit(0);
                     } else {
-                        adapter.log.debug('3: Before Process Atom')
-
-                        const done = processAtom(result)
-                        adapter.log.debug('10: After Process Atom')
-                        return
+                        
+                        return result
                     }
                 });
             }
@@ -208,6 +215,7 @@ async function requestDetails(detailsLink){
                         var type = result.alert.info[0].parameter[1].value
                         if (typeArray.indexOf(type) > -1) {
                             //In the array - skip
+                            return
                         } else {
                             //Not in the array
                             typeArray.push(type)
@@ -251,8 +259,8 @@ async function processAtom(content){
             i += 1;
         }
     });
-    adapter.log.debug('All entries processed')
-    adapter.log.debug('Entries found: ' + i)
+    //adapter.log.debug('All entries processed')
+    //adapter.log.debug('Entries found: ' + i)
     return
 }
 
