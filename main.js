@@ -79,7 +79,7 @@ function main() {
     }) 
 }
 
-async function requestAtom(){
+function requestAtom(){
     countryConfig = adapter.config.country
     regionConfig = adapter.config.region
 
