@@ -66,6 +66,8 @@ function main() {
 
         const allDone = requestAtom()
         adapter.log.debug('Abfragen fertig')
+        adapter.terminate ? adapter.terminate(0) : process.exit(0);
+
     }) 
 }
 
@@ -165,8 +167,9 @@ async function requestAtom(){
                         adapter.log.error("Fehler: " + err);
                         adapter.terminate ? adapter.terminate(0) : process.exit(0);
                     } else {
-                        processAtom(result)
-                        adapter.terminate ? adapter.terminate(0) : process.exit(0);
+                        const done = processAtom(result)
+                        adapter.log.debug('Atom processed')
+                        return
                     }
                 });
             }
@@ -187,7 +190,7 @@ async function requestAtom(){
 }
 
   
-function requestDetails(detailsLink){
+async function requestDetails(detailsLink){
 
     adapter.log.debug('Requesting data from ' + detailsLink)
 
@@ -230,7 +233,8 @@ function requestDetails(detailsLink){
                     if (err) {
     
                         adapter.log.error("Fehler: " + err);
-                        adapter.terminate ? adapter.terminate(0) : process.exit(0);
+                        return
+                        //adapter.terminate ? adapter.terminate(0) : process.exit(0);
                     } else {
                         adapter.log.debug('Ready to parse atom')
                         countEntries += 1
@@ -241,6 +245,7 @@ function requestDetails(detailsLink){
                             //Not in the array
                             typeArray.push(type)
                             const promises = processDetails(result,countEntries)
+                            return
                             //adapter.terminate ? adapter.terminate(0) : process.exit(0);
                         }
                     }
@@ -249,12 +254,13 @@ function requestDetails(detailsLink){
         }
         else{
             adapter.log.warn('Status Code:' + response.statusCode)
-            adapter.terminate ? adapter.terminate(0) : process.exit(0);
+            return
+            //adapter.terminate ? adapter.terminate(0) : process.exit(0);
         }
       });    
 }
 
-function processAtom(content){
+async function processAtom(content){
     adapter.log.debug('Received Atom data for ' + JSON.stringify(content.feed.id))
 
     var newdate = moment(new Date()).local().format('DD.MM.YYYY HH:mm')
@@ -267,12 +273,13 @@ function processAtom(content){
         var expiresDate = new Date(element['cap:expires']);
         if (element['cap:areaDesc'] == regionConfig && expiresDate >= now){
             var detailsLink = element.link[0].$.href
-            requestDetails(detailsLink)
+            const done =  requestDetails(detailsLink)
             i += 1;
         }
     });
+    adapter.log.debug('All entries processed')
     adapter.log.debug('Entries found: ' + i)
-
+    return
 }
 
 async function processDetails(content, countInt){
