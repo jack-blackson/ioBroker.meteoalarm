@@ -63,14 +63,9 @@ function main() {
         else{
             lang = systemConfig.common.language
         }
-        //requestXML()
-        /*
-        if (adapter.config.pathXML != ""){
-            // check if users are migrating from version < 2.0
-            let  done = setParameters(adapter.config.pathXML)
-        }
-        */
+
         const allDone = requestAtom()
+        adapter.log.debug('Abfragen fertig')
     }) 
 }
 
@@ -240,7 +235,6 @@ function requestDetails(detailsLink){
                         adapter.log.debug('Ready to parse atom')
                         countEntries += 1
                         var type = result.alert.info[0].parameter[1].value
-                        adapter.log.info('Type: ' + type)
                         if (typeArray.indexOf(type) > -1) {
                             //In the array - skip
                         } else {
