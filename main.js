@@ -68,17 +68,10 @@ function main() {
 
         adapter.log.debug('2: Before Request Atom')
 
-        var atomResult = requestAtom()
+        const atomResult = requestAtom()
         
-        adapter.log.debug('3: After Request Atom')
-        adapter.log.debug('4: Before Process Atom')
-
-        const done = processAtom(atomResult)
-        adapter.log.debug('10: After Process Atom')
-
-
-
-
+        adapter.log.debug('11: After Request Atom')
+        
         adapter.terminate ? adapter.terminate(0) : process.exit(0);
 
     }) 
@@ -142,8 +135,42 @@ async function requestAtom(){
                         adapter.log.error("Fehler: " + err);
                         adapter.terminate ? adapter.terminate(0) : process.exit(0);
                     } else {
-                        
-                        return result
+                        adapter.log.debug('3: Before Process Atom')
+
+                        //adapter.log.debug('Received Atom data for ' + JSON.stringify(content.feed.id))
+
+                        var newdate = moment(new Date()).local().format('DD.MM.YYYY HH:mm')
+                    
+                        adapter.setState({device: '' , channel: '',state: 'lastUpdate'}, {val: newdate, ack: true});
+                    
+                        var i = 0
+                        var now = new Date();
+                        result.feed.entry.forEach(function (element){
+                            var expiresDate = new Date(element['cap:expires']);
+                            if (element['cap:areaDesc'] == regionConfig && expiresDate >= now){
+                                var detailsLink = element.link[0].$.href
+                                adapter.log.debug('4: Before Request Details')
+                    
+                                const done =  requestDetails(detailsLink)
+                                adapter.log.debug('9: After Request Details')
+                    
+                                i += 1;
+                            }
+                        });
+                        //adapter.log.debug('All entries processed')
+                        //adapter.log.debug('Entries found: ' + i)
+                        //return
+
+
+
+
+
+
+
+                        //await processAtom(result)
+                        //const done = processAtom(result)
+                        adapter.log.debug('10: After Process Atom')
+                        return
                     }
                 });
             }
@@ -238,6 +265,7 @@ async function requestDetails(detailsLink){
       });    
 }
 
+/*
 async function processAtom(content){
     adapter.log.debug('Received Atom data for ' + JSON.stringify(content.feed.id))
 
@@ -263,6 +291,7 @@ async function processAtom(content){
     //adapter.log.debug('Entries found: ' + i)
     return
 }
+*/
 
 async function processDetails(content, countInt){
 
