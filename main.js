@@ -133,6 +133,7 @@ async function getData(){
         for (const URL of detailsURL){ 
             //console.log(element) 
             var jsonResult;
+            var type = ""
             adapter.log.debug('6: Request Details from ' + URL)
 
             const getJSON1 = bent('string')
@@ -141,28 +142,33 @@ async function getData(){
 
             parseStringPromise(xmlDetails,{explicitArray: false})
             .then(async function (result) {
-                jsonResult = result      
+                jsonResult = result  
+                type =  result.alert.info[0].parameter[1].value   
             })
             .catch(function (err) {
                 adapter.log.error("Fehler: " + err);
                 adapter.terminate ? adapter.terminate(0) : process.exit(0);                
             });
-            var type = jsonResult.alert.info[0].parameter[1].value
-                        adapter.log.debug(' Type: ' + type);
-                        if (typeArray.indexOf(type) > -1) {
-                            adapter.log.debug('8: Alarm States ignored for Alarm ' + countEntries)
+            if (jsonResult){
+                //var type = jsonResult.alert.info[0].parameter[1].value
+                adapter.log.debug(' Type: ' + type);
+                if (typeArray.indexOf(type) > -1) {
+                    adapter.log.debug('8: Alarm States ignored for Alarm ' + countEntries)
 
-                        } else {
-                            //Type not yet in the array
-                            countEntries += 1
+                } else {
+                    //Type not yet in the array
+                    countEntries += 1
             
-                            typeArray.push(type)
-                            const created = await createAlarms(countEntries)
-                            adapter.log.debug('8: Alarm States created for Alarm ' + countEntries)
+                    typeArray.push(type)
+                    const created = await createAlarms(countEntries)
+                    adapter.log.debug('8: Alarm States created for Alarm ' + countEntries)
             
-                            const promises = await processDetails(jsonResult,countEntries)
-                            adapter.log.debug('9: Processed Details for Alarm ' + countEntries)
-                        }
+                    const promises = await processDetails(jsonResult,countEntries)
+                    adapter.log.debug('9: Processed Details for Alarm ' + countEntries)
+                }
+
+            }
+                        
         
         }
             
