@@ -471,20 +471,21 @@ async function processDetails(content, countInt){
         Warnung_img += 't' + type + '.png'
     }
 
+    var path = 'alarms.' + 'Alarm ' + countInt
     const promises = await Promise.all([
 
-        adapter.setStateAsync({ state: 'alarms.' + countInt + '.event'}, {val:  content.alert.info[0].event, ack: true}),
-        adapter.setStateAsync({ state: 'alarms.' + countInt + '.description'}, {val: content.alert.info[0].description, ack: true}),
-        adapter.setStateAsync({ state: 'alarms.' + countInt + '.link'}, {val: content.alert.info[0].web, ack: true}),
-        adapter.setStateAsync({ state: 'alarms.' + countInt + '.expires'}, {val: content.alert.info[0].expires, ack: true}),
-        adapter.setStateAsync({ state: 'alarms.' + countInt + '.effective'}, {val: content.alert.info[0].effective, ack: true}),
-        adapter.setStateAsync({ state: 'alarms.' + countInt + '.sender'}, {val: content.alert.info[0].senderName, ack: true}),
-        adapter.setStateAsync({ state: 'alarms.' + countInt + '.level'}, {val: level, ack: true}),
-        adapter.setStateAsync({ state: 'alarms.' + countInt + '.levelText'}, {val: getLevelName(level), ack: true}),
-        adapter.setStateAsync({ state: 'alarms.' + countInt + '.type'}, {val: type, ack: true}),
-        adapter.setStateAsync({ state: 'alarms.' + countInt + '.typeText'}, {val: getTypeName(type), ack: true}),
-        adapter.setStateAsync({ state: 'alarms.' + countInt + '.icon'}, {val: Warnung_img, ack: true}),
-        adapter.setStateAsync({ state: 'alarms.' + countInt + '.color'}, {val: getColor(level), ack: true})
+        adapter.setStateAsync({ state: path + '.event'}, {val:  content.alert.info[0].event, ack: true}),
+        adapter.setStateAsync({ state: path + '.description'}, {val: content.alert.info[0].description, ack: true}),
+        adapter.setStateAsync({ state: path + '.link'}, {val: content.alert.info[0].web, ack: true}),
+        adapter.setStateAsync({ state: path + '.expires'}, {val: content.alert.info[0].expires, ack: true}),
+        adapter.setStateAsync({ state: path + '.effective'}, {val: content.alert.info[0].effective, ack: true}),
+        adapter.setStateAsync({ state: path + '.sender'}, {val: content.alert.info[0].senderName, ack: true}),
+        adapter.setStateAsync({ state: path + '.level'}, {val: level, ack: true}),
+        adapter.setStateAsync({ state: path + '.levelText'}, {val: getLevelName(level), ack: true}),
+        adapter.setStateAsync({ state: path + '.type'}, {val: type, ack: true}),
+        adapter.setStateAsync({ state: path + '.typeText'}, {val: getTypeName(type), ack: true}),
+        adapter.setStateAsync({ state: path + '.icon'}, {val: Warnung_img, ack: true}),
+        adapter.setStateAsync({ state: path + '.color'}, {val: getColor(level), ack: true})
     ])
     //adapter.log.debug('7: After Set Alarm')
 
@@ -515,7 +516,7 @@ async function createAlarms(AlarmNumber){
             'native' : {}
         }),
 
-        adapter.setObjectNotExistsAsync('alarms.' + AlarmNumber + '.event', {
+        adapter.setObjectNotExistsAsync('alarms.' + 'Alarm ' + AlarmNumber + '.event', {
             common: {
                 name: 'Event',
                 type: 'string',
@@ -526,7 +527,7 @@ async function createAlarms(AlarmNumber){
             type: 'state',
             'native' : {}
         }),
-        adapter.setObjectNotExistsAsync('alarms.' + AlarmNumber + '.color', {
+        adapter.setObjectNotExistsAsync('alarms.' + 'Alarm ' + AlarmNumber + '.color', {
             common: {
                 name: 'Alarm color',
                 type: 'string',
@@ -537,7 +538,7 @@ async function createAlarms(AlarmNumber){
             type: 'state',
             'native' : {}
         }),
-        adapter.setObjectNotExistsAsync('alarms.' + AlarmNumber + '.icon', {
+        adapter.setObjectNotExistsAsync('alarms.' + 'Alarm ' + AlarmNumber + '.icon', {
             common: {
                 name: 'Alarm icon',
                 type: 'string',
@@ -548,7 +549,7 @@ async function createAlarms(AlarmNumber){
             type: 'state',
             'native' : {}
         }),
-        adapter.setObjectNotExistsAsync('alarms.' + AlarmNumber + '.level', {
+        adapter.setObjectNotExistsAsync('alarms.' + 'Alarm ' + AlarmNumber + '.level', {
             common: {
                 name: 'Alarm level',
                 type: 'string',
@@ -559,7 +560,7 @@ async function createAlarms(AlarmNumber){
             type: 'state',
             'native' : {}
         }),
-        adapter.setObjectNotExistsAsync('alarms.' + AlarmNumber + '.levelText', {
+        adapter.setObjectNotExistsAsync('alarms.' + 'Alarm ' + AlarmNumber + '.levelText', {
             common: {
                 name: 'Alarm level text',
                 type: 'string',
@@ -570,7 +571,7 @@ async function createAlarms(AlarmNumber){
             type: 'state',
             'native' : {}
         }),
-        adapter.setObjectNotExistsAsync('alarms.' + AlarmNumber + '.type', {
+        adapter.setObjectNotExistsAsync('alarms.' + 'Alarm ' + AlarmNumber + '.type', {
             common: {
                 name: 'Alarm icon',
                 type: 'string',
@@ -581,7 +582,7 @@ async function createAlarms(AlarmNumber){
             type: 'state',
             'native' : {}
         }),
-        adapter.setObjectNotExistsAsync('alarms.' + AlarmNumber + '.typeText', {
+        adapter.setObjectNotExistsAsync('alarms.' + 'Alarm ' + AlarmNumber + '.typeText', {
             common: {
                 name: 'Alarm type text',
                 type: 'string',
@@ -592,7 +593,7 @@ async function createAlarms(AlarmNumber){
             type: 'state',
             'native' : {}
         }),
-        adapter.setObjectNotExistsAsync('alarms.' + AlarmNumber + '.description', {
+        adapter.setObjectNotExistsAsync('alarms.' + 'Alarm ' + AlarmNumber + '.description', {
             common: {
                 name: 'Description',
                 type: 'string',
@@ -603,7 +604,7 @@ async function createAlarms(AlarmNumber){
             type: 'state',
             'native' : {}
         }),
-        adapter.setObjectNotExistsAsync('alarms.' + AlarmNumber + '.sender', {
+        adapter.setObjectNotExistsAsync('alarms.' + 'Alarm ' + AlarmNumber + '.sender', {
             common: {
                 name: 'Sender of the Alarm',
                 type: 'string',
@@ -614,7 +615,7 @@ async function createAlarms(AlarmNumber){
             type: 'state',
             'native' : {}
         }),
-        adapter.setObjectNotExistsAsync('alarms.' + AlarmNumber + '.effective', {
+        adapter.setObjectNotExistsAsync('alarms.' + 'Alarm ' + AlarmNumber + '.effective', {
             common: {
                 name: 'Date Alarm gets effective',
                 type: 'string',
@@ -625,7 +626,7 @@ async function createAlarms(AlarmNumber){
             type: 'state',
             'native' : {}
         }),
-        adapter.setObjectNotExistsAsync('alarms.' + AlarmNumber + '.expires', {
+        adapter.setObjectNotExistsAsync('alarms.' + 'Alarm ' + AlarmNumber + '.expires', {
             common: {
                 name: 'Date Alarm expires',
                 type: 'string',
@@ -637,7 +638,7 @@ async function createAlarms(AlarmNumber){
             type: 'state',
             'native' : {}
         }),
-        adapter.setObjectNotExistsAsync('alarms.' + AlarmNumber + '.link', {
+        adapter.setObjectNotExistsAsync('alarms.' + 'Alarm ' + AlarmNumber + '.link', {
             common: {
                 name: 'Link',
                 type: 'string',
