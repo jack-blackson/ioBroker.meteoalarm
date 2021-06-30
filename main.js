@@ -85,110 +85,115 @@ async function getData(){
             adapter.log.error('Please select a valid region in setup!')
             adapter.terminate ? adapter.terminate(0) : process.exit(0);
         }
+        else{
+            var urlAtom = getCountryLink(countryConfig)
 
-        var urlAtom = getCountryLink(countryConfig)
 
+            // Delete old alarms
+            adapter.log.debug('1: Delete Alarms')
 
-        // Delete old alarms
-        adapter.log.debug('1: Delete Alarms')
+            const deleted =  deleteAllAlarms();
 
-        const deleted =  deleteAllAlarms();
+            adapter.log.debug('2: Request Atom from ' + urlAtom )
 
-        adapter.log.debug('2: Request Atom from ' + urlAtom )
+            const getJSON = bent('string')
+            let xmlAtom = await getJSON(urlAtom)
+            adapter.log.debug('3: Received Atom')
 
-        const getJSON = bent('string')
-        let xmlAtom = await getJSON(urlAtom)
-        adapter.log.debug('3: Received Atom')
-
-        
-        parseString(xmlAtom, {
-            //mergeAttrs: true
-        }, 
-
-        function (err, result) {
-            if (err) {
-                adapter.log.error("Fehler: " + err);
-                adapter.terminate ? adapter.terminate(0) : process.exit(0);
-            } else {
-                adapter.log.debug('4: Process Atom')
-                //adapter.log.debug('Received Atom data for ' + JSON.stringify(result.feed.id))
-                var newdate = moment(new Date()).local().format('DD.MM.YYYY HH:mm')
-                adapter.setState({device: '' , channel: '',state: 'lastUpdate'}, {val: newdate, ack: true});
             
-                var i = 0
-                var now = new Date();
-                result.feed.entry.forEach(function (element){
-                    var expiresDate = new Date(element['cap:expires']);
-                    if (element['cap:areaDesc'] == regionConfig && expiresDate >= now){
-                        var detailsLink = element.link[0].$.href
-                        adapter.log.debug('4.1: Warning found: ' + detailsLink)
-                        detailsURL.push(detailsLink)
-            
-                        i += 1;
-                    }
-                });
-            }
-        });
-        
-        // continue now to request details
-        var countEntries = 0
-
-        adapter.log.debug('5: Processed Atom')
-        var countTotalURLs = detailsURL.length
-        adapter.log.debug('5.1 Found ' + countTotalURLs + ' URLs')
-        var countURL = 0
-        for (const URL of detailsURL){ 
-            countURL += 1
-            //console.log(element) 
-            var jsonResult;
-            var type = ""
-            adapter.log.debug('6: Request Details from URL ' + countURL + ': ' + URL)
-
-            const getJSON1 = bent('string')
-            let xmlDetails = await getJSON(URL)
-            adapter.log.debug('7: Received Details for URL ' + countURL)
-
-            parseString(xmlDetails, {
-                explicitArray: false
+            parseString(xmlAtom, {
+                //mergeAttrs: true
             }, 
-    
+
             function (err, result) {
                 if (err) {
                     adapter.log.error("Fehler: " + err);
                     adapter.terminate ? adapter.terminate(0) : process.exit(0);
                 } else {
-                    jsonResult = result  
-                    type =  result.alert.info[0].parameter[1].value
+                    adapter.log.debug('4: Process Atom')
+                    //adapter.log.debug('Received Atom data for ' + JSON.stringify(result.feed.id))
+                    var newdate = moment(new Date()).local().format('DD.MM.YYYY HH:mm')
+                    adapter.setState({device: '' , channel: '',state: 'lastUpdate'}, {val: newdate, ack: true});
+                
+                    var i = 0
+                    var now = new Date();
+                    result.feed.entry.forEach(function (element){
+                        var expiresDate = new Date(element['cap:expires']);
+                        if (element['cap:areaDesc'] == regionConfig && expiresDate >= now){
+                            var detailsLink = element.link[0].$.href
+                            adapter.log.debug('4.1: Warning found: ' + detailsLink)
+                            detailsURL.push(detailsLink)
+                
+                            i += 1;
+                        }
+                    });
                 }
             });
-
-            if (jsonResult){
-                //adapter.log.debug(' Type of URL ' + countURL + ' :' + type);
-                if (typeArray.indexOf(type) > -1) {
-                    adapter.log.debug('8: Alarm States ignored for Alarm ' + countURL)
-                    adapter.log.debug('9: Processed Details for Alarm ' + countURL)
-
-
-                } else {
-                    //Type not yet in the array
-                    countEntries += 1
             
-                    typeArray.push(type)
-                    const created = await createAlarms(countEntries)
-                    adapter.log.debug('8: Alarm States created for Alarm ' + countURL)
-            
-                    const promises = await processDetails(jsonResult,countEntries)
-                    adapter.log.debug('9: Processed Details for Alarm ' + countURL)
+            // continue now to request details
+            var countEntries = 0
+
+            adapter.log.debug('5: Processed Atom')
+            var countTotalURLs = detailsURL.length
+            adapter.log.debug('5.1 Found ' + countTotalURLs + ' URLs')
+            var countURL = 0
+            for (const URL of detailsURL){ 
+                countURL += 1
+                //console.log(element) 
+                var jsonResult;
+                var type = ""
+                adapter.log.debug('6: Request Details from URL ' + countURL + ': ' + URL)
+
+                const getJSON1 = bent('string')
+                let xmlDetails = await getJSON(URL)
+                adapter.log.debug('7: Received Details for URL ' + countURL)
+
+                parseString(xmlDetails, {
+                    explicitArray: false
+                }, 
+        
+                function (err, result) {
+                    if (err) {
+                        adapter.log.error("Fehler: " + err);
+                        adapter.terminate ? adapter.terminate(0) : process.exit(0);
+                    } else {
+                        jsonResult = result  
+                        type =  result.alert.info[0].parameter[1].value
+                    }
+                });
+
+                if (jsonResult){
+                    //adapter.log.debug(' Type of URL ' + countURL + ' :' + type);
+                    if (typeArray.indexOf(type) > -1) {
+                        adapter.log.debug('8: Alarm States ignored for Alarm ' + countURL)
+                        adapter.log.debug('9: Processed Details for Alarm ' + countURL)
+
+
+                    } else {
+                        //Type not yet in the array
+                        countEntries += 1
+                
+                        typeArray.push(type)
+                        const created = await createAlarms(countEntries)
+                        adapter.log.debug('8: Alarm States created for Alarm ' + countURL)
+                
+                        const promises = await processDetails(jsonResult,countEntries)
+                        adapter.log.debug('9: Processed Details for Alarm ' + countURL)
+                    }
+
                 }
-
-            }
-                        
-        
-        }
+                            
             
-        adapter.log.debug('10: All Done')
+            }
+                
+            adapter.log.debug('10: All Done')
+            
+            adapter.terminate ? adapter.terminate(0) : process.exit(0);
+
+
+        }
+
         
-        adapter.terminate ? adapter.terminate(0) : process.exit(0);
 
 }
 
