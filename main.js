@@ -107,6 +107,7 @@ async function getData(){
                     var expiresDate = new Date(element['cap:expires']);
                     if (element['cap:areaDesc'] == regionConfig && expiresDate >= now){
                         var detailsLink = element.link[0].$.href
+                        adapter.log.info('Link found: ' + detailsLink)
                         detailsURL.push(detailsLink)
             
                         i += 1;
