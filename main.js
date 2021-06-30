@@ -80,13 +80,10 @@ async function getData(){
 
         //await requestAtom()
         const getJSON = bent('string')
-        let obj = await getJSON('http://api.daswetter.com/index.php?api_lang=de&localidad=194681&affiliate_id=fa7kosy175bc&v=2.0&h=1')
-        adapter.log.debug('Daswetter done')
-        const getJSON1 = bent('string')
-        let obj1 = await getJSON('https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-austria')
+        let obj = await getJSON('https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-austria')
         adapter.log.debug('meteoalarm done')
 
-        /*
+        
         parseString(obj, {
             //mergeAttrs: true
         }, 
@@ -143,7 +140,7 @@ async function getData(){
 
 
         adapter.log.debug('11: After Request Atom')
-        */
+        
         adapter.terminate ? adapter.terminate(0) : process.exit(0);
 
 }
