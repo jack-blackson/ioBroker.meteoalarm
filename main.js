@@ -228,7 +228,10 @@ async function createHTMLWidget(){
             });
             adapter.getState('alarms.' +  channel.common.name + '.expires', function (err, state) {
                 expiresDate = state.val;
-                adapter.log.debug('Date exporires: ' + expiresDate)
+                adapter.log.debug('Date expires: ' + expiresDate);
+                const dateOptions = { weekday: "long"};
+
+                adapter.log.debug(getDay(expiresDate));
             });
 
 
@@ -253,6 +256,11 @@ async function createHTMLWidget(){
     ])
 }
 
+function getDay(date)
+{
+    var options = { weekday: "long"};        
+    return date.toLocaleDateString( options );
+}
 
 /*
 async function requestAtom(){
