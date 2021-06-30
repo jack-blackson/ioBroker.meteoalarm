@@ -176,11 +176,12 @@ async function getData(){
                 })
             .catch(function (err) {
                 adapter.log.error("Fehler: " + err);
-                adapter.terminate ? adapter.terminate(0) : process.exit(0);                });
+                adapter.terminate ? adapter.terminate(0) : process.exit(0);                
+            });
                 
             }
             
-        };
+        //};
 
         adapter.log.debug('10: All Done')
         
