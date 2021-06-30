@@ -36,6 +36,8 @@ var expiresDate = new Date();
 var effectiveString = "";
 var expiresString = "";
 
+var channelNames = []
+
 
 let adapter;
 let lang;
@@ -201,7 +203,38 @@ async function getData(){
             //const widget = await createHTMLWidget()
             adapter.log.debug('10: Creating HTML Widget')
 
-            createHTMLWidget()
+            //createHTMLWidget()
+            if (channelNames.length >= 1){
+                htmlCode += '<table style="border-collapse: collapse; width: 100%;" border="1"><tbody>'
+                for (const channel of channelNames) {
+                    //adapter.log.debug('Found alarm: ' + channel.common.name)
+                    const promises = await loadData(channel)
+                    
+    
+                    
+                    htmlCode += '<tr><td style="width: 20%; border-style: none;">'
+    
+    
+                    htmlCode += '</td>'
+    
+                    htmlCode += '<td style="width: 80%; border-style: none;">'
+    
+                    htmlCode += '<h2>' + eventType + '</h2>'
+    
+                    htmlCode += '<p>' + effectiveDate + ' - ' + expiresDate + '</p>'
+    
+    
+                    htmlCode += '</td></tr>'
+                }
+            }
+            if (htmlCode){
+                htmlCode += '</tbody></table>'
+            } 
+            adapter.log.debug('widget: ' + htmlCode)
+
+
+
+
             adapter.log.debug('11: Set State for Widget')
 
             await Promise.all([
@@ -247,6 +280,9 @@ function createHTMLWidget(){
                 htmlCode += '</td></tr>'
             }
         }
+        if (htmlCode){
+            htmlCode += '</tbody></table>'
+        } 
         adapter.log.debug('widget: ' + htmlCode)
         //return Promise.resolve();
     });
@@ -264,9 +300,7 @@ function createHTMLWidget(){
             */
        
 
-    if (htmlCode){
-        htmlCode += '</tbody></table>'
-    }    
+       
 }
 
 
@@ -580,6 +614,7 @@ async function deleteAllAlarms(){
 
 async function createAlarms(AlarmNumber){
     var path = 'alarms.' + 'Alarm ' + AlarmNumber
+    channelNames.push('Alarm ' + AlarmNumber)
     const promises = await Promise.all([
 
         adapter.setObjectNotExistsAsync('alarms', {
