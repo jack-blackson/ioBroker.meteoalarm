@@ -27,8 +27,7 @@
     "moment": "2.29.1",
     "request": "^2.88.2",
     "bent": "^7.3.12",
-    "xml2json-light": "1.0.6",
-     "xml2js": "^0.4.22"
+    "xml2js": "^0.4.22"
   },
   "scripts": {
     "test": "npm run test:package && npm run test:unit",

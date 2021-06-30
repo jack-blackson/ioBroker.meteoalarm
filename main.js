@@ -15,7 +15,6 @@ const moment = require('moment');
 var parseString = require('xml2js').parseString;
 const i18nHelper = require(`${__dirname}/lib/i18nHelper`);
 const bent = require("bent");
-const xml2js = require("xml2json-light");
 
 var DescFilter1 = '';
 var DescFilter2 = '';
@@ -93,8 +92,8 @@ async function getData(){
         let xmlAtom = await getJSON('https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-austria')
         adapter.log.debug('3: meteoalarm done')
 
-        /*
-        parseString(obj, {
+        
+        parseString(xmlAtom, {
             //mergeAttrs: true
         }, 
 
@@ -123,25 +122,8 @@ async function getData(){
                 adapter.log.debug('5: Processed Atom')
             }
         });
-        */
-
-        const jsonAtom = xml2js.xml2json(xmlAtom);
-
-        var newdate = moment(new Date()).local().format('DD.MM.YYYY HH:mm')
-                adapter.setState({device: '' , channel: '',state: 'lastUpdate'}, {val: newdate, ack: true});
-            
-                var i = 0
-                var now = new Date();
-                jsonAtom.feed.entry.forEach(function (element){
-                    var expiresDate = new Date(element['cap:expires']);
-                    if (element['cap:areaDesc'] == regionConfig && expiresDate >= now){
-                        var detailsLink = element.link[0].$.href
-                        adapter.log.debug('4.1: Warning found: ' + detailsLink)
-                        detailsURL.push(detailsLink)
-            
-                        i += 1;
-                    }
-                });
+        
+     
         adapter.log.debug('5: Processed Atom')
         // continue now to request details
 
