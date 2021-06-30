@@ -10,7 +10,7 @@
 
 'use strict';
 const utils = require('@iobroker/adapter-core');
-const request = require('request');
+//const request = require('request');
 const moment = require('moment');
 var parseString = require('xml2js').parseString;
 var parseStringPromise = require('xml2js').parseStringPromise;
@@ -79,13 +79,14 @@ async function getData(){
         // request setup
         countryConfig = adapter.config.country
         regionConfig = adapter.config.region
-        adapter.log.debug('0: Setup found: country ' + countryConfig + ' and region ' + regionConfig)
 
         if (regionConfig  == "0"|| !regionConfig){
             adapter.log.error('Please select a valid region in setup!')
             adapter.terminate ? adapter.terminate(0) : process.exit(0);
         }
         else{
+            adapter.log.debug('0: Setup found: country ' + countryConfig + ' and region ' + regionConfig)
+
             var urlAtom = getCountryLink(countryConfig)
 
 
