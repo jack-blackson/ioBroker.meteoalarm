@@ -173,6 +173,8 @@ async function getData(){
                 adapter.log.debug(' Type of URL ' + countURL + ' :' + type);
                 if (typeArray.indexOf(type) > -1) {
                     adapter.log.debug('8: Alarm States ignored for Alarm ' + countURL)
+                    adapter.log.debug('9: Processed Details for Alarm ' + countURL)
+
 
                 } else {
                     //Type not yet in the array
