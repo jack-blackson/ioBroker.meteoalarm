@@ -259,7 +259,7 @@ async function createHTMLWidget(){
 function getDay(date)
 {
     var options = { weekday: "long"};        
-    return date.toLocaleDateString( options );
+    return date.toLocaleDateString('en-GB', options );
 }
 
 /*
