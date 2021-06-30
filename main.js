@@ -128,17 +128,19 @@ async function getData(){
         var countEntries = 0
 
         adapter.log.debug('5: Processed Atom')
-        var countURLs = detailsURL.length
-        adapter.log.debug('5.1 Found ' + countURLs + ' URLs')
+        var countTotalURLs = detailsURL.length
+        adapter.log.debug('5.1 Found ' + countTotalURLs + ' URLs')
+        var countURL = 0
         for (const URL of detailsURL){ 
+            countURL += 1
             //console.log(element) 
             var jsonResult;
             var type = ""
-            adapter.log.debug('6: Request Details from ' + URL)
+            adapter.log.debug('6: Request Details from URL ' + countURL + ': ' + URL)
 
             const getJSON1 = bent('string')
             let xmlDetails = await getJSON(URL)
-            adapter.log.debug('7: Received Details')
+            adapter.log.debug('7: Received Details for URL ' + countURL)
 
             parseStringPromise(xmlDetails,{explicitArray: false})
             .then(async function (result) {
@@ -153,7 +155,7 @@ async function getData(){
                 //var type = jsonResult.alert.info[0].parameter[1].value
                 adapter.log.debug(' Type: ' + type);
                 if (typeArray.indexOf(type) > -1) {
-                    adapter.log.debug('8: Alarm States ignored for Alarm ' + countEntries)
+                    adapter.log.debug('8: Alarm States ignored for Alarm ' + countURL)
 
                 } else {
                     //Type not yet in the array
@@ -161,10 +163,10 @@ async function getData(){
             
                     typeArray.push(type)
                     const created = await createAlarms(countEntries)
-                    adapter.log.debug('8: Alarm States created for Alarm ' + countEntries)
+                    adapter.log.debug('8: Alarm States created for Alarm ' + countURL)
             
                     const promises = await processDetails(jsonResult,countEntries)
-                    adapter.log.debug('9: Processed Details for Alarm ' + countEntries)
+                    adapter.log.debug('9: Processed Details for Alarm ' + countURL)
                 }
 
             }
