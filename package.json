@@ -22,7 +22,7 @@
     "url": "https://github.com/jack-blackson/ioBroker.meteoalarm/issues"
   },
   "dependencies": {
-    "@iobroker/adapter-core": "^2.3.0",
+    "@iobroker/adapter-core": "^2.5.0",
     "@iobroker/testing": "^2.2.0",
     "moment": "2.29.1",
     "request": "^2.88.2",
