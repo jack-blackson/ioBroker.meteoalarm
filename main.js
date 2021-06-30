@@ -67,7 +67,7 @@ function main() {
         else{
             lang = systemConfig.common.language
         }
-
+        adapter.log.debug('Language: ' + lang)
         getData()
         
 
