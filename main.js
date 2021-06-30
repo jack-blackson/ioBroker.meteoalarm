@@ -219,9 +219,9 @@ async function createHTMLWidget(){
 
 
 
-
-    adapter.setState({device: '' , channel: '',state: 'htmlToday'}, {val: htmlCode, ack: true});
-
+    await Promise.all([
+        adapter.setStateAsync({device: '' , channel: '',state: 'htmlToday'}, {val: htmlCode, ack: true})
+    ])
 }
 
 
