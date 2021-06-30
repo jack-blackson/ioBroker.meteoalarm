@@ -123,18 +123,34 @@ async function getData(){
         });
         
         // continue now to request details
-
+        var countEntries = 0
         adapter.log.debug('5: Processed Atom')
         for (const URL of detailsURL){ 
             //console.log(element) 
+
             adapter.log.debug('6: Request Details from ' + URL)
 
             const getJSON1 = bent('json')
             let xmlAtom1 = await getJSON(URL)
             adapter.log.debug('7: Received Details')
 
-        };
+            var type = xmlAtom1.alert.info[0].parameter[1].value
+            if (typeArray.indexOf(type) > -1) {
+                return
+            } else {
+                //Type not yet in the array
+                countEntries += 1
 
+                typeArray.push(type)
+                let created = createAlarms(countEntries)
+                let done = await created
+
+                adapter.log.debug('8: Alarm States created')
+                adapter.log.debug('9: Start Process Details')
+                const promises = processDetails(xmlAtom1,countEntries)
+                adapter.log.debug('10: Processed Details')
+
+        };
 
         adapter.log.debug('11: After Request Atom')
         
@@ -259,6 +275,7 @@ async function requestAtom(){
 }
 */
   
+/*
 async function requestDetails(detailsLink){
 
     adapter.log.debug('Requesting details from ' + detailsLink)
@@ -332,6 +349,7 @@ async function requestDetails(detailsLink){
         }
       });    
 }
+*/
 
 /*
 async function processAtom(content){
@@ -363,9 +381,9 @@ async function processAtom(content){
 
 async function processDetails(content, countInt){
 
-    let created = createAlarms(countInt)
-    let done = await created
-    adapter.log.debug('6: After Create Alarm')
+   // let created = createAlarms(countInt)
+   // let done = await created
+    //adapter.log.debug('6: After Create Alarm')
     var level = content.alert.info[0].parameter[0].value
     var n = level.indexOf(";");
     level = level.substring(0, n)
@@ -399,7 +417,7 @@ async function processDetails(content, countInt){
         adapter.setStateAsync({ state: 'alarms.' + countInt + '.icon'}, {val: Warnung_img, ack: true}),
         adapter.setStateAsync({ state: 'alarms.' + countInt + '.color'}, {val: getColor(level), ack: true})
     ])
-    adapter.log.debug('7: After Set Alarm')
+    //adapter.log.debug('7: After Set Alarm')
 
 }
 
