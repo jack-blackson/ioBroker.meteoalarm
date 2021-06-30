@@ -134,23 +134,35 @@ async function getData(){
             let xmlDetails = await getJSON(URL)
             adapter.log.debug('7: Received Details')
 
-            var type = xmlDetails.alert.info[0].parameter[1].value
-            if (typeArray.indexOf(type) > -1) {
-                return
-            } else {
-                //Type not yet in the array
-                countEntries += 1
+            parseString(xmlDetails, {
+                //mergeAttrs: true
+            }, 
+    
+            async function (err, result) {
+                if (err) {
+                    adapter.log.error("Fehler: " + err);
+                    adapter.terminate ? adapter.terminate(0) : process.exit(0);
+                } else {
+                    var type = xmlDetails.alert.info[0].parameter[1].value
+                    if (typeArray.indexOf(type) > -1) {
+                        return
+                    } else {
+                        //Type not yet in the array
+                        countEntries += 1
 
-                typeArray.push(type)
-                let created = createAlarms(countEntries)
-                let done = await created
+                        typeArray.push(type)
+                        const created = await createAlarms(countEntries)
 
-                adapter.log.debug('8: Alarm States created')
-                adapter.log.debug('9: Start Process Details')
-                const promises = await processDetails(xmlDetails,countEntries)
-                adapter.log.debug('10: Processed Details')
-            }
+                        adapter.log.debug('8: Alarm States created')
+                        adapter.log.debug('9: Start Process Details')
+                        const promises = await processDetails(xmlDetails,countEntries)
+                        adapter.log.debug('10: Processed Details')
+                        return
+                    }
 
+                }
+            });
+            
         };
 
         adapter.log.debug('11: After Request Atom')
