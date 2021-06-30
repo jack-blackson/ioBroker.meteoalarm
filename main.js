@@ -179,25 +179,20 @@ async function getData(){
                             countEntries += 1
             
                             typeArray.push(type)
-                            const  created = await createAlarms(countEntries)
+                            const created = await createAlarms(countEntries)
                             adapter.log.debug('8: Alarm States created for Alarm ' + countEntries)
             
-                            //created.then(processDetails())
-                            //if (created){
-            
-                            //}
-                            //const AlarmCreated = await Promise.all([createAlarms(countEntries), processDetails(result,countEntries)]);
-            
-                            const promises = await processDetails(result,countEntries)
-                            adapter.log.debug('9: Processed Details for Alarm ' + countEntries)
+                            //const promises = await processDetails(result,countEntries)
+                            //adapter.log.debug('9: Processed Details for Alarm ' + countEntries)
                         }
                 })
             .catch(function (err) {
                 adapter.log.error("Fehler: " + err);
                 adapter.terminate ? adapter.terminate(0) : process.exit(0);                
             });
+
                 
-            }
+        }
             
         //};
 
