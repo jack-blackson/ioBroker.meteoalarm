@@ -149,6 +149,7 @@ async function getData(){
                 adapter.log.debug('9: Start Process Details')
                 const promises = await processDetails(xmlAtom1,countEntries)
                 adapter.log.debug('10: Processed Details')
+            }
 
         };
 
