@@ -78,12 +78,10 @@ async function getData(){
 
         adapter.log.debug('2: Before Request Atom')
 
-        //await requestAtom()
         const getJSON = bent('string')
         let obj = await getJSON('https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-austria')
         adapter.log.debug('3: meteoalarm done')
 
-        
         parseString(obj, {
             //mergeAttrs: true
         }, 
@@ -109,26 +107,12 @@ async function getData(){
                     var expiresDate = new Date(element['cap:expires']);
                     if (element['cap:areaDesc'] == regionConfig && expiresDate >= now){
                         var detailsLink = element.link[0].$.href
-                        //adapter.log.debug('4: Before Request Details')
-                        detailsURL.push = detailsLink
-                        //const done =  requestDetails(detailsLink)
-                        //adapter.log.debug('9: After Request Details')
+                        detailsURL.push(detailsLink)
             
                         i += 1;
                     }
                 });
-                //adapter.log.debug('All entries processed')
-                //adapter.log.debug('Entries found: ' + i)
-                //return
 
-
-
-
-
-
-
-                //await processAtom(result)
-                //const done = processAtom(result)
                 adapter.log.debug(' Links: ' + detailsURL)
 
                 adapter.log.debug('5: Processed Atom')
