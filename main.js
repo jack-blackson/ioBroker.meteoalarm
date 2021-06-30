@@ -153,10 +153,10 @@ async function getData(){
                         countEntries += 1
 
                         typeArray.push(type)
-                        var  created = await createAlarms(countEntries)
-                        adapter.log.debug('8: Alarm States created for Alarm ' + countEntries)
+                        //var  created = await createAlarms(countEntries)
+                        //adapter.log.debug('8: Alarm States created for Alarm ' + countEntries)
 
-                        created.then(processDetails())
+                        //created.then(processDetails())
 
                         const promises = await processDetails(result,countEntries)
                         adapter.log.debug('9: Processed Details')
