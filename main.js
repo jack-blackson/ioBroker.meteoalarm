@@ -15,6 +15,7 @@ const moment = require('moment');
 var parseString = require('xml2js').parseString;
 const i18nHelper = require(`${__dirname}/lib/i18nHelper`);
 const bent = require("bent");
+const xml2js = require("xml2json-light");
 
 var DescFilter1 = '';
 var DescFilter2 = '';
@@ -74,10 +75,15 @@ function main() {
 
 async function getData(){
     adapter.log.debug('1: Before Delete Alarms')
-        const deleted =  deleteAllAlarms();
 
+        // request setup
         countryConfig = adapter.config.country
         regionConfig = adapter.config.region
+
+        // Delete old alarms
+        const deleted =  deleteAllAlarms();
+
+
     
         adapter.log.debug('Requesting atom data for country ' + countryConfig + ' and region ' + regionConfig)
 
@@ -87,23 +93,19 @@ async function getData(){
         let obj = await getJSON('https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-austria')
         adapter.log.debug('3: meteoalarm done')
 
+        /*
         parseString(obj, {
             //mergeAttrs: true
         }, 
 
         function (err, result) {
-
             if (err) {
-
                 adapter.log.error("Fehler: " + err);
                 adapter.terminate ? adapter.terminate(0) : process.exit(0);
             } else {
                 adapter.log.debug('4: Process Atom')
-
                 adapter.log.debug('Received Atom data for ' + JSON.stringify(result.feed.id))
-
                 var newdate = moment(new Date()).local().format('DD.MM.YYYY HH:mm')
-            
                 adapter.setState({device: '' , channel: '',state: 'lastUpdate'}, {val: newdate, ack: true});
             
                 var i = 0
@@ -112,22 +114,36 @@ async function getData(){
                     var expiresDate = new Date(element['cap:expires']);
                     if (element['cap:areaDesc'] == regionConfig && expiresDate >= now){
                         var detailsLink = element.link[0].$.href
-                        adapter.log.info('Link found: ' + detailsLink)
+                        adapter.log.debug('4.1: Warning found: ' + detailsLink)
                         detailsURL.push(detailsLink)
             
                         i += 1;
                     }
                 });
-
-                adapter.log.debug(' Links: ' + detailsURL)
-
                 adapter.log.debug('5: Processed Atom')
-                //return Promise.resolve();
             }
         });
+        */
 
+        const result = xml2js.xml2json(obj);
 
-
+        var newdate = moment(new Date()).local().format('DD.MM.YYYY HH:mm')
+                adapter.setState({device: '' , channel: '',state: 'lastUpdate'}, {val: newdate, ack: true});
+            
+                var i = 0
+                var now = new Date();
+                obj.feed.entry.forEach(function (element){
+                    var expiresDate = new Date(element['cap:expires']);
+                    if (element['cap:areaDesc'] == regionConfig && expiresDate >= now){
+                        var detailsLink = element.link[0].$.href
+                        adapter.log.debug('4.1: Warning found: ' + detailsLink)
+                        detailsURL.push(detailsLink)
+            
+                        i += 1;
+                    }
+                });
+        adapter.log.debug('5: Processed Atom')
+        // continue now to request details
 
         adapter.log.debug('11: After Request Atom')
         
