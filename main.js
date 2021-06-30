@@ -186,7 +186,7 @@ async function getData(){
                             
             
             }
-            createHTMLWidget()
+            const widget = await createHTMLWidget()
             adapter.log.debug('10: All Done')
             
             adapter.terminate ? adapter.terminate(0) : process.exit(0);
