@@ -132,7 +132,7 @@ async function getData(){
             
                 var i = 0
                 var now = new Date();
-                obj.feed.entry.forEach(function (element){
+                result.feed.entry.forEach(function (element){
                     var expiresDate = new Date(element['cap:expires']);
                     if (element['cap:areaDesc'] == regionConfig && expiresDate >= now){
                         var detailsLink = element.link[0].$.href
