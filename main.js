@@ -27,6 +27,7 @@ var countEntries = 0;
 var typeArray = [];
 var detailsURL = []
 
+/*
 var event = ""
 var description = ""
 var icon = ""
@@ -35,6 +36,7 @@ var effectiveDate = new Date();
 var expiresDate = new Date();
 var effectiveString = "";
 var expiresString = "";
+*/
 
 var channelNames = []
 
@@ -210,16 +212,20 @@ async function getData(){
 
                     var path = 'alarms.' + channelLoop
 
-                    event = await adapter.getStateAsync(path + '.event')
-                    description = await adapter.getStateAsync(path + '.description');
-                    icon = await adapter.getStateAsync(path + '.icon');
-                    color = await adapter.getStateAsync(path + '.color');
-                    effectiveDate = await adapter.getStateAsync(path + '.effective');
-                    expiresDate = await adapter.getStateAsync(path + '.expires');
+                    let event = await adapter.getStateAsync(path + '.event')
+                    let description = await adapter.getStateAsync(path + '.description');
+                    let icon = await adapter.getStateAsync(path + '.icon');
+                    let color = await adapter.getStateAsync(path + '.color');
+                    let effectiveDate = await adapter.getStateAsync(path + '.effective');
+                    let expiresDate = await adapter.getStateAsync(path + '.expires');
                     
                     adapter.log.debug('Path: ' + path)
 
                     adapter.log.debug('Event Type: ' + event)
+                    if (event.val){
+                        adapter.log.debug('Event Type1: ' + event.val)
+
+                    }
 
                     htmlCode += '<tr><td style="width: 20%; border-style: none;">'
     
