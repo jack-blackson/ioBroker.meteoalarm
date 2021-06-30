@@ -206,6 +206,8 @@ async function createHTMLWidget(){
     var color = ""
     var effectiveDate = new Date();
     var expiresDate = new Date();
+    var effectiveString = "";
+    var expiresString = "";
 
     adapter.getChannelsOf('alarms', function (err, result) {
         for (const channel of result) {
@@ -225,10 +227,13 @@ async function createHTMLWidget(){
             });
             adapter.getState('alarms.' +  channel.common.name + '.effective', function (err, state) {
                 effectiveDate = state.val
+                effectiveString = state.val
+                
             });
             adapter.getState('alarms.' +  channel.common.name + '.expires', function (err, state) {
                 expiresDate = state.val;
-                adapter.log.debug('Date expires: ' + expiresDate);
+                expiresString = state.val;
+                adapter.log.debug('Date expires: ' + expiresString);
                 const dateOptions = { weekday: "long"};
 
                 adapter.log.debug(getDay(expiresDate));
@@ -256,10 +261,11 @@ async function createHTMLWidget(){
     ])
 }
 
-function getDay(dateInput)
+function getDate(dateTimeString)
 {
-    var options = { weekday: "long"};        
-    return dateInput.toLocaleDateString('en-GB', options );
+   return new Date(dateTimeString).toLocaleDateString('en-US', { weekday: "long" })
+      
+    //return date.toLocaleDateString( date.getTimezoneOffset(), options );
 }
 
 /*
