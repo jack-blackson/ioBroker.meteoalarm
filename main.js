@@ -228,7 +228,7 @@ async function getData(){
     
                     htmlCode += '<td style="width: 80%; border-style: none;">'
     
-                    htmlCode += '<h2>' + eventType + '</h2>'
+                    htmlCode += '<h2>' + event + '</h2>'
     
                     htmlCode += '<p>' + effectiveDate + ' - ' + expiresDate + '</p>'
     
