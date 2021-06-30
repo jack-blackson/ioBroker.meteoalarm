@@ -133,7 +133,6 @@ async function getData(){
             const getJSON1 = bent('string')
             let xmlDetails = await getJSON(URL)
             adapter.log.debug('7: Received Details')
-            adapter.log.debug('7: Received Details1' + xmlDetails)
 
             parseString(xmlDetails, {
                 //mergeAttrs: true
@@ -144,7 +143,8 @@ async function getData(){
                     adapter.log.error("Fehler: " + err);
                     adapter.terminate ? adapter.terminate(0) : process.exit(0);
                 } else {
-                    var type = xmlDetails.alert.info[0].parameter[1].value
+
+                    var type = result.alert.info[0].parameter[1].value
                     if (typeArray.indexOf(type) > -1) {
                         return
                     } else {
@@ -156,7 +156,7 @@ async function getData(){
 
                         adapter.log.debug('8: Alarm States created')
                         adapter.log.debug('9: Start Process Details')
-                        const promises = await processDetails(xmlDetails,countEntries)
+                        const promises = await processDetails(result,countEntries)
                         adapter.log.debug('10: Processed Details')
                         return
                     }
