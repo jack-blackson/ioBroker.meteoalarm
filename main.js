@@ -69,7 +69,7 @@ function main() {
 
         adapter.log.debug('2: Before Request Atom')
 
-        const atomResult = requestAtom()
+        requestAtom()
         
         adapter.log.debug('11: After Request Atom')
         
@@ -78,7 +78,7 @@ function main() {
     }) 
 }
 
-function requestAtom(){
+async function requestAtom(){
     countryConfig = adapter.config.country
     regionConfig = adapter.config.region
 
@@ -173,7 +173,7 @@ function requestAtom(){
                         adapter.log.debug(' Links: ' + detailsURL)
 
                         adapter.log.debug('5: Processed Atom')
-                        return
+                        return Promise.resolve();
                     }
                 });
             }
