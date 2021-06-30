@@ -209,35 +209,54 @@ async function createHTMLWidget(){
     var effectiveString = "";
     var expiresString = "";
 
-    adapter.getChannelsOf('alarms', function (err, result) {
-        for (const channel of result) {
-            //adapter.log.debug('Found alarm: ' + channel.common.name)
-            adapter.getState('alarms.' +  channel.common.name + '.event', function (err, state) {
-                adapter.log.debug('Event Type: ' + state.val)
-                eventType = state.val
-            });
-            adapter.getState('alarms.' +  channel.common.name + '.description', function (err, state) {
-                description = state.val
-            });
-            adapter.getState('alarms.' +  channel.common.name + '.icon', function (err, state) {
-                icon = state.val
-            });
-            adapter.getState('alarms.' +  channel.common.name + '.color', function (err, state) {
-                color = state.val
-            });
-            adapter.getState('alarms.' +  channel.common.name + '.effective', function (err, state) {
-                effectiveDate = state.val
-                effectiveString = state.val
-                
-            });
-            adapter.getState('alarms.' +  channel.common.name + '.expires', function (err, state) {
-                expiresDate = state.val;
-                expiresString = state.val;
-                adapter.log.debug('Date expires: ' + expiresString);
-                const dateOptions = { weekday: "long"};
 
-                adapter.log.debug(getDay(expiresDate));
-            });
+    adapter.getChannelsOf('alarms', function (err, result) {
+        if (result.length >= 1){
+            htmlCode += '<table style="border-collapse: collapse; width: 100%;" border="1"><tbody>'
+            for (const channel of result) {
+                //adapter.log.debug('Found alarm: ' + channel.common.name)
+                adapter.getState('alarms.' +  channel.common.name + '.event', function (err, state) {
+                    adapter.log.debug('Event Type: ' + state.val)
+                    eventType = state.val
+                });
+                adapter.getState('alarms.' +  channel.common.name + '.description', function (err, state) {
+                    description = state.val
+                });
+                adapter.getState('alarms.' +  channel.common.name + '.icon', function (err, state) {
+                    icon = state.val
+                });
+                adapter.getState('alarms.' +  channel.common.name + '.color', function (err, state) {
+                    color = state.val
+                });
+                adapter.getState('alarms.' +  channel.common.name + '.effective', function (err, state) {
+                    effectiveDate = state.val
+                    effectiveString = state.val
+                    
+                });
+                adapter.getState('alarms.' +  channel.common.name + '.expires', function (err, state) {
+                    expiresDate = state.val;
+                    expiresString = state.val;
+                    adapter.log.debug('Date expires: ' + expiresString);
+                    const dateOptions = { weekday: "long"};
+    
+                    adapter.log.debug(getDay(expiresDate));
+                });
+                htmlCode += '<tr><td style="width: 20%; border-style: none;">'
+
+
+                htmlCode += '</td>'
+
+                htmlCode += '<td style="width: 80%; border-style: none;">'
+
+                htmlCode += '<h2>' + eventType + '</h2>'
+
+                htmlCode += '<p>' + effectiveDate + ' - ' + expiresDate + '</p>'
+
+
+                htmlCode += '</td></tr>'
+            }
+        }
+    });
 
 
 
@@ -250,12 +269,13 @@ async function createHTMLWidget(){
                 }
             });   
             */
-        }
-      });
+       
 
+    if (htmlCode){
+        htmlCode += '</tbody></table>'
+    }
 
-
-
+    
     await Promise.all([
         adapter.setStateAsync({device: '' , channel: '',state: 'htmlToday'}, {val: htmlCode, ack: true})
     ])
