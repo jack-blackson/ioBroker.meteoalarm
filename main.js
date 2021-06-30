@@ -79,6 +79,11 @@ async function getData(){
         // request setup
         countryConfig = adapter.config.country
         regionConfig = adapter.config.region
+
+        if (regionConfig  == "0"|| regionConfig  == ""){
+            adapter.log.error('Please select a valid region in setup!')
+            adapter.terminate ? adapter.terminate(0) : process.exit(0);
+        }
         var urlAtom = getCountryLink(countryConfig)
 
         adapter.log.debug('0: Setup found: country ' + countryConfig + ' and region ' + regionConfig)
@@ -156,21 +161,8 @@ async function getData(){
                 }
             });
 
-
-            /*
-            parseString(xmlDetails,{explicitArray: false})
-            .then(function (result) {
-                jsonResult = result  
-                type =  result.alert.info[0].parameter[1].value   
-            })
-            .catch(function (err) {
-                adapter.log.error("Fehler: " + err);
-                adapter.terminate ? adapter.terminate(0) : process.exit(0);                
-            });
-            */
             if (jsonResult){
-                //var type = jsonResult.alert.info[0].parameter[1].value
-                adapter.log.debug(' Type of URL ' + countURL + ' :' + type);
+                //adapter.log.debug(' Type of URL ' + countURL + ' :' + type);
                 if (typeArray.indexOf(type) > -1) {
                     adapter.log.debug('8: Alarm States ignored for Alarm ' + countURL)
                     adapter.log.debug('9: Processed Details for Alarm ' + countURL)
@@ -961,6 +953,7 @@ function getColor(level){
             }
 }
 
+/*
 function getFilters(){
     DescFilter1 = '';
     DescFilter2 = '';
@@ -1100,6 +1093,7 @@ function getFilters(){
            break;
        }
 }
+*/
 
 function getCountryLink(country){
     var link = ''
