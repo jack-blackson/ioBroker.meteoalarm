@@ -201,12 +201,26 @@ async function getData(){
 async function createHTMLWidget(){
     var htmlCode = ""
 
+    adapter.getChannelsOf('alarms', function (err, result) {
+        for (const channel of result) {
+            adapter.log.debug('Found alarm: ' + channel.common.name)
+            /*
+            adapter.getObject('setup.' + channel.common.name, function (err, state) {
+                //check if setup is still existing
+                if(state === null && typeof state === "object") {
+                    //if not - delete results
+                    deleteCountdownResults(channel.common.name)
+                }
+            });   
+            */
+        }
+      });
 
 
 
 
 
-    adapter.setState({device: '' , channel: '',state: 'htmlToday'}, {val: htmllong, ack: true});
+    adapter.setState({device: '' , channel: '',state: 'htmlToday'}, {val: htmlCode, ack: true});
 
 }
 
