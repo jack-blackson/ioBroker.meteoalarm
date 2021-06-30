@@ -133,6 +133,7 @@ async function getData(){
             const getJSON1 = bent('string')
             let xmlDetails = await getJSON(URL)
             adapter.log.debug('7: Received Details')
+            adapter.log.debug('7: Received Details1' + xmlDetails)
 
             parseString(xmlDetails, {
                 //mergeAttrs: true
