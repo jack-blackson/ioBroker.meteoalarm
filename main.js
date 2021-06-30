@@ -153,12 +153,16 @@ async function getData(){
                         countEntries += 1
 
                         typeArray.push(type)
-                        //var  created = await createAlarms(countEntries)
-                        //adapter.log.debug('8: Alarm States created for Alarm ' + countEntries)
+                        //const  created = await createAlarms(countEntries)
+                        adapter.log.debug('8: Alarm States created for Alarm ' + countEntries)
 
                         //created.then(processDetails())
+                        //if (created){
 
-                        const promises = await processDetails(result,countEntries)
+                        //}
+                        const AlarmCreated = await Promise.all([createAlarms(countEntries), processDetails(result,countEntries)]);
+
+                        //const promises = await processDetails(result,countEntries)
                         adapter.log.debug('9: Processed Details')
                         return
                     }
@@ -416,147 +420,6 @@ async function processDetails(content, countInt){
     }
 
     const promises = await Promise.all([
-        adapter.setObjectNotExistsAsync('alarms.' + countInt, {
-            common: {
-                name: 'Alarm'
-            },
-            type: 'channel',
-            'native' : {}
-        }),
-
-        adapter.setObjectNotExistsAsync('alarms.' + countInt + '.event', {
-            common: {
-                name: 'Event',
-                type: 'string',
-				role: 'value',
-				read: true,
-				write: true
-            },
-            type: 'state',
-            'native' : {}
-        }),
-        adapter.setObjectNotExistsAsync('alarms.' + countInt + '.color', {
-            common: {
-                name: 'Alarm color',
-                type: 'string',
-				role: 'value',
-				read: true,
-				write: true
-            },
-            type: 'state',
-            'native' : {}
-        }),
-        adapter.setObjectNotExistsAsync('alarms.' + countInt + '.icon', {
-            common: {
-                name: 'Alarm icon',
-                type: 'string',
-				role: 'value',
-				read: true,
-				write: true
-            },
-            type: 'state',
-            'native' : {}
-        }),
-        adapter.setObjectNotExistsAsync('alarms.' + countInt + '.level', {
-            common: {
-                name: 'Alarm level',
-                type: 'string',
-				role: 'value',
-				read: true,
-				write: true
-            },
-            type: 'state',
-            'native' : {}
-        }),
-        adapter.setObjectNotExistsAsync('alarms.' + countInt + '.levelText', {
-            common: {
-                name: 'Alarm level text',
-                type: 'string',
-				role: 'value',
-				read: true,
-				write: true
-            },
-            type: 'state',
-            'native' : {}
-        }),
-        adapter.setObjectNotExistsAsync('alarms.' + countInt + '.type', {
-            common: {
-                name: 'Alarm icon',
-                type: 'string',
-				role: 'value',
-				read: true,
-				write: true
-            },
-            type: 'state',
-            'native' : {}
-        }),
-        adapter.setObjectNotExistsAsync('alarms.' + countInt + '.typeText', {
-            common: {
-                name: 'Alarm type text',
-                type: 'string',
-				role: 'value',
-				read: true,
-				write: true
-            },
-            type: 'state',
-            'native' : {}
-        }),
-        adapter.setObjectNotExistsAsync('alarms.' + countInt + '.description', {
-            common: {
-                name: 'Description',
-                type: 'string',
-				role: 'value',
-				read: true,
-				write: true
-            },
-            type: 'state',
-            'native' : {}
-        }),
-        adapter.setObjectNotExistsAsync('alarms.' + countInt + '.sender', {
-            common: {
-                name: 'Sender of the Alarm',
-                type: 'string',
-				role: 'value',
-				read: true,
-				write: true
-            },
-            type: 'state',
-            'native' : {}
-        }),
-        adapter.setObjectNotExistsAsync('alarms.' + countInt + '.effective', {
-            common: {
-                name: 'Date Alarm gets effective',
-                type: 'string',
-				role: 'value.datetime',
-				read: true,
-				write: true
-            },
-            type: 'state',
-            'native' : {}
-        }),
-        adapter.setObjectNotExistsAsync('alarms.' + countInt + '.expires', {
-            common: {
-                name: 'Date Alarm expires',
-                type: 'string',
-				//role: 'value.datetime',
-                role: 'value',
-				read: true,
-				write: true
-            },
-            type: 'state',
-            'native' : {}
-        }),
-        adapter.setObjectNotExistsAsync('alarms.' + countInt + '.link', {
-            common: {
-                name: 'Link',
-                type: 'string',
-				role: 'value',
-				read: true,
-				write: true
-            },
-            type: 'state',
-            'native' : {}
-        }),
 
         adapter.setStateAsync({ state: 'alarms.' + countInt + '.event'}, {val:  content.alert.info[0].event, ack: true}),
         adapter.setStateAsync({ state: 'alarms.' + countInt + '.description'}, {val: content.alert.info[0].description, ack: true}),
