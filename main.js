@@ -142,7 +142,9 @@ async function getData(){
                         var type = result.alert.info[0].parameter[1].value
                         adapter.log.debug(' Type: ' + type);
                         if (typeArray.indexOf(type) > -1) {
+                            adapter.log.debug('8: Alarm States ignored for Alarm ' + countEntries)
                             return
+
                         } else {
                             //Type not yet in the array
                             countEntries += 1
