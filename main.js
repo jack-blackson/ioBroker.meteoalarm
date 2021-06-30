@@ -97,7 +97,7 @@ async function getData(){
             } else {
                 adapter.log.debug('4: Process Atom')
 
-                adapter.log.debug('Received Atom data for ' + JSON.stringify(content.feed.id))
+                adapter.log.debug('Received Atom data for ' + JSON.stringify(result.feed.id))
 
                 var newdate = moment(new Date()).local().format('DD.MM.YYYY HH:mm')
             
