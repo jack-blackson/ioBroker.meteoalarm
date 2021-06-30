@@ -13,6 +13,8 @@ const utils = require('@iobroker/adapter-core');
 const request = require('request');
 const moment = require('moment');
 var parseString = require('xml2js').parseString;
+var parseStringPromise = require('xml2js').parseStringPromise;
+
 const i18nHelper = require(`${__dirname}/lib/i18nHelper`);
 const bent = require("bent");
 
@@ -124,51 +126,59 @@ async function getData(){
         
         // continue now to request details
         var countEntries = 0
+        var jsonResult;
+
         adapter.log.debug('5: Processed Atom')
         for (const URL of detailsURL){ 
             //console.log(element) 
-
             adapter.log.debug('6: Request Details from ' + URL)
 
             const getJSON1 = bent('string')
             let xmlDetails = await getJSON(URL)
             adapter.log.debug('7: Received Details')
-
+            /*
             parseString(xmlDetails, {
                 explicitArray: false
             }, 
     
-            async function (err, result) {
-                if (err) {
-                    adapter.log.error("Fehler: " + err);
-                    adapter.terminate ? adapter.terminate(0) : process.exit(0);
-                } else {
-
-                    var type = result.alert.info[0].parameter[1].value
-                    adapter.log.debug(' Type: ' + type);
-                    if (typeArray.indexOf(type) > -1) {
-                        return
+                function (err, result) {
+                    if (err) {
+                        adapter.log.error("Fehler: " + err);
+                        adapter.terminate ? adapter.terminate(0) : process.exit(0);
                     } else {
-                        //Type not yet in the array
-                        countEntries += 1
-
-                        typeArray.push(type)
-                        //const  created = await createAlarms(countEntries)
-                        adapter.log.debug('8: Alarm States created for Alarm ' + countEntries)
-
-                        //created.then(processDetails())
-                        //if (created){
-
-                        //}
-                        const AlarmCreated = await Promise.all([createAlarms(countEntries), processDetails(result,countEntries)]);
-
-                        //const promises = await processDetails(result,countEntries)
-                        adapter.log.debug('9: Processed Details')
-                        return
-                    }
-
+                         jsonResult = result;
                 }
             });
+            var type = jsonResult.alert.info[0].parameter[1].value
+            adapter.log.debug(' Type: ' + type);
+            if (typeArray.indexOf(type) > -1) {
+                return
+            } else {
+                //Type not yet in the array
+                countEntries += 1
+
+                typeArray.push(type)
+                const  created = await createAlarms(countEntries)
+                adapter.log.debug('8: Alarm States created for Alarm ' + countEntries)
+
+                //created.then(processDetails())
+                //if (created){
+
+                //}
+                //const AlarmCreated = await Promise.all([createAlarms(countEntries), processDetails(result,countEntries)]);
+
+                const promises = await processDetails(jsonResult,countEntries)
+                adapter.log.debug('9: Processed Details for Alarm ' + countEntries)
+            */
+            parseStringPromise(xmlDetails).then(function (result) {
+                        var type = result.alert.info[0].parameter[1].value
+                        adapter.log.debug(' Type: ' + type);
+                })
+            .catch(function (err) {
+                adapter.log.error("Fehler: " + err);
+                adapter.terminate ? adapter.terminate(0) : process.exit(0);                });
+                
+            }
             
         };
 
