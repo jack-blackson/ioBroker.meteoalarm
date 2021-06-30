@@ -275,7 +275,7 @@ async function createHTMLWidget(){
         htmlCode += '</tbody></table>'
     }
 
-    adapter.log.debug(htmlCode)
+    adapter.log.debug('widget: ' + htmlCode)
     await Promise.all([
         adapter.setStateAsync({device: '' , channel: '',state: 'htmlToday'}, {val: htmlCode, ack: true})
     ])
