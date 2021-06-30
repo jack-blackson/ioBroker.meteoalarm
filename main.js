@@ -204,6 +204,11 @@ async function createHTMLWidget(){
     adapter.getChannelsOf('alarms', function (err, result) {
         for (const channel of result) {
             adapter.log.debug('Found alarm: ' + channel.common.name)
+            adapter.getState('alarms.' +  channel.common.name + '.event', function (err, state) {
+                adapter.log.debug('Event Type: ' + state.val)
+
+                //color = state.val;
+            });
             /*
             adapter.getObject('setup.' + channel.common.name, function (err, state) {
                 //check if setup is still existing
@@ -502,9 +507,9 @@ async function createAlarms(AlarmNumber){
             'native' : {}
         }),
 
-        adapter.setObjectNotExistsAsync('alarms.' + AlarmNumber, {
+        adapter.setObjectNotExistsAsync('alarms.' + 'Alarm ' + AlarmNumber, {
             common: {
-                name: 'Alarm'
+                name: 'Alarm ' + AlarmNumber
             },
             type: 'channel',
             'native' : {}
