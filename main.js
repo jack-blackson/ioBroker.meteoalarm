@@ -79,7 +79,7 @@ async function getData(){
         adapter.log.debug('2: Before Request Atom')
 
         //await requestAtom()
-        const getJSON = bent('json')
+        const getJSON = bent('buffer')
         let obj = await getJSON('http://https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-austria.com/json.api')
 
 
