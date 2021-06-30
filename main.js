@@ -122,9 +122,19 @@ async function getData(){
             }
         });
         
-     
-        adapter.log.debug('5: Processed Atom')
         // continue now to request details
+
+        adapter.log.debug('5: Processed Atom')
+        for (const URL of detailsURL)        { 
+            //console.log(element) 
+            adapter.log.debug('6: Request Details from ' + URL)
+
+            const getJSON1 = bent('json')
+            let xmlAtom1 = await getJSON(URL)
+            adapter.log.debug('7: Received Details')
+
+        });
+
 
         adapter.log.debug('11: After Request Atom')
         
@@ -132,6 +142,7 @@ async function getData(){
 
 }
 
+/*
 async function requestAtom(){
     countryConfig = adapter.config.country
     regionConfig = adapter.config.region
@@ -246,7 +257,7 @@ async function requestAtom(){
     }
     
 }
-
+*/
   
 async function requestDetails(detailsLink){
 
