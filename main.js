@@ -130,11 +130,11 @@ async function getData(){
 
             adapter.log.debug('6: Request Details from ' + URL)
 
-            const getJSON1 = bent('json')
-            let xmlAtom1 = await getJSON(URL)
+            const getJSON1 = bent('string')
+            let xmlDetails = await getJSON(URL)
             adapter.log.debug('7: Received Details')
 
-            var type = xmlAtom1.alert.info[0].parameter[1].value
+            var type = xmlDetails.alert.info[0].parameter[1].value
             if (typeArray.indexOf(type) > -1) {
                 return
             } else {
@@ -147,7 +147,7 @@ async function getData(){
 
                 adapter.log.debug('8: Alarm States created')
                 adapter.log.debug('9: Start Process Details')
-                const promises = await processDetails(xmlAtom1,countEntries)
+                const promises = await processDetails(xmlDetails,countEntries)
                 adapter.log.debug('10: Processed Details')
             }
 
