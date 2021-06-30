@@ -263,7 +263,7 @@ async function createHTMLWidget(){
 
 function getDay(dateTimeString)
 {
-   return new Date(dateTimeString).toLocaleDateString('en-US', { weekday: "long" })
+   return new Date(dateTimeString).toLocaleDateString(lang, { weekday: "long" })
       
     //return date.toLocaleDateString( date.getTimezoneOffset(), options );
 }
