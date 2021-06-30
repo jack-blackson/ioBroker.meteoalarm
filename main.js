@@ -210,9 +210,17 @@ async function getData(){
                 htmlCode += '<table style="border-collapse: collapse; width: 100%;" border="1"><tbody>'
                 for (const channelLoop of channelNames) {
                     //adapter.log.debug('Found alarm: ' + channel.common.name)
-                    const promises = await loadData(channelLoop)
+                    //const promises = await loadData(channelLoop)
                     adapter.log.debug('Loaded data for ' + channelLoop)
-    
+
+                    var path = 'alarms.' + channelLoop
+
+                    let eventType = await adapter.getStateAsync(path + '.event');
+                    let description = await adapter.getStateAsync(path + '.description');
+                    let icon = await adapter.getStateAsync(path + '.icon');
+                    let color = await adapter.getStateAsync(path + '.color');
+                    let effectiveDate = await adapter.getStateAsync(path + '.effective');
+                    let expiresDate = await adapter.getStateAsync(path + '.expires');
                     
                     htmlCode += '<tr><td style="width: 20%; border-style: none;">'
     
