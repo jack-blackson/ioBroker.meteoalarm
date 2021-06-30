@@ -27,7 +27,7 @@ var countEntries = 0;
 var typeArray = [];
 var detailsURL = []
 
-var eventType = ""
+var event = ""
 var description = ""
 var icon = ""
 var color = ""
@@ -210,18 +210,16 @@ async function getData(){
 
                     var path = 'alarms.' + channelLoop
 
-                    let done = await adapter.getStateAsync(path + '.event',function (err, state){
-                        eventType = state.val
-                    });
-                    let description = await adapter.getStateAsync(path + '.description');
-                    let icon = await adapter.getStateAsync(path + '.icon');
-                    let color = await adapter.getStateAsync(path + '.color');
-                    let effectiveDate = await adapter.getStateAsync(path + '.effective');
-                    let expiresDate = await adapter.getStateAsync(path + '.expires');
+                    event = await adapter.getStateAsync(path + '.event')
+                    description = await adapter.getStateAsync(path + '.description');
+                    icon = await adapter.getStateAsync(path + '.icon');
+                    color = await adapter.getStateAsync(path + '.color');
+                    effectiveDate = await adapter.getStateAsync(path + '.effective');
+                    expiresDate = await adapter.getStateAsync(path + '.expires');
                     
                     adapter.log.debug('Path: ' + path)
 
-                    adapter.log.debug('Event Type: ' + eventType)
+                    adapter.log.debug('Event Type: ' + event)
 
                     htmlCode += '<tr><td style="width: 20%; border-style: none;">'
     
