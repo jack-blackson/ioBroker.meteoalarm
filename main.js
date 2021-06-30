@@ -145,6 +145,7 @@ async function getData(){
                 } else {
 
                     var type = result.alert.info[0].parameter[1].value
+                    adapter.log.debug(' Type: ' + type);
                     if (typeArray.indexOf(type) > -1) {
                         return
                     } else {
@@ -154,10 +155,9 @@ async function getData(){
                         typeArray.push(type)
                         const created = await createAlarms(countEntries)
 
-                        adapter.log.debug('8: Alarm States created')
-                        adapter.log.debug('9: Start Process Details')
+                        adapter.log.debug('8: Alarm States created for Alarm ' + countEntries)
                         const promises = await processDetails(result,countEntries)
-                        adapter.log.debug('10: Processed Details')
+                        adapter.log.debug('9: Processed Details')
                         return
                     }
 
@@ -166,7 +166,7 @@ async function getData(){
             
         };
 
-        adapter.log.debug('11: After Request Atom')
+        adapter.log.debug('10: All Done')
         
         adapter.terminate ? adapter.terminate(0) : process.exit(0);
 
