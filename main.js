@@ -77,17 +77,19 @@ async function getData(){
         // request setup
         countryConfig = adapter.config.country
         regionConfig = adapter.config.region
-        adapter.log.debug('0: Requesting atom data for country ' + countryConfig + ' and region ' + regionConfig)
+        var urlAtom = getCountryLink(countryConfig)
+
+        adapter.log.debug('0: Setup found: country ' + countryConfig + ' and region ' + regionConfig)
 
         // Delete old alarms
         adapter.log.debug('1: Delete Alarms')
 
         const deleted =  deleteAllAlarms();
 
-        adapter.log.debug('2: Request Atom')
+        adapter.log.debug('2: Request Atom from ' + urlAtom )
 
         const getJSON = bent('string')
-        let xmlAtom = await getJSON('https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-austria')
+        let xmlAtom = await getJSON(urlAtom)
         adapter.log.debug('3: Received Atom')
 
         
