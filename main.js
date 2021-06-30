@@ -153,7 +153,7 @@ async function getData(){
             });
             if (jsonResult){
                 //var type = jsonResult.alert.info[0].parameter[1].value
-                adapter.log.debug(' Type: ' + type);
+                adapter.log.debug(' Type of URL ' + countURL + ' :' + type);
                 if (typeArray.indexOf(type) > -1) {
                     adapter.log.debug('8: Alarm States ignored for Alarm ' + countURL)
 
