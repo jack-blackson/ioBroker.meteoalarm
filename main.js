@@ -256,6 +256,8 @@ async function createHTMLWidget(){
                 htmlCode += '</td></tr>'
             }
         }
+        adapter.log.debug('widget: ' + htmlCode)
+
     });
 
 
@@ -275,7 +277,6 @@ async function createHTMLWidget(){
         htmlCode += '</tbody></table>'
     }
 
-    adapter.log.debug('widget: ' + htmlCode)
     await Promise.all([
         adapter.setStateAsync({device: '' , channel: '',state: 'htmlToday'}, {val: htmlCode, ack: true})
     ])
