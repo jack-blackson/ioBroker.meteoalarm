@@ -74,13 +74,16 @@ function main() {
 
 async function getData(){
     adapter.log.debug('1: Before Delete Alarms')
-        await deleteAllAlarms();
+        const deleted =  deleteAllAlarms();
 
         adapter.log.debug('2: Before Request Atom')
 
         //await requestAtom()
         const getJSON = bent('json')
         let obj = await getJSON('http://https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-austria.com/json.api')
+
+
+        /*
         parseString(obj, {
             //mergeAttrs: true
         }, 
@@ -137,7 +140,7 @@ async function getData(){
 
 
         adapter.log.debug('11: After Request Atom')
-        
+        */
         adapter.terminate ? adapter.terminate(0) : process.exit(0);
 
 }
