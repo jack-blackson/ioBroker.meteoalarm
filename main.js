@@ -147,7 +147,7 @@ async function getData(){
 
                 adapter.log.debug('8: Alarm States created')
                 adapter.log.debug('9: Start Process Details')
-                const promises = processDetails(xmlAtom1,countEntries)
+                const promises = await processDetails(xmlAtom1,countEntries)
                 adapter.log.debug('10: Processed Details')
 
         };
