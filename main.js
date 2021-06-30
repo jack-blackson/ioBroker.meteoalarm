@@ -125,7 +125,7 @@ async function getData(){
         // continue now to request details
 
         adapter.log.debug('5: Processed Atom')
-        for (const URL of detailsURL)        { 
+        for (const URL of detailsURL){ 
             //console.log(element) 
             adapter.log.debug('6: Request Details from ' + URL)
 
@@ -133,7 +133,7 @@ async function getData(){
             let xmlAtom1 = await getJSON(URL)
             adapter.log.debug('7: Received Details')
 
-        });
+        };
 
 
         adapter.log.debug('11: After Request Atom')
