@@ -142,6 +142,22 @@ async function getData(){
             let xmlDetails = await getJSON(URL)
             adapter.log.debug('7: Received Details for URL ' + countURL)
 
+            parseString(xmlDetails, {
+                explicitArray: false
+            }, 
+    
+            function (err, result) {
+                if (err) {
+                    adapter.log.error("Fehler: " + err);
+                    adapter.terminate ? adapter.terminate(0) : process.exit(0);
+                } else {
+                    jsonResult = result  
+                    type =  result.alert.info[0].parameter[1].value
+                }
+            });
+
+
+            /*
             parseString(xmlDetails,{explicitArray: false})
             .then(function (result) {
                 jsonResult = result  
@@ -151,6 +167,7 @@ async function getData(){
                 adapter.log.error("Fehler: " + err);
                 adapter.terminate ? adapter.terminate(0) : process.exit(0);                
             });
+            */
             if (jsonResult){
                 //var type = jsonResult.alert.info[0].parameter[1].value
                 adapter.log.debug(' Type of URL ' + countURL + ' :' + type);
