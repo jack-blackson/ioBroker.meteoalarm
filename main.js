@@ -79,9 +79,10 @@ async function getData(){
         adapter.log.debug('2: Before Request Atom')
 
         //await requestAtom()
-        const getJSON = bent('buffer')
-        let obj = await getJSON('http://https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-austria.com/json.api')
-
+        const getJSON = bent('string')
+        let obj = await getJSON('http://api.daswetter.com/index.php?api_lang=de&localidad=194681&affiliate_id=fa7kosy175bc&v=2.0&h=1')
+        const getJSON1 = bent('string')
+        let obj1 = await getJSON('https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-austria')
 
         /*
         parseString(obj, {
