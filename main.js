@@ -76,6 +76,11 @@ async function getData(){
     adapter.log.debug('1: Before Delete Alarms')
         const deleted =  deleteAllAlarms();
 
+        countryConfig = adapter.config.country
+        regionConfig = adapter.config.region
+    
+        adapter.log.debug('Requesting atom data for country ' + countryConfig + ' and region ' + regionConfig)
+
         adapter.log.debug('2: Before Request Atom')
 
         const getJSON = bent('string')
