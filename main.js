@@ -203,13 +203,15 @@ async function getData(){
             //const widget = await createHTMLWidget()
             adapter.log.debug('10: Creating HTML Widget')
 
+
+            adapter.log.debug('Adapter names: ' + channelNames)
             //createHTMLWidget()
             if (channelNames.length >= 1){
                 htmlCode += '<table style="border-collapse: collapse; width: 100%;" border="1"><tbody>'
                 for (const channel of channelNames) {
                     //adapter.log.debug('Found alarm: ' + channel.common.name)
                     const promises = await loadData(channel)
-                    
+                    adapter.log.debug('Loaded data for ' + channel)
     
                     
                     htmlCode += '<tr><td style="width: 20%; border-style: none;">'
@@ -252,6 +254,7 @@ async function getData(){
 
 }
 
+/*
 function createHTMLWidget(){
     
 
@@ -289,7 +292,7 @@ function createHTMLWidget(){
 
 
 
-            /*
+            
             adapter.getObject('setup.' + channel.common.name, function (err, state) {
                 //check if setup is still existing
                 if(state === null && typeof state === "object") {
@@ -297,11 +300,12 @@ function createHTMLWidget(){
                     deleteCountdownResults(channel.common.name)
                 }
             });   
-            */
+            
        
 
        
 }
+*/
 
 
 async function loadData(channelName){
