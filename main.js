@@ -160,8 +160,8 @@ async function getData(){
                             const created = await createAlarms(countEntries)
                             adapter.log.debug('8: Alarm States created for Alarm ' + countEntries)
             
-                            //const promises = await processDetails(result,countEntries)
-                            //adapter.log.debug('9: Processed Details for Alarm ' + countEntries)
+                            const promises = await processDetails(jsonResult,countEntries)
+                            adapter.log.debug('9: Processed Details for Alarm ' + countEntries)
                         }
         
         }
