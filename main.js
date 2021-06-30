@@ -64,18 +64,25 @@ function main() {
         else{
             lang = systemConfig.common.language
         }
-        adapter.log.debug('1: Before Delete Alarms')
-        const deleted = deleteAllAlarms();
+
+        getData()
+        
+
+    }) 
+}
+
+async function getData(){
+    adapter.log.debug('1: Before Delete Alarms')
+        await deleteAllAlarms();
 
         adapter.log.debug('2: Before Request Atom')
 
-        requestAtom()
+        await requestAtom()
         
         adapter.log.debug('11: After Request Atom')
         
         adapter.terminate ? adapter.terminate(0) : process.exit(0);
 
-    }) 
 }
 
 async function requestAtom(){
