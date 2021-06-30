@@ -73,24 +73,22 @@ function main() {
 }
 
 async function getData(){
-    adapter.log.debug('1: Before Delete Alarms')
 
         // request setup
         countryConfig = adapter.config.country
         regionConfig = adapter.config.region
+        adapter.log.debug('0: Requesting atom data for country ' + countryConfig + ' and region ' + regionConfig)
 
         // Delete old alarms
+        adapter.log.debug('1: Delete Alarms')
+
         const deleted =  deleteAllAlarms();
 
-
-    
-        adapter.log.debug('Requesting atom data for country ' + countryConfig + ' and region ' + regionConfig)
-
-        adapter.log.debug('2: Before Request Atom')
+        adapter.log.debug('2: Request Atom')
 
         const getJSON = bent('string')
         let xmlAtom = await getJSON('https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-austria')
-        adapter.log.debug('3: meteoalarm done')
+        adapter.log.debug('3: Received Atom')
 
         
         parseString(xmlAtom, {
@@ -103,7 +101,7 @@ async function getData(){
                 adapter.terminate ? adapter.terminate(0) : process.exit(0);
             } else {
                 adapter.log.debug('4: Process Atom')
-                adapter.log.debug('Received Atom data for ' + JSON.stringify(result.feed.id))
+                //adapter.log.debug('Received Atom data for ' + JSON.stringify(result.feed.id))
                 var newdate = moment(new Date()).local().format('DD.MM.YYYY HH:mm')
                 adapter.setState({device: '' , channel: '',state: 'lastUpdate'}, {val: newdate, ack: true});
             
@@ -119,7 +117,6 @@ async function getData(){
                         i += 1;
                     }
                 });
-                adapter.log.debug('5: Processed Atom')
             }
         });
         
