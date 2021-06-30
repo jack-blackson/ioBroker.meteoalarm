@@ -219,13 +219,6 @@ async function getData(){
                     let effectiveDate = await adapter.getStateAsync(path + '.effective');
                     let expiresDate = await adapter.getStateAsync(path + '.expires');
                     
-                    adapter.log.debug('Path: ' + path)
-
-                    adapter.log.debug('Event Type: ' + event)
-                    if (event.val){
-                        adapter.log.debug('Event Type1: ' + event.val)
-
-                    }
 
                     htmlCode += '<tr><td style="width: 20%; border-style: none;">'
     
@@ -234,9 +227,9 @@ async function getData(){
     
                     htmlCode += '<td style="width: 80%; border-style: none;">'
     
-                    htmlCode += '<h2>' + event + '</h2>'
+                    htmlCode += '<h2>' + event.val + '</h2>'
     
-                    htmlCode += '<p>' + effectiveDate + ' - ' + expiresDate + '</p>'
+                    htmlCode += '<p>' + effectiveDate.val + ' - ' + expiresDate.val + '</p>'
     
     
                     htmlCode += '</td></tr>'
