@@ -210,14 +210,17 @@ async function getData(){
 
                     var path = 'alarms.' + channelLoop
 
-                    let eventType = await adapter.getStateAsync(path + '.event.val');
-                    eventType = eventType.val 
+                    let done = await adapter.getStateAsync(path + '.event.val',function (err, state){
+                        eventType = state.val
+                    });
                     let description = await adapter.getStateAsync(path + '.description');
                     let icon = await adapter.getStateAsync(path + '.icon');
                     let color = await adapter.getStateAsync(path + '.color');
                     let effectiveDate = await adapter.getStateAsync(path + '.effective');
                     let expiresDate = await adapter.getStateAsync(path + '.expires');
                     
+                    adapter.log.debug('Path: ' + path)
+
                     adapter.log.debug('Event Type: ' + eventType)
 
                     htmlCode += '<tr><td style="width: 20%; border-style: none;">'
