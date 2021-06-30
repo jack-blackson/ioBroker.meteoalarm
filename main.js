@@ -208,10 +208,10 @@ async function getData(){
             //createHTMLWidget()
             if (channelNames.length >= 1){
                 htmlCode += '<table style="border-collapse: collapse; width: 100%;" border="1"><tbody>'
-                for (const channel of channelNames) {
+                for (const channelLoop of channelNames) {
                     //adapter.log.debug('Found alarm: ' + channel.common.name)
-                    const promises = await loadData(channel)
-                    adapter.log.debug('Loaded data for ' + channel)
+                    const promises = await loadData(channelLoop)
+                    adapter.log.debug('Loaded data for ' + channelLoop)
     
                     
                     htmlCode += '<tr><td style="width: 20%; border-style: none;">'
@@ -332,10 +332,10 @@ async function loadData(channelName){
         adapter.getStateAsync(path + '.expires', function (err, state) {
             expiresDate = state.val;
             expiresString = state.val;
-            adapter.log.debug('Date expires: ' + expiresString);
-            const dateOptions = { weekday: "long"};
+            //adapter.log.debug('Date expires: ' + expiresString);
+            //const dateOptions = { weekday: "long"};
 
-            adapter.log.debug(getDay(expiresDate));
+            //adapter.log.debug(getDay(expiresDate));
         })
     ]);
 
