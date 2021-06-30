@@ -200,15 +200,39 @@ async function getData(){
 
 async function createHTMLWidget(){
     var htmlCode = ""
+    var eventType = ""
+    var description = ""
+    var icon = ""
+    var color = ""
+    var effectiveDate = new Date();
+    var expiresDate = new Date();
 
     adapter.getChannelsOf('alarms', function (err, result) {
         for (const channel of result) {
-            adapter.log.debug('Found alarm: ' + channel.common.name)
+            //adapter.log.debug('Found alarm: ' + channel.common.name)
             adapter.getState('alarms.' +  channel.common.name + '.event', function (err, state) {
                 adapter.log.debug('Event Type: ' + state.val)
-
-                //color = state.val;
+                eventType = state.val
             });
+            adapter.getState('alarms.' +  channel.common.name + '.description', function (err, state) {
+                description = state.val
+            });
+            adapter.getState('alarms.' +  channel.common.name + '.icon', function (err, state) {
+                icon = state.val
+            });
+            adapter.getState('alarms.' +  channel.common.name + '.color', function (err, state) {
+                color = state.val
+            });
+            adapter.getState('alarms.' +  channel.common.name + '.effective', function (err, state) {
+                effectiveDate = state.val
+            });
+            adapter.getState('alarms.' +  channel.common.name + '.expires', function (err, state) {
+                expiresDate = state.val;
+                adapter.log.debug('Date exporires: ' + expiresDate)
+            });
+
+
+
             /*
             adapter.getObject('setup.' + channel.common.name, function (err, state) {
                 //check if setup is still existing
