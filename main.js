@@ -27,9 +27,21 @@ var countEntries = 0;
 var typeArray = [];
 var detailsURL = []
 
+var eventType = ""
+var description = ""
+var icon = ""
+var color = ""
+var effectiveDate = new Date();
+var expiresDate = new Date();
+var effectiveString = "";
+var expiresString = "";
+
 
 let adapter;
 let lang;
+
+var htmlCode = ""
+
 
 //var Interval
 
@@ -186,8 +198,17 @@ async function getData(){
                             
             
             }
-            const widget = await createHTMLWidget()
-            adapter.log.debug('10: All Done')
+            //const widget = await createHTMLWidget()
+            adapter.log.debug('10: Creating HTML Widget')
+
+            createHTMLWidget()
+            adapter.log.debug('11: Set State for Widget')
+
+            await Promise.all([
+                adapter.setStateAsync({device: '' , channel: '',state: 'htmlToday'}, {val: htmlCode, ack: true})
+            ])
+
+            adapter.log.debug('12: All Done')
             
             adapter.terminate ? adapter.terminate(0) : process.exit(0);
 
@@ -198,49 +219,19 @@ async function getData(){
 
 }
 
-async function createHTMLWidget(){
-    var htmlCode = ""
-    var eventType = ""
-    var description = ""
-    var icon = ""
-    var color = ""
-    var effectiveDate = new Date();
-    var expiresDate = new Date();
-    var effectiveString = "";
-    var expiresString = "";
+function createHTMLWidget(){
+    
 
 
-    adapter.getChannelsOf('alarms', function (err, result) {
+    adapter.getChannelsOf('alarms', async function (err, result) {
         if (result.length >= 1){
             htmlCode += '<table style="border-collapse: collapse; width: 100%;" border="1"><tbody>'
             for (const channel of result) {
                 //adapter.log.debug('Found alarm: ' + channel.common.name)
-                adapter.getState('alarms.' +  channel.common.name + '.event', function (err, state) {
-                    adapter.log.debug('Event Type: ' + state.val)
-                    eventType = state.val
-                });
-                adapter.getState('alarms.' +  channel.common.name + '.description', function (err, state) {
-                    description = state.val
-                });
-                adapter.getState('alarms.' +  channel.common.name + '.icon', function (err, state) {
-                    icon = state.val
-                });
-                adapter.getState('alarms.' +  channel.common.name + '.color', function (err, state) {
-                    color = state.val
-                });
-                adapter.getState('alarms.' +  channel.common.name + '.effective', function (err, state) {
-                    effectiveDate = state.val
-                    effectiveString = state.val
-                    
-                });
-                adapter.getState('alarms.' +  channel.common.name + '.expires', function (err, state) {
-                    expiresDate = state.val;
-                    expiresString = state.val;
-                    adapter.log.debug('Date expires: ' + expiresString);
-                    const dateOptions = { weekday: "long"};
-    
-                    adapter.log.debug(getDay(expiresDate));
-                });
+                const promises = await loadData(channel.common.name)
+                
+
+                
                 htmlCode += '<tr><td style="width: 20%; border-style: none;">'
 
 
@@ -257,7 +248,7 @@ async function createHTMLWidget(){
             }
         }
         adapter.log.debug('widget: ' + htmlCode)
-
+        //return Promise.resolve();
     });
 
 
@@ -275,11 +266,42 @@ async function createHTMLWidget(){
 
     if (htmlCode){
         htmlCode += '</tbody></table>'
-    }
+    }    
+}
 
-    await Promise.all([
-        adapter.setStateAsync({device: '' , channel: '',state: 'htmlToday'}, {val: htmlCode, ack: true})
-    ])
+
+async function loadData(channelName){
+    var path = 'alarms.' + channelName
+    const promises = await Promise.all([
+        adapter.getStateAsync(path + '.event', function (err, state) {
+            adapter.log.debug('Event Type: ' + state.val)
+            eventType = state.val
+        }),
+        adapter.getStateAsync(path + '.description', function (err, state) {
+            description = state.val
+        }),
+        adapter.getStateAsync(path + '.icon', function (err, state) {
+            icon = state.val
+        }),
+        adapter.getStateAsync(path + '.color', function (err, state) {
+            color = state.val
+        }),
+        adapter.getStateAsync(path + '.effective', function (err, state) {
+            effectiveDate = state.val
+            effectiveString = state.val
+            
+        }),
+        adapter.getStateAsync(path + '.expires', function (err, state) {
+            expiresDate = state.val;
+            expiresString = state.val;
+            adapter.log.debug('Date expires: ' + expiresString);
+            const dateOptions = { weekday: "long"};
+
+            adapter.log.debug(getDay(expiresDate));
+        })
+    ]);
+
+
 }
 
 function getDay(dateTimeString)
