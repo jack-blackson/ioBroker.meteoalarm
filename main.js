@@ -128,6 +128,8 @@ async function getData(){
         var countEntries = 0
 
         adapter.log.debug('5: Processed Atom')
+        var countURLs = detailsURL.length
+        adapter.log.debug('5.1 Found ' + countURLs + ' URLs')
         for (const URL of detailsURL){ 
             //console.log(element) 
             adapter.log.debug('6: Request Details from ' + URL)
@@ -135,40 +137,7 @@ async function getData(){
             const getJSON1 = bent('string')
             let xmlDetails = await getJSON(URL)
             adapter.log.debug('7: Received Details')
-            /*
-            parseString(xmlDetails, {
-                explicitArray: false
-            }, 
-    
-                function (err, result) {
-                    if (err) {
-                        adapter.log.error("Fehler: " + err);
-                        adapter.terminate ? adapter.terminate(0) : process.exit(0);
-                    } else {
-                         jsonResult = result;
-                }
-            });
-            var type = jsonResult.alert.info[0].parameter[1].value
-            adapter.log.debug(' Type: ' + type);
-            if (typeArray.indexOf(type) > -1) {
-                return
-            } else {
-                //Type not yet in the array
-                countEntries += 1
 
-                typeArray.push(type)
-                const  created = await createAlarms(countEntries)
-                adapter.log.debug('8: Alarm States created for Alarm ' + countEntries)
-
-                //created.then(processDetails())
-                //if (created){
-
-                //}
-                //const AlarmCreated = await Promise.all([createAlarms(countEntries), processDetails(result,countEntries)]);
-
-                const promises = await processDetails(jsonResult,countEntries)
-                adapter.log.debug('9: Processed Details for Alarm ' + countEntries)
-            */
             parseStringPromise(xmlDetails,{explicitArray: false}).then(async function (result) {
                         var type = result.alert.info[0].parameter[1].value
                         adapter.log.debug(' Type: ' + type);
@@ -194,8 +163,6 @@ async function getData(){
                 
         }
             
-        //};
-
         adapter.log.debug('10: All Done')
         
         adapter.terminate ? adapter.terminate(0) : process.exit(0);
