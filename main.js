@@ -142,7 +142,7 @@ async function getData(){
             let xmlDetails = await getJSON(URL)
             adapter.log.debug('7: Received Details for URL ' + countURL)
 
-            parseStringPromise(xmlDetails,{explicitArray: false})
+            parseString(xmlDetails,{explicitArray: false})
             .then(function (result) {
                 jsonResult = result  
                 type =  result.alert.info[0].parameter[1].value   
