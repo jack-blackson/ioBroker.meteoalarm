@@ -126,7 +126,6 @@ async function getData(){
         
         // continue now to request details
         var countEntries = 0
-        var jsonResult;
 
         adapter.log.debug('5: Processed Atom')
         for (const URL of detailsURL){ 
@@ -170,9 +169,28 @@ async function getData(){
                 const promises = await processDetails(jsonResult,countEntries)
                 adapter.log.debug('9: Processed Details for Alarm ' + countEntries)
             */
-            parseStringPromise(xmlDetails).then(function (result) {
+            parseStringPromise(xmlDetails,{explicitArray: false}).then(async function (result) {
                         var type = result.alert.info[0].parameter[1].value
                         adapter.log.debug(' Type: ' + type);
+                        if (typeArray.indexOf(type) > -1) {
+                            return
+                        } else {
+                            //Type not yet in the array
+                            countEntries += 1
+            
+                            typeArray.push(type)
+                            const  created = await createAlarms(countEntries)
+                            adapter.log.debug('8: Alarm States created for Alarm ' + countEntries)
+            
+                            //created.then(processDetails())
+                            //if (created){
+            
+                            //}
+                            //const AlarmCreated = await Promise.all([createAlarms(countEntries), processDetails(result,countEntries)]);
+            
+                            const promises = await processDetails(result,countEntries)
+                            adapter.log.debug('9: Processed Details for Alarm ' + countEntries)
+                        }
                 })
             .catch(function (err) {
                 adapter.log.error("Fehler: " + err);
