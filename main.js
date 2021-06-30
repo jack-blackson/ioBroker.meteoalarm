@@ -204,18 +204,13 @@ async function getData(){
             adapter.log.debug('10: Creating HTML Widget')
 
 
-            adapter.log.debug('Adapter names: ' + channelNames)
-            //createHTMLWidget()
             if (channelNames.length >= 1){
                 htmlCode += '<table style="border-collapse: collapse; width: 100%;" border="1"><tbody>'
                 for (const channelLoop of channelNames) {
-                    //adapter.log.debug('Found alarm: ' + channel.common.name)
-                    //const promises = await loadData(channelLoop)
-                    adapter.log.debug('Loaded data for ' + channelLoop)
 
                     var path = 'alarms.' + channelLoop
 
-                    let eventType = await adapter.getStateAsync(path + '.event');
+                    let eventType = await adapter.getStateAsync(path + '.event').val;
                     let description = await adapter.getStateAsync(path + '.description');
                     let icon = await adapter.getStateAsync(path + '.icon');
                     let color = await adapter.getStateAsync(path + '.color');
@@ -241,9 +236,6 @@ async function getData(){
                 htmlCode += '</tbody></table>'
             } 
             adapter.log.debug('widget: ' + htmlCode)
-
-
-
 
             adapter.log.debug('11: Set State for Widget')
 
