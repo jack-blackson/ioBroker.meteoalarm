@@ -256,10 +256,10 @@ async function createHTMLWidget(){
     ])
 }
 
-function getDay(date)
+function getDay(dateInput)
 {
     var options = { weekday: "long"};        
-    return date.toLocaleDateString('en-GB', options );
+    return dateInput.toLocaleDateString('en-GB', options );
 }
 
 /*
