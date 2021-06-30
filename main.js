@@ -135,7 +135,7 @@ async function getData(){
             adapter.log.debug('7: Received Details')
 
             parseString(xmlDetails, {
-                //mergeAttrs: true
+                explicitArray: false
             }, 
     
             async function (err, result) {
