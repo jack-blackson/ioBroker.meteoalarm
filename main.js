@@ -90,7 +90,7 @@ async function getData(){
         adapter.log.debug('2: Before Request Atom')
 
         const getJSON = bent('string')
-        let obj = await getJSON('https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-austria')
+        let xmlAtom = await getJSON('https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-austria')
         adapter.log.debug('3: meteoalarm done')
 
         /*
@@ -125,14 +125,14 @@ async function getData(){
         });
         */
 
-        const result = xml2js.xml2json(obj);
+        const jsonAtom = xml2js.xml2json(xmlAtom);
 
         var newdate = moment(new Date()).local().format('DD.MM.YYYY HH:mm')
                 adapter.setState({device: '' , channel: '',state: 'lastUpdate'}, {val: newdate, ack: true});
             
                 var i = 0
                 var now = new Date();
-                result.feed.entry.forEach(function (element){
+                jsonAtom.feed.entry.forEach(function (element){
                     var expiresDate = new Date(element['cap:expires']);
                     if (element['cap:areaDesc'] == regionConfig && expiresDate >= now){
                         var detailsLink = element.link[0].$.href
