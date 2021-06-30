@@ -261,7 +261,7 @@ async function createHTMLWidget(){
     ])
 }
 
-function getDate(dateTimeString)
+function getDay(dateTimeString)
 {
    return new Date(dateTimeString).toLocaleDateString('en-US', { weekday: "long" })
       
