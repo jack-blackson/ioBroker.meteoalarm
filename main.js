@@ -210,7 +210,7 @@ async function getData(){
 
                     var path = 'alarms.' + channelLoop
 
-                    let done = await adapter.getStateAsync(path + '.event.val',function (err, state){
+                    let done = await adapter.getStateAsync(path + '.event',function (err, state){
                         eventType = state.val
                     });
                     let description = await adapter.getStateAsync(path + '.description');
