@@ -186,7 +186,7 @@ async function getData(){
                             
             
             }
-                
+            createHTMLWidget()
             adapter.log.debug('10: All Done')
             
             adapter.terminate ? adapter.terminate(0) : process.exit(0);
@@ -197,6 +197,19 @@ async function getData(){
         
 
 }
+
+async function createHTMLWidget(){
+    var htmlCode = ""
+
+
+
+
+
+
+    adapter.setState({device: '' , channel: '',state: 'htmlToday'}, {val: htmllong, ack: true});
+
+}
+
 
 /*
 async function requestAtom(){
@@ -466,6 +479,14 @@ async function deleteAllAlarms(){
 
 async function createAlarms(AlarmNumber){
     const promises = await Promise.all([
+
+        adapter.setObjectNotExistsAsync('alarms', {
+            common: {
+                name: 'Alarm'
+            },
+            type: 'device',
+            'native' : {}
+        }),
 
         adapter.setObjectNotExistsAsync('alarms.' + AlarmNumber, {
             common: {
