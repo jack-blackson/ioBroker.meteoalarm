@@ -398,7 +398,9 @@ async function processDetails(content, countInt){
    // let created = createAlarms(countInt)
    // let done = await created
     //adapter.log.debug('6: After Create Alarm')
+
     var level = content.alert.info[0].parameter[0].value
+    adapter.log.debug('Level: ' + level)
     var n = level.indexOf(";");
     level = level.substring(0, n)
     var type = content.alert.info[0].parameter[1].value
