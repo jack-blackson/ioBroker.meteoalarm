@@ -229,8 +229,9 @@ async function getData(){
     
                     htmlCode += '<h2>' + event.val + '</h2>'
     
-                    htmlCode += '<p>' + effectiveDate.val + ' - ' + expiresDate.val + '</p>'
-    
+                    htmlCode += '<p>' + getDateFormated(effectiveDate.val) + ' - ' + getDateFormated(expiresDate.val) + '</p>'
+                    htmlCode += '<p>' + description.val + '</p>'
+
     
                     htmlCode += '</td></tr>'
                 }
@@ -311,43 +312,11 @@ function createHTMLWidget(){
 */
 
 
-async function loadData(channelName){
-    var path = 'alarms.' + channelName
-    const promises = await Promise.all([
-        adapter.getStateAsync(path + '.event', function (err, state) {
-            adapter.log.debug('Event Type: ' + state.val)
-            eventType = state.val
-        }),
-        adapter.getStateAsync(path + '.description', function (err, state) {
-            description = state.val
-        }),
-        adapter.getStateAsync(path + '.icon', function (err, state) {
-            icon = state.val
-        }),
-        adapter.getStateAsync(path + '.color', function (err, state) {
-            color = state.val
-        }),
-        adapter.getStateAsync(path + '.effective', function (err, state) {
-            effectiveDate = state.val
-            effectiveString = state.val
-            
-        }),
-        adapter.getStateAsync(path + '.expires', function (err, state) {
-            expiresDate = state.val;
-            expiresString = state.val;
-            //adapter.log.debug('Date expires: ' + expiresString);
-            //const dateOptions = { weekday: "long"};
-
-            //adapter.log.debug(getDay(expiresDate));
-        })
-    ]);
 
 
-}
-
-function getDay(dateTimeString)
+function getDateFormated(dateTimeString)
 {
-   return new Date(dateTimeString).toLocaleDateString(undefined, { weekday: "long" })
+   return new Date(dateTimeString).toLocaleDateString(undefined, { weekday: "long" , hour: "numeric", minute: "2-digit"})
       
     //return date.toLocaleDateString( date.getTimezoneOffset(), options );
 }
