@@ -42,6 +42,7 @@ var expiresString = "";
 */
 
 var channelNames = []
+var csvContent = [];
 
 
 let adapter;
@@ -126,28 +127,14 @@ async function getData(){
             */
             //var contents = fs.readFileSync('geocodes-aliases.csv', 'utf8');
             //adapter.log.debug(contents);
-            var csvContent = [];
-            fs.createReadStream('geocodes-aliases.csv', 'utf8')
-                .pipe(parseCSV({delimiter: ','}))
-                .on('headers', (headers) => {
-                    adapter.log.debug(`First header: ${headers[0]}`)
-                  })
-                .on('data', function(csvrow) {
-                    //console.log(csvrow);
-                    //do something with csvrow
-                    csvContent.push(csvrow);        
-                })
-                .on('end',function() {
-                //do something with csvData
-                adapter.log.debug(csvContent);
-                adapter.log.debug('First Line: ' + csvContent[1][0])
-            });
 
+            const csv = await getCSVData()
                 
 
             //adapter.log.debug('First Line: ' + csvContent[0][0])
             //adapter.log.debug('First Line1: ' + JSON.stringify(csvContent[0][0]))
-            
+            adapter.log.debug('First Line: ' + csvContent[1][0])
+
 
             adapter.log.debug('2: Request Atom from ' + urlAtom )
 
@@ -322,6 +309,26 @@ function getDateFormated(dateTimeString)
       
 }
 
+async function getCSVData(){
+    return new Promise(function(resolve,reject){
+        fs.createReadStream('geocodes-aliases.csv', 'utf8')
+        .pipe(parseCSV({delimiter: ','}))
+        .on('headers', (headers) => {
+            adapter.log.debug(`First header: ${headers[0]}`)
+        })
+        .on('data', function(csvrow) {
+            //console.log(csvrow);
+            //do something with csvrow
+            csvContent.push(csvrow);        
+        })
+        .on('end',function() {
+        //do something with csvData
+        adapter.log.debug(csvContent);
+        resolve(csvContent);
+        })
+        .on('error', reject); 
+    })
+}
 
 async function processDetails(content, countInt){
     var type = ""
