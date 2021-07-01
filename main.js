@@ -120,6 +120,8 @@ async function getData(){
             
             parseString(xmlAtom, {
                 //mergeAttrs: true
+                explicitArray: false
+
             }, 
 
             function (err, result) {
