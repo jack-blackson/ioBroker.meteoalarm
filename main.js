@@ -235,7 +235,7 @@ async function getData(){
                     htmlCode += '<h3 style = "margin-top: 5px;margin-bottom: 1px;">' + event.val + ': '
     
                     htmlCode += getDateFormated(effectiveDate.val) + ' - ' + getDateFormated(expiresDate.val) + '</h3>'
-                    htmlCode += '<p>' + description.val + '</p>'
+                    htmlCode += description.val 
 
     
                     htmlCode += '</td></tr>'
