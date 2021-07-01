@@ -136,6 +136,7 @@ async function getData(){
                     var now = new Date();
                     result.feed.entry.forEach(function (element){
                         var expiresDate = new Date(element['cap:expires']);
+                        adapter.log.debug('4.0.1: ' + element['cap:areaDesc'] )
                         if (element['cap:areaDesc'] == regionConfig && expiresDate >= now){
                             var detailsLink = element.link[0].$.href
                             adapter.log.debug('4.1: Warning found: ' + detailsLink)
