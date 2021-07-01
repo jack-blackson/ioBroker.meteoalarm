@@ -192,7 +192,7 @@ async function getData(){
                 
                         typeArray.push(type)
                         const created = await createAlarms(countEntries)
-                        adapter.log.debug('8: Alarm States created for Alarm ' + countURL)
+                        adapter.log.debug('8: Alarm States created for Alarm ' + countURL + ' type:  ' + type)
                 
                         const promises = await processDetails(jsonResult,countEntries)
                         adapter.log.debug('9: Processed Details for Alarm ' + countURL)
@@ -220,14 +220,12 @@ async function getData(){
                     let expiresDate = await adapter.getStateAsync(path + '.expires');
                     
                     if (!adapter.config.noBackgroundColor){
-                        colorHTML = 'background-color: ' + color
+                        colorHTML = 'background-color: ' + color.val
                     }
                      
-
-
                     htmlCode += '<tr><td style="width: 10%; border-style: none; ' + colorHTML +  '">'
                     if (!adapter.config.noIcons){
-                        htmlCode += '<img src="' +  icon + '" alt=""/>'
+                        htmlCode += '<img src="' +  icon.val + '" alt=""/>'
                     }
     
                     htmlCode += '</td>'
