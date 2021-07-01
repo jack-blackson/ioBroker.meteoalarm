@@ -29,6 +29,7 @@ var regionConfig = '';
 var countEntries = 0;
 var typeArray = [];
 var detailsURL = []
+var regionCSV = ""
 
 /*
 var event = ""
@@ -119,16 +120,12 @@ async function getData(){
                 
             adapter.log.debug('1: Parsed CSV File')
 
-            var indexFound = 0
             for(var i = 0; i < csvContent.length; i += 1) {
-                adapter.log.debug(csvContent[i]);
                 if(csvContent[i][0] == regionConfig) {
-                    adapter.log.debug('FOUND!!');
-                    indexFound =  csvContent[i][1];
+                    regionConfig =  csvContent[i][1];
                 }
             }
-            adapter.log.debug('Index: ' + indexFound)
-            adapter.log.debug('Search Value: ' + csvContent[indexFound][1])
+            adapter.log.debug('1.1 Region Converted: ' + regionCSV)
             
             //adapter.log.debug('First Line: ' + csvContent[1][0])
 
@@ -171,7 +168,7 @@ async function getData(){
                         }
 
 
-                        if (element['cap:areaDesc'] == regionConfig && expiresDate >= now){
+                        if (element['cap:areaDesc'] == regionCSV && expiresDate >= now){
                             var detailsLink = element.link[0].$.href
                             adapter.log.debug('4.1: Warning found: ' + detailsLink)
                             detailsURL.push(detailsLink)
