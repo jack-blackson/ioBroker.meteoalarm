@@ -104,7 +104,8 @@
                 
                 //regionArray.sort();
                 var NoOfEntries = regionArray.length
-                $.each(regionArray, function (key, value) {
+                keysSorted = Object.keys(regionArray).sort(function(a,b){return list[a]-list[b]})
+                $.each(keysSorted, function (key, value) {
                     console.log( key + ' : ' + value );
                     $option = $("<option/>", {
                                         value: key,
