@@ -18,6 +18,9 @@ var parseStringPromise = require('xml2js').parseStringPromise;
 const i18nHelper = require(`${__dirname}/lib/i18nHelper`);
 const bent = require("bent");
 
+const csv = require("csv-parser");
+const fs = require("fs");
+
 var DescFilter1 = '';
 var DescFilter2 = '';
 var country = '';
@@ -110,6 +113,17 @@ async function getData(){
             adapter.log.debug('1: Delete Alarms')
 
             const deleted =  deleteAllAlarms();
+
+
+            fs.createReadStream('geocodes-aliases.csv')
+            .pipe(csv())
+            .on('data', (row) => {
+              console.log(row);
+            })
+            .on('end', () => {
+              console.log('CSV file successfully processed');
+            });
+
 
             adapter.log.debug('2: Request Atom from ' + urlAtom )
 
