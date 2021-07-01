@@ -105,15 +105,9 @@
                 console.log('Vor Sort: ' + JSON.stringify(regionArray))
                 //regionArray = sortObject(regionArray)
 
-                var sortedRegions = [];
-                for (var code in region) {
-                    sortedRegions.push([code, regionArray[code]]);
-                }
-
-                sortedRegions.sort(function(a, b) {
-                    return a[1] - b[1];
-                });
-
+                const sortedRegions = Object.entries(regionArray)
+                    .sort(([,a],[,b]) => a-b)
+                    .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
 
                 console.log('Nach Sort: ' + sortedRegions)
 
