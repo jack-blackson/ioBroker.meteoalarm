@@ -126,14 +126,16 @@ async function getData(){
             */
             //var contents = fs.readFileSync('geocodes-aliases.csv', 'utf8');
             //adapter.log.debug(contents);
+            const csvContent = [];
             fs.createReadStream('geocodes-aliases.csv', 'utf8')
                 .pipe(csv())
-                .on('data', (row) => {
-                    adapter.log.debug(row);
-                })
+                .on('data', (data) => csvContent.push(data))
                 .on('end', () => {
-                    adapter.log.debug('CSV file successfully processed');
+                    adapter.log.debug('1.5: CSV file successfully processed');
                 });
+
+            adapter.log.debug('First Line: ' + csvContent[0])
+            adapter.log.debug('First Line1: ' + JSON.stringify(csvContent[0]))
 
 
             adapter.log.debug('2: Request Atom from ' + urlAtom )
