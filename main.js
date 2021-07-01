@@ -225,14 +225,14 @@ async function getData(){
                      
                     htmlCode += '<tr><td style="width: 10%; border-style: none; ' + colorHTML +  '">'
                     if (!adapter.config.noIcons){
-                        htmlCode += '<img style="display:block;" width="100%" height="100%"' +  icon.val + '/>'
+                        htmlCode += '<img style="display:block;" width="100%" height="100%" src="' +  icon.val + '/>'
                     }
     
                     htmlCode += '</td>'
     
                     htmlCode += '<td style="width: 90%; border-style: none; ' + colorHTML +  '">'
     
-                    htmlCode += '<h3>' + event.val + '</h3>'
+                    htmlCode += '<h3 style = "margin-top: 5px;margin-bottom: 1px;">' + event.val + '</h3>'
     
                     htmlCode += getDateFormated(effectiveDate.val) + ' - ' + getDateFormated(expiresDate.val) + '</p>'
                     htmlCode += '<p>' + description.val + '</p>'
