@@ -91,7 +91,7 @@ function main() {
 }
 
 async function getData(){
-
+        
         // request setup
         countryConfig = adapter.config.country
         regionConfig = adapter.config.region
@@ -225,7 +225,7 @@ async function getData(){
                      
                     htmlCode += '<tr><td style="width: 10%; border-style: none; ' + colorHTML +  '">'
                     if (!adapter.config.noIcons){
-                        htmlCode += '<img src="' +  icon.val + '" alt=""/>'
+                        htmlCode += '<img style="display:block;" width="100%" height="100%"' +  icon.val + '/>'
                     }
     
                     htmlCode += '</td>'
