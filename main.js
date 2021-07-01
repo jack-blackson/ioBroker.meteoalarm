@@ -181,9 +181,6 @@ async function getData(){
                             }  
                         })
 
-
-                        //type =  result.alert.info[0].parameter[1].value
-                        adapter.log.debug('Type: ' + type)
                     }
                 });
 
@@ -276,13 +273,23 @@ function getDateFormated(dateTimeString)
 
 
 async function processDetails(content, countInt){
+    var type = ""
+    var level = ""
+    content.alert.info[0].parameter.forEach(function (element){
+        if (element.valueName == "awareness_type") {
+            type =element.value
+            var n = type.indexOf(";");
+            type = type.substring(0, n)
+        }  
+        if (element.valueName == "awareness_level") {
+            level =element.value
+            var n = level.indexOf(";");
+            level = level.substring(0, n)
+        }  
+    })
+    //var level = content.alert.info[0].parameter[0].value
+    
 
-    var level = content.alert.info[0].parameter[0].value
-    var n = level.indexOf(";");
-    level = level.substring(0, n)
-    var type = content.alert.info[0].parameter[1].value
-    var n = type.indexOf(";");
-    type = type.substring(0, n)
 
     var Warnung_img = ''
     if (level != 1){
