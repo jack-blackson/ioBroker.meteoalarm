@@ -287,12 +287,10 @@ async function processDetails(content, countInt){
             level = level.substring(0, n)
         }  
     })
-    //var level = content.alert.info[0].parameter[0].value
-    
-
+ 
 
     var Warnung_img = ''
-    if (level != 1){
+    if (level != "1"){
         if (adapter.config.whiteIcons){
             Warnung_img += '/meteoalarm.admin/icons/white/'
         }
