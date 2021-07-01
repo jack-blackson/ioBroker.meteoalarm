@@ -144,8 +144,8 @@ async function getData(){
 
                 
 
-            adapter.log.debug('First Line: ' + csvContent[0][0])
-            adapter.log.debug('First Line1: ' + JSON.stringify(csvContent[0][0]))
+            //adapter.log.debug('First Line: ' + csvContent[0][0])
+            //adapter.log.debug('First Line1: ' + JSON.stringify(csvContent[0][0]))
             adapter.log.debug('First Line: ' + csvContent[0]["CODE"])
             adapter.log.debug('First Line1: ' + JSON.stringify(csvContent[0]["CODE"]))
 
