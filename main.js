@@ -18,7 +18,7 @@ var parseStringPromise = require('xml2js').parseStringPromise;
 const i18nHelper = require(`${__dirname}/lib/i18nHelper`);
 const bent = require("bent");
 
-const csv = require('jquery-csv');
+const parseCSV = require('csv-parse');
 const fs = require("fs");
 
 var DescFilter1 = '';
@@ -128,17 +128,18 @@ async function getData(){
             //adapter.log.debug(contents);
             var csvContent = [];
             fs.createReadStream('geocodes-aliases.csv', 'utf8')
-                .pipe(csv())
-                .on('data', (data) => csvContent = csv.toArrays(csv, {
-                    delimiter: "'", // Sets a custom value delimiter character
-                    separator: ';', // Sets a custom field separator character
-                  }))
-                  
-                .on('end', () => {
-                    adapter.log.debug('1.5: CSV file successfully processed');
-                    adapter.log.debug('CSV Content: ' + csvContent);
+                .pipe(parseCSV({delimiter: ','}))
+                .on('data', function(csvrow) {
+                    //console.log(csvrow);
+                    //do something with csvrow
+                    csvContent.push(csvrow);        
+                })
+                .on('end',function() {
+                //do something with csvData
+                adapter.log.debug(csvContent);
+            });
 
-                });
+                
 
             adapter.log.debug('First Line: ' + csvContent[0])
             adapter.log.debug('First Line1: ' + JSON.stringify(csvContent[0]))
