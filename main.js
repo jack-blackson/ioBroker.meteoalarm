@@ -124,7 +124,7 @@ async function getData(){
               console.log('CSV file successfully processed');
             });
             */
-            var contents = fs.readFileSync('/geocodes-aliases.csv', 'utf8');
+            var contents = fs.readFileSync('geocodes-aliases.csv', 'utf8');
             console.log(contents);
 
             adapter.log.debug('2: Request Atom from ' + urlAtom )
