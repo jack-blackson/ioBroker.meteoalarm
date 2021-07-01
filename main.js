@@ -225,7 +225,7 @@ async function getData(){
                      
                     htmlCode += '<tr><td style="width: 10%; border-style: none; ' + colorHTML +  '">'
                     if (!adapter.config.noIcons){
-                        htmlCode += '<img style="display:block;" width="100%" height="100%" src="' +  icon.val + '"/>'
+                        htmlCode += '<img style="display:block;" width="70%" height="70%" src="' +  icon.val + '"/>'
                     }
     
                     htmlCode += '</td>'
