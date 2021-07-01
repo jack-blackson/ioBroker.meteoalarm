@@ -175,8 +175,15 @@ async function getData(){
                         adapter.terminate ? adapter.terminate(0) : process.exit(0);
                     } else {
                         jsonResult = result  
-                        type =  result.alert.info[0].parameter[1].value
-                        adapter.log.debug('123: ' + result.alert.info[0].parameter[1].valueName)
+                        result.alert.info[0].forEach(function (element){
+                            if (element.parameter.valueName == "awareness_type") {
+                                type =element.parameter.value
+                            }  
+                        })
+
+
+                        //type =  result.alert.info[0].parameter[1].value
+                        adapter.log.debug('Type: ' + type)
                     }
                 });
 
