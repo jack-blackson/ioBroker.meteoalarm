@@ -114,7 +114,7 @@ async function getData(){
 
             const deleted =  deleteAllAlarms();
 
-
+            /*
             fs.createReadStream('geocodes-aliases.csv')
             .pipe(csv())
             .on('data', (row) => {
@@ -123,7 +123,9 @@ async function getData(){
             .on('end', () => {
               console.log('CSV file successfully processed');
             });
-
+            */
+            var contents = fs.readFileSync('geocodes-aliases.csv', 'utf8');
+            console.log(contents);
 
             adapter.log.debug('2: Request Atom from ' + urlAtom )
 
