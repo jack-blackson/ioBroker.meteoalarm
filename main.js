@@ -221,7 +221,9 @@ async function getData(){
                     
 
                     htmlCode += '<tr><td style="width: 20%; border-style: none;">'
-    
+                    if (!adapter.config.noIcons){
+                        htmlCode += '<img src="' +  icon + '" alt=""/>'
+                    }
     
                     htmlCode += '</td>'
     
@@ -257,62 +259,6 @@ async function getData(){
         
 
 }
-
-/*
-function createHTMLWidget(){
-    
-
-
-    adapter.getChannelsOf('alarms', async function (err, result) {
-        if (result.length >= 1){
-            htmlCode += '<table style="border-collapse: collapse; width: 100%;" border="1"><tbody>'
-            for (const channel of result) {
-                //adapter.log.debug('Found alarm: ' + channel.common.name)
-                const promises = await loadData(channel.common.name)
-                
-
-                
-                htmlCode += '<tr><td style="width: 20%; border-style: none;">'
-
-
-                htmlCode += '</td>'
-
-                htmlCode += '<td style="width: 80%; border-style: none;">'
-
-                htmlCode += '<h2>' + eventType + '</h2>'
-
-                htmlCode += '<p>' + effectiveDate + ' - ' + expiresDate + '</p>'
-
-
-                htmlCode += '</td></tr>'
-            }
-        }
-        if (htmlCode){
-            htmlCode += '</tbody></table>'
-        } 
-        adapter.log.debug('widget: ' + htmlCode)
-        //return Promise.resolve();
-    });
-
-
-
-            
-            adapter.getObject('setup.' + channel.common.name, function (err, state) {
-                //check if setup is still existing
-                if(state === null && typeof state === "object") {
-                    //if not - delete results
-                    deleteCountdownResults(channel.common.name)
-                }
-            });   
-            
-       
-
-       
-}
-*/
-
-
-
 
 function getDateFormated(dateTimeString)
 {
@@ -787,6 +733,7 @@ function processJSON(content){
 
 */
 
+/*
 function updateHTMLWidget(){
     var htmllong = '';
     var typeName = '';
@@ -870,6 +817,7 @@ function updateHTMLWidget(){
         
     });
 }
+*/
 
 function getTypeName(type){
 
