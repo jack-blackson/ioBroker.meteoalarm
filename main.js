@@ -105,35 +105,25 @@ async function getData(){
             adapter.terminate ? adapter.terminate(0) : process.exit(0);
         }
         else{
-            adapter.log.debug('0: Setup found: country ' + countryConfig + ' and region ' + regionConfig)
+            adapter.log.debug('Setup found: country ' + countryConfig + ' and region ' + regionConfig)
 
             var urlAtom = getCountryLink(countryConfig)
 
 
             // Delete old alarms
-            adapter.log.debug('1: Delete Alarms')
+            adapter.log.debug('0: Delete Alarms')
 
             const deleted =  deleteAllAlarms();
 
-            /*
-            fs.createReadStream('geocodes-aliases.csv')
-            .pipe(csv())
-            .on('data', (row) => {
-              console.log(row);
-            })
-            .on('end', () => {
-              console.log('CSV file successfully processed');
-            });
-            */
-            //var contents = fs.readFileSync('geocodes-aliases.csv', 'utf8');
-            //adapter.log.debug(contents);
-
             const csv = await getCSVData()
                 
+            adapter.log.debug('1: Parsed CSV File')
 
-            //adapter.log.debug('First Line: ' + csvContent[0][0])
-            //adapter.log.debug('First Line1: ' + JSON.stringify(csvContent[0][0]))
-            adapter.log.debug('First Line: ' + csvContent[1][0])
+            var indexFound = csvContent.indexOf(regionConfig)
+            adapter.log.debug('Index: ' + indexFound)
+            adapter.log.debug('Search Value: ' + csvContent[indexFound][1])
+            
+            //adapter.log.debug('First Line: ' + csvContent[1][0])
 
 
             adapter.log.debug('2: Request Atom from ' + urlAtom )
