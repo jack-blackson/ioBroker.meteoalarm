@@ -90,8 +90,7 @@
                                         text: '--------'
                             });
                 $('#region').append($option);
-                var regionArray = new Map();
-                regionArray.set('code', 'region');
+                var regionArray = {};
                 for(var i = 0; i < NoOfEntries; i++) {
                     var country = features[i].properties.country
                     var region = features[i].properties.name
@@ -99,15 +98,15 @@
 
                     if (country == $('#country').children("option:selected").val()){
                         regionarray[code] = region
-                        regionArray.push(region)
+                        //regionArray.push(region)
                     }
                 }
                 
                 regionArray.sort();
                 var NoOfEntries = regionArray.length
-                for (let [key, value] of regionArray) {
-                    console.log(key + " - " + value);
-                }
+                $.each(regionArray, function (key, value) {
+                    console.log( key + ' : ' + value );
+                });
 
                 /*
                 for(var i = 0; i < NoOfEntries; i++) {
