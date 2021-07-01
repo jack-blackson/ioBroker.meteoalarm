@@ -211,7 +211,7 @@ async function getData(){
                 for (const channelLoop of channelNames) {
 
                     var path = 'alarms.' + channelLoop
-
+                    var colorHTML = ''
                     let event = await adapter.getStateAsync(path + '.event')
                     let description = await adapter.getStateAsync(path + '.description');
                     let icon = await adapter.getStateAsync(path + '.icon');
@@ -219,19 +219,24 @@ async function getData(){
                     let effectiveDate = await adapter.getStateAsync(path + '.effective');
                     let expiresDate = await adapter.getStateAsync(path + '.expires');
                     
+                    if (!adapter.config.noBackgroundColor){
+                        colorHTML = 'background-color: ' + color
+                    }
+                     
 
-                    htmlCode += '<tr><td style="width: 20%; border-style: none;">'
+
+                    htmlCode += '<tr><td style="width: 20%; border-style: none; ' + colorHTML +  '">'
                     if (!adapter.config.noIcons){
                         htmlCode += '<img src="' +  icon + '" alt=""/>'
                     }
     
                     htmlCode += '</td>'
     
-                    htmlCode += '<td style="width: 80%; border-style: none;">'
+                    htmlCode += '<td style="width: 80%; border-style: none; ' + colorHTML +  '">'
     
-                    htmlCode += '<h2>' + event.val + '</h2>'
+                    htmlCode += '<h3>' + event.val + '</h3>'
     
-                    htmlCode += '<p>' + getDateFormated(effectiveDate.val) + ' - ' + getDateFormated(expiresDate.val) + '</p>'
+                    htmlCode += getDateFormated(effectiveDate.val) + ' - ' + getDateFormated(expiresDate.val) + '</p>'
                     htmlCode += '<p>' + description.val + '</p>'
 
     
@@ -241,7 +246,7 @@ async function getData(){
             if (htmlCode){
                 htmlCode += '</tbody></table>'
             } 
-            adapter.log.debug('widget: ' + htmlCode)
+            //adapter.log.debug('widget: ' + htmlCode)
 
             adapter.log.debug('11: Set State for Widget')
 
