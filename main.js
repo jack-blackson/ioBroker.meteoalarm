@@ -129,6 +129,9 @@ async function getData(){
             var csvContent = [];
             fs.createReadStream('geocodes-aliases.csv', 'utf8')
                 .pipe(parseCSV({delimiter: ','}))
+                .on('headers', (headers) => {
+                    adapter.log.debug(`First header: ${headers[0]}`)
+                  })
                 .on('data', function(csvrow) {
                     //console.log(csvrow);
                     //do something with csvrow
