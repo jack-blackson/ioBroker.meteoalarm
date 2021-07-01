@@ -90,17 +90,26 @@
                                         text: '--------'
                             });
                 $('#region').append($option);
-                var regionArray = []
+                var regionArray = new Map();
+                regionArray.set('code', 'region');
                 for(var i = 0; i < NoOfEntries; i++) {
                     var country = features[i].properties.country
                     var region = features[i].properties.name
+                    var code = features[i].properties.code
+
                     if (country == $('#country').children("option:selected").val()){
+                        regionarray[code] = region
                         regionArray.push(region)
                     }
                 }
                 
                 regionArray.sort();
                 var NoOfEntries = regionArray.length
+                for (let [key, value] of regionArray) {
+                    console.log(key + " - " + value);
+                }
+
+                /*
                 for(var i = 0; i < NoOfEntries; i++) {
                     $option = $("<option/>", {
                                         value: regionArray[i],
@@ -108,7 +117,7 @@
                             });
                             $('#region').append($option);
                 }
-
+                */
                 
 
                 let instance =  M.FormSelect.getInstance($('#region'));
