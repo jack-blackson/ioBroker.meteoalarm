@@ -138,7 +138,7 @@ async function getData(){
                         var expiresDate = new Date(element['cap:expires']);
 
                         // TEMP
-                        if (element['cap:areaDesc'] == regionConfig ){
+                        if (element['cap:geocode'].value == regionConfig ){
 
 
                         adapter.log.debug('4.0.1: now ' + now )
