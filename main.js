@@ -119,7 +119,12 @@ async function getData(){
                 
             adapter.log.debug('1: Parsed CSV File')
 
-            var indexFound = csvContent.indexOf(regionConfig)
+            var indexFound = 0
+            for(var i = 0; i < csvContent.length; i += 1) {
+                if(csvContent[i] == regionConfig) {
+                    indexFound =  csvContent[i][1];
+                }
+            }
             adapter.log.debug('Index: ' + indexFound)
             adapter.log.debug('Search Value: ' + csvContent[indexFound][1])
             
