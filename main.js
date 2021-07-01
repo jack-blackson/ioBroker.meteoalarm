@@ -232,9 +232,9 @@ async function getData(){
     
                     htmlCode += '<td style="width: 90%; border-style: none; ' + colorHTML +  '">'
     
-                    htmlCode += '<h3 style = "margin-top: 5px;margin-bottom: 1px;">' + event.val + '</h3>'
+                    htmlCode += '<h3 style = "margin-top: 5px;margin-bottom: 1px;">' + event.val + ': '
     
-                    htmlCode += getDateFormated(effectiveDate.val) + ' - ' + getDateFormated(expiresDate.val) + '</p>'
+                    htmlCode += getDateFormated(effectiveDate.val) + ' - ' + getDateFormated(expiresDate.val) + '</h3>'
                     htmlCode += '<p>' + description.val + '</p>'
 
     
