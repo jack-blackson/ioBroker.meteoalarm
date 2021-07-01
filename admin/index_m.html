@@ -98,32 +98,23 @@
 
                     if (country == $('#country').children("option:selected").val()){
                         regionArray[code] = region
-                        //regionArray.push(region)
                     }
                 }
                 
-                //regionArray.sort();
                 var NoOfEntries = regionArray.length
-                keysSorted = Object.keys(regionArray).sort(function(a,b){return regionArray[a]-regionArray[b]})
-                $.each(keysSorted, function (key, value) {
+                console.log('Vor Sort: ' + regionArray)
+                regionArray = sortObject(regionArray)
+                console.log('Nach Sort: ' + regionArray)
+
+
+                $.each(regionArray, function (key, value) {
                     console.log( key + ' : ' + value );
                     $option = $("<option/>", {
                                         value: key,
                                         text: value
                             });
                             $('#region').append($option);
-                });
-
-                /*
-                for(var i = 0; i < NoOfEntries; i++) {
-                    $option = $("<option/>", {
-                                        value: regionArray[i],
-                                        text: regionArray[i]
-                            });
-                            $('#region').append($option);
-                }
-                */
-                
+                });               
 
                 let instance =  M.FormSelect.getInstance($('#region'));
 
@@ -134,6 +125,20 @@
                 instances = M.FormSelect.init($('#region'));
             })
 		}
+
+        function sortObject(obj) {
+            var arr = [];
+            for (var prop in obj) {
+                if (obj.hasOwnProperty(prop)) {
+                    arr.push({
+                        'key': prop,
+                        'value': obj[prop]
+                    });
+                }
+            }
+            arr.sort(function(a, b) { return a.value - b.value; });
+            return arr; // returns array
+        }
 
 		// This will be called by the admin adapter when the user presses the save button
 		function save(callback) {
