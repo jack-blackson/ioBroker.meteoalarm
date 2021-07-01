@@ -125,7 +125,7 @@ async function getData(){
             });
             */
             var contents = fs.readFileSync('geocodes-aliases.csv', 'utf8');
-            console.log(contents);
+            adapter.log.debug(contents);
 
             adapter.log.debug('2: Request Atom from ' + urlAtom )
 
