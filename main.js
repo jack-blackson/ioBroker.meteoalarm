@@ -225,14 +225,14 @@ async function getData(){
                      
 
 
-                    htmlCode += '<tr><td style="width: 20%; border-style: none; ' + colorHTML +  '">'
+                    htmlCode += '<tr><td style="width: 10%; border-style: none; ' + colorHTML +  '">'
                     if (!adapter.config.noIcons){
                         htmlCode += '<img src="' +  icon + '" alt=""/>'
                     }
     
                     htmlCode += '</td>'
     
-                    htmlCode += '<td style="width: 80%; border-style: none; ' + colorHTML +  '">'
+                    htmlCode += '<td style="width: 90%; border-style: none; ' + colorHTML +  '">'
     
                     htmlCode += '<h3>' + event.val + '</h3>'
     
