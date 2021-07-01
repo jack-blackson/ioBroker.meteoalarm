@@ -175,9 +175,9 @@ async function getData(){
                         adapter.terminate ? adapter.terminate(0) : process.exit(0);
                     } else {
                         jsonResult = result  
-                        result.alert.info[0].forEach(function (element){
-                            if (element.parameter.valueName == "awareness_type") {
-                                type =element.parameter.value
+                        result.alert.info[0].parameter.forEach(function (element){
+                            if (element.valueName == "awareness_type") {
+                                type =element.value
                             }  
                         })
 
