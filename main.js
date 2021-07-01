@@ -136,10 +136,10 @@ async function getData(){
                     var now = new Date();
                     result.feed.entry.forEach(function (element){
                         var expiresDate = new Date(element['cap:expires']);
+                        adapter.log.debug('Region code: ' + element['cap:geocode'].value)
 
                         // TEMP
                         if (element['cap:geocode'].value == regionConfig ){
-                        adapter.log.debug('Region: ' + element['cap:geocode'].value)
 
                         adapter.log.debug('4.0.1: now ' + now )
                         adapter.log.debug('4.0.1: expires ' + expiresDate )
