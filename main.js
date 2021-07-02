@@ -31,6 +31,7 @@ var typeArray = [];
 var detailsURL = []
 var regionCSV = ""
 var regionName = ""
+var xmlLanguage = ""
 
 var channelNames = []
 var csvContent = [];
@@ -105,7 +106,7 @@ async function getData(){
             adapter.log.debug('Setup found: country ' + countryConfig + ' and region ' + regionConfig + ' - ' +  regionName )
 
             urlAtom = getCountryLink(countryConfig)
-            var xmlLanguage = getXMLLanguage(countryConfig)
+            xmlLanguage = getXMLLanguage(countryConfig)
             if (xmlLanguage == ""){
                 xmlLanguage = 'en-GB'
             }
@@ -337,7 +338,7 @@ async function getData(){
 
 function getDateFormated(dateTimeString)
 {
-   return new Date(dateTimeString).toLocaleDateString(undefined, { weekday: "long" , hour: "numeric", minute: "2-digit"})
+   return new Date(dateTimeString).toLocaleDateString(xmlLanguage, { weekday: "long" , hour: "numeric", minute: "2-digit"})
       
 }
 
