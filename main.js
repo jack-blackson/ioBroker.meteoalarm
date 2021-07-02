@@ -269,7 +269,7 @@ async function getData(){
             //const widget = await createHTMLWidget()
             adapter.log.debug('10: Creating HTML Widget')
 
-
+            var maxAlarmLevel = 0
             if (channelNames.length >= 1){
                 htmlCode += '<table style="border-collapse: collapse; width: 100%;" border="1"><tbody>'
                 for (const channelLoop of channelNames) {
@@ -283,10 +283,16 @@ async function getData(){
                     let icon = await adapter.getStateAsync(path + '.icon');
                     let color = await adapter.getStateAsync(path + '.color');
                     let effectiveDate = await adapter.getStateAsync(path + '.effective');
-                    let expiresDate = await adapter.getStateAsync(path + '.expires');
-                    
+                    let expiresDate = await adapter.getStateAsync(path + '.expires');    
+                    let level = await adapter.getStateAsync(path + '.level');
+
                     if (!adapter.config.noBackgroundColor){
                         colorHTML = 'background-color: ' + color.val
+                    }
+
+                    if (level.val > maxAlarmLevel){
+                        maxAlarmLevel = level.val
+                        adapter.debug.log('Reised maxAlarmLevel to ' + maxAlarmLevel);
                     }
                      
                     if (!adapter.config.noIcons){
@@ -314,7 +320,9 @@ async function getData(){
             adapter.log.debug('11: Set State for Widget')
 
             await Promise.all([
-                adapter.setStateAsync({device: '' , channel: '',state: 'htmlToday'}, {val: htmlCode, ack: true})
+                adapter.setStateAsync({device: '' , channel: '',state: 'htmlToday'}, {val: htmlCode, ack: true}),
+                adapter.setStateAsync({device: '' , channel: '',state: 'color'}, {val: getColor(maxAlarmLevel), ack: true})
+
             ])
 
             adapter.log.debug('12: All Done')
@@ -668,7 +676,7 @@ function getColor(level){
                 return adapter.config.warningColorLevel4;
                 break;
             default:
-                return '#ffffff';
+                return '';
                 break;
             }
 }

@@ -237,6 +237,19 @@
             "native": {}
         },
         {
+            "_id": "color",
+            "type": "state",
+            "common": {
+                "name": "Overall Alarm Color",
+                "type": "string",
+                "role": "value",
+                "read": true,
+                "write": false,
+                "def": ""
+            },
+            "native": {}
+        },
+        {
             "_id": "location",
             "type": "state",
             "common": {
