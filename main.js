@@ -195,11 +195,11 @@ async function getData(){
 
                 const getJSON1 = bent('string')
                 // TEMP!!!
-
+                let xmlDetails
 
                 try {
                     //let xmlDetails = await getJSON1('wer.as.at')
-                    await getJSON1('wer.as.at')
+                    xmlDetails = await getJSON1('wer.as.at')
 
                 } catch (err){
                     adapter.log.debug('6.1: Details URL ' + URL + ' not valid any more - error ' + err) 
@@ -215,31 +215,34 @@ async function getData(){
                  //}
                  
                 //let xmlDetails = await getJSON(URL)
+                if (xmlDetails ){
+                    // Just go here if Request for Details is successful
+                    parseString(xmlDetails, {
+                        explicitArray: false
+                    }, 
+            
+                    function (err, result) {
+                        if (err) {
+                            adapter.log.error("Fehler: " + err);
+                            adapter.terminate ? adapter.terminate(0) : process.exit(0);
+                        } else {
+                            result.alert.info.forEach(function (element){
+                                if (element.language == xmlLanguage){
+                                    element.parameter.forEach(function (parameter){
+                                        if (parameter.valueName == "awareness_type") {
+                                            type =parameter.value
+                                        }  
+                                    })
+                                    jsonResult = element 
+    
+                                }
+                            })
+    
+                        }
+                    });
+
+                }
                 adapter.log.debug('7: Received Details for URL ' + countURL)
-
-                parseString(xmlDetails, {
-                    explicitArray: false
-                }, 
-        
-                function (err, result) {
-                    if (err) {
-                        adapter.log.error("Fehler: " + err);
-                        adapter.terminate ? adapter.terminate(0) : process.exit(0);
-                    } else {
-                        result.alert.info.forEach(function (element){
-                            if (element.language == xmlLanguage){
-                                element.parameter.forEach(function (parameter){
-                                    if (parameter.valueName == "awareness_type") {
-                                        type =parameter.value
-                                    }  
-                                })
-                                jsonResult = element 
-
-                            }
-                        })
-
-                    }
-                });
 
                 if (jsonResult){
                     //adapter.log.debug(' Type of URL ' + countURL + ' :' + type);
