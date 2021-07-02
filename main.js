@@ -118,8 +118,9 @@ async function getData(){
             const deleted =  deleteAllAlarms();
 
             const csv = await getCSVData()
+            
 
-            adapter.log.debug(' State:' + adapter.getState('weatherMapCountry'))
+            adapter.log.debug(' State:' + await adapter.getStateAsync('weatherMapCountry'))
             if (adapter.getState('weatherMapCountry') != null ){
 
                 adapter.log.debug('0.1: Cleaning up old objects');
