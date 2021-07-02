@@ -160,10 +160,10 @@ async function getData(){
                         //adapter.log.debug('Region code: ' + element['cap:geocode'].value)
 
                         // TEMP
-                        if (element['cap:geocode'].value == regionConfig ){
+                        if (element['cap:geocode'].value == regionCSV ){
 
-                        adapter.log.debug('4.0.1: now ' + now )
-                        adapter.log.debug('4.0.1: expires ' + expiresDate )
+                            adapter.log.debug('4.0.1: now ' + now )
+                            adapter.log.debug('4.0.1: expires ' + expiresDate )
 
                         }
 
