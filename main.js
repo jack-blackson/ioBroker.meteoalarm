@@ -317,10 +317,10 @@ async function getData(){
                     var expiresDateStringDate = new Date(expiresDate.val)
                     var expiresDateString = ""
                     if ((today.toDateString() == expiresDateStringDate.toDateString())){
-                        effectiveDateString = getDateFormatedShort(expiresDate.val)
+                        expiresDateString = getDateFormatedShort(expiresDate.val)
                     }
                     else{
-                        effectiveDateString = getDateFormatedLong(expiresDate.val)
+                        expiresDateString = getDateFormatedLong(expiresDate.val)
                     }
 
                     htmlCode += '<td style="width: 92%; border-style: none; ' + colorHTML +  '">'
