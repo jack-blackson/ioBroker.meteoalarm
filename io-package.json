@@ -280,7 +280,7 @@
             "type": "state",
             "common": {
                 "name": "Overall Level",
-                "type": "string",
+                "type": "number",
                 "role": "value",
                 "read": true,
                 "write": false,

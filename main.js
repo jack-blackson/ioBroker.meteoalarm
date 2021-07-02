@@ -117,9 +117,6 @@ async function getData(){
 
             const deleted =  deleteAllAlarms();
 
-            const csv = await getCSVData()
-            
-
             const checkState = await adapter.getStateAsync('weatherMapCountry')
             if (checkState != null ){
 
@@ -127,6 +124,7 @@ async function getData(){
                 const cleaned = await cleanupOld()
             }
             
+            const csv = await getCSVData()
                 
             adapter.log.debug('1: Parsed CSV File')
 
@@ -171,10 +169,8 @@ async function getData(){
                         adapter.log.debug('4: Process Atom')
                         var newdate = moment(new Date()).local().format('DD.MM.YYYY HH:mm')
                         adapter.setState({device: '' , channel: '',state: 'lastUpdate'}, {val: newdate, ack: true});
-                        publicationDate = new Date(result.feed.updated)
+                        publicationDate = new Date(JSON.stringify(result.feed.updated))
                         adapter.setState({device: '' , channel: '',state: 'publicationDate'}, {val: publicationDate, ack: true});
-
-                        
 
                         var i = 0
                         var now = new Date();
