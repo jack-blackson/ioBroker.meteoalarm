@@ -30,7 +30,7 @@ var countEntries = 0;
 var typeArray = [];
 var detailsURL = []
 var regionCSV = ""
-var location = ""
+var regionName = ""
 
 var channelNames = []
 var csvContent = [];
@@ -90,6 +90,7 @@ async function getData(){
         // request setup
         countryConfig = adapter.config.country
         regionConfig = adapter.config.region
+        regionName = adapter.config.regionName
 
         if (regionConfig  == "0"|| !regionConfig){
             adapter.log.error('Please select a valid region in setup!')
@@ -308,7 +309,7 @@ async function getData(){
             await Promise.all([
                 adapter.setStateAsync({device: '' , channel: '',state: 'level'}, {val: maxAlarmLevel, ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'htmlToday'}, {val: htmlCode, ack: true}),
-                adapter.setStateAsync({device: '' , channel: '',state: 'location'}, {val: location, ack: true}),
+                adapter.setStateAsync({device: '' , channel: '',state: 'location'}, {val: regionName, ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'link'}, {val: urlAtom, ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'color'}, {val: getColor(maxAlarmLevel), ack: true})
 
