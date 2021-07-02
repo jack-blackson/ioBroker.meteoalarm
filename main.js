@@ -267,7 +267,7 @@ async function getData(){
             //const widget = await createHTMLWidget()
             adapter.log.debug('10: Creating HTML Widget')
 
-            var maxAlarmLevel = 0
+            var maxAlarmLevel = 1
             if (channelNames.length >= 1){
                 htmlCode += '<table style="border-collapse: collapse; width: 100%;" border="1"><tbody>'
                 for (const channelLoop of channelNames) {
@@ -293,6 +293,7 @@ async function getData(){
                     }
                      
                     if (!adapter.config.noIcons){
+                        htmlCode += '<td style="width: 2%; border-style: none; ' + colorHTML +  '">'
                         htmlCode += '<tr><td style="width: 5%; border-style: none; ' + colorHTML +  '">'
                         htmlCode += '<img style="display:block; padding-top: 10px; padding-bottom: 15px;padding-right: 10px; padding left: 10px;"'
                         htmlCode +=  'width="50%" height="50%" src="' +  icon.val + '"/>'
@@ -300,7 +301,7 @@ async function getData(){
                     }
 
 
-                    htmlCode += '<td style="width: 95%; border-style: none; ' + colorHTML +  '">'
+                    htmlCode += '<td style="width: 92%; border-style: none; ' + colorHTML +  '">'
                     htmlCode += '<h3 style = "margin-top: 5px;margin-bottom: 1px;">' + headline.val + ': '
                     htmlCode += getDateFormated(effectiveDate.val) + ' - ' + getDateFormated(expiresDate.val) + '</h3>'
                     htmlCode += description.val 
