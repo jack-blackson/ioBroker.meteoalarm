@@ -90,19 +90,27 @@
                                         text: '--------'
                             });
                 $('#region').append($option);
-                var regionArray = {};
+                var regionArray = [];
+                var codeArray= [];
                 for(var i = 0; i < NoOfEntries; i++) {
                     var country = features[i].properties.country
                     var region = features[i].properties.name
                     var code = features[i].properties.code
 
                     if (country == $('#country').children("option:selected").val()){
-                        regionArray[code] = region
+                        //regionArray[code] = region
+                        regionArray.push(region)
+                        codeArray.push(code)
                     }
                 }
                 
+                var sortedRegionArray = regionArray
+                sortedRegionArray.sort()
                 var NoOfEntries = regionArray.length
+                adapter.log.debug('Regions Array: ' + regionArray)
+                adapter.log.debug('Regions Array sorted: ' + sortedRegionArray)
 
+                /*
                 const sortedRegions = Object.entries(regionArray)
                     .sort(([,a],[,b]) => a-b)
                     .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
@@ -116,6 +124,7 @@
                             });
                             $('#region').append($option);
                 });               
+                */
 
                 let instance =  M.FormSelect.getInstance($('#region'));
 
