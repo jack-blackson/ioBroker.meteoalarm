@@ -316,6 +316,7 @@ async function getData(){
 
                     var expiresDateDate = new Date(expiresDate.val)
                     var expiresDateString = ""
+                    adapter.log.debug('Tag: ' + expiresDateDate.getDay());
                     if ((today.toDateString() == expiresDateDate.toDateString())){
                         expiresDateString = getDateFormatedShort(expiresDate.val)
                     }
