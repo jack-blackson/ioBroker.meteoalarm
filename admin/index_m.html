@@ -92,6 +92,7 @@
                 $('#region').append($option);
                 var regionArray = [];
                 var codeArray= [];
+                var sortedRegionArray= [];
                 for(var i = 0; i < NoOfEntries; i++) {
                     var country = features[i].properties.country
                     var region = features[i].properties.name
@@ -100,13 +101,14 @@
                     if (country == $('#country').children("option:selected").val()){
                         //regionArray[code] = region
                         regionArray.push(region)
+                        sortedRegionArray.push(region)
                         codeArray.push(code)
                     }
                 }
                 
                 console.log('Regions Array before: ' + regionArray)
 
-                var sortedRegionArray = regionArray
+                //var sortedRegionArray = regionArray
                 sortedRegionArray.sort()
                 var NoOfEntries = regionArray.length
                 console.log('Regions Array: ' + regionArray)
