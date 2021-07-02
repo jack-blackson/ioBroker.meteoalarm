@@ -194,29 +194,20 @@ async function getData(){
                 adapter.log.debug('6: Request Details from URL ' + countURL + ': ' + URL)
 
                 const getJSON1 = bent('string')
-                // TEMP!!!
                 let xmlDetails
 
                 try {
                     //let xmlDetails = await getJSON1('wer.as.at')
-                    xmlDetails = await getJSON1('wer.as.at')
+                    xmlDetails = await getJSON1(URL)
 
                 } catch (err){
                     adapter.log.debug('6.1: Details URL ' + URL + ' not valid any more - error ' + err) 
                 }
                
-                
-                //try {
-                    //let xmlDetails = await getJSON('wer.as.at')
-                 //}
-                 //catch (errorMessage) {
-                    // Anweisungen für jeden Fehler
-                    //adapter.log.debug('6.1: Details URL ' + URL + ' not valid any more - error ' + errorMessage)
-                 //}
-                 
-                //let xmlDetails = await getJSON(URL)
                 if (xmlDetails ){
                     // Just go here if Request for Details is successful
+                    adapter.log.debug('7: Received Details for URL ' + countURL)
+
                     parseString(xmlDetails, {
                         explicitArray: false
                     }, 
@@ -242,7 +233,6 @@ async function getData(){
                     });
 
                 }
-                adapter.log.debug('7: Received Details for URL ' + countURL)
 
                 if (jsonResult){
                     //adapter.log.debug(' Type of URL ' + countURL + ' :' + type);
