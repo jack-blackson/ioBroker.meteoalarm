@@ -111,8 +111,20 @@
                 //var sortedRegionArray = regionArray
                 sortedRegionArray.sort()
                 var NoOfEntries = regionArray.length
-                console.log('Regions Array: ' + regionArray)
-                console.log('Regions Array sorted: ' + sortedRegionArray)
+                //console.log('Regions Array: ' + regionArray)
+                //console.log('Regions Array sorted: ' + sortedRegionArray)
+
+                for(const val of sortedRegionArray) {
+
+                    codePosition = regionArray.indexOf(val)
+                    console.debug(' Code: ' + codeArray[codePosition] + ' Region: ' + val)
+                    $option = $("<option/>", {
+                                        value: codeArray[codePosition],
+                                        text: val
+                            });
+                            $('#region').append($option);
+                }
+
 
                 /*
                 const sortedRegions = Object.entries(regionArray)
