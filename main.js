@@ -31,6 +31,7 @@ var typeArray = [];
 var detailsURL = []
 var regionCSV = ""
 var regionName = ""
+var publicationDate = new Date()
 
 var channelNames = []
 var csvContent = [];
@@ -161,7 +162,11 @@ async function getData(){
                         adapter.log.debug('4: Process Atom')
                         var newdate = moment(new Date()).local().format('DD.MM.YYYY HH:mm')
                         adapter.setState({device: '' , channel: '',state: 'lastUpdate'}, {val: newdate, ack: true});
-                    
+                        publicationDate = new Date(result.feed.updated)
+                        adapter.setState({device: '' , channel: '',state: 'publicationDate'}, {val: publicationDate, ack: true});
+
+                        
+
                         var i = 0
                         var now = new Date();
                         result.feed.entry.forEach(function (element){

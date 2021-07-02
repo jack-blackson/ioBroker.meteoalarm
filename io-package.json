@@ -237,6 +237,19 @@
             "native": {}
         },
         {
+            "_id": "publicationDate",
+            "type": "state",
+            "common": {
+                "name": "Publication Date",
+                "type": "string",
+                "role": "value",
+                "read": true,
+                "write": false,
+                "def": ""
+            },
+            "native": {}
+        },
+        {
             "_id": "lastUpdate",
             "type": "state",
             "common": {
