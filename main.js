@@ -265,6 +265,8 @@ async function getData(){
                     var path = 'alarms.' + channelLoop
                     var colorHTML = ''
                     let event = await adapter.getStateAsync(path + '.event')
+                    let headline = await adapter.getStateAsync(path + '.headline')
+
                     let description = await adapter.getStateAsync(path + '.description');
                     let icon = await adapter.getStateAsync(path + '.icon');
                     let color = await adapter.getStateAsync(path + '.color');
@@ -284,7 +286,7 @@ async function getData(){
 
 
                     htmlCode += '<td style="width: 95%; border-style: none; ' + colorHTML +  '">'
-                    htmlCode += '<h3 style = "margin-top: 5px;margin-bottom: 1px;">' + event.val + ': '
+                    htmlCode += '<h3 style = "margin-top: 5px;margin-bottom: 1px;">' + headline.val + ': '
                     htmlCode += getDateFormated(effectiveDate.val) + ' - ' + getDateFormated(expiresDate.val) + '</h3>'
                     htmlCode += description.val 
 
@@ -368,6 +370,7 @@ async function processDetails(content, countInt){
     const promises = await Promise.all([
 
         adapter.setStateAsync({ state: path + '.event'}, {val:  content.event, ack: true}),
+        adapter.setStateAsync({ state: path + '.headline'}, {val:  content.headline, ack: true}),
         adapter.setStateAsync({ state: path + '.description'}, {val: content.description, ack: true}),
         adapter.setStateAsync({ state: path + '.link'}, {val: content.web, ack: true}),
         adapter.setStateAsync({ state: path + '.expires'}, {val: content.expires, ack: true}),
@@ -414,6 +417,17 @@ async function createAlarms(AlarmNumber){
         adapter.setObjectNotExistsAsync(path + '.event', {
             common: {
                 name: 'Event',
+                type: 'string',
+				role: 'value',
+				read: true,
+				write: true
+            },
+            type: 'state',
+            'native' : {}
+        }),
+        adapter.setObjectNotExistsAsync(path + '.headline', {
+            common: {
+                name: 'Headline',
                 type: 'string',
 				role: 'value',
 				read: true,
