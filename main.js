@@ -199,19 +199,28 @@ async function getData(){
                         adapter.log.error("Fehler: " + err);
                         adapter.terminate ? adapter.terminate(0) : process.exit(0);
                     } else {
-                        jsonResult = result 
                         result.alert.info.forEach(function (element){
                             adapter.log.debug('Sprache gefundeN: ' + element.language)
+                            if (element.language == xmlLanguage){
+                                element.parameter.forEach(function (parameter){
+                                    if (parameter.valueName == "awareness_type") {
+                                        type =parameter.value
+                                    }  
+                                })
+                                jsonResult = element 
+
+                            }
                         })
 
 
 
-                        
+                        /*
                         result.alert.info[0].parameter.forEach(function (element){
                             if (element.valueName == "awareness_type") {
                                 type =element.value
                             }  
                         })
+                        */
 
                     }
                 });
@@ -327,7 +336,7 @@ async function getCSVData(){
 async function processDetails(content, countInt){
     var type = ""
     var level = ""
-    content.alert.info[0].parameter.forEach(function (element){
+    content.parameter.forEach(function (element){
         if (element.valueName == "awareness_type") {
             type =element.value
             var n = type.indexOf(";");
@@ -355,12 +364,12 @@ async function processDetails(content, countInt){
     var path = 'alarms.' + 'Alarm ' + countInt
     const promises = await Promise.all([
 
-        adapter.setStateAsync({ state: path + '.event'}, {val:  content.alert.info[0].event, ack: true}),
-        adapter.setStateAsync({ state: path + '.description'}, {val: content.alert.info[0].description, ack: true}),
-        adapter.setStateAsync({ state: path + '.link'}, {val: content.alert.info[0].web, ack: true}),
-        adapter.setStateAsync({ state: path + '.expires'}, {val: content.alert.info[0].expires, ack: true}),
-        adapter.setStateAsync({ state: path + '.effective'}, {val: content.alert.info[0].effective, ack: true}),
-        adapter.setStateAsync({ state: path + '.sender'}, {val: content.alert.info[0].senderName, ack: true}),
+        adapter.setStateAsync({ state: path + '.event'}, {val:  content.event, ack: true}),
+        adapter.setStateAsync({ state: path + '.description'}, {val: content.description, ack: true}),
+        adapter.setStateAsync({ state: path + '.link'}, {val: content.web, ack: true}),
+        adapter.setStateAsync({ state: path + '.expires'}, {val: content.expires, ack: true}),
+        adapter.setStateAsync({ state: path + '.effective'}, {val: content.effective, ack: true}),
+        adapter.setStateAsync({ state: path + '.sender'}, {val: content.senderName, ack: true}),
         adapter.setStateAsync({ state: path + '.level'}, {val: level, ack: true}),
         adapter.setStateAsync({ state: path + '.levelText'}, {val: getLevelName(level), ack: true}),
         adapter.setStateAsync({ state: path + '.type'}, {val: type, ack: true}),
