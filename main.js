@@ -144,40 +144,49 @@ async function getData(){
             adapter.log.debug('2: Request Atom from ' + urlAtom )
 
             const getJSON = bent('string')
-            let xmlAtom = await getJSON(urlAtom)
-            adapter.log.debug('3: Received Atom')
+            let xmlAtom
+            try {
+                //xmlAtom = await getJSON(urlAtom)
+                xmlAtom = await getJSON(urlAtom + 'as')
 
-            
-            parseString(xmlAtom, {
-                //mergeAttrs: true
-                explicitArray: false
+            } catch (err){
+                adapter.log.debug('2.1: Atom URL ' + urlAtom + ' not available - error ' + err) 
+                adapter.terminate ? adapter.terminate(0) : process.exit(0);
+            }
+            if (xmlAtom){
+                adapter.log.debug('3: Received Atom')
 
-            }, 
+                parseString(xmlAtom, {
+                    //mergeAttrs: true
+                    explicitArray: false
 
-            function (err, result) {
-                if (err) {
-                    adapter.log.error("Fehler: " + err);
-                    adapter.terminate ? adapter.terminate(0) : process.exit(0);
-                } else {
-                    adapter.log.debug('4: Process Atom')
-                    var newdate = moment(new Date()).local().format('DD.MM.YYYY HH:mm')
-                    adapter.setState({device: '' , channel: '',state: 'lastUpdate'}, {val: newdate, ack: true});
-                
-                    var i = 0
-                    var now = new Date();
-                    result.feed.entry.forEach(function (element){
-                        var expiresDate = new Date(element['cap:expires']);
+                }, 
 
-                        if ((element['cap:geocode'].value == regionCSV) && (expiresDate >= now)){
-                            var detailsLink = element.link[0].$.href
-                            adapter.log.debug('4.1: Warning found: ' + detailsLink)
-                            detailsURL.push(detailsLink)
-                
-                            i += 1;
-                        }
-                    });
-                }
-            });
+                function (err, result) {
+                    if (err) {
+                        adapter.log.error("Fehler: " + err);
+                        adapter.terminate ? adapter.terminate(0) : process.exit(0);
+                    } else {
+                        adapter.log.debug('4: Process Atom')
+                        var newdate = moment(new Date()).local().format('DD.MM.YYYY HH:mm')
+                        adapter.setState({device: '' , channel: '',state: 'lastUpdate'}, {val: newdate, ack: true});
+                    
+                        var i = 0
+                        var now = new Date();
+                        result.feed.entry.forEach(function (element){
+                            var expiresDate = new Date(element['cap:expires']);
+
+                            if ((element['cap:geocode'].value == regionCSV) && (expiresDate >= now)){
+                                var detailsLink = element.link[0].$.href
+                                adapter.log.debug('4.1: Warning found: ' + detailsLink)
+                                detailsURL.push(detailsLink)
+                    
+                                i += 1;
+                            }
+                        });
+                    }
+                });
+            }
             
             // continue now to request details
             var countEntries = 0
