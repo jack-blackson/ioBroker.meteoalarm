@@ -88,7 +88,7 @@ function main() {
         else{
             lang = systemConfig.common.language
         }
-        adapter.debug.log('Language: ' + lang)
+        adapter.log.debug('Language: ' + lang)
         getData()
         
 
@@ -292,7 +292,7 @@ async function getData(){
 
                     if (level.val > maxAlarmLevel){
                         maxAlarmLevel = level.val
-                        adapter.debug.log('Reised maxAlarmLevel to ' + maxAlarmLevel);
+                        adapter.log.debug('Reised maxAlarmLevel to ' + maxAlarmLevel);
                     }
                      
                     if (!adapter.config.noIcons){
