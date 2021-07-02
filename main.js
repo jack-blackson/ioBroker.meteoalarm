@@ -109,7 +109,11 @@ async function getData(){
             adapter.log.debug('Setup found: country ' + countryConfig + ' and region ' + regionConfig)
 
             var urlAtom = getCountryLink(countryConfig)
-
+            var xmlLanguage = getXMLLanguage(countryConfig)
+            if (xmlLanguage == ""){
+                xmlLanguage = 'en-GB'
+            }
+            adapter.log.debug(' XML Language: ' + xmlLanguage)
 
             // Delete old alarms
             adapter.log.debug('0: Delete Alarms')
@@ -149,7 +153,6 @@ async function getData(){
                     adapter.terminate ? adapter.terminate(0) : process.exit(0);
                 } else {
                     adapter.log.debug('4: Process Atom')
-                    //adapter.log.debug('Received Atom data for ' + JSON.stringify(result.feed.id))
                     var newdate = moment(new Date()).local().format('DD.MM.YYYY HH:mm')
                     adapter.setState({device: '' , channel: '',state: 'lastUpdate'}, {val: newdate, ack: true});
                 
@@ -157,20 +160,6 @@ async function getData(){
                     var now = new Date();
                     result.feed.entry.forEach(function (element){
                         var expiresDate = new Date(element['cap:expires']);
-                        //adapter.log.debug('Region code: ' + element['cap:geocode'].value)
-
-                        // TEMP
-                        if (element['cap:geocode'].value == regionCSV ){
-
-                            adapter.log.debug('4.0.1: now ' + now )
-                            adapter.log.debug('4.0.1: expires ' + expiresDate )
-                            if(expiresDate >= now){
-                                adapter.log.debug('Found valid')
-                            }
-
-
-                        }
-
 
                         if ((element['cap:geocode'].value == regionCSV) && (expiresDate >= now)){
                             var detailsLink = element.link[0].$.href
@@ -210,7 +199,14 @@ async function getData(){
                         adapter.log.error("Fehler: " + err);
                         adapter.terminate ? adapter.terminate(0) : process.exit(0);
                     } else {
-                        jsonResult = result  
+                        jsonResult = result 
+                        result.alert.info.forEach(function (element){
+                            adapter.log.debug('Sprache gefundeN: ' + element.language)
+                        })
+
+
+
+                        
                         result.alert.info[0].parameter.forEach(function (element){
                             if (element.valueName == "awareness_type") {
                                 type =element.value
@@ -713,7 +709,7 @@ function getCountryLink(country){
         case 'MD':
             return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-moldova'
             break;
-        case 'MT':
+        case 'ME':
             return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-montenegro'
             break;
         case 'NL':
@@ -754,6 +750,124 @@ function getCountryLink(country){
             break;                           
        default:
            return ''
+           break;
+    }
+}
+
+function getXMLLanguage(country){
+    var link = ''
+    switch (country) {
+        // Alpha-2 Codes https://de.wikipedia.org/wiki/ISO-3166-1-Kodierliste
+        case 'AT':
+            return 'de-DE';
+            break;
+        case 'BE':
+            return '';
+            break;
+        case 'BA':
+            return 'bs';
+            break;
+        case 'BG':
+            return 'bg';
+            break;
+        case 'HR':
+            return 'hr-HR'
+            break;
+        case 'CY':
+            return 'el-GR'
+            break;
+        case 'CZ':
+            return ''
+            break;
+        case 'DK':
+            return ''
+            break;
+        case 'EE':
+            return ''
+            break;
+        case 'FI':
+            return 'fi-FI'
+            break;
+        case 'FR':
+            return 'fr-FR'
+            break;
+        case 'DE':
+            return 'de-DE'
+            break;
+         case 'GR':
+            return 'el-GR'
+            break;
+        case 'HU':
+            return 'hu-HU'
+            break;
+        case 'IS':
+            return ''
+            break;
+        case 'IE':
+            return ''
+            break;
+        case 'IL':
+            return 'he-IL'
+            break;
+        case 'IT':
+            return 'it-IT'
+            break;
+        case 'LV':
+            return 'lv'
+            break;
+        case 'LT':
+            return 'lt'
+            break;
+        case 'LU':
+            return ''
+            break;
+        case 'ME':
+            return ''
+            break;
+        case 'MD':
+            return 'ro'
+            break;
+        case 'MT':
+            return ''
+            break;
+        case 'NL':
+            return ''
+            break;
+         case 'NO':
+            return 'no'
+            break;
+         case 'PL':
+            return 'po-PL'
+            break;
+        case 'PT':
+            return 'pt-PT'
+            break;
+        case 'RO':
+            return 'ro-RO'
+            break;
+        case 'RS':
+            return 'sr'
+            break;
+        case 'SK':
+            return 'sk'
+            break;
+        case 'SI':
+            return 'sl'
+            break;
+        case 'ES':
+            return 'es-ES'
+            break;
+        case 'SE':
+            return 'sv-SE'
+            break;
+        case 'CH':
+            return ''
+            break;
+         case 'UK':
+            return 'en-GB'
+            break;                           
+       default:
+           return 'en-GB'
            break;
     }
 }
