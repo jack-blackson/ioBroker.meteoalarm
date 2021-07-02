@@ -149,13 +149,12 @@
         }
 
 		// This will be called by the admin adapter when the user presses the save button
-		function save(settings, callback) {
+		function save(callback) {
 			// example: select elements with class=value and build settings object
             console.log('saving country ' + $('#country').children("option:selected").val() + ' and region ' + $('#region').children("option:selected").val()+  ' - ' + $('#region').children("option:selected").text())
-            if (!settings) return;
-            settings.regionName = $('#region').children("option:selected").text()
+            //settings.regionName = $('#region').children("option:selected").text()
 
-			var obj = {};
+            var obj = {};
 			$('.value').each(function () {
 				var $this = $(this);
 				if ($this.attr('type') === 'checkbox') {
@@ -170,6 +169,9 @@
 					obj[$this.attr('id')] = $this.val();
 				}
 			});
+
+            obj.regionName = $('#region').children("option:selected").text()
+
 			callback(obj);
 		}
 
