@@ -30,21 +30,11 @@ var countEntries = 0;
 var typeArray = [];
 var detailsURL = []
 var regionCSV = ""
-
-/*
-var event = ""
-var description = ""
-var icon = ""
-var color = ""
-var effectiveDate = new Date();
-var expiresDate = new Date();
-var effectiveString = "";
-var expiresString = "";
-*/
+var location = ""
 
 var channelNames = []
 var csvContent = [];
-
+var urlAtom = ""
 
 let adapter;
 let lang;
@@ -113,7 +103,7 @@ async function getData(){
         else{
             adapter.log.debug('Setup found: country ' + countryConfig + ' and region ' + regionConfig)
 
-            var urlAtom = getCountryLink(countryConfig)
+            urlAtom = getCountryLink(countryConfig)
             var xmlLanguage = getXMLLanguage(countryConfig)
             if (xmlLanguage == ""){
                 xmlLanguage = 'en-GB'
@@ -175,7 +165,7 @@ async function getData(){
                         var now = new Date();
                         result.feed.entry.forEach(function (element){
                             var expiresDate = new Date(element['cap:expires']);
-
+                            location = element['cap:areaDesc']
                             if ((element['cap:geocode'].value == regionCSV) && (expiresDate >= now)){
                                 var detailsLink = element.link[0].$.href
                                 adapter.log.debug('4.1: Warning found: ' + detailsLink)
@@ -292,7 +282,6 @@ async function getData(){
 
                     if (level.val > maxAlarmLevel){
                         maxAlarmLevel = level.val
-                        adapter.log.debug('Reised maxAlarmLevel to ' + maxAlarmLevel);
                     }
                      
                     if (!adapter.config.noIcons){
@@ -315,15 +304,17 @@ async function getData(){
             if (htmlCode){
                 htmlCode += '</tbody></table>'
             } 
-            //adapter.log.debug('widget: ' + htmlCode)
 
-            adapter.log.debug('11: Set State for Widget')
 
             await Promise.all([
+                adapter.setStateAsync({device: '' , channel: '',state: 'level'}, {val: maxAlarmLevel, ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'htmlToday'}, {val: htmlCode, ack: true}),
+                adapter.setStateAsync({device: '' , channel: '',state: 'location'}, {val: location, ack: true}),
+                adapter.setStateAsync({device: '' , channel: '',state: 'link'}, {val: urlAtom, ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'color'}, {val: getColor(maxAlarmLevel), ack: true})
 
             ])
+            adapter.log.debug('11: Set State for Widget')
 
             adapter.log.debug('12: All Done')
             

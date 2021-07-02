@@ -211,6 +211,19 @@
             "native": {}
         },
         {
+            "_id": "link",
+            "type": "state",
+            "common": {
+                "name": "RSS Feed Link",
+                "type": "string",
+                "role": "value",
+                "read": true,
+                "write": false,
+                "def": ""
+            },
+            "native": {}
+        },
+        {
             "_id": "htmlToday",
             "type": "state",
             "common": {
@@ -241,6 +254,19 @@
             "type": "state",
             "common": {
                 "name": "Overall Alarm Color",
+                "type": "string",
+                "role": "value",
+                "read": true,
+                "write": false,
+                "def": ""
+            },
+            "native": {}
+        },
+        {
+            "_id": "level",
+            "type": "state",
+            "common": {
+                "name": "Overall Level",
                 "type": "string",
                 "role": "value",
                 "read": true,
