@@ -314,9 +314,9 @@ async function getData(){
                         effectiveDateString = getDateFormatedLong(effectiveDate.val)
                     }
 
-                    var expiresDateStringDate = new Date(expiresDate.val)
+                    var expiresDateDate = new Date(expiresDate.val)
                     var expiresDateString = ""
-                    if ((today.toDateString() == expiresDateStringDate.toDateString())){
+                    if ((today.toDateString() == expiresDateDate.toDateString())){
                         expiresDateString = getDateFormatedShort(expiresDate.val)
                     }
                     else{
