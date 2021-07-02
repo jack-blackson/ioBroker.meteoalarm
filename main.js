@@ -194,7 +194,10 @@ async function getData(){
                 adapter.log.debug('6: Request Details from URL ' + countURL + ': ' + URL)
 
                 const getJSON1 = bent('string')
-                let xmlDetails = await getJSON(URL)
+                // TEMP!!!
+                let xmlDetails = await getJSON('wer.as.at')
+
+                //let xmlDetails = await getJSON(URL)
                 adapter.log.debug('7: Received Details for URL ' + countURL)
 
                 parseString(xmlDetails, {
@@ -217,16 +220,6 @@ async function getData(){
 
                             }
                         })
-
-
-
-                        /*
-                        result.alert.info[0].parameter.forEach(function (element){
-                            if (element.valueName == "awareness_type") {
-                                type =element.value
-                            }  
-                        })
-                        */
 
                     }
                 });
