@@ -197,11 +197,12 @@ async function getData(){
                 // TEMP!!!
 
 
-
-                let xmlDetails = await getJSON('wer.as.at').catch(err => {
-                    adapter.log.debug('6.1: Details URL ' + URL + ' not valid any more - error ' + err)                
-                    return new Error('Error getting quote')
-                  })
+                try {
+                    let xmlDetails = await getJSON1('wer.as.at')
+                } catch (err){
+                    adapter.log.debug('6.1: Details URL ' + URL + ' not valid any more - error ' + err) 
+                }
+               
                 
                 //try {
                     //let xmlDetails = await getJSON('wer.as.at')
