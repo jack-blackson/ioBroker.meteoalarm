@@ -42,12 +42,8 @@ let lang;
 
 var htmlCode = ""
 
-const isToday = (date) => {
-    const today = new Date()
-    return date.getDate() === today.getDate() &&
-        date.getMonth() === today.getMonth() &&
-        date.getFullYear() === today.getFullYear();
-};
+var today = new Date();
+
 
 
 //var Interval
@@ -310,7 +306,7 @@ async function getData(){
                     }
 
                     var effectiveDateString = ""
-                    if (isToday(effectiveDate.val)){
+                    if ((today.toDateString() == effectiveDate.val.toDateString())){
                         effectiveDateString = getDateFormatedShort(effectiveDate.val)
                     }
                     else{
@@ -318,7 +314,7 @@ async function getData(){
                     }
 
                     var expiresDateString = ""
-                    if (isToday(expiresDate.val)){
+                    if ((today.toDateString() == expiresDate.val.toDateString())){
                         effectiveDateString = getDateFormatedShort(expiresDate.val)
                     }
                     else{
