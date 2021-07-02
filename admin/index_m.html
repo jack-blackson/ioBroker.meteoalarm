@@ -117,30 +117,12 @@
                 for(const val of sortedRegionArray) {
 
                     codePosition = regionArray.indexOf(val)
-                    console.debug(' Code: ' + codeArray[codePosition] + ' Region: ' + val)
                     $option = $("<option/>", {
                                         value: codeArray[codePosition],
                                         text: val
                             });
                             $('#region').append($option);
                 }
-
-
-                /*
-                const sortedRegions = Object.entries(regionArray)
-                    .sort(([,a],[,b]) => a-b)
-                    .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
-
-
-                $.each(sortedRegions, function (key, value) {
-                    console.log( key + ' : ' + value );
-                    $option = $("<option/>", {
-                                        value: key,
-                                        text: value
-                            });
-                            $('#region').append($option);
-                });               
-                */
 
                 let instance =  M.FormSelect.getInstance($('#region'));
 
