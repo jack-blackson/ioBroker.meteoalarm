@@ -120,8 +120,8 @@ async function getData(){
             const csv = await getCSVData()
             
 
-            adapter.log.debug(' State:' + await adapter.getStateAsync('weatherMapCountry'))
-            if (adapter.getState('weatherMapCountry') != null ){
+            const checkState = await adapter.getStateAsync('weatherMapCountry')
+            if (checkState != null ){
 
                 adapter.log.debug('0.1: Cleaning up old objects');
                 const cleaned = await cleanupOld()
