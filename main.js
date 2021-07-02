@@ -103,6 +103,11 @@ async function getData(){
 
         if (regionConfig  == "0"|| !regionConfig){
             adapter.log.error('Please select a valid region in setup!')
+            let htmlCode = '<table style="border-collapse: collapse; width: 100%;" border="1"><tbody><tr>'
+            htmlCode += '<td style="width: 100%; background-color: #fc3d03;">Please maintain country and region in setup!</td></tr></tbody></table>'
+            await Promise.all([
+                adapter.setStateAsync({device: '' , channel: '',state: 'htmlToday'}, {val: htmlCode, ack: true})
+            ])
             adapter.terminate ? adapter.terminate(0) : process.exit(0);
         }
         else{
@@ -137,9 +142,6 @@ async function getData(){
                 adapter.log.debug('1.1 No region conversion found, kept old value' + regionCSV)
  
             }
-
-            
-
 
             adapter.log.debug('2: Request Atom from ' + urlAtom )
 
