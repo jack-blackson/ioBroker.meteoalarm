@@ -122,7 +122,6 @@ async function getData(){
 
             for(var i = 0; i < csvContent.length; i += 1) {
                 if(csvContent[i][0] == regionConfig) {
-                    adapter.log.debug('FOUND!!')
                     regionCSV =  csvContent[i][1];
                 }
             }
