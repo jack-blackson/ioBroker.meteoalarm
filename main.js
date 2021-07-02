@@ -293,8 +293,9 @@ async function getData(){
                     }
                      
                     if (!adapter.config.noIcons){
-                        htmlCode += '<td style="width: 2%; border-style: none; ' + colorHTML +  '">'
-                        htmlCode += '<tr><td style="width: 5%; border-style: none; ' + colorHTML +  '">'
+                        // Dummy cell to move picture away from the left side
+                        htmlCode += '<tr><td style="width: 2%; border-style: none; ' + colorHTML +  '"></td>'
+                        htmlCode += '<td style="width: 5%; border-style: none; ' + colorHTML +  '">'
                         htmlCode += '<img style="display:block; padding-top: 10px; padding-bottom: 15px;padding-right: 10px; padding left: 10px;"'
                         htmlCode +=  'width="50%" height="50%" src="' +  icon.val + '"/>'
                         htmlCode += '</td>'
