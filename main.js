@@ -198,7 +198,9 @@ async function getData(){
 
 
                 try {
-                    let xmlDetails = await getJSON1('wer.as.at')
+                    //let xmlDetails = await getJSON1('wer.as.at')
+                    await getJSON1('wer.as.at')
+
                 } catch (err){
                     adapter.log.debug('6.1: Details URL ' + URL + ' not valid any more - error ' + err) 
                 }
