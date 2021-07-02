@@ -346,8 +346,10 @@ function getDateFormated(dateTimeString)
 async function cleanupOld(){
     const promises = await Promise.all([
 
-        adapter.deleteChannelAsync('today')
-        
+        adapter.deleteChannelAsync('today'),
+        adapter.deleteChannelAsync('tomorrow'),
+        adapter.deleteStateAsync('weatherMapCountry')
+
     ])
 }
 
