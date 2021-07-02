@@ -129,9 +129,16 @@ async function getData(){
                     regionCSV =  csvContent[i][1];
                 }
             }
-            adapter.log.debug('1.1 Region Converted: ' + regionCSV)
+            if (regionCSV){
+                adapter.log.debug('1.1 Region Converted: ' + regionCSV)
+            }
+            else{
+                regionCSV = regionConfig
+                adapter.log.debug('1.1 No region conversion found, kept old value' + regionCSV)
+ 
+            }
+
             
-            //adapter.log.debug('First Line: ' + csvContent[1][0])
 
 
             adapter.log.debug('2: Request Atom from ' + urlAtom )
@@ -200,7 +207,6 @@ async function getData(){
                         adapter.terminate ? adapter.terminate(0) : process.exit(0);
                     } else {
                         result.alert.info.forEach(function (element){
-                            adapter.log.debug('Sprache gefundeN: ' + element.language)
                             if (element.language == xmlLanguage){
                                 element.parameter.forEach(function (parameter){
                                     if (parameter.valueName == "awareness_type") {
@@ -316,9 +322,6 @@ async function getCSVData(){
     return new Promise(function(resolve,reject){
         fs.createReadStream('geocodes-aliases.csv', 'utf8')
         .pipe(parseCSV({delimiter: ','}))
-        .on('headers', (headers) => {
-            adapter.log.debug(`First header: ${headers[0]}`)
-        })
         .on('data', function(csvrow) {
             //console.log(csvrow);
             //do something with csvrow
@@ -326,7 +329,7 @@ async function getCSVData(){
         })
         .on('end',function() {
         //do something with csvData
-        adapter.log.debug(csvContent);
+        //adapter.log.debug(csvContent);
         resolve(csvContent);
         })
         .on('error', reject); 
