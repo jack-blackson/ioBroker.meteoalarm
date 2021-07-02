@@ -129,7 +129,7 @@ async function getData(){
             }
             else{
                 regionCSV = regionConfig
-                adapter.log.debug('1.1 No region conversion found, kept old value' + regionCSV)
+                adapter.log.debug('1.1 No region conversion found, kept old value ' + regionCSV)
  
             }
 
@@ -165,7 +165,6 @@ async function getData(){
                         var now = new Date();
                         result.feed.entry.forEach(function (element){
                             var expiresDate = new Date(element['cap:expires']);
-                            location = element['cap:areaDesc']
                             if ((element['cap:geocode'].value == regionCSV) && (expiresDate >= now)){
                                 var detailsLink = element.link[0].$.href
                                 adapter.log.debug('4.1: Warning found: ' + detailsLink)

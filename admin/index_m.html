@@ -151,7 +151,10 @@
 		// This will be called by the admin adapter when the user presses the save button
 		function save(callback) {
 			// example: select elements with class=value and build settings object
-            console.log('saving country ' + $('#country').children("option:selected").val() + ' and region ' + $('#region').children("option:selected").val())
+            console.log('saving country ' + $('#country').children("option:selected").val() + ' and region ' + $('#region').children("option:selected").val()+  ' - ' + $('#region').children("option:selected").text())
+            if (!settings) return;
+            settings.regionName = $('#region').children("option:selected").text()
+
 			var obj = {};
 			$('.value').each(function () {
 				var $this = $(this);
