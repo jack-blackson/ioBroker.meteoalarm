@@ -146,11 +146,9 @@ async function getData(){
             const getJSON = bent('string')
             let xmlAtom
             try {
-                //xmlAtom = await getJSON(urlAtom)
-                xmlAtom = await getJSON(urlAtom + 'as')
-
+                xmlAtom = await getJSON(urlAtom)
             } catch (err){
-                adapter.log.debug('2.1: Atom URL ' + urlAtom + ' not available - error ' + err) 
+                adapter.log.warn('2.1: Atom URL ' + urlAtom + ' not available - error ' + err) 
                 adapter.terminate ? adapter.terminate(0) : process.exit(0);
             }
             if (xmlAtom){
