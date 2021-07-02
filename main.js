@@ -102,7 +102,7 @@ async function getData(){
             adapter.terminate ? adapter.terminate(0) : process.exit(0);
         }
         else{
-            adapter.log.debug('Setup found: country ' + countryConfig + ' and region ' + regionConfig)
+            adapter.log.debug('Setup found: country ' + countryConfig + ' and region ' + regionConfig + ' - ' +  regionName )
 
             urlAtom = getCountryLink(countryConfig)
             var xmlLanguage = getXMLLanguage(countryConfig)
