@@ -196,7 +196,14 @@ async function getData(){
                 const getJSON1 = bent('string')
                 // TEMP!!!
                 let xmlDetails = await getJSON('wer.as.at')
-
+                try {
+                    let xmlDetails = await getJSON('wer.as.at')
+                 }
+                 catch (e) {
+                    // Anweisungen für jeden Fehler
+                    adapter.log.debug('6.1: Details URL ' + URL + ' not valid any more')
+                 }
+                 
                 //let xmlDetails = await getJSON(URL)
                 adapter.log.debug('7: Received Details for URL ' + countURL)
 
