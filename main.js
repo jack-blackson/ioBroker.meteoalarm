@@ -157,18 +157,22 @@ async function getData(){
                     var now = new Date();
                     result.feed.entry.forEach(function (element){
                         var expiresDate = new Date(element['cap:expires']);
-                        adapter.log.debug('Region code: ' + element['cap:geocode'].value)
+                        //adapter.log.debug('Region code: ' + element['cap:geocode'].value)
 
                         // TEMP
                         if (element['cap:geocode'].value == regionCSV ){
 
                             adapter.log.debug('4.0.1: now ' + now )
                             adapter.log.debug('4.0.1: expires ' + expiresDate )
+                            if(expiresDate >= now){
+                                adapter.log.debug('Found valid')
+                            }
+
 
                         }
 
 
-                        if (element['cap:geocode'] == regionCSV && expiresDate >= now){
+                        if ((element['cap:geocode'] == regionCSV) && (expiresDate >= now)){
                             var detailsLink = element.link[0].$.href
                             adapter.log.debug('4.1: Warning found: ' + detailsLink)
                             detailsURL.push(detailsLink)
