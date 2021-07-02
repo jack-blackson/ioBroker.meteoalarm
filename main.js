@@ -157,7 +157,7 @@ async function getData(){
                     var now = new Date();
                     result.feed.entry.forEach(function (element){
                         var expiresDate = new Date(element['cap:expires']);
-                        //adapter.log.debug('Region code: ' + element['cap:geocode'].value)
+                        adapter.log.debug('Region code: ' + element['cap:geocode'].value)
 
                         // TEMP
                         if (element['cap:geocode'].value == regionCSV ){
