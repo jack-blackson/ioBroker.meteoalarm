@@ -305,16 +305,18 @@ async function getData(){
                         htmlCode += '</td>'
                     }
 
+                    var effectiveDateDate = new Date(effectiveDate.val)
                     var effectiveDateString = ""
-                    if ((today.toDateString() == effectiveDate.val.toDateString())){
+                    if ((today.toDateString() == effectiveDateDate.toDateString())){
                         effectiveDateString = getDateFormatedShort(effectiveDate.val)
                     }
                     else{
                         effectiveDateString = getDateFormatedLong(effectiveDate.val)
                     }
 
+                    var expiresDateStringDate = new Date(expiresDate.val)
                     var expiresDateString = ""
-                    if ((today.toDateString() == expiresDate.val.toDateString())){
+                    if ((today.toDateString() == expiresDateStringDate.toDateString())){
                         effectiveDateString = getDateFormatedShort(expiresDate.val)
                     }
                     else{
