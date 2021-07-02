@@ -102,14 +102,10 @@
                 }
                 
                 var NoOfEntries = regionArray.length
-                console.log('Vor Sort: ' + JSON.stringify(regionArray))
-                //regionArray = sortObject(regionArray)
 
                 const sortedRegions = Object.entries(regionArray)
                     .sort(([,a],[,b]) => a-b)
                     .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
-
-                console.log('Nach Sort: ' + sortedRegions)
 
 
                 $.each(sortedRegions, function (key, value) {
