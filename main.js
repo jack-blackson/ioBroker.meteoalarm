@@ -119,7 +119,7 @@ async function getData(){
 
             const csv = await getCSVData()
 
-            if (adapter.existsState('weatherMapCountry')){
+            if (adapter.getState('weatherMapCountry') != null ){
 
                 adapter.log.debug('0.1: Cleaning up old objects');
                 const cleaned = await cleanupOld()
@@ -839,7 +839,7 @@ function getXMLLanguage(country){
             return ''
             break;
         case 'DK':
-            return ''
+            return 'da-DK'
             break;
         case 'EE':
             return ''
