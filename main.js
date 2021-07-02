@@ -118,6 +118,13 @@ async function getData(){
             const deleted =  deleteAllAlarms();
 
             const csv = await getCSVData()
+
+            if (adapter.getObject('weatherMapCountry')) {
+
+                adapter.log.debug('0.1: Cleaning up old objects');
+                const cleaned = await cleanupOld()
+            }
+            
                 
             adapter.log.debug('1: Parsed CSV File')
 
@@ -334,6 +341,14 @@ function getDateFormated(dateTimeString)
 {
    return new Date(dateTimeString).toLocaleDateString(undefined, { weekday: "long" , hour: "numeric", minute: "2-digit"})
       
+}
+
+async function cleanupOld(){
+    const promises = await Promise.all([
+
+        adapter.deleteChannelAsync('today')
+        
+    ])
 }
 
 async function getCSVData(){
