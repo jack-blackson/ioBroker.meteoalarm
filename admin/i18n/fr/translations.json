@@ -46,6 +46,8 @@
     "TextwarningColorLevel2": "Potentiellement dangereux",
     "TextwarningColorLevel3": "Dangereux",
     "TextwarningColorLevel4": "Très dangereux",
+    "Today": "Aujourd'hui",
+    "Tomorrow": "Demain",
     "UK": "Royaume-Uni",
     "country": "Pays",
     "country_select": "Choisissez le pays",

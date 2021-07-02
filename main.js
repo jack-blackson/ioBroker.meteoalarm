@@ -42,6 +42,13 @@ let lang;
 
 var htmlCode = ""
 
+const isToday = (date) => {
+    const today = new Date()
+    return date.getDate() === today.getDate() &&
+        date.getMonth() === today.getMonth() &&
+        date.getFullYear() === today.getFullYear();
+};
+
 
 //var Interval
 
@@ -302,10 +309,25 @@ async function getData(){
                         htmlCode += '</td>'
                     }
 
+                    var effectiveDateString = ""
+                    if (isToday(effectiveDate.val)){
+                        effectiveDateString = getDateFormatedShort(effectiveDate.val)
+                    }
+                    else{
+                        effectiveDateString = getDateFormatedLong(effectiveDate.val)
+                    }
+
+                    var expiresDateString = ""
+                    if (isToday(expiresDate.val)){
+                        effectiveDateString = getDateFormatedShort(expiresDate.val)
+                    }
+                    else{
+                        effectiveDateString = getDateFormatedLong(expiresDate.val)
+                    }
 
                     htmlCode += '<td style="width: 92%; border-style: none; ' + colorHTML +  '">'
                     htmlCode += '<h3 style = "margin-top: 5px;margin-bottom: 1px;">' + headline.val + ': '
-                    htmlCode += getDateFormated(effectiveDate.val) + ' - ' + getDateFormated(expiresDate.val) + '</h3>'
+                    htmlCode += effectiveDateString + ' - ' + expiresDateString + '</h3>'
                     htmlCode += description.val 
 
     
@@ -336,9 +358,15 @@ async function getData(){
 
 }
 
-function getDateFormated(dateTimeString)
+function getDateFormatedShort(dateTimeString)
 {
-   return new Date(dateTimeString).toLocaleDateString(xmlLanguage, { weekday: "long" , hour: "numeric", minute: "2-digit"})
+   return new Date(dateTimeString).toLocaleDateString(undefined, { hour: "numeric", minute: "2-digit"})
+      
+}
+
+function getDateFormatedLong(dateTimeString)
+{
+   return new Date(dateTimeString).toLocaleDateString(undefined, { weekday: "long", hour: "numeric", minute: "2-digit"})
       
 }
 
