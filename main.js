@@ -165,19 +165,22 @@ async function getData(){
 
                         var i = 0
                         var now = new Date();
-                        result.feed.entry.forEach(function (element){
-                            var expiresDate = new Date(element['cap:expires']);
+                        if (result.feed.entry){
+                            result.feed.entry.forEach(function (element){
+                                var expiresDate = new Date(element['cap:expires']);
+    
+                                var locationRelevant = checkLocation(element['cap:geocode'].valueName , element['cap:geocode'].value)
+    
+                                if (locationRelevant && (expiresDate >= now)){
+                                    var detailsLink = element.link[0].$.href
+                                    adapter.log.debug('4.1: Warning found: ' + detailsLink)
+                                    detailsURL.push(detailsLink)
+                        
+                                    i += 1;
+                                }
+                            });
+                        }
 
-                            var locationRelevant = checkLocation(element['cap:geocode'].valueName , element['cap:geocode'].value)
-
-                            if (locationRelevant && (expiresDate >= now)){
-                                var detailsLink = element.link[0].$.href
-                                adapter.log.debug('4.1: Warning found: ' + detailsLink)
-                                detailsURL.push(detailsLink)
-                    
-                                i += 1;
-                            }
-                        });
                     }
                 });
             }
