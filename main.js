@@ -108,8 +108,6 @@ async function getData(){
             adapter.terminate ? adapter.terminate(0) : process.exit(0);
         }
         else{
-            //relevantLocationArray["EMMA_ID"] = regionConfig
-            fillWarnTypeArray("EMMA_ID",regionConfig)
             adapter.log.debug('Setup found: country ' + countryConfig + ' and region ' + regionConfig + ' - ' +  regionName )
 
             urlAtom = getCountryLink(countryConfig)
