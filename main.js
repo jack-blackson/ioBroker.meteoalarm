@@ -325,7 +325,7 @@ async function getData(){
             else{
                 // No Alarm Found
                 htmlCode += '<table style="border-collapse: collapse; width: 100%;"><tbody>'
-                htmlCode += '<tr><td style= border-style: none; '
+                htmlCode += '<tr><td style= "border-style: none; '
                 if (!adapter.config.noBackgroundColor){
                     htmlCode += 'background-color: ' + getColor('1')
                 }
