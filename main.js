@@ -357,17 +357,15 @@ function getAlarmTime(effective,expires){
     var effectiveToday = today.toDateString() == effectiveDate.toDateString()
     var expiresDay = moment(expires).locale(lang).format("dddd")
     var effectiveDay = moment(effective).locale(lang).format("dddd")
-    adapter.log.debug(' Tage: '+ effectiveDay + ' - ' + expiresDay)
 
     if (expiresToday && expiresToday){
         dateString = getDateFormatedShort(effective) + ' - ' + getDateFormatedShort(expires)
 
     }
     else{
-        //effectiveDateString = getDateFormatedLong(effectiveDate.val)
+        dateString = effectiveDay + ' ' + getDateFormatedShort(effective) + ' - ' + expiresDay + ' ' + getDateFormatedShort(expires)
     }
 
-    adapter.log.debug('Date String: ' + dateString)
     return dateString
 }
 
@@ -378,11 +376,6 @@ function getDateFormatedShort(dateTimeString)
       
 }
 
-function getDateFormatedLong(dateTimeString)
-{
-   return new Date(dateTimeString).toLocaleDateString(undefined, { weekday: "long", hour: "numeric", minute: "2-digit"})
-      
-}
 
 async function cleanupOld(){
     const promises = await Promise.all([
