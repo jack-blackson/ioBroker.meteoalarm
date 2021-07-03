@@ -104,13 +104,13 @@ async function getData(){
             adapter.log.error('Please select a valid region in setup!')
             let htmlCode = '<table style="border-collapse: collapse; width: 100%;" border="1"><tbody><tr>'
             htmlCode += '<td style="width: 100%; background-color: #fc3d03;">Please maintain country and region in setup!</td></tr></tbody></table>'
-            relevantLocationArray["EMMA_ID"] = regionConfig
             await Promise.all([
                 adapter.setStateAsync({device: '' , channel: '',state: 'htmlToday'}, {val: htmlCode, ack: true})
             ])
             adapter.terminate ? adapter.terminate(0) : process.exit(0);
         }
         else{
+            relevantLocationArray["EMMA_ID"] = regionConfig
             adapter.log.debug('Setup found: country ' + countryConfig + ' and region ' + regionConfig + ' - ' +  regionName )
 
             urlAtom = getCountryLink(countryConfig)
@@ -142,7 +142,7 @@ async function getData(){
                     relevantLocationArray[csvContent[i][2]] = csvContent[i][1]
                 }
             }
-            
+
             for (var key in relevantLocationArray) {
                 adapter.log.debug("key " + key + " has value " + relevantLocationArray[key]);
               }
