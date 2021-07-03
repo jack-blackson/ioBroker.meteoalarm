@@ -305,28 +305,9 @@ async function getData(){
                         htmlCode += '</td>'
                     }
 
-                    var effectiveDateDate = new Date(effectiveDate.val)
-                    var effectiveDateString = ""
-                    if ((today.toDateString() == effectiveDateDate.toDateString())){
-                        effectiveDateString = getDateFormatedShort(effectiveDate.val)
-                    }
-                    else{
-                        effectiveDateString = getDateFormatedLong(effectiveDate.val)
-                    }
-
-                    var expiresDateDate = new Date(expiresDate.val)
-                    var expiresDateString = ""
-                    adapter.log.debug('Tag: ' + expiresDateDate.getDay());
-                    if ((today.toDateString() == expiresDateDate.toDateString())){
-                        expiresDateString = getDateFormatedShort(expiresDate.val)
-                    }
-                    else{
-                        expiresDateString = getDateFormatedLong(expiresDate.val)
-                    }
-
                     htmlCode += '<td style="width: 92%; border-style: none; ' + colorHTML +  '">'
                     htmlCode += '<h3 style = "margin-top: 5px;margin-bottom: 1px;">' + headline.val + ': '
-                    htmlCode += effectiveDateString + ' - ' + expiresDateString + '</h3>'
+                    htmlCode += getAlarmTime(effectiveDate.valexpiresDate.val) + '</h3>'
                     htmlCode += description.val 
 
     
@@ -355,6 +336,28 @@ async function getData(){
 
         }
 
+}
+
+function getAlarmTime(effective,expires){
+    var expiresDate = new Date(expires)
+    var effectiveDate = new Date(effective)
+    var dateString = ''
+    var expiresToday = today.toDateString() == expiresDate.toDateString()
+    var effectiveToday = today.toDateString() == effectiveDate.toDateString()
+    var expiresDay = moment(expires).locale(lang).format("dddd")
+    var effectiveDay = moment(effective).locale(lang).format("dddd")
+    adapter.log.debug(' Tage: '+ effectiveDay + ' - ' + expiresDay)
+
+    if (expiresToday && expiresToday){
+        dateString = getDateFormatedShort(effective) + ' - ' + getDateFormatedShort(expires)
+
+    }
+    else{
+        //effectiveDateString = getDateFormatedLong(effectiveDate.val)
+    }
+
+    adapter.log.debug('Date String: ' + dateString)
+    return dateString
 }
 
 function getDateFormatedShort(dateTimeString)
