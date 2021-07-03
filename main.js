@@ -43,6 +43,7 @@ let lang;
 var htmlCode = ""
 
 var today = new Date();
+var maxAlarmLevel = 1
 
 
 
@@ -262,7 +263,6 @@ async function getData(){
             //const widget = await createHTMLWidget()
             adapter.log.debug('10: Creating HTML Widget')
 
-            var maxAlarmLevel = 1
             if (channelNames.length >= 1){
                 htmlCode += '<table style="border-collapse: collapse; width: 100%;" border="1"><tbody>'
                 for (const channelLoop of channelNames) {
