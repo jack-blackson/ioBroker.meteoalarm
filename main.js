@@ -142,7 +142,10 @@ async function getData(){
                     relevantLocationArray[csvContent[i][2]] = csvContent[i][1]
                 }
             }
-            adapter.log.debug('Location ARray: ' + relevantLocationArray)
+            
+            for (var key in relevantLocationArray) {
+                adapter.log.debug("key " + key + " has value " + relevantLocationArray[key]);
+              }
             /*
             if (regionCSV){
                 adapter.log.debug('1.1 Region Converted: ' + regionCSV)
