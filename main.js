@@ -298,8 +298,8 @@ async function getData(){
                      
                     if (!adapter.config.noIcons){
                         // Dummy cell to move picture away from the left side
-                        htmlCode += '<tr><td style="width: 2%; border-style: none; ' + colorHTML +  '"></td>'
-                        htmlCode += '<td style="width: 5%; border-style: none; ' + colorHTML +  '">'
+                        htmlCode += '<tr><td style="width: 1%; border-style: none; ' + colorHTML +  '"></td>'
+                        htmlCode += '<td style="width: 9%; border-style: none; ' + colorHTML +  '">'
                         htmlCode += '<img style="display:block; padding-top: 10px; padding-bottom: 15px;padding-right: 10px; padding left: 10px;"'
                         if (icon && icon.val){
                             htmlCode +=  ' width="50%" alt="Warningimmage" src="' +  icon.val + '"/>'
@@ -307,7 +307,7 @@ async function getData(){
                         htmlCode += '</td>'
                     }
 
-                    htmlCode += '<td style="width: 92%; border-style: none; ' + colorHTML +  '">'
+                    htmlCode += '<td style="width: 90%; border-style: none; ' + colorHTML +  '">'
                     if (headline && headline.val){
                         htmlCode += '<h3 style = "margin-top: 5px;margin-bottom: 1px;">' + headline.val + ': '
                     }
