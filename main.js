@@ -132,18 +132,18 @@ async function getData(){
             const csv = await getCSVData()
                 
             adapter.log.debug('1: Parsed CSV File')
-
+            
             for(var i = 0; i < csvContent.length; i += 1) {
                 if(csvContent[i][0] == regionConfig) {
                     //regionCSV =  csvContent[i][1];
-                    relevantLocationArray[csvContent[i][2]] = csvContent[i][1]
+                    //relevantLocationArray[csvContent[i][2]] = csvContent[i][1]
                 }
             }
-
+            /*
             for (var key in relevantLocationArray) {
                 adapter.log.debug("key " + key + " has value " + relevantLocationArray[key]);
               }
-            /*
+            
             if (regionCSV){
                 adapter.log.debug('1.1 Region Converted: ' + regionCSV)
             }
