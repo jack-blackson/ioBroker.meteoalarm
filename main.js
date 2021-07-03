@@ -44,6 +44,8 @@ var htmlCode = ""
 
 var today = new Date();
 
+var relevantLocationArray = {}
+
 
 
 //var Interval
@@ -96,10 +98,13 @@ async function getData(){
         regionConfig = adapter.config.region
         regionName = adapter.config.regionName
 
+        
+
         if (regionConfig  == "0"|| !regionConfig){
             adapter.log.error('Please select a valid region in setup!')
             let htmlCode = '<table style="border-collapse: collapse; width: 100%;" border="1"><tbody><tr>'
             htmlCode += '<td style="width: 100%; background-color: #fc3d03;">Please maintain country and region in setup!</td></tr></tbody></table>'
+            relevantLocationArray["EMMA_ID"] = regionConfig
             await Promise.all([
                 adapter.setStateAsync({device: '' , channel: '',state: 'htmlToday'}, {val: htmlCode, ack: true})
             ])
@@ -133,9 +138,12 @@ async function getData(){
 
             for(var i = 0; i < csvContent.length; i += 1) {
                 if(csvContent[i][0] == regionConfig) {
-                    regionCSV =  csvContent[i][1];
+                    //regionCSV =  csvContent[i][1];
+                    relevantLocationArray[csvContent[i][2]] = csvContent[i][1]
                 }
             }
+            adapter.log.debug('Location ARray: ' + relevantLocationArray)
+            /*
             if (regionCSV){
                 adapter.log.debug('1.1 Region Converted: ' + regionCSV)
             }
@@ -144,6 +152,7 @@ async function getData(){
                 adapter.log.debug('1.1 No region conversion found, kept old value ' + regionCSV)
  
             }
+            */
 
             adapter.log.debug('2: Request Atom from ' + urlAtom )
 
@@ -919,7 +928,7 @@ function getXMLLanguage(country){
             return ''
             break;
         case 'NL':
-            return ''
+            return 'ne-NL'
             break;
          case 'NO':
             return 'no'
