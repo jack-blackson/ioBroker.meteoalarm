@@ -192,7 +192,7 @@ async function getData(){
 
                             var locationRelevant = checkLocation(element['cap:geocode'].valueName , element['cap:geocode'].value)
 
-                            if ((element['cap:geocode'].value == regionCSV) && (expiresDate >= now)){
+                            if (locationRelevant && (expiresDate >= now)){
                                 var detailsLink = element.link[0].$.href
                                 adapter.log.debug('4.1: Warning found: ' + detailsLink)
                                 detailsURL.push(detailsLink)
