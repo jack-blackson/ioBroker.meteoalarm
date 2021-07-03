@@ -133,22 +133,6 @@ async function getData(){
                 
             adapter.log.debug('1: Parsed CSV File')
             
-            
-            /*
-            for (var key in relevantLocationArray) {
-                adapter.log.debug("key " + key + " has value " + relevantLocationArray[key]);
-              }
-            
-            if (regionCSV){
-                adapter.log.debug('1.1 Region Converted: ' + regionCSV)
-            }
-            else{
-                regionCSV = regionConfig
-                adapter.log.debug('1.1 No region conversion found, kept old value ' + regionCSV)
- 
-            }
-            */
-
             adapter.log.debug('2: Request Atom from ' + urlAtom )
 
             const getJSON = bent('string')
@@ -389,7 +373,8 @@ function getAlarmTime(effective,expires){
 
 function getDateFormatedShort(dateTimeString)
 {
-   return new Date(dateTimeString).toLocaleDateString(undefined, { hour: "numeric", minute: "2-digit"})
+   return new Date(dateTimeString).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+
       
 }
 
