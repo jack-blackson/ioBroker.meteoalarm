@@ -295,7 +295,7 @@ async function getData(){
                         htmlCode += '<tr><td style="width: 2%; border-style: none; ' + colorHTML +  '"></td>'
                         htmlCode += '<td style="width: 5%; border-style: none; ' + colorHTML +  '">'
                         htmlCode += '<img style="display:block; padding-top: 10px; padding-bottom: 15px;padding-right: 10px; padding left: 10px;"'
-                        htmlCode +=  ' width="50%" height="50%" alt="Warningimmage" src="' +  icon.val + '"/>'
+                        htmlCode +=  ' width="50%" alt="Warningimmage" src="' +  icon.val + '"/>'
                         htmlCode += '</td>'
                     }
 
