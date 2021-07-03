@@ -283,9 +283,12 @@ async function getData(){
                         colorHTML = 'background-color: ' + color.val
                     }
 
-                    if (level.val > maxAlarmLevel){
-                        maxAlarmLevel = Number(level.val)
+                    if (level && level.val){
+                        if (level.val > maxAlarmLevel){
+                            maxAlarmLevel = Number(level.val)
+                        }
                     }
+                    
                      
                     if (!adapter.config.noIcons){
                         // Dummy cell to move picture away from the left side
