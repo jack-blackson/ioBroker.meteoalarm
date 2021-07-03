@@ -133,12 +133,7 @@ async function getData(){
                 
             adapter.log.debug('1: Parsed CSV File')
             
-            for(var i = 0; i < csvContent.length; i += 1) {
-                if(csvContent[i][0] == regionConfig) {
-                    //regionCSV =  csvContent[i][1];
-                    //relevantLocationArray[csvContent[i][2]] = csvContent[i][1]
-                }
-            }
+            
             /*
             for (var key in relevantLocationArray) {
                 adapter.log.debug("key " + key + " has value " + relevantLocationArray[key]);
@@ -354,6 +349,18 @@ function checkLocation(type,value){
     //check which type it is and if it is relevant for us
     if (type == "EMMA_ID"){
         return value == regionConfig
+    }
+    else{
+        var successful = false
+        for(var i = 0; i < csvContent.length; i += 1) {
+            if((csvContent[i][0] == regionConfig) && (csvContent[i][2] == type) ) {
+                if (value == csvContent[i][1] ){
+                    successful = true
+                }
+            }
+        }
+        return successful
+
     }
 
 }
