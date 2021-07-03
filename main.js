@@ -403,7 +403,7 @@ async function cleanupOld(){
 
 async function getCSVData(){
     return new Promise(function(resolve,reject){
-        fs.createReadStream('/geocodes-aliases.csv')
+        fs.createReadStream('geocodes-aliases.csv')
         .pipe(parseCSV({delimiter: ','}))
         .on('data', function(csvrow) {
             //console.log(csvrow);
