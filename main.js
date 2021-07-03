@@ -284,7 +284,7 @@ async function getData(){
                     }
 
                     if (level.val > maxAlarmLevel){
-                        maxAlarmLevel = Number(level.val)
+                        maxAlarmLevel = Number(level.val
                     }
                      
                     if (!adapter.config.noIcons){
@@ -315,7 +315,7 @@ async function getData(){
                 adapter.setStateAsync({device: '' , channel: '',state: 'htmlToday'}, {val: htmlCode, ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'location'}, {val: regionName, ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'link'}, {val: urlAtom, ack: true}),
-                adapter.setStateAsync({device: '' , channel: '',state: 'color'}, {val: getColor(maxAlarmLevel), ack: true})
+                adapter.setStateAsync({device: '' , channel: '',state: 'color'}, {val: getColor(maxAlarmLevel.toString()), ack: true})
 
             ])
             adapter.log.debug('11: Set State for Widget')
