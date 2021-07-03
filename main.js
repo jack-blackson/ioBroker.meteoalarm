@@ -319,7 +319,7 @@ async function getData(){
 
                     htmlCode += '<td style="width: 92%; border-style: none; ' + colorHTML +  '">'
                     htmlCode += '<h3 style = "margin-top: 5px;margin-bottom: 1px;">' + headline.val + ': '
-                    htmlCode += getAlarmTime(effectiveDate.valexpiresDate.val) + '</h3>'
+                    htmlCode += getAlarmTime(effectiveDate.expiresDate.val) + '</h3>'
                     htmlCode += description.val 
 
     
