@@ -284,7 +284,7 @@ async function getData(){
                     }
 
                     if (level.val > maxAlarmLevel){
-                        maxAlarmLevel = Number(level.val
+                        maxAlarmLevel = Number(level.val)
                     }
                      
                     if (!adapter.config.noIcons){
