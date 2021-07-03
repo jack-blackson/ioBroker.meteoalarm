@@ -264,7 +264,7 @@ async function getData(){
             adapter.log.debug('10: Creating HTML Widget')
 
             if (channelNames.length >= 1){
-                htmlCode += '<table style="border-collapse: collapse; width: 100%;" border="1"><tbody>'
+                htmlCode += '<table style="border-collapse: collapse; width: 100%;"><tbody>'
                 for (const channelLoop of channelNames) {
 
                     var path = 'alarms.' + channelLoop
@@ -295,7 +295,7 @@ async function getData(){
                         htmlCode += '<tr><td style="width: 2%; border-style: none; ' + colorHTML +  '"></td>'
                         htmlCode += '<td style="width: 5%; border-style: none; ' + colorHTML +  '">'
                         htmlCode += '<img style="display:block; padding-top: 10px; padding-bottom: 15px;padding-right: 10px; padding left: 10px;"'
-                        htmlCode +=  'width="50%" height="50%" src="' +  icon.val + '"/>'
+                        htmlCode +=  ' width="50%" height="50%" alt="Warningimmage" src="' +  icon.val + '"/>'
                         htmlCode += '</td>'
                     }
 
