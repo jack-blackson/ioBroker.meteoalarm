@@ -279,9 +279,12 @@ async function getData(){
                     let expiresDate = await adapter.getStateAsync(path + '.expires');    
                     let level = await adapter.getStateAsync(path + '.level');
 
-                    if (!adapter.config.noBackgroundColor){
-                        colorHTML = 'background-color: ' + color.val
+                    if (color && color.val){
+                        if (!adapter.config.noBackgroundColor){
+                            colorHTML = 'background-color: ' + color.val
+                        }
                     }
+                    
 
                     if (level && level.val){
                         if (level.val > maxAlarmLevel){
@@ -295,14 +298,22 @@ async function getData(){
                         htmlCode += '<tr><td style="width: 2%; border-style: none; ' + colorHTML +  '"></td>'
                         htmlCode += '<td style="width: 5%; border-style: none; ' + colorHTML +  '">'
                         htmlCode += '<img style="display:block; padding-top: 10px; padding-bottom: 15px;padding-right: 10px; padding left: 10px;"'
-                        htmlCode +=  'width="50%" height="50%" src="' +  icon.val + '"/>'
+                        if (icon && icon.val){
+                            htmlCode +=  'width="50%" height="50%" src="' +  icon.val + '"/>'
+                        }
                         htmlCode += '</td>'
                     }
 
                     htmlCode += '<td style="width: 92%; border-style: none; ' + colorHTML +  '">'
-                    htmlCode += '<h3 style = "margin-top: 5px;margin-bottom: 1px;">' + headline.val + ': '
-                    htmlCode += getAlarmTime(effectiveDate.val, expiresDate.val) + '</h3>'
-                    htmlCode += description.val 
+                    if (headline && headline.val){
+                        htmlCode += '<h3 style = "margin-top: 5px;margin-bottom: 1px;">' + headline.val + ': '
+                    }
+                    if (effectiveDate && effectiveDate.val && expiresDate && expiresDate.val){
+                        htmlCode += getAlarmTime(effectiveDate.val, expiresDate.val) + '</h3>'
+                    }
+                    if (description && description.val){
+                        htmlCode += description.val 
+                    }
 
     
                     htmlCode += '</td></tr>'
