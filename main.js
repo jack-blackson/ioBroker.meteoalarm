@@ -352,7 +352,7 @@ async function getData(){
 
 function checkLocation(type,value){
     //check which type it is and if it is relevant for us
-    if (type == "EMMA-ID"){
+    if (type == "EMMA_ID"){
         return value == regionConfig
     }
 
