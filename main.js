@@ -44,8 +44,6 @@ var htmlCode = ""
 
 var today = new Date();
 
-var relevantLocationArray = {}
-
 
 
 //var Interval
@@ -110,7 +108,8 @@ async function getData(){
             adapter.terminate ? adapter.terminate(0) : process.exit(0);
         }
         else{
-            relevantLocationArray["EMMA_ID"] = regionConfig
+            //relevantLocationArray["EMMA_ID"] = regionConfig
+            fillWarnTypeArray("EMMA_ID",regionConfig)
             adapter.log.debug('Setup found: country ' + countryConfig + ' and region ' + regionConfig + ' - ' +  regionName )
 
             urlAtom = getCountryLink(countryConfig)
@@ -190,6 +189,9 @@ async function getData(){
                         var now = new Date();
                         result.feed.entry.forEach(function (element){
                             var expiresDate = new Date(element['cap:expires']);
+
+                            var locationRelevant = checkLocation(element['cap:geocode'].valueName , element['cap:geocode'].value)
+
                             if ((element['cap:geocode'].value == regionCSV) && (expiresDate >= now)){
                                 var detailsLink = element.link[0].$.href
                                 adapter.log.debug('4.1: Warning found: ' + detailsLink)
@@ -347,6 +349,14 @@ async function getData(){
 
 
         }
+
+}
+
+function checkLocation(type,value){
+    //check which type it is and if it is relevant for us
+    if (type == "EMMA-ID"){
+        return value == regionConfig
+    }
 
 }
 
