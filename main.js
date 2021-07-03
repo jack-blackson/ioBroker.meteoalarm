@@ -320,8 +320,17 @@ async function getData(){
 
     
                     htmlCode += '</td></tr>'
-                }
+                }    
             }
+            else{
+                // No Alarm Found
+                htmlCode += '<table style="border-collapse: collapse; width: 100%;"><tbody>'
+                htmlCode += '<tr><td style= border-style: none; ' + getColor('1') +  '">' + getLevelName('1') 
+                htmlCode += '</td></tr>'
+
+            }
+
+
             if (htmlCode){
                 htmlCode += '</tbody></table>'
             } 
