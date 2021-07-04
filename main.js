@@ -332,7 +332,7 @@ async function getData(){
                 }
                 htmlCode +=  '">' + getLevelName('1') 
                 htmlCode += '</td></tr>'
-
+                maxAlarmLevel = 1
             }
 
 
