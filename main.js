@@ -20,6 +20,7 @@ const bent = require("bent");
 
 const parseCSV = require('csv-parse');
 const fs = require("fs");
+const path = require('path');
 
 var DescFilter1 = '';
 var DescFilter2 = '';
@@ -420,7 +421,7 @@ async function cleanupOld(){
 
 async function getCSVData(){
     return new Promise(function(resolve,reject){
-        fs.createReadStream('geocodes-aliases.csv')
+        fs.createReadStream(path.resolve(__dirname, 'geocodes-aliases.csv'))
         .pipe(parseCSV({delimiter: ','}))
         .on('data', function(csvrow) {
             //console.log(csvrow);
