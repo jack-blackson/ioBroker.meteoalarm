@@ -353,6 +353,9 @@ async function getData(){
             adapter.log.debug('11: Set State for Widget')
 
             adapter.log.debug('12: All Done')
+            if (regionName){
+                adapter.log.info('Updated Weather Alarms for ' + regionName)
+            }
             
             adapter.terminate ? adapter.terminate(0) : process.exit(0);
 
