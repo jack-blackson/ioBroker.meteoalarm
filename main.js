@@ -304,7 +304,7 @@ async function getData(){
                         htmlCode += '<td style="width: 9%; border-style: none; ' + colorHTML +  '">'
                         htmlCode += '<img style="display:block; padding-top: 10px; padding-bottom: 15px;padding-right: 10px; padding left: 10px;"'
                         if (icon && icon.val){
-                            htmlCode +=  ' width="50%" alt="Warningimmage" src="' +  icon.val + '"/>'
+                            htmlCode +=  ' width="80%" alt="Warningimmage" src="' +  icon.val + '"/>'
                         }
                         htmlCode += '</td>'
                     }
