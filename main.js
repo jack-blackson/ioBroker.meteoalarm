@@ -311,10 +311,10 @@ async function getData(){
 
                     htmlCode += '<td style="width: 90%; border-style: none; ' + colorHTML +  '">'
                     if (headline && headline.val){
-                        htmlCode += '<h3 style = "margin-top: 5px;margin-bottom: 1px;">' + headline.val + ': '
+                        htmlCode += '<h4 style = "margin-top: 5px;margin-bottom: 1px;">' + headline.val + ': '
                     }
                     if (effectiveDate && effectiveDate.val && expiresDate && expiresDate.val){
-                        htmlCode += getAlarmTime(effectiveDate.val, expiresDate.val) + '</h3>'
+                        htmlCode += getAlarmTime(effectiveDate.val, expiresDate.val) + '</h4>'
                     }
                     if (description && description.val){
                         htmlCode += description.val 
