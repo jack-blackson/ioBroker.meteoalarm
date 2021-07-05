@@ -309,16 +309,16 @@ async function getData(){
                         if (icon && icon.val){
                             switch (imageSizeSetup) {
                                 case 1:
-                                    imageSize = 'width="20" height="20"'
+                                    imageSize = 'width="20" height="20"';
                                     break;
                                 case 2:
-                                    imageSize = 'width="40" height="40"'
+                                    imageSize = 'width="40" height="40"';
                                     break;
                                 case 3:
-                                    imageSize = 'width="60" height="60"'
+                                    imageSize = 'width="60" height="60"';
                                     break;
                                 default:
-                                    imageSize = 'width="40" height="40"'
+                                    imageSize = 'width="30" height="30"';
                                     break;
                              } 
                              adapter.log.debug('Image Size: ' + imageSizeSetup + ' -> Result: ' + imageSize)
