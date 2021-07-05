@@ -306,7 +306,7 @@ async function getData(){
                         var imageSize = ''
                         if (icon && icon.val){
                             
-                            switch (adapter.config.imageSize) {
+                            switch (Number(adapter.config.imageSize)) {
                                 case 1:
                                     imageSize = 'width="20" height="20"'
                                     break;
