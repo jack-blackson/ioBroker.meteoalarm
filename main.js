@@ -321,7 +321,7 @@ async function getData(){
                                     imageSize = 'width="40" height="40"';
                                     break;
                              } 
-                             adapter.log.debug('Image Size: ' + imageSizeSetup + ' -> Result: ' + imageSize)
+                             //adapter.log.debug('Image Size: ' + imageSizeSetup + ' -> Result: ' + imageSize)
 
                             htmlCode += imageSize
 
