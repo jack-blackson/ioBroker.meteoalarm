@@ -46,6 +46,8 @@ var htmlCode = ""
 var today = new Date();
 var maxAlarmLevel = 1
 
+var imageSizeSetup = 0
+
 
 
 //var Interval
@@ -97,7 +99,7 @@ async function getData(){
         countryConfig = adapter.config.country
         regionConfig = adapter.config.region
         regionName = adapter.config.regionName
-
+        imageSizeSetup = Number(adapter.config.imageSize)
         
 
         if (regionConfig  == "0"|| !regionConfig){
@@ -305,7 +307,7 @@ async function getData(){
                         htmlCode += '<img style="display:block;"'
                         var imageSize = ''
                         if (icon && icon.val){
-                            switch (Number(adapter.config.imageSize)) {
+                            switch (imageSizeSetup) {
                                 case 1:
                                     imageSize = 'width="20" height="20"'
                                     break;
@@ -319,7 +321,7 @@ async function getData(){
                                     imageSize = 'width="40" height="40"'
                                     break;
                              } 
-                             adapter.log.debug('Image Size: ' + Number(adapter.config.imageSize + ' -> Result: ' + imageSize))
+                             adapter.log.debug('Image Size: ' + imageSizeSetup + ' -> Result: ' + imageSize))
 
                             htmlCode += imageSize
 
