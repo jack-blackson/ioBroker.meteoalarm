@@ -308,16 +308,16 @@ async function getData(){
                             
                             switch (adapter.config.imageSize) {
                                 case 1:
-                                    imageSize = 'width="10" height="10"'
+                                    imageSize = 'width="20" height="20"'
                                     break;
                                 case 2:
-                                    imageSize = 'width="20" height="20"'
+                                    imageSize = 'width="50" height="50"'
                                     break;
                                 case 3:
-                                    imageSize = 'width="30" height="30"'
+                                    imageSize = 'width="80" height="80"'
                                     break;
                                 default:
-                                    imageSize = 'width="20" height="20"'
+                                    imageSize = 'width="50" height="50"'
                                     break;
                              } 
                             htmlCode += imageSize
