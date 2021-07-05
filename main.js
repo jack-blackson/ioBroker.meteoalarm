@@ -311,13 +311,13 @@ async function getData(){
                                     imageSize = 'width="20" height="20"'
                                     break;
                                 case 2:
-                                    imageSize = 'width="50" height="50"'
+                                    imageSize = 'width="40" height="40"'
                                     break;
                                 case 3:
-                                    imageSize = 'width="80" height="80"'
+                                    imageSize = 'width="60" height="60"'
                                     break;
                                 default:
-                                    imageSize = 'width="50" height="50"'
+                                    imageSize = 'width="40" height="40"'
                                     break;
                              } 
                             htmlCode += imageSize
