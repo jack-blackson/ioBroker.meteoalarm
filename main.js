@@ -302,9 +302,27 @@ async function getData(){
                         // Dummy cell to move picture away from the left side
                         htmlCode += '<tr><td style="width: 1%; border-style: none; ' + colorHTML +  '"></td>'
                         htmlCode += '<td style="width: 9%; border-style: none; ' + colorHTML +  '">'
-                        htmlCode += '<img style="display:block; padding-top: 10px; padding-bottom: 15px;padding-right: 10px; padding left: 10px;"'
+                        htmlCode += '<img style="display:block;"'
+                        var imageSize = ''
                         if (icon && icon.val){
-                            htmlCode +=  ' width="80%" alt="Warningimmage" src="' +  icon.val + '"/>'
+                            
+                            switch (adapter.config.imageSize) {
+                                case 1:
+                                    imageSize = 'width="10" height="10"'
+                                    break;
+                                case 2:
+                                    imageSize = 'width="20" height="20"'
+                                    break;
+                                case 3:
+                                    imageSize = 'width="30" height="30"'
+                                    break;
+                                default:
+                                    imageSize = 'width="20" height="20"'
+                                    break;
+                             } 
+                            htmlCode += imageSize
+
+                            htmlCode +=  ' alt="Warningimmage" src="' +  icon.val + '"/>'
                         }
                         htmlCode += '</td>'
                     }

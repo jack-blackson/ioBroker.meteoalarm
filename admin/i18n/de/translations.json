@@ -53,11 +53,15 @@
     "country_select": "Land auswählen",
     "instruction": "Für Hilfe, finde hier die Anleitung: https://github.com/jack-blackson/ioBroker.meteoalarm",
     "instructionLoading": "Zuerst Land auswählen und dann auf: Region laden klicken",
+    "large": "Groß",
     "layout": "Layoutanpassungen",
     "loadRegions": "Regionen laden",
+    "medium": "Mittel",
     "noBackgroundColor": "Keine Hintergrundfarbe im HTML-Widget",
     "noIcons": "Symbol im HTML-Widget nicht anzeigen",
     "region_select": "Region wählen",
     "regions": "Regionen",
+    "selectImageSize": "Symbolgröße im HTML-Widget auswählen",
+    "small": "Klein",
     "whiteIcons": "Weiße Symbole für Widgets"
 }

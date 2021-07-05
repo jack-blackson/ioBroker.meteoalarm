@@ -53,11 +53,15 @@
     "country_select": "Selecteer land",
     "instruction": "Raadpleeg de beschrijving hier voor hulp: https://github.com/jack-blackson/ioBroker.meteoalarm",
     "instructionLoading": "Selecteer eerst het land en klik op: laad regio",
+    "large": "Groot",
     "layout": "Aanpassingen van de lay-out",
     "loadRegions": "Laad regio's",
+    "medium": "Medium",
     "noBackgroundColor": "Geen achtergrondkleur in HTML-widget",
     "noIcons": "Pictogram niet weergeven in HTML-widget",
     "region_select": "Selecteer regio",
     "regions": "Regio's",
+    "selectImageSize": "Selecteer pictogramgrootte in HTML-widget",
+    "small": "Klein",
     "whiteIcons": "Gebruik witte pictogrammen voor widgets"
 }

@@ -53,11 +53,15 @@
     "country_select": "Selecione o pais",
     "instruction": "Para obter ajuda, por favor, verifique a descrição aqui: https://github.com/jack-blackson/ioBroker.meteoalarm",
     "instructionLoading": "Selecione primeiro o país e clique em: carregar região",
+    "large": "Grande",
     "layout": "Ajustes de layout",
     "loadRegions": "Carregar regiões",
+    "medium": "Médio",
     "noBackgroundColor": "Sem cor de fundo no widget HTML",
     "noIcons": "Não mostrar o ícone no widget HTML",
     "region_select": "Selecione a região",
     "regions": "Regiões",
+    "selectImageSize": "Selecione o tamanho do ícone no widget HTML",
+    "small": "Pequeno",
     "whiteIcons": "Use ícones brancos para widgets"
 }

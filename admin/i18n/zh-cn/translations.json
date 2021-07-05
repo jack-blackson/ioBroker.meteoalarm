@@ -53,11 +53,15 @@
     "country_select": "选择国家",
     "instruction": "如需帮助，请查看以下说明：https：//github.com/jack-blackson/ioBroker.meteoalarm",
     "instructionLoading": "请首先选择国家，然后单击：加载区域",
+    "large": "大",
     "layout": "布局调整",
     "loadRegions": "加载区域",
+    "medium": "中等的",
     "noBackgroundColor": "HTML小部件中没有背景色",
     "noIcons": "在HTML窗口小部件中不显示图标",
     "region_select": "选择地区",
     "regions": "地区",
+    "selectImageSize": "在 HTML 小部件中选择图标大小",
+    "small": "小的",
     "whiteIcons": "对小部件使用白色图标"
 }

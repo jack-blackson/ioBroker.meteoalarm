@@ -53,11 +53,15 @@
     "country_select": "Выберите страну",
     "instruction": "Для помощи, пожалуйста, проверьте описание здесь: https://github.com/jack-blackson/ioBroker.meteoalarm",
     "instructionLoading": "Пожалуйста, сначала выберите страну и нажмите: загрузить регион",
+    "large": "Большой",
     "layout": "Настройки макета",
     "loadRegions": "Загрузить регионы",
+    "medium": "Середина",
     "noBackgroundColor": "В виджете HTML нет цвета фона",
     "noIcons": "Не показывать значок в виджете HTML",
     "region_select": "Выберите регион",
     "regions": "районы",
+    "selectImageSize": "Выберите размер значка в виджете HTML",
+    "small": "Небольшой",
     "whiteIcons": "Используйте белые значки для виджетов"
 }
