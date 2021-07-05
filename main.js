@@ -305,7 +305,6 @@ async function getData(){
                         htmlCode += '<img style="display:block;"'
                         var imageSize = ''
                         if (icon && icon.val){
-                            adapter.log.debug('Image Size: ' + Number(adapter.config.imageSize))
                             switch (Number(adapter.config.imageSize)) {
                                 case 1:
                                     imageSize = 'width="20" height="20"'
@@ -320,6 +319,8 @@ async function getData(){
                                     imageSize = 'width="40" height="40"'
                                     break;
                              } 
+                             adapter.log.debug('Image Size: ' + Number(adapter.config.imageSize + ' -> Result: ' + imageSize))
+
                             htmlCode += imageSize
 
                             htmlCode +=  ' alt="Warningimmage" src="' +  icon.val + '"/>'
