@@ -14,6 +14,7 @@ const utils = require('@iobroker/adapter-core');
 const moment = require('moment');
 var parseString = require('xml2js').parseString;
 var parseStringPromise = require('xml2js').parseStringPromise;
+const stateAttr = require('./lib/stateAttr.js'); // State attribute definitions
 
 const i18nHelper = require(`${__dirname}/lib/i18nHelper`);
 const bent = require("bent");
@@ -33,6 +34,7 @@ var detailsURL = []
 var regionCSV = ""
 var regionName = ""
 var xmlLanguage = ""
+const warnMessages = {};
 
 var channelNames = []
 var csvContent = [];
@@ -495,8 +497,9 @@ async function processDetails(content, countInt){
     }
 
     var path = 'alarms.' + 'Alarm ' + countInt
+    /*
     const promises = await Promise.all([
-
+        
         adapter.setStateAsync({ state: path + '.event'}, {val:  content.event, ack: true}),
         adapter.setStateAsync({ state: path + '.headline'}, {val:  content.headline, ack: true}),
         adapter.setStateAsync({ state: path + '.description'}, {val: content.description, ack: true}),
@@ -511,8 +514,64 @@ async function processDetails(content, countInt){
         adapter.setStateAsync({ state: path + '.icon'}, {val: Warnung_img, ack: true}),
         adapter.setStateAsync({ state: path + '.color'}, {val: getColor(level), ack: true})
     ])
+    */
+    await localCreateState(path + '.event', 'event', content.event);
     //adapter.log.debug('7: After Set Alarm')
+    
 
+}
+
+async function localCreateState(state, name, value) {
+    adapter.log.debug(`Create_state called for : ${state} with value : ${value}`);
+
+    try {
+        // Try to get details from state lib, if not use defaults. throw warning if states is not known in attribute list
+        if (stateAttr[name] === undefined) {
+            const warnMessage = `State attribute definition missing for ${name}`;
+            if (warnMessages[name] !== warnMessage) {
+                warnMessages[name] = warnMessage;
+                adapter.log.warn(`State attribute definition missing for ${name}`);
+            }
+        }
+        const writable = stateAttr[name] !== undefined ? stateAttr[name].write || false : false;
+        const state_name = stateAttr[name] !== undefined ? stateAttr[name].name || name : name;
+        const role = stateAttr[name] !== undefined ? stateAttr[name].role || 'state' : 'state';
+        const type = stateAttr[name] !== undefined ? stateAttr[name].type || 'mixed' : 'mixed';
+        const unit = stateAttr[name] !== undefined ? stateAttr[name].unit || '' : '';
+        adapter.log.debug(`Write value : ${writable}`);
+
+        await adapter.setObjectNotExistsAsync(state, {
+            type: 'state',
+            common: {
+                name: state_name,
+                role: role,
+                type: type,
+                unit: unit,
+                read: true,
+                write: writable
+            },
+            native: {},
+        });
+
+        // Ensure name changes are propagated
+        await adapter.extendObjectAsync(state, {
+            type: 'state',
+            common: {
+                name: state_name,
+                type: type, // Also update types t solve log error's and  attribute changes
+            },
+        });
+
+        // Only set value if input != null
+        if (value !== null) {
+            await adapter.setState(state, {val: value, ack: true});
+        }
+
+        // Subscribe on state changes if writable
+        // writable && this.subscribeStates(state);
+    } catch (error) {
+        adapter.errorHandling('localCreateState', error);
+    }
 }
 
 async function deleteAllAlarms(){
@@ -520,6 +579,8 @@ async function deleteAllAlarms(){
         adapter.deleteDeviceAsync('alarms')
     ])
 }
+
+
 
 async function createAlarms(AlarmNumber){
     var path = 'alarms.' + 'Alarm ' + AlarmNumber
@@ -541,7 +602,7 @@ async function createAlarms(AlarmNumber){
             type: 'channel',
             'native' : {}
         }),
-
+        /*
         adapter.setObjectNotExistsAsync(path + '.event', {
             common: {
                 name: 'Event',
@@ -553,6 +614,7 @@ async function createAlarms(AlarmNumber){
             type: 'state',
             'native' : {}
         }),
+        */
         adapter.setObjectNotExistsAsync(path + '.headline', {
             common: {
                 name: 'Headline',
