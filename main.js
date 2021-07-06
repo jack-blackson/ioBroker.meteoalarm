@@ -319,13 +319,13 @@ async function getData(){
                                     imageSize = ' width="20" height="20"';
                                     break;
                                 case 1:
-                                    imageSize = ' width="40" height="40"';
+                                    imageSize = ' width="35" height="35"';
                                     break;
                                 case 2:
-                                    imageSize = ' width="60" height="60"';
+                                    imageSize = ' width="50" height="50"';
                                     break;
                                 default:
-                                    imageSize = ' width="40" height="40"';
+                                    imageSize = ' width="35" height="35"';
                                     break;
                              } 
                              //adapter.log.debug('Image Size: ' + imageSizeSetup + ' -> Result: ' + imageSize)
