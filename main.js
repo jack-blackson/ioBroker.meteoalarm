@@ -174,8 +174,11 @@ async function getData(){
                                 var expiresDate = new Date(element['cap:expires']);
     
                                 var locationRelevant = checkLocation(element['cap:geocode'].valueName , element['cap:geocode'].value)
-    
-                                if (locationRelevant && (expiresDate >= now)){
+                                var statusRelevant = false
+                                if (element['cap:status'] == 'Actual'){
+                                    statusRelevant = true
+                                }
+                                if (locationRelevant && (expiresDate >= now) && statusRelevant){
                                     var detailsLink = element.link[0].$.href
                                     adapter.log.debug('4.1: Warning found: ' + detailsLink)
                                     detailsURL.push(detailsLink)
