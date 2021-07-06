@@ -405,21 +405,21 @@ function checkLocation(type,value){
 
 }
 
-function getAlarmTime(effective,expires){
+function getAlarmTime(onset,expires){
     var expiresDate = new Date(expires)
-    var effectiveDate = new Date(effective)
+    var onsetDate = new Date(onset)
     var dateString = ''
     var expiresToday = today.toDateString() == expiresDate.toDateString()
-    var effectiveToday = today.toDateString() == effectiveDate.toDateString()
+    var onsetToday = today.toDateString() == onsetDate.toDateString()
     var expiresDay = moment(expires).locale(lang).format("dddd")
-    var effectiveDay = moment(effective).locale(lang).format("dddd")
+    var onsetDay = moment(onset).locale(lang).format("dddd")
 
     if (expiresToday && expiresToday){
-        dateString = getDateFormatedShort(effective) + ' - ' + getDateFormatedShort(expires)
+        dateString = getDateFormatedShort(onset) + ' - ' + getDateFormatedShort(expires)
 
     }
     else{
-        dateString = effectiveDay + ' ' + getDateFormatedShort(effective) + ' - ' + expiresDay + ' ' + getDateFormatedShort(expires)
+        dateString = onsetDay + ' ' + getDateFormatedShort(onset) + ' - ' + expiresDay + ' ' + getDateFormatedShort(expires)
     }
 
     return dateString
@@ -497,7 +497,7 @@ async function processDetails(content, countInt){
         adapter.setStateAsync({ state: path + '.description'}, {val: content.description, ack: true}),
         adapter.setStateAsync({ state: path + '.link'}, {val: content.web, ack: true}),
         adapter.setStateAsync({ state: path + '.expires'}, {val: content.expires, ack: true}),
-        adapter.setStateAsync({ state: path + '.effective'}, {val: content.effective, ack: true}),
+        adapter.setStateAsync({ state: path + '.effective'}, {val: content.onset, ack: true}),
         adapter.setStateAsync({ state: path + '.sender'}, {val: content.senderName, ack: true}),
         adapter.setStateAsync({ state: path + '.level'}, {val: level, ack: true}),
         adapter.setStateAsync({ state: path + '.levelText'}, {val: getLevelName(level), ack: true}),
