@@ -196,16 +196,15 @@ async function getData(){
                                     statusRelevant = true
                                 }
 
-                                var dateRelevant = false
-                                //if ((expiresDate >= now)&&(){
-                                    dateRelevant = true
-                                //}
+
 
                                 var given = moment(effectiveDate);
                                 var current = moment().startOf('day');
-
-                                //Difference in number of days
-                                adapter.log.debug(' Effective Date: ' + effectiveDate + ' current: ' + current + ' difference: ' + moment.duration(given.diff(current)).asDays())
+                                var daysDifference = moment.duration(given.diff(current)).asDays()
+                                var dateRelevant = false
+                                if ((expiresDate >= now)&&(daysDifference < 2)){
+                                    dateRelevant = true
+                                }
 
                                 if (locationRelevant && (dateRelevant) && statusRelevant && messagetypeRelevant){
                                     var detailsLink = element.link[0].$.href
