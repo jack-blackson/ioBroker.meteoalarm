@@ -251,22 +251,22 @@ async function getData(){
 
                 if (jsonResult){
                     //adapter.log.debug(' Type of URL ' + countURL + ' :' + type);
-                    if (typeArray.indexOf(type) > -1) {
-                        adapter.log.debug('8: Alarm States ignored for Alarm ' + countURL)
-                        adapter.log.debug('9: Processed Details for Alarm ' + countURL)
+                    //if (typeArray.indexOf(type) > -1) {
+                    //    adapter.log.debug('8: Alarm States ignored for Alarm ' + countURL)
+                    //    adapter.log.debug('9: Processed Details for Alarm ' + countURL)
 
 
-                    } else {
+                    //} else {
                         //Type not yet in the array
                         countEntries += 1
                 
-                        typeArray.push(type)
+                        //typeArray.push(type)
                         const created = await createAlarms(countEntries)
                         adapter.log.debug('8: Alarm States created for Alarm ' + countURL + ' type:  ' + type)
                 
                         const promises = await processDetails(jsonResult,countEntries)
                         adapter.log.debug('9: Processed Details for Alarm ' + countURL)
-                    }
+                    //}
 
                 }
                             
