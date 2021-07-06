@@ -273,10 +273,12 @@ async function getData(){
             //const widget = await createHTMLWidget()
             adapter.log.debug('10: Creating HTML Widget')
             htmlCode = ''
+            var warningCount = 0
             if (channelNames.length >= 1){
                 htmlCode += '<table style="border-collapse: collapse; width: 100%;"><tbody>'
                 for (const channelLoop of channelNames) {
 
+                    warningCount += 1
                     var path = 'alarms.' + channelLoop
                     var colorHTML = ''
                     let event = await adapter.getStateAsync(path + '.event')
@@ -378,7 +380,7 @@ async function getData(){
 
             adapter.log.debug('12: All Done')
             if (regionName){
-                adapter.log.info('Updated Weather Alarms for ' + regionName)
+                adapter.log.info('Updated Weather Alarms for ' + regionName + ' -> ' + warningCount + ' warnings found')
             }
             
             adapter.terminate ? adapter.terminate(0) : process.exit(0);
