@@ -13,6 +13,8 @@ This adapter is pulling weather alarms from https://meteoalarm.org, which includ
 
 Disclaimer: Time delays between this website and the www.meteoalarm.org website are possible, for the most up to date information about alert levels as published by the participating National Meteorological Services please use https://www.meteoalarm.org.
 
+## !!!! The new version 2.0.0 which can handle the new website is currently in testing and will be available soon
+
 ## How to use it
 Choose your country, and afterwards the region you want the warnings for. If you are unsure what your region name is, please go to https://meteoalarm.org and try to find it on the map. 
 

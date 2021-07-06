@@ -175,8 +175,18 @@ async function getData(){
                             result.feed.entry.forEach(function (element){
                                 var expiresDate = new Date(element['cap:expires']);
                                 var messagetype = ""
+                                var messagetypeRelevant = false
                                 if (element['cap:message_type']){
                                     messagetype = element['cap:message_type']
+                                }
+                                // Ignore Cancles
+                                if (messagetype == "Alert"){
+                                    // show Alert only if no Update and no cancle found
+                                    messagetypeRelevant = true
+                                }
+                                if (messagetype == "Update"){
+                                    // Show all updates
+                                    messagetypeRelevant = true
                                 }
 
                                 var locationRelevant = checkLocation(element['cap:geocode'].valueName , element['cap:geocode'].value)
@@ -184,7 +194,7 @@ async function getData(){
                                 if (element['cap:status'] == 'Actual'){
                                     statusRelevant = true
                                 }
-                                if (locationRelevant && (expiresDate >= now) && statusRelevant){
+                                if (locationRelevant && (expiresDate >= now) && statusRelevant && messagetypeRelevant){
                                     var detailsLink = element.link[0].$.href
                                     adapter.log.debug('4.1: Warning found: ' + detailsLink + ' of message type ' + messagetype)
                                     detailsURL.push(detailsLink)
