@@ -174,7 +174,11 @@ async function getData(){
                         if (result.feed.entry){
                             result.feed.entry.forEach(function (element){
                                 var expiresDate = new Date(element['cap:expires']);
-    
+                                var messagetype = ""
+                                if (element['cap:message_type']){
+                                    messagetype = element['cap:message_type']
+                                }
+
                                 var locationRelevant = checkLocation(element['cap:geocode'].valueName , element['cap:geocode'].value)
                                 var statusRelevant = false
                                 if (element['cap:status'] == 'Actual'){
@@ -182,7 +186,7 @@ async function getData(){
                                 }
                                 if (locationRelevant && (expiresDate >= now) && statusRelevant){
                                     var detailsLink = element.link[0].$.href
-                                    adapter.log.debug('4.1: Warning found: ' + detailsLink)
+                                    adapter.log.debug('4.1: Warning found: ' + detailsLink + ' of message type ' + messagetype)
                                     detailsURL.push(detailsLink)
                         
                                     i += 1;
@@ -205,7 +209,7 @@ async function getData(){
                 countURL += 1
                 //console.log(element) 
                 var jsonResult;
-                var type = ""
+                var awarenesstype = ""
                 adapter.log.debug('6: Request Details from URL ' + countURL + ': ' + URL)
 
                 const getJSON1 = bent('string')
@@ -236,7 +240,7 @@ async function getData(){
                                 if (element.language == xmlLanguage){
                                     element.parameter.forEach(function (parameter){
                                         if (parameter.valueName == "awareness_type") {
-                                            type =parameter.value
+                                            awarenesstype =parameter.value
                                         }  
                                     })
                                     jsonResult = element 
@@ -251,7 +255,7 @@ async function getData(){
 
                 if (jsonResult){
                     //adapter.log.debug(' Type of URL ' + countURL + ' :' + type);
-                    //if (typeArray.indexOf(type) > -1) {
+                    //if (typeArray.indexOf(awarenesstype) > -1) {
                     //    adapter.log.debug('8: Alarm States ignored for Alarm ' + countURL)
                     //    adapter.log.debug('9: Processed Details for Alarm ' + countURL)
 
@@ -260,9 +264,9 @@ async function getData(){
                         //Type not yet in the array
                         countEntries += 1
                 
-                        //typeArray.push(type)
+                        //typeArray.push(awarenesstype)
                         const created = await createAlarms(countEntries)
-                        adapter.log.debug('8: Alarm States created for Alarm ' + countURL + ' type:  ' + type)
+                        adapter.log.debug('8: Alarm States created for Alarm ' + countURL + ' type:  ' + awarenesstype)
                 
                         const promises = await processDetails(jsonResult,countEntries)
                         adapter.log.debug('9: Processed Details for Alarm ' + countURL)
