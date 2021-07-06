@@ -522,9 +522,9 @@ async function processDetails(content, countInt){
     await localCreateState(path + '.expires', 'expires', content.expires);
     await localCreateState(path + '.effective', 'effective', content.onset);
     await localCreateState(path + '.sender', 'sender', content.senderName);
-    await localCreateState(path + '.level', 'level', level);
+    await localCreateState(path + '.level', 'level', Number(level));
     await localCreateState(path + '.levelText', 'levelText', getLevelName(level));
-    await localCreateState(path + '.type', 'type', type);
+    await localCreateState(path + '.type', 'type', Number(type));
     await localCreateState(path + '.typeText', 'typeText', getTypeName(type));
     await localCreateState(path + '.icon', 'icon', Warnung_img);
     await localCreateState(path + '.color', 'color', getColor(level));
