@@ -10,17 +10,47 @@
 
 'use strict';
 const utils = require('@iobroker/adapter-core');
-const request = require('request');
+//const request = require('request');
 const moment = require('moment');
 var parseString = require('xml2js').parseString;
+var parseStringPromise = require('xml2js').parseStringPromise;
+const stateAttr = require('./lib/stateAttr.js'); // State attribute definitions
+
 const i18nHelper = require(`${__dirname}/lib/i18nHelper`);
+const bent = require("bent");
+
+const parseCSV = require('csv-parse');
+const fs = require("fs");
+const path = require('path');
 
 var DescFilter1 = '';
 var DescFilter2 = '';
 var country = '';
+var countryConfig = '';
+var regionConfig = '';
+var countEntries = 0;
+var typeArray = [];
+var detailsURL = []
+var regionCSV = ""
+var regionName = ""
+var xmlLanguage = ""
+const warnMessages = {};
+
+var channelNames = []
+var csvContent = [];
+var urlAtom = ""
 
 let adapter;
 let lang;
+
+var htmlCode = ""
+
+var today = new Date();
+var maxAlarmLevel = 1
+
+var imageSizeSetup = 0
+
+
 
 //var Interval
 
@@ -58,243 +88,584 @@ function main() {
         else{
             lang = systemConfig.common.language
         }
-        requestXML()
+        adapter.log.debug('Language: ' + lang)
+        getData()
+        
+
     }) 
 }
 
-function checkURL(){
-    var url = adapter.config.pathXML
-    if (url.includes('meteoalarm.eu/documents/rss')){
-        return true
-    }
-    else{
-        adapter.log.error('URL incorrect. Please make sure to choose the RSS feed link!')
-        adapter.terminate ? adapter.terminate(0) : process.exit(0);
-        return false
-    } 
-}
+async function getData(){
+        
+        // request setup
+        countryConfig = adapter.config.country
+        regionConfig = adapter.config.region
+        regionName = adapter.config.regionName
+        imageSizeSetup = Number(adapter.config.imageSize)
+        
 
-function requestXML(){
-    if ((adapter.config.pathXML != '') && (typeof adapter.config.pathXML != 'undefined') && (checkURL())) {
-        var url = adapter.config.pathXML
+        if (regionConfig  == "0"|| !regionConfig){
+            adapter.log.error('Please select a valid region in setup!')
+            let htmlCode = '<table style="border-collapse: collapse; width: 100%;" border="1"><tbody><tr>'
+            htmlCode += '<td style="width: 100%; background-color: #fc3d03;">Please maintain country and region in setup!</td></tr></tbody></table>'
+            await Promise.all([
+                adapter.setStateAsync({device: '' , channel: '',state: 'level'}, {val: '4', ack: true}),
+                adapter.setStateAsync({device: '' , channel: '',state: 'htmlToday'}, {val: htmlCode, ack: true})
+            ])
+            adapter.terminate ? adapter.terminate(0) : process.exit(0);
+        }
+        else{
+            adapter.log.debug('Setup found: country ' + countryConfig + ' and region ' + regionConfig + ' - ' +  regionName )
 
-        adapter.log.info('Requesting data from ' + url)
-        request.post({
-            url:     url,
-            timeout: 8000
-          }, function(error, response, body){
-            if (error){
-                if (error.code === 'ETIMEDOUT'){
-                    adapter.log.error('Error ETIMEOUT: No website response after 8 seconds. Adapter will try again at next scheduled run.')
-                    adapter.terminate ? adapter.terminate(0) : process.exit(0);
-                }
-                else if (error.code === 'ESOCKETTIMEDOUT'){
-                    adapter.log.error('Error ESOCKETTIMEDOUT: No website response after 8 seconds. Adapter will try again at next scheduled run.')
-                    adapter.terminate ? adapter.terminate(0) : process.exit(0);
-                }
-                else if (error.code === 'ENOTFOUND'){
-                    adapter.log.error('Error ENOTFOUND: No website response after 8 seconds. Adapter will try again at next scheduled run.')
-                    adapter.terminate ? adapter.terminate(0) : process.exit(0);
-                }
-                else(
-                    adapter.log.error(error)
-
-                )
+            urlAtom = getCountryLink(countryConfig)
+            xmlLanguage = getXMLLanguage(countryConfig)
+            if (xmlLanguage == ""){
+                xmlLanguage = 'en-GB'
             }
-            if (body) {
-                parseString(body, {
-    
-                    explicitArray: false,
-    
-                    mergeAttrs: true
-    
+            adapter.log.debug(' XML Language: ' + xmlLanguage)
+
+            // Delete old alarms
+            adapter.log.debug('0: Delete Alarms')
+
+            const deleted =  await deleteAllAlarms();
+
+            const checkState = await adapter.getStateAsync('weatherMapCountry')
+            if (checkState != null ){
+
+                adapter.log.debug('0.1: Cleaning up old objects');
+                const cleaned = await cleanupOld()
+            }
+            
+            const csv = await getCSVData()
+                
+            adapter.log.debug('1: Parsed CSV File')
+            
+            adapter.log.debug('2: Request Atom from ' + urlAtom )
+
+            const getJSON = bent('string')
+            let xmlAtom
+            try {
+                xmlAtom = await getJSON(urlAtom)
+            } catch (err){
+                adapter.log.warn('2.1: Atom URL ' + urlAtom + ' not available - error ' + err) 
+                adapter.terminate ? adapter.terminate(0) : process.exit(0);
+            }
+            if (xmlAtom){
+                adapter.log.debug('3: Received Atom')
+
+                parseString(xmlAtom, {
+                    //mergeAttrs: true
+                    explicitArray: false
+
                 }, 
-    
+
                 function (err, result) {
-    
                     if (err) {
-    
                         adapter.log.error("Fehler: " + err);
                         adapter.terminate ? adapter.terminate(0) : process.exit(0);
                     } else {
-                        processJSON(result)
+                        adapter.log.debug('4: Process Atom')
+                        var newdate = moment(new Date()).local().format('DD.MM.YYYY HH:mm')
+                        adapter.setState({device: '' , channel: '',state: 'lastUpdate'}, {val: newdate, ack: true});
+
+
+                        var i = 0
+                        var now = new Date();
+                        if (result.feed.entry){
+                            result.feed.entry.forEach(function (element){
+                                var expiresDate = new Date(element['cap:expires']);
+                                var effectiveDate = new Date(element['cap:onset']);
+                                var messagetype = ""
+                                var messagetypeRelevant = false
+                                if (element['cap:message_type']){
+                                    messagetype = element['cap:message_type']
+                                }
+                                // Ignore Cancles
+                                if (messagetype == "Alert"){
+                                    // show Alert only if no Update and no cancle found
+                                    messagetypeRelevant = true
+                                }
+                                if (messagetype == "Update"){
+                                    // Show all updates
+                                    messagetypeRelevant = true
+                                }
+
+                                var locationRelevant = checkLocation(element['cap:geocode'].valueName , element['cap:geocode'].value)
+                                var statusRelevant = false
+                                if (element['cap:status'] == 'Actual'){
+                                    statusRelevant = true
+                                }
+
+
+
+                                var given = moment(effectiveDate);
+                                var current = moment().startOf('day');
+                                var daysDifference = moment.duration(given.diff(current)).asDays()
+                                var dateRelevant = false
+                                if ((expiresDate >= now)&&(daysDifference < 2)){
+                                    dateRelevant = true
+                                }
+
+                                if (locationRelevant && (dateRelevant) && statusRelevant && messagetypeRelevant){
+                                    var detailsLink = element.link[0].$.href
+                                    adapter.log.debug('4.1: Warning found: ' + detailsLink + ' of message type ' + messagetype)
+                                    detailsURL.push(detailsLink)
+                        
+                                    i += 1;
+                                }
+                            });
+                        }
+
                     }
                 });
             }
-          });    
-        }
-    else{
-        adapter.log.debug('No path maintained!!')
-        adapter.terminate ? adapter.terminate(0) : process.exit(0);
-    }
+            
+            // continue now to request details
+            var countEntries = 0
+
+            adapter.log.debug('5: Processed Atom')
+            var countTotalURLs = detailsURL.length
+            adapter.log.debug('5.1 Found ' + countTotalURLs + ' URLs')
+            var countURL = 0
+            for (const URL of detailsURL){ 
+                countURL += 1
+                var jsonResult;
+                var awarenesstype = ""
+                adapter.log.debug('6: Request Details from URL ' + countURL + ': ' + URL)
+
+                const getJSON1 = bent('string')
+                let xmlDetails
+
+                try {
+                    xmlDetails = await getJSON1(URL)
+
+                } catch (err){
+                    adapter.log.debug('6.1: Details URL ' + URL + ' not valid any more - error ' + err) 
+                }
+               
+                if (xmlDetails ){
+                    // Just go here if Request for Details is successful
+                    adapter.log.debug('7: Received Details for URL ' + countURL)
+
+                    parseString(xmlDetails, {
+                        explicitArray: false
+                    }, 
+            
+                    function (err, result) {
+                        if (err) {
+                            adapter.log.error("Fehler: " + err);
+                            adapter.terminate ? adapter.terminate(0) : process.exit(0);
+                        } else {
+                            result.alert.info.forEach(function (element){
+                                if (element.language == xmlLanguage){
+                                    element.parameter.forEach(function (parameter){
+                                        if (parameter.valueName == "awareness_type") {
+                                            awarenesstype =parameter.value
+                                        }  
+                                    })
+                                    jsonResult = element 
     
-}
+                                }
+                            })
+    
+                        }
+                    });
 
-function processJSON(content){
+                }
 
-    getFilters()
-    adapter.setState({device: '' , channel: '',state: 'location'}, {val: JSON.stringify(content.rss.channel.item.title), ack: true});
-    adapter.log.info('Received data for ' + JSON.stringify(content.rss.channel.item.title))
-
-    adapter.setState({device: '' , channel: '',state: 'link'}, {val: JSON.stringify(content.rss.channel.item.link), ack: true});
-
-    var newdate = moment(new Date()).local().format('DD.MM.YYYY HH:mm')
-
-    adapter.setState({device: '' , channel: '',state: 'lastUpdate'}, {val: newdate, ack: true});
-    adapter.setState({device: '' , channel: '',state: 'publicationDate'}, {val: JSON.stringify(content.rss.channel.item.pubDate), ack: true});
+                if (jsonResult){
+                    //adapter.log.debug(' Type of URL ' + countURL + ' :' + type);
+                    //if (typeArray.indexOf(awarenesstype) > -1) {
+                    //    adapter.log.debug('8: Alarm States ignored for Alarm ' + countURL)
+                    //    adapter.log.debug('9: Processed Details for Alarm ' + countURL)
 
 
-    if (DescFilter1 != 'nA'){
-        if (typeof content.rss.channel.item.description != 'undefined'){
-            parseWeather(content.rss.channel.item.description,'today', function(){
-                parseWeather(content.rss.channel.item.description,'tomorrow', function(){
-                    setTimeout(function() {
-                        // wait 3 seconds to make sure all is done
-                        updateHTMLWidget()
-                      }, 3000);
+                    //} else {
+                        //Type not yet in the array
+                        countEntries += 1
+                
+                        //typeArray.push(awarenesstype)
+                        const created = await createAlarms(countEntries)
+                        adapter.log.debug('8: Alarm States created for Alarm ' + countURL + ' type:  ' + awarenesstype)
+                
+                        const promises = await processDetails(jsonResult,countEntries)
+                        adapter.log.debug('9: Processed Details for Alarm ' + countURL)
+                    //}
+
+                }
+                            
+            
+            }
+            //const widget = await createHTMLWidget()
+            adapter.log.debug('10: Creating HTML Widget')
+            htmlCode = ''
+            var warningCount = 0
+            if (channelNames.length >= 1){
+                htmlCode += '<table style="border-collapse: collapse; width: 100%;"><tbody>'
+                for (const channelLoop of channelNames) {
+
+                    warningCount += 1
+                    var path = 'alarms.' + channelLoop
+                    var colorHTML = ''
+                    let event = await adapter.getStateAsync(path + '.event')
+                    let headline = await adapter.getStateAsync(path + '.headline')
+
+                    let description = await adapter.getStateAsync(path + '.description');
+                    let icon = await adapter.getStateAsync(path + '.icon');
+                    let color = await adapter.getStateAsync(path + '.color');
+                    let effectiveDate = await adapter.getStateAsync(path + '.effective');
+                    let expiresDate = await adapter.getStateAsync(path + '.expires');    
+                    let level = await adapter.getStateAsync(path + '.level');
+
+                    if (color && color.val){
+                        if (!adapter.config.noBackgroundColor){
+                            colorHTML = 'background-color: ' + color.val
+                        }
+                    }
                     
-                })
-            })    
-        }
-        else{
-            adapter.log.error('Invalid XML - please check link in adapter settings. Choose region!')
+
+                    if (level && level.val){
+                        if (level.val > maxAlarmLevel){
+                            maxAlarmLevel = Number(level.val)
+                        }
+                    }
+                    adapter.log.debug('10.1: Added Alarm for ' + headline.val)
+                     
+                    if (!adapter.config.noIcons){
+                        // Dummy cell to move picture away from the left side
+                        htmlCode += '<tr><td style="width: 1%; border-style: none; ' + colorHTML +  '"></td>'
+                        htmlCode += '<td style="width: 9%; border-style: none; ' + colorHTML +  '">'
+                        htmlCode += '<img style="display:block;"'
+                        var imageSize = ''
+                        if (icon && icon.val){
+                            switch (imageSizeSetup) {
+                                case 0:
+                                    imageSize = ' width="20" height="20"';
+                                    break;
+                                case 1:
+                                    imageSize = ' width="35" height="35"';
+                                    break;
+                                case 2:
+                                    imageSize = ' width="50" height="50"';
+                                    break;
+                                default:
+                                    imageSize = ' width="35" height="35"';
+                                    break;
+                             } 
+                             //adapter.log.debug('Image Size: ' + imageSizeSetup + ' -> Result: ' + imageSize)
+
+                            htmlCode += imageSize
+
+                            htmlCode +=  ' alt="Warningimmage" src="' +  icon.val + '"/>'
+                        }
+                        htmlCode += '</td>'
+                    }
+
+                    htmlCode += '<td style="width: 90%; border-style: none; ' + colorHTML +  '">'
+                    if (headline && headline.val){
+                        htmlCode += '<h4 style = "margin-top: 5px;margin-bottom: 1px;">' + headline.val + ': '
+                    }
+                    if (effectiveDate && effectiveDate.val && expiresDate && expiresDate.val){
+                        htmlCode += getAlarmTime(effectiveDate.val, expiresDate.val) + '</h4>'
+                    }
+                    if (description && description.val){
+                        htmlCode += description.val 
+                    }
+
+    
+                    htmlCode += '</td></tr>'
+                }    
+            }
+            else{
+                // No Alarm Found
+                htmlCode += '<table style="border-collapse: collapse; width: 100%;"><tbody>'
+                htmlCode += '<tr><td style= "border-style: none; '
+                if (!adapter.config.noBackgroundColor){
+                    htmlCode += 'background-color: ' + getColor('1')
+                }
+                htmlCode +=  '">' + getLevelName('1') 
+                htmlCode += '</td></tr>'
+                maxAlarmLevel = 1
+            }
+
+
+            if (htmlCode){
+                htmlCode += '</tbody></table>'
+            } 
+
+
+            await Promise.all([
+                adapter.setStateAsync({device: '' , channel: '',state: 'level'}, {val: maxAlarmLevel, ack: true}),
+                adapter.setStateAsync({device: '' , channel: '',state: 'htmlToday'}, {val: htmlCode, ack: true}),
+                adapter.setStateAsync({device: '' , channel: '',state: 'location'}, {val: regionName, ack: true}),
+                adapter.setStateAsync({device: '' , channel: '',state: 'link'}, {val: urlAtom, ack: true}),
+                adapter.setStateAsync({device: '' , channel: '',state: 'color'}, {val: getColor(maxAlarmLevel.toString()), ack: true})
+
+            ])
+            adapter.log.debug('11: Set State for Widget')
+
+            adapter.log.debug('12: All Done')
+            if (regionName){
+                adapter.log.info('Updated Weather Alarms for ' + regionName + ' -> ' + warningCount + ' warning(s) found')
+            }
+            
             adapter.terminate ? adapter.terminate(0) : process.exit(0);
-        }            
+
+
+        }
+
+}
+
+function checkLocation(type,value){
+    //check which type it is and if it is relevant for us
+    if (type == "EMMA_ID"){
+        return value == regionConfig
     }
     else{
-        // Land ist nicht in der Filterliste (getfilters()) -> daher kann Text nicht gefunden werden
-        adapter.log.error('The country ' + country +  ' is not set up. Please create a github issue to get it set up.')
-        adapter.terminate ? adapter.terminate(0) : process.exit(0);
+        var successful = false
+        for(var i = 0; i < csvContent.length; i += 1) {
+            if((csvContent[i][0] == regionConfig) && (csvContent[i][2] == type) ) {
+                if (value == csvContent[i][1] ){
+                    successful = true
+                }
+            }
+        }
+        return successful
+
+    }
+
+}
+
+function getAlarmTime(onset,expires){
+    var expiresDate = new Date(expires)
+    var onsetDate = new Date(onset)
+    var dateString = ''
+    var expiresToday = today.toDateString() == expiresDate.toDateString()
+    var onsetToday = today.toDateString() == onsetDate.toDateString()
+    var expiresDay = moment(expires).locale(lang).format("ddd")
+    var onsetDay = moment(onset).locale(lang).format("ddd")
+
+    if (expiresToday && expiresToday){
+        dateString = getDateFormatedShort(onset) + ' - ' + getDateFormatedShort(expires)
+
+    }
+    else{
+        dateString = onsetDay + ' ' + getDateFormatedShort(onset) + ' - ' + expiresDay + ' ' + getDateFormatedShort(expires)
+    }
+
+    return dateString
+}
+
+function getDateFormatedShort(dateTimeString)
+{
+   return new Date(dateTimeString).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+
+      
+}
+
+
+async function cleanupOld(){
+    const promises = await Promise.all([
+
+        adapter.deleteChannelAsync('today'),
+        adapter.deleteChannelAsync('tomorrow'),
+        adapter.deleteStateAsync('weatherMapCountry')
+
+    ])
+}
+
+async function getCSVData(){
+    return new Promise(function(resolve,reject){
+        fs.createReadStream(path.resolve(__dirname, 'geocodes-aliases.csv'))
+        .pipe(parseCSV({delimiter: ','}))
+        .on('data', function(csvrow) {
+            //console.log(csvrow);
+            //do something with csvrow
+            csvContent.push(csvrow);        
+        })
+        .on('end',function() {
+        //do something with csvData
+        //adapter.log.debug(csvContent);
+        resolve(csvContent);
+        })
+        .on('error', reject); 
+    })
+}
+
+async function processDetails(content, countInt){
+    var type = ""
+    var level = ""
+    content.parameter.forEach(function (element){
+        if (element.valueName == "awareness_type") {
+            type =element.value
+            var n = type.indexOf(";");
+            type = type.substring(0, n)
+        }  
+        if (element.valueName == "awareness_level") {
+            level =element.value
+            var n = level.indexOf(";");
+            level = level.substring(0, n)
+        }  
+    })
+ 
+
+    var Warnung_img = ''
+    if (level != "1"){
+        if (adapter.config.whiteIcons){
+            Warnung_img += '/meteoalarm.admin/icons/white/'
+        }
+        else{
+            Warnung_img += '/meteoalarm.admin/icons/black/'
+        }
+        Warnung_img += 't' + type + '.png'
+    }
+
+    var path = 'alarms.' + 'Alarm ' + countInt
+
+    await localCreateState(path + '.event', 'event', content.event);
+    await localCreateState(path + '.headline', 'headline', content.headline);
+    await localCreateState(path + '.description', 'description', content.description);
+    await localCreateState(path + '.link', 'link', content.web);
+    await localCreateState(path + '.expires', 'expires', content.expires);
+    await localCreateState(path + '.effective', 'effective', content.onset);
+    await localCreateState(path + '.sender', 'sender', content.senderName);
+    await localCreateState(path + '.level', 'level', Number(level));
+    await localCreateState(path + '.levelText', 'levelText', getLevelName(level));
+    await localCreateState(path + '.type', 'type', Number(type));
+    await localCreateState(path + '.typeText', 'typeText', getTypeName(type));
+    await localCreateState(path + '.icon', 'icon', Warnung_img);
+    await localCreateState(path + '.color', 'color', getColor(level));
+   
+
+}
+
+async function localCreateState(state, name, value) {
+    adapter.log.debug(`Create_state called for : ${state} with value : ${value}`);
+
+    try {
+        // Try to get details from state lib, if not use defaults. throw warning if states is not known in attribute list
+        if (stateAttr[name] === undefined) {
+            const warnMessage = `State attribute definition missing for ${name}`;
+            if (warnMessages[name] !== warnMessage) {
+                warnMessages[name] = warnMessage;
+                adapter.log.warn(`State attribute definition missing for ${name}`);
+            }
+        }
+        const writable = stateAttr[name] !== undefined ? stateAttr[name].write || false : false;
+        const state_name = stateAttr[name] !== undefined ? stateAttr[name].name || name : name;
+        const role = stateAttr[name] !== undefined ? stateAttr[name].role || 'state' : 'state';
+        const type = stateAttr[name] !== undefined ? stateAttr[name].type || 'mixed' : 'mixed';
+        const unit = stateAttr[name] !== undefined ? stateAttr[name].unit || '' : '';
+        //adapter.log.debug(`Write value : ${writable}`);
+
+        await adapter.setObjectNotExistsAsync(state, {
+            type: 'state',
+            common: {
+                name: state_name,
+                role: role,
+                type: type,
+                unit: unit,
+                read: true,
+                write: writable
+            },
+            native: {},
+        });
+
+        // Ensure name changes are propagated
+        await adapter.extendObjectAsync(state, {
+            type: 'state',
+            common: {
+                name: state_name,
+                type: type, // Also update types t solve log error's and  attribute changes
+            },
+        });
+
+        // Only set value if input != null
+        if (value !== null) {
+            await adapter.setState(state, {val: value, ack: true});
+        }
+
+        // Subscribe on state changes if writable
+        // writable && this.subscribeStates(state);
+    } catch (error) {
+        adapter.errorHandling('localCreateState', error);
     }
 }
 
-function updateHTMLWidget(){
-    var htmllong = '';
-    var typeName = '';
-    var color = '';
-    var icon = '';
-    var from = '';
-    var to = '';
-    var text = '';
-    var level = '';
-
-    adapter.getState('today.type', function (err, state) {
-        typeName = getTypeName(parseInt(state.val));
-
-    });
-    adapter.getState('today.color', function (err, state) {
-        color = state.val;
-    });
-
-    adapter.getState('today.level', function (err, state) {
-        level = state.val;
-    });
-
-    adapter.getState('today.icon', function (err, state) {
-        icon = state.val;
-    });
-
-    adapter.getState('today.from', function (err, state) {
-        from = state.val;
-    });
-
-    adapter.getState('today.to', function (err, state) {
-        to = state.val;
-    });
-    
-    adapter.log.debug('Setup Status noBackground Color:' + adapter.config.noBackgroundColor)
-
-    adapter.getState('today.text', function (err, state) {
-        text = state.val;
-
-        if (level != '1'){
-            // Warnung vorhanden
-            htmllong += '<div '
-            if (!adapter.config.noBackgroundColor){
-                htmllong += 'style="background:' + color + '"';  
-            }
-            htmllong += ' border:"10px">';
-            htmllong += '<div style="display: flex; align-items: center">'
-            if (!adapter.config.noIcons){
-                htmllong += '<img src="' +  icon + '" alt="" width="20" height="20"/> '
-            }
-            htmllong += '<h3 style="margin-left: 10px;margin-top: 5px;margin-bottom: 5px;">' + typeName + '</h3> </div>' 
-            htmllong += '<div style="margin-left: 10px; margin-right: 5px">' + from + ' - ' + to 
-            htmllong += '</p><p>' + text + '</p></div></div>'
-        }
-        else{
-            // keine Warnung vorhanden
-            htmllong += '<div ';
-            if (!adapter.config.noBackgroundColor){
-                htmllong +=  'style="background:' + color + '"';  
-            }
-            htmllong += ' border:"10px">';
-            htmllong += '<p></p><h3> '
-            htmllong += i18nHelper.NoWarning[lang] + '</h3><p>'  
-            htmllong += '</p><p></p></div>'
-        }
-        
-        adapter.setState({device: '' , channel: '',state: 'htmlToday'}, {val: htmllong, ack: true});
+async function deleteAllAlarms(){
+    const promises = await Promise.all([
+        adapter.deleteDeviceAsync('alarms')
+    ])
+}
 
 
-        let weatherDate = moment(new Date()).local().format('YYMMDD')
-        var htmlweathermap = "https://meteoalarm.eu/maps/" + country.toUpperCase() + '-' + weatherDate + '.gif';
 
-        adapter.setState({device: '' , channel: '',state: 'weatherMapCountry'}, {val: htmlweathermap, ack: true});
+async function createAlarms(AlarmNumber){
+    var path = 'alarms.' + 'Alarm ' + AlarmNumber
+    channelNames.push('Alarm ' + AlarmNumber)
+    const promises = await Promise.all([
 
+        adapter.setObjectNotExistsAsync('alarms', {
+            common: {
+                name: 'Alarm'
+            },
+            type: 'device',
+            'native' : {}
+        }),
 
-        setTimeout(function() {
-            // wait 5 seconds to make sure all is done
-            adapter.log.debug('All done')
-            adapter.terminate ? adapter.terminate(0) : process.exit(0);
-          }, 5000);
-        
-    });
+        adapter.setObjectNotExistsAsync(path, {
+            common: {
+                name: 'Alarm ' + AlarmNumber
+            },
+            type: 'channel',
+            'native' : {}
+        })
+    ])
 }
 
 function getTypeName(type){
 
     switch (type) {
-        case 1:
+        case '1':
             return i18nHelper.typeDesc1[lang]
             break;
-        case 2:
+        case '2':
             return i18nHelper.typeDesc2[lang]
             break;
-        case 3:
+        case '3':
             return i18nHelper.typeDesc3[lang]
             break;
-        case 4:
+        case '4':
             return i18nHelper.typeDesc4[lang]
             break;
-        case 5:
+        case '5':
             return i18nHelper.typeDesc5[lang]
             break;
-        case 6:
+        case '6':
             return i18nHelper.typeDesc6[lang]
             break;
-        case 7:
+        case '7':
             return i18nHelper.typeDesc7[lang]
             break;
-        case 8:
+        case '8':
             return i18nHelper.typeDesc8[lang]
             break;
-        case 9:
+        case '9':
             return i18nHelper.typeDesc9[lang]
             break;
-        case 10:
+        case '10':
             return i18nHelper.typeDesc10[lang]
             break;
-        case 11:
+        case '11':
             return 'Unknown'
             break;
-        case 12:
+        case '12':
             return i18nHelper.typeDesc12[lang]
             break;
-        case 13:
+        case '13':
             return i18nHelper.typeDesc13[lang]
             break;
-        case 0:
+        case '0':
             return ''
             break;
        default:
@@ -307,16 +678,16 @@ function getTypeName(type){
 function getLevelName(level){
 
     switch (level) {
-        case 1:
+        case '1':
             return i18nHelper.levelDesc1[lang]
             break;
-        case 2:
+        case '2':
             return i18nHelper.levelDesc2[lang]
             break;
-        case 3:
+        case '3':
             return i18nHelper.levelDesc3[lang]
             break;
-        case 4:
+        case '4':
             return i18nHelper.levelDesc4[lang]
             break;
        default:
@@ -326,274 +697,267 @@ function getLevelName(level){
 
 }
 
-function parseWeather(description,type, callback){
-    var WarnungsText = '';
-    var folder = '';
-    var SearchCrit1 = 0;
-    var SearchCrit2 = 0;
-    switch (type) {
-        case 'today':
-            SearchCrit1 = description.indexOf('Today') + 1;
-            SearchCrit2 = description.indexOf('Tomorrow') + 1;
-            folder = 'today';
-           break;
-       case 'tomorrow':
-            SearchCrit1 = description.indexOf('Tomorrow') + 1;
-            SearchCrit2 = description.length;
-            folder = 'tomorrow';
-           break;       
-       default:
-           break;
-       }
-
-    // Warning Text
-    var ContentHeute = description.slice((SearchCrit1 - 1), SearchCrit2);
-    SearchCrit1 = ContentHeute.indexOf(DescFilter1) + 1;
-    if (SearchCrit1 != 0){
-        SearchCrit1 = (typeof SearchCrit1 == 'number' ? SearchCrit1 : 0) + DescFilter1.length;
-        var ContentFromDescFilter1 = ContentHeute.slice((SearchCrit1))
-        SearchCrit2 = ContentFromDescFilter1.indexOf(DescFilter2) + 1;
-        SearchCrit2 = (typeof SearchCrit2 == 'number' ? SearchCrit2 : 0) + -1;
-        WarnungsText = ContentFromDescFilter1.slice(1, SearchCrit2);
-    } 
-
-    adapter.setState({device: '' , channel: folder,state: 'text'}, {val: WarnungsText, ack: true});
-
-    // Warning Text From/To Today
-    var Warnung_Von = ''
-    var Warnung_Bis = ''
-    if (ContentHeute.indexOf('From: </b><i>') != -1){
-        SearchCrit1 = ContentHeute.indexOf('From: </b><i>') + 1;
-        SearchCrit1 = (typeof SearchCrit1 == 'number' ? SearchCrit1 : 0) + 13;
-        SearchCrit2 = ContentHeute.indexOf('CET') + 1;
-        SearchCrit2 = (typeof SearchCrit2 == 'number' ? SearchCrit2 : 0) + -2;
-        Warnung_Von = ContentHeute.slice((SearchCrit1 - 1), SearchCrit2);
-
-        SearchCrit1 = ContentHeute.indexOf('Until: </b><i>') + 1;
-        SearchCrit1 = (typeof SearchCrit1 == 'number' ? SearchCrit1 : 0) + 14;
-        SearchCrit2 = ContentHeute.indexOf(' CET</i></td><') + 1;
-        SearchCrit2 = (typeof SearchCrit2 == 'number' ? SearchCrit2 : 0) + -1;
-        Warnung_Bis = ContentHeute.slice((SearchCrit1 - 1), SearchCrit2);
-    }
-    
-    adapter.setState({device: '' , channel: folder,state: 'from'}, {val: Warnung_Von, ack: true});
-    adapter.setState({device: '' , channel: folder,state: 'to'}, {val: Warnung_Bis, ack: true});
-
-
-        // Warning Text  Level
-        SearchCrit1 = ContentHeute.indexOf('level:') + 1;
-        SearchCrit1 = (typeof SearchCrit1 == 'number' ? SearchCrit1 : 0) + 6;
-        SearchCrit2 = SearchCrit1 + 1;
-        var Level = parseInt(ContentHeute.charAt(SearchCrit1 - 1));
-        var Color = ''
-        if (SearchCrit1 != 0) {
-
-            adapter.setState({device: '' , channel: folder,state: 'level'}, {val: Level, ack: true});
-            adapter.setState({device: '' , channel: folder,state: 'levelText'}, {val: getLevelName(Level), ack: true});
-
-        
-            switch (Level) {
-             case 1:
+function getColor(level){
+    var Color = ''
+               
+            switch (level) {
+             case '1':
                 // Grün
-                Color = adapter.config.warningColorLevel1;
+                return adapter.config.warningColorLevel1;
                 break;
-            case 2:
+            case '2':
                 // Gelb
-                Color = adapter.config.warningColorLevel2;
+                return adapter.config.warningColorLevel2;
                 break;
-            case 3:
+            case '3':
                 // Orange
-                Color = adapter.config.warningColorLevel3;
+                return adapter.config.warningColorLevel3;
                 break;
-            case 4:
+            case '4':
                 // Rot
-                Color = adapter.config.warningColorLevel4;
+                return adapter.config.warningColorLevel4;
                 break;
             default:
-                Color = '#ffffff';
+                return '';
                 break;
             }
-
-            adapter.setState({device: '' , channel: folder,state: 'color'}, {val: Color, ack: true});
-
-        }
-
-    //Warning Text Type
-    SearchCrit1 = ContentHeute.indexOf('awt:') + 1;
-    SearchCrit1 = (typeof SearchCrit1 == 'number' ? SearchCrit1 : 0) + 4;
-    SearchCrit2 = SearchCrit1 + 1;
-    var Typ = parseInt(ContentHeute.slice((SearchCrit1 - 1), SearchCrit2));
-    if (SearchCrit1 != 0) {
-        if (Level == 1){
-            Typ = 0;
-        }
-
-        adapter.setState({device: '' , channel: folder,state: 'type'}, {val: Typ, ack: true});
-        adapter.setState({device: '' , channel: folder,state: 'typeText'}, {val: getTypeName(Typ), ack: true});
-    }
-    // Icon Link:
-    //SearchCrit1 = ContentHeute.indexOf('src=') + 1;
-    //SearchCrit1 = (typeof SearchCrit1 == 'number' ? SearchCrit1 : 0) + 13;
-    //SearchCrit2 = ContentHeute.indexOf('alt=') + 1;
-    //SearchCrit2 = (typeof SearchCrit2 == 'number' ? SearchCrit2 : 0) + -3;
-    //var Link_temp =  ContentHeute.slice((SearchCrit1 - 1), SearchCrit2);
-    //Link_temp = Link_temp.slice(32);
-    //var Warnung_img = '/meteoalarm.admin/icons/' + Link_temp
-    var Warnung_img = '';
-    if (Level != 1){
-        if (adapter.config.whiteIcons){
-            Warnung_img += '/meteoalarm.admin/icons/white/'
-        }
-        else{
-            Warnung_img += '/meteoalarm.admin/icons/black/'
-        }
-        Warnung_img += 't' + Typ + '.png'
-    }
-
-    adapter.setState({device: '' , channel: folder,state: 'icon'}, {val: Warnung_img, ack: true});
-
-    adapter.log.debug('Loaded ' + type + ' data')
-    callback()
 }
 
-function getFilters(){
-    DescFilter1 = '';
-    DescFilter2 = '';
 
-    var link = adapter.config.pathXML
-    var SearchCrit1 = link.indexOf('rss') + 4;
-    country = link.slice((SearchCrit1), SearchCrit1 + 2)
+function getCountryLink(country){
+    var link = ''
     switch (country) {
-        case 'at':
-            // Österreich
-            DescFilter1 = 'deutsch:';
-            DescFilter2 = 'english:';
+        // Alpha-2 Codes https://de.wikipedia.org/wiki/ISO-3166-1-Kodierliste
+        case 'AT':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-austria';
+            break;
+        case 'BE':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-belgium';
+            break;
+        case 'BA':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-bosnia-herzegovina';
+            break;
+        case 'BG':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-bulgaria';
+            break;
+        case 'HR':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-croatia'
+            break;
+        case 'CY':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-cyprus'
+            break;
+        case 'CZ':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-czechia'
+            break;
+        case 'DK':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-denmark'
+            break;
+        case 'EE':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-estonia'
+            break;
+        case 'FI':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-finland'
+            break;
+        case 'FR':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-france'
+            break;
+        case 'DE':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-germany'
+            break;
+         case 'GR':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-greece'
+            break;
+        case 'HU':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-hungary'
+            break;
+        case 'IS':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-iceland'
+            break;
+        case 'IE':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-ireland'
+            break;
+        case 'IL':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-israel'
+            break;
+        case 'IT':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-italy'
+            break;
+        case 'LV':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-latvia'
+            break;
+        case 'LT':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-lithuania'
+            break;
+        case 'LU':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-luxembourg'
+            break;
+        case 'MT':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-malta'
+            break;
+        case 'MD':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-moldova'
+            break;
+        case 'ME':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-montenegro'
+            break;
+        case 'NL':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-netherlands'
+            break;
+         case 'NO':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-norway'
+            break;
+         case 'PL':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-poland'
+            break;
+        case 'PT':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-portugal'
+            break;
+        case 'RO':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-romania'
+            break;
+        case 'RS':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-serbia'
+            break;
+        case 'SK':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-slovakia'
+            break;
+        case 'SI':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-slovenia'
+            break;
+        case 'ES':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-spain'
+            break;
+        case 'SE':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-sweden'
+            break;
+        case 'CH':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-switzerland'
+            break;
+         case 'UK':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-united-kingdom'
+            break;                           
+       default:
+           return ''
            break;
-        case 'de':
-                // Deutschland
-                DescFilter1 = 'deutsch:';
-                DescFilter2 = 'english:';
-               break;
-        case 'it':
-            // Italien
-            DescFilter1 = 'italiano:';
-            DescFilter2 = '</td>';
+    }
+}
+
+function getXMLLanguage(country){
+    var link = ''
+    switch (country) {
+        // Alpha-2 Codes https://de.wikipedia.org/wiki/ISO-3166-1-Kodierliste
+        case 'AT':
+            return 'de-DE';
+            break;
+        case 'BE':
+            return '';
+            break;
+        case 'BA':
+            return 'bs';
+            break;
+        case 'BG':
+            return 'bg';
+            break;
+        case 'HR':
+            return 'hr-HR'
+            break;
+        case 'CY':
+            return 'el-GR'
+            break;
+        case 'CZ':
+            return ''
+            break;
+        case 'DK':
+            return 'da-DK'
+            break;
+        case 'EE':
+            return ''
+            break;
+        case 'FI':
+            return 'fi-FI'
+            break;
+        case 'FR':
+            return 'fr-FR'
+            break;
+        case 'DE':
+            return 'de-DE'
+            break;
+         case 'GR':
+            return 'el-GR'
+            break;
+        case 'HU':
+            return 'hu-HU'
+            break;
+        case 'IS':
+            return ''
+            break;
+        case 'IE':
+            return ''
+            break;
+        case 'IL':
+            return 'he-IL'
+            break;
+        case 'IT':
+            return 'it-IT'
+            break;
+        case 'LV':
+            return 'lv'
+            break;
+        case 'LT':
+            return 'lt'
+            break;
+        case 'LU':
+            return ''
+            break;
+        case 'ME':
+            return ''
+            break;
+        case 'MD':
+            return 'ro'
+            break;
+        case 'MT':
+            return ''
+            break;
+        case 'NL':
+            return 'ne-NL'
+            break;
+         case 'NO':
+            return 'no'
+            break;
+         case 'PL':
+            return 'po-PL'
+            break;
+        case 'PT':
+            return 'pt-PT'
+            break;
+        case 'RO':
+            return 'ro-RO'
+            break;
+        case 'RS':
+            return 'sr'
+            break;
+        case 'SK':
+            return 'sk'
+            break;
+        case 'SI':
+            return 'sl'
+            break;
+        case 'ES':
+            return 'es-ES'
+            break;
+        case 'SE':
+            return 'sv-SE'
+            break;
+        case 'CH':
+            return ''
+            break;
+         case 'UK':
+            return 'en-GB'
+            break;                           
+       default:
+           return 'en-GB'
            break;
-        case 'hu':
-            // Ungarn
-            DescFilter1 = 'magyar:';
-            DescFilter2 = 'english:';
-           break;
-        case 'no':
-            // Norwegen
-            DescFilter1 = 'norsk:';
-            DescFilter2 = 'english:';
-           break;
-        case 'nl':
-            // Niederlande
-            DescFilter1 = 'nederlands:';
-            DescFilter2 = 'english:';
-           break;
-        case 'fi':
-            // Finnland
-            DescFilter1 = 'suomi:';
-            DescFilter2 = 'svenska:';
-           break;
-        case 'hr':
-            // Kroatien
-            DescFilter1 = 'hrvatski:';
-            DescFilter2 = 'english:';
-           break;
-        case 'es':
-            // Spanien
-            DescFilter1 = 'español:';
-            DescFilter2 = 'english:';
-           break;
-        case 'ch':
-            // Switzerland
-            DescFilter1 = 'english:';
-            DescFilter2 = '</td>';
-           break;
-        case 'sk':
-            // Switzerland
-            DescFilter1 = 'slovenčina:';
-            DescFilter2 = 'english:';
-           break;
-        case 'cz':
-            // Czech Republic
-            DescFilter1 = 'čeština:';
-            DescFilter2 = 'english:';
-        break;
-        case 'ie':
-            // Ireland
-            DescFilter1 = 'english:';
-            DescFilter2 = '</td>';
-        break;
-        case 'il':
-            // Israel
-            DescFilter1 = 'english:';
-            DescFilter2 = '</td>';
-        break;
-        case 'lt':
-            // Lithuania
-            DescFilter1 = 'lietuviu:';
-            DescFilter2 = 'english:';
-        break;
-        case 'lu':
-            // Luxembourg
-            DescFilter1 = 'deutsch:';
-            DescFilter2 = 'english:';
-        break;
-        case 'lv':
-            // Latvia
-            DescFilter1 = 'latviešu:';
-            DescFilter2 = '</td>';
-        break;
-        case 'me':
-            // Montenegro
-            DescFilter1 = 'Црногорски:';
-            DescFilter2 = '</td>';
-        break;
-        case 'mt':
-            // Malta
-            DescFilter1 = 'Malti:';
-            DescFilter2 = '</td>';
-        break;
-        case 'rs':
-            // Serbia
-            DescFilter1 = 'српски:';
-            DescFilter2 = '</td>';
-        break;
-        case 'se':
-            // Sweden
-            DescFilter1 = 'svenska:';
-            DescFilter2 = 'english:';
-        break;
-        case 'pl':
-            // Poland
-            DescFilter1 = 'polski:';
-            DescFilter2 = 'english:';
-        break;
-        case 'md':
-            // Moldova
-            DescFilter1 = 'româna:';
-            DescFilter2 = '</td>';
-        break;
-        case 'ro':
-            // Romania
-            DescFilter1 = 'româna:';
-            DescFilter2 = 'english:';
-        break;
-        case 'gr':
-            // Greece
-            DescFilter1 = 'Ελληνικά:';
-            DescFilter2 = '</td>';
-        break;
-        default:
-                DescFilter1 = 'nA';
-                DescFilter2 = 'nA';
-           break;
-       }
+    }
 }
 
 // If started as allInOne/compact mode => return function to create instance

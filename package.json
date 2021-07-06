@@ -1,6 +1,6 @@
 {
   "name": "iobroker.meteoalarm",
-  "version": "1.2.1",
+  "version": "2.0.0",
   "description": "Meteolaram",
   "main": "main.js",
   "repository": {
@@ -22,10 +22,11 @@
     "url": "https://github.com/jack-blackson/ioBroker.meteoalarm/issues"
   },
   "dependencies": {
-    "@iobroker/adapter-core": "^2.3.0",
+    "@iobroker/adapter-core": "^2.5.0",
     "@iobroker/testing": "^2.2.0",
     "moment": "2.29.1",
-    "request": "^2.88.2",
+    "bent": "^7.3.12",
+    "csv-parse": "3.0.0",
     "xml2js": "^0.4.22"
   },
   "scripts": {

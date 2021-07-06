@@ -8,6 +8,8 @@
 <script type="text/javascript" src="../../js/translate.js"></script>
 <script type="text/javascript" src="../../lib/js/materialize.js"></script>
 <script type="text/javascript" src="../../js/adapter-settings.js"></script>
+
+
 <script type="text/javascript" src="words.js"></script>
 
 
@@ -23,170 +25,157 @@
 </style>
 <!-- you have to define 2 functions in the global scope: -->
 <script type="text/javascript">
-    var setup = [];
-    var regionArray = [];
-    var regionLinkArray = [];
-    var textLoadRegions = '';
-    var textChooseRegion = '';
+    //var setup = [];
+    //var regionArray = [];
+    //var regionLinkArray = [];
+    //var textLoadRegions = '';
+    //var textChooseRegion = '';
 
     
     // the function loadSettings has to exist ...
-    function save(callback) {
+	function load(settings, onChange) {
+			// example: select elements with id=key and class=value and insert value
+			if (!settings) return;
+            if (settings.region){
+                loadRegions(settings.region)
+            }
 
-            var obj = {};
-            $('.value').each(function () {
-                var $this = $(this);
-                var id = $this.attr('id');
-                if ($this.attr('type') === 'checkbox') {
-                    obj[$this.attr('id')] = $this.prop('checked');
-                } else {
-                    obj[$this.attr('id')] = $this.val();
-                }
-            });
-            callback(obj);
-        }
-    
-        function load(settings, onChange) {
-            //getVariableTranslation()
-            if (!settings) return;
-            $('.value').each(function () {
-                var key = $(this).attr('id');
-                var $key = $('#' + key + '.value');
-                if ($key.attr('type') === 'checkbox') {
-                    $key.prop('checked', settings[key]).change(function () {
-                        onChange();
-                    });
-                } else {
-                    $key.val(settings[key]).change(function () {
-                        onChange();
-                    }).keyup(function () {
-                        onChange();
-                    });
-                }
-            });
-            onChange(false);
+			$('.value').each(function () {
+				var $key = $(this);
+				var id = $key.attr('id');
+                var value = $key.attr('val');
 
-            $('#regions').change(function () {
-                $('#pathXML').val(regionLinkArray[$(this).val()-1]).trigger('change');
-                M.updateTextFields();
+				if ($key.attr('type') === 'checkbox') {
+					// do not call onChange direct, because onChange could expect some arguments
+					$key.prop('checked', settings[id])
+						.on('change', () => onChange())
+						;
+				} else {
+					// do not call onChange direct, because onChange could expect some arguments
+					$key.val(settings[id])
+						.on('change', () => onChange())
+						.on('keyup', () => onChange())
+						;
+				}
+			});
+			onChange(false);
+
+
+
+
+			// reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
+			if (M) M.updateTextFields();
+
+            // Trigger to load regions 
+            $('#country').on('change', function () {
+                loadRegions("")
             });
 
-            $('#loadRegions').on('click', function () {
-                var $loadRegions = $('#loadRegions');
-                var $regionList = $('#regions')
-                regionArray = [];
-                regionLinkArray = [];
-                $('#loader1').removeClass('seenot');
-                $loadRegions.addClass('disabled');
-                var $loadRegions = $('#loadRegions');
-                let country = $('#country').val();
-                let url = 'https://www.meteoalarm.eu/documents/rss/' + country + '.rss'
-                httpGet(url, function(returnValue) {
-                    let xml = returnValue
-                    let text = "";
-                    var i = 0
-                    $('#regions').empty().html(' ');
-                    var $option = $("<option/>", {
+
+            console.log('Settings loaded')
+
+		}
+
+		function loadRegions(initValue){
+            $('#loader1').removeClass('seenot');
+            console.log('Start loadRegions')
+            console.log('Init Value: ' + initValue)
+            
+            $.getJSON( "geocodes.json" , function( result ){
+                var features = result.features
+                var NoOfEntries = features.length
+                //console.log('Einträge: ' + NoOfEntries)
+                $('#region').empty().html(' ');
+                var $option = $("<option/>", {
                                         value: 0,
                                         text: '--------'
                             });
-                    $('#regions').append($option);
-                    $(xml).find('item').each(function(){
-                        
-                        if (i != 0){
-                            $option = $("<option/>", {
-                                        value: i,
-                                        text: $(this).find("title").text()
+                $('#region').append($option);
+                var regionArray = [];
+                var codeArray= [];
+                var sortedRegionArray= [];
+                for(var i = 0; i < NoOfEntries; i++) {
+                    var country = features[i].properties.country
+                    var region = features[i].properties.name
+                    var code = features[i].properties.code
+
+                    if (country == $('#country').children("option:selected").val()){
+                        //regionArray[code] = region
+                        regionArray.push(region)
+                        sortedRegionArray.push(region)
+                        codeArray.push(code)
+                    }
+                }
+                
+                console.log('Regions Array before: ' + regionArray)
+
+                //var sortedRegionArray = regionArray
+                sortedRegionArray.sort()
+                var NoOfEntries = regionArray.length
+                //console.log('Regions Array: ' + regionArray)
+                //console.log('Regions Array sorted: ' + sortedRegionArray)
+
+                for(const val of sortedRegionArray) {
+
+                    codePosition = regionArray.indexOf(val)
+                    $option = $("<option/>", {
+                                        value: codeArray[codePosition],
+                                        text: val
                             });
-                            $('#regions').append($option);
-                            regionArray.push($(this).find("title").text());
+                            $('#region').append($option);
+                }
 
-                            let origLink = $(this).find("link").text()
-                            let linkPartPos = origLink.indexOf('/0/0/') + 5
-                            let newLink = 'https://www.meteoalarm.eu/documents/rss/' + country + '/' + origLink.slice(linkPartPos, linkPartPos + 5) + '.rss'
-                            regionLinkArray.push(newLink);
-                        }
-                        i += 1
+                let instance =  M.FormSelect.getInstance($('#region'));
+
+                if (initValue){
+                    $("#region").val(initValue);
+                }
+                instance.destroy();
+                instances = M.FormSelect.init($('#region'));
+                $('#loader1').addClass('seenot');
+            })
+		}
+
+        function sortObject(obj) {
+            var arr = [];
+            for (var prop in obj) {
+                if (obj.hasOwnProperty(prop)) {
+                    arr.push({
+                        'key': prop,
+                        'value': obj[prop]
                     });
-
-                    let instance =  M.FormSelect.getInstance($('#regions'));
-
-                    instance.destroy();
-                    instances = M.FormSelect.init($('#regions'));
-                    //showToast(_(textLoadRegions + ': ' + i));
-                    $loadRegions.removeClass('disabled');
-                    $('#loader1').addClass('seenot');
-                });
-            });
+                }
+            }
+            arr.sort(function(a, b) { return a.value - b.value; });
+            return arr; // returns array
         }
 
-        function httpGet(theUrl, callback)
-        {
-            //theUrl =  'https://cors.bridged.cc/<' + theUrl + '>';
-            //theUrl = theUrl
+		// This will be called by the admin adapter when the user presses the save button
+		function save(callback) {
+			// example: select elements with class=value and build settings object
+            console.log('saving country ' + $('#country').children("option:selected").val() + ' and region ' + $('#region').children("option:selected").val()+  ' - ' + $('#region').children("option:selected").text())
+            //settings.regionName = $('#region').children("option:selected").text()
 
-            var xmlHttp = new XMLHttpRequest();
-            xmlHttp.open( "GET", theUrl, false ); 
-            xmlHttp.send( null );
-            callback(xmlHttp.responseXML);
-        }           
+            var obj = {};
+			$('.value').each(function () {
+				var $this = $(this);
+				if ($this.attr('type') === 'checkbox') {
+					obj[$this.attr('id')] = $this.prop('checked');
+				} else if ($this.attr('type') === 'number') {
+					obj[$this.attr('id')] = parseFloat($this.val());
+				} else if ($this.hasClass("isNumeric")){
+					obj[$this.attr('id')] = parseInt($this.val());
+				} else if ($this.attr('type') === 'radio'){
+					obj['provider'] = parseInt($("input:radio[name ='provider']:checked").val());
+				} else { 
+					obj[$this.attr('id')] = $this.val();
+				}
+			});
 
-        function getVariableTranslation(){
-            // not working at the moment, as I can not determine the language code
-        var language = adapter.language.text()
-        console.log('Sprache: ' + language)
-        //system.getForeignObject('system.config', (err, systemConfig) => {
-            //language = systemConfig.common.language
+            obj.regionName = $('#region').children("option:selected").text()
 
-        switch (language) {
-            case 'de':
-                textLoadRegions = 'Regionen geladen';
-                textChooseRegion = 'Region auswählen';
-                break;
-            case 'en':
-                textLoadRegions = 'Regions loaded';
-                textChooseRegion = 'Choose region';
-                break;
-            case 'ru':
-                textLoadRegions = 'Регионы загружены';
-                textChooseRegion = 'Выберите регион';
-                break;
-            case 'pt':
-                textLoadRegions = 'Regiões carregadas';
-                textChooseRegion = 'Escolha a região';
-                break;
-            case 'nl':
-                textLoadRegions = 'Gebieden geladen';
-                textChooseRegion = 'Kies regio';
-                break;
-            case 'fr':
-                textLoadRegions = 'Régions chargées';
-                textChooseRegion = 'Choisissez la région';
-                break;
-            case 'it':
-                textLoadRegions = 'Regioni caricate';
-                textChooseRegion = 'Scegli la regione';
-                break;
-            case 'es':
-                textLoadRegions = 'Regiones cargadas';
-                textChooseRegion = 'Elige región';
-                break;
-            case 'pl':
-                textLoadRegions = 'Regiony załadowane';
-                textChooseRegion = 'Wybierz region';
-                break;
-            case 'zh-cn':
-                textLoadRegions = '加载区域';                
-                textChooseRegion = '选择地区';
-                break;    
-            default:
-                textLoadRegions = 'Regions loaded';
-                textChooseRegion = 'Choose region';
-                    break;
-          }
-
-    //});
-}
+			callback(obj);
+		}
 
 </script>
 <style>
@@ -219,19 +208,62 @@
             </div>
         </div>
     </div>
-    <div class="col s12">
-        <h6 class="title translate" data-lang="AddLinkManually">AddLinkManually</h6>
-    </div>
+    
+ 
     <div class="row">
-        <div class="input-field col s12">
-            <input type="text" id="pathXML" class="value" />
-            <label for="pathXML" class="translate">AddPath</label>
+        <div class="input-field">
+            <select class="value select-country" id="country">
+                <option value="" class="translate">ChooseCountry</option>
+                <option value="AT" class="translate">Austria</option>
+                <!--<option value="CH" class="translate">Switzerland</option>   Auskommentiert da falsch in geocodes.json-->
+                <option value="DE" class="translate">Germany</option>
+                <option value="BE" class="translate">Belgium</option>
+                <option value="BA" class="translate">BosniaHerzegovina</option>
+                <!--<option value="BG" class="translate">Bulgaria</option> Auskommentiert da falsch in geocodes.json-->
+                <option value="HR" class="translate">Croatia</option>
+                <option value="CY" class="translate">Cyprus</option>
+                <option value="CZ" class="translate">Czech Republic</option>
+                <option value="DK" class="translate">Denmark</option>
+                <option value="EE" class="translate">Estonia</option>
+                <option value="FI" class="translate">Finland</option>
+                <option value="FR" class="translate">France</option>
+                <option value="GR" class="translate">Greece</option>
+                <option value="HU" class="translate">Hungary</option>
+                <option value="IE" class="translate">Ireland</option>
+                <option value="IS" class="translate">Iceland</option>
+                <option value="IL" class="translate">Israel</option>
+                <option value="IT" class="translate">Italy</option>
+                <option value="LV" class="translate">Latvia</option>
+                <option value="LT" class="translate">Lithuania</option>
+                <option value="LU" class="translate">Luxembourg</option>
+                <option value="MT" class="translate">Malta</option>
+                <option value="NL" class="translate">Netherlands</option>
+                <option value="NO" class="translate">Norway</option>
+                <option value="PL" class="translate">Poland</option>
+                <!--<option value="PT" class="translate">Portugal</option> Auskommentiert da falsch in geocodes.json-->
+                <option value="RO" class="translate">Romania</option>
+                <option value="RS" class="translate">Serbia</option>
+                <option value="SK" class="translate">Slovakia</option>
+                <option value="SI" class="translate">Slovenia</option>
+                <option value="ES" class="translate">Spain</option>
+                <option value="SE" class="translate">Sweden</option>
+                <option value="UK" class="translate">UK</option>
+            </select>
+            <label for="country" class="translate">country_select</label>
         </div>
     </div>
+
     <div class="row">
-        <div class="col s12">
-            <span class="translate">instruction</span>
+        <div class="input-field">
+            <select class="value select-region" id="region">
+                <option value="0" class="translate">ChooseRegion</option>
+            </select>
+            <label for="region" class="translate">region_select</label>
         </div>
+    </div>
+
+    <div class="row">
+        
     </div>
 
     <div class="col s12">
@@ -250,6 +282,14 @@
             <input type="checkbox" id="noIcons" class="value" />
             <label for="noIcons" class="translate">noIcons</label>
         </div> 
+        <div class="input-field col s3">
+            <select class="value select-image-size" id="imageSize">
+                <option value="0" class="translate">small</option>
+                <option value="1" class="translate">medium</option>
+                <option value="2" class="translate">large</option>
+            </select>
+            <label for="imageSize" class="translate">selectImageSize</label>
+        </div>
     </div>
     <div class="row">
         <div class="input-field col s12">
@@ -273,6 +313,9 @@
             <input type="text" id="warningColorLevel4" class="value" />
             <label for="warningColorLevel4" class="translate">TextwarningColorLevel4</label>
         </div>
+    </div>
+    <div class="row">
+        
     </div>
 </div>
 </body>
