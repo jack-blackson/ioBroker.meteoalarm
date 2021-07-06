@@ -551,7 +551,7 @@ async function localCreateState(state, name, value) {
         const role = stateAttr[name] !== undefined ? stateAttr[name].role || 'state' : 'state';
         const type = stateAttr[name] !== undefined ? stateAttr[name].type || 'mixed' : 'mixed';
         const unit = stateAttr[name] !== undefined ? stateAttr[name].unit || '' : '';
-        adapter.log.debug(`Write value : ${writable}`);
+        //adapter.log.debug(`Write value : ${writable}`);
 
         await adapter.setObjectNotExistsAsync(state, {
             type: 'state',
