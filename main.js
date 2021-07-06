@@ -127,7 +127,7 @@ async function getData(){
             // Delete old alarms
             adapter.log.debug('0: Delete Alarms')
 
-            const deleted =  deleteAllAlarms();
+            const deleted =  await deleteAllAlarms();
 
             const checkState = await adapter.getStateAsync('weatherMapCountry')
             if (checkState != null ){
