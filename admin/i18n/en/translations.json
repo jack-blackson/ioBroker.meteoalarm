@@ -63,5 +63,10 @@
     "regions": "Regions",
     "selectImageSize": "Select icon size in HTML widget",
     "small": "Small",
-    "whiteIcons": "White Icons for Widgets"
+    "whiteIcons": "White Icons for Widgets",
+    "settings": "Settings",
+    "alarmtypes": "Alarm Types",
+    "regionsetup": "Setup the alarm region",
+    "alarmtypesetup": "Choose the alarm types you want to monitor"
+
 }
