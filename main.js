@@ -516,6 +516,19 @@ async function processDetails(content, countInt){
     ])
     */
     await localCreateState(path + '.event', 'event', content.event);
+    await localCreateState(path + '.headline', 'headline', content.headline);
+    await localCreateState(path + '.description', 'description', content.description);
+    await localCreateState(path + '.link', 'link', content.web);
+    await localCreateState(path + '.expires', 'expires', content.expires);
+    await localCreateState(path + '.effective', 'effective', content.onset);
+    await localCreateState(path + '.sender', 'sender', content.senderName);
+    await localCreateState(path + '.level', 'level', content.level);
+    await localCreateState(path + '.levelText', 'levelText', getLevelName(level));
+    await localCreateState(path + '.type', 'type', content.type);
+    await localCreateState(path + '.typeText', 'typeText', getTypeName(type));
+    await localCreateState(path + '.icon', 'icon', Warnung_img);
+    await localCreateState(path + '.color', 'color', getColor(level));
+
     //adapter.log.debug('7: After Set Alarm')
     
 
@@ -601,7 +614,7 @@ async function createAlarms(AlarmNumber){
             },
             type: 'channel',
             'native' : {}
-        }),
+        })
         /*
         adapter.setObjectNotExistsAsync(path + '.event', {
             common: {
@@ -614,7 +627,7 @@ async function createAlarms(AlarmNumber){
             type: 'state',
             'native' : {}
         }),
-        */
+        
         adapter.setObjectNotExistsAsync(path + '.headline', {
             common: {
                 name: 'Headline',
@@ -748,6 +761,7 @@ async function createAlarms(AlarmNumber){
             type: 'state',
             'native' : {}
         })
+        */
     ])
 }
 
