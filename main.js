@@ -305,7 +305,7 @@ async function getData(){
                             maxAlarmLevel = Number(level.val)
                         }
                     }
-                    adapter.log.debug('10.1: Added Alarm for ' + headline)
+                    adapter.log.debug('10.1: Added Alarm for ' + headline.val)
                      
                     if (!adapter.config.noIcons){
                         // Dummy cell to move picture away from the left side
