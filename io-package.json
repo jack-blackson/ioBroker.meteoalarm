@@ -210,7 +210,19 @@
         "warningColorLevel4": "#FD0204",
         "country": "",
         "region": "",
-        "imageSize": 1
+        "imageSize": 1,
+        "warningType1" : true,
+        "warningType2" : true,
+        "warningType3" : true,
+        "warningType4" : true,
+        "warningType5" : true,
+        "warningType6" : true,
+        "warningType7" : true,
+        "warningType8" : true,
+        "warningType9" : true,
+        "warningType10" : true,
+        "warningType11" : true,
+        "warningType13" : true
     },
     "objects": [],
     "instanceObjects": [
