@@ -174,6 +174,7 @@ async function getData(){
                         if (result.feed.entry){
                             result.feed.entry.forEach(function (element){
                                 var expiresDate = new Date(element['cap:expires']);
+                                var effectiveDate = new Date(element['cap:onset']);
                                 var messagetype = ""
                                 var messagetypeRelevant = false
                                 if (element['cap:message_type']){
@@ -194,7 +195,19 @@ async function getData(){
                                 if (element['cap:status'] == 'Actual'){
                                     statusRelevant = true
                                 }
-                                if (locationRelevant && (expiresDate >= now) && statusRelevant && messagetypeRelevant){
+
+                                var dateRelevant = false
+                                //if ((expiresDate >= now)&&(){
+                                    dateRelevant = true
+                                //}
+
+                                var given = moment(effectiveDate);
+                                var current = moment().startOf('day');
+
+                                //Difference in number of days
+                                adapter.log.debug(' Effective Date: ' + effectiveDate + ' current: ' + current + ' difference: ' + moment.duration(given.diff(current)).asDays())
+
+                                if (locationRelevant && (dateRelevant) && statusRelevant && messagetypeRelevant){
                                     var detailsLink = element.link[0].$.href
                                     adapter.log.debug('4.1: Warning found: ' + detailsLink + ' of message type ' + messagetype)
                                     detailsURL.push(detailsLink)
@@ -217,7 +230,6 @@ async function getData(){
             var countURL = 0
             for (const URL of detailsURL){ 
                 countURL += 1
-                //console.log(element) 
                 var jsonResult;
                 var awarenesstype = ""
                 adapter.log.debug('6: Request Details from URL ' + countURL + ': ' + URL)
@@ -226,7 +238,6 @@ async function getData(){
                 let xmlDetails
 
                 try {
-                    //let xmlDetails = await getJSON1('wer.as.at')
                     xmlDetails = await getJSON1(URL)
 
                 } catch (err){
