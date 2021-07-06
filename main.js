@@ -497,24 +497,7 @@ async function processDetails(content, countInt){
     }
 
     var path = 'alarms.' + 'Alarm ' + countInt
-    /*
-    const promises = await Promise.all([
-        
-        adapter.setStateAsync({ state: path + '.event'}, {val:  content.event, ack: true}),
-        adapter.setStateAsync({ state: path + '.headline'}, {val:  content.headline, ack: true}),
-        adapter.setStateAsync({ state: path + '.description'}, {val: content.description, ack: true}),
-        adapter.setStateAsync({ state: path + '.link'}, {val: content.web, ack: true}),
-        adapter.setStateAsync({ state: path + '.expires'}, {val: content.expires, ack: true}),
-        adapter.setStateAsync({ state: path + '.effective'}, {val: content.onset, ack: true}),
-        adapter.setStateAsync({ state: path + '.sender'}, {val: content.senderName, ack: true}),
-        adapter.setStateAsync({ state: path + '.level'}, {val: level, ack: true}),
-        adapter.setStateAsync({ state: path + '.levelText'}, {val: getLevelName(level), ack: true}),
-        adapter.setStateAsync({ state: path + '.type'}, {val: type, ack: true}),
-        adapter.setStateAsync({ state: path + '.typeText'}, {val: getTypeName(type), ack: true}),
-        adapter.setStateAsync({ state: path + '.icon'}, {val: Warnung_img, ack: true}),
-        adapter.setStateAsync({ state: path + '.color'}, {val: getColor(level), ack: true})
-    ])
-    */
+
     await localCreateState(path + '.event', 'event', content.event);
     await localCreateState(path + '.headline', 'headline', content.headline);
     await localCreateState(path + '.description', 'description', content.description);
@@ -528,9 +511,7 @@ async function processDetails(content, countInt){
     await localCreateState(path + '.typeText', 'typeText', getTypeName(type));
     await localCreateState(path + '.icon', 'icon', Warnung_img);
     await localCreateState(path + '.color', 'color', getColor(level));
-
-    //adapter.log.debug('7: After Set Alarm')
-    
+   
 
 }
 
@@ -615,153 +596,6 @@ async function createAlarms(AlarmNumber){
             type: 'channel',
             'native' : {}
         })
-        /*
-        adapter.setObjectNotExistsAsync(path + '.event', {
-            common: {
-                name: 'Event',
-                type: 'string',
-				role: 'value',
-				read: true,
-				write: true
-            },
-            type: 'state',
-            'native' : {}
-        }),
-        
-        adapter.setObjectNotExistsAsync(path + '.headline', {
-            common: {
-                name: 'Headline',
-                type: 'string',
-				role: 'value',
-				read: true,
-				write: true
-            },
-            type: 'state',
-            'native' : {}
-        }),
-        adapter.setObjectNotExistsAsync(path + '.color', {
-            common: {
-                name: 'Alarm color',
-                type: 'string',
-				role: 'value',
-				read: true,
-				write: true
-            },
-            type: 'state',
-            'native' : {}
-        }),
-        adapter.setObjectNotExistsAsync(path + '.icon', {
-            common: {
-                name: 'Alarm icon',
-                type: 'string',
-				role: 'value',
-				read: true,
-				write: true
-            },
-            type: 'state',
-            'native' : {}
-        }),
-        adapter.setObjectNotExistsAsync(path + '.level', {
-            common: {
-                name: 'Alarm level',
-                type: 'string',
-				role: 'value',
-				read: true,
-				write: true
-            },
-            type: 'state',
-            'native' : {}
-        }),
-        adapter.setObjectNotExistsAsync(path + '.levelText', {
-            common: {
-                name: 'Alarm level text',
-                type: 'string',
-				role: 'value',
-				read: true,
-				write: true
-            },
-            type: 'state',
-            'native' : {}
-        }),
-        adapter.setObjectNotExistsAsync(path + '.type', {
-            common: {
-                name: 'Alarm icon',
-                type: 'string',
-				role: 'value',
-				read: true,
-				write: true
-            },
-            type: 'state',
-            'native' : {}
-        }),
-        adapter.setObjectNotExistsAsync(path + '.typeText', {
-            common: {
-                name: 'Alarm type text',
-                type: 'string',
-				role: 'value',
-				read: true,
-				write: true
-            },
-            type: 'state',
-            'native' : {}
-        }),
-        adapter.setObjectNotExistsAsync(path + '.description', {
-            common: {
-                name: 'Description',
-                type: 'string',
-				role: 'value',
-				read: true,
-				write: true
-            },
-            type: 'state',
-            'native' : {}
-        }),
-        adapter.setObjectNotExistsAsync(path + '.sender', {
-            common: {
-                name: 'Sender of the Alarm',
-                type: 'string',
-				role: 'value',
-				read: true,
-				write: true
-            },
-            type: 'state',
-            'native' : {}
-        }),
-        adapter.setObjectNotExistsAsync(path + '.effective', {
-            common: {
-                name: 'Date Alarm gets effective',
-                type: 'string',
-				role: 'value.datetime',
-				read: true,
-				write: true
-            },
-            type: 'state',
-            'native' : {}
-        }),
-        adapter.setObjectNotExistsAsync(path + '.expires', {
-            common: {
-                name: 'Date Alarm expires',
-                type: 'string',
-				//role: 'value.datetime',
-                role: 'value',
-				read: true,
-				write: true
-            },
-            type: 'state',
-            'native' : {}
-        }),
-        adapter.setObjectNotExistsAsync(path + '.link', {
-            common: {
-                name: 'Link',
-                type: 'string',
-				role: 'value',
-				read: true,
-				write: true
-            },
-            type: 'state',
-            'native' : {}
-        })
-        */
     ])
 }
 
