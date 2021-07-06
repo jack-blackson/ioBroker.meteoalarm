@@ -432,8 +432,8 @@ function getAlarmTime(onset,expires){
     var dateString = ''
     var expiresToday = today.toDateString() == expiresDate.toDateString()
     var onsetToday = today.toDateString() == onsetDate.toDateString()
-    var expiresDay = moment(expires).locale(lang).format("dddd")
-    var onsetDay = moment(onset).locale(lang).format("dddd")
+    var expiresDay = moment(expires).locale(lang).format("ddd")
+    var onsetDay = moment(onset).locale(lang).format("ddd")
 
     if (expiresToday && expiresToday){
         dateString = getDateFormatedShort(onset) + ' - ' + getDateFormatedShort(expires)
