@@ -9,15 +9,20 @@
 
 meteoalarm Adapter for ioBroker
 ------------------------------------------------------------------------------
+
+## !!!! The new version 2.0.0 which can handle the new website is currently in testing and available in the latest/beta channel
+
 This adapter is pulling weather alarms from https://meteoalarm.org, which includes wind, snow, rain, high and low temperature,etc. This information is available in local language and for detailed regions.
 
 Disclaimer: Time delays between this website and the www.meteoalarm.org website are possible, for the most up to date information about alert levels as published by the participating National Meteorological Services please use https://www.meteoalarm.org.
 
-## !!!! The new version 2.0.0 which can handle the new website is currently in testing and available in the latest/beta channel
 
 ## How to use it
 Choose your country, and afterwards the region you want the warnings for. If you are unsure what your region name is, please go to https://meteoalarm.org and try to find it on the map. 
 
+
+## Add it to your vis
+The easiest way to add it to your vis is by using the widget basic - string, and there choosing the datapoint htmlToday. This gives you a predesigned HTML widget, which you can adjust in the setup.
 
 ## Alarm Types
 |Alarm Type|Description|                                                                       
@@ -45,6 +50,9 @@ Ability to define the colors for the various alarm levels in HEX code. Used for 
 
 "Use white icons": 
 Use white icons instead of black ones
+
+"Icons": 
+Define the size of the icon in the HTML widget
 
 "No symbols in widget":
 Don't use the symbol in the HTML widget. You can still access it in the objects. This is usefill if you want to show the icon seperatly from the widget - e.g. in a bigger size.
