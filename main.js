@@ -272,7 +272,7 @@ async function getData(){
             }
             //const widget = await createHTMLWidget()
             adapter.log.debug('10: Creating HTML Widget')
-
+            htmlCode = ''
             if (channelNames.length >= 1){
                 htmlCode += '<table style="border-collapse: collapse; width: 100%;"><tbody>'
                 for (const channelLoop of channelNames) {
@@ -301,7 +301,7 @@ async function getData(){
                             maxAlarmLevel = Number(level.val)
                         }
                     }
-                    
+                    adapter.log.debug('10.1: Added Alarm for ' + headline)
                      
                     if (!adapter.config.noIcons){
                         // Dummy cell to move picture away from the left side
@@ -312,16 +312,16 @@ async function getData(){
                         if (icon && icon.val){
                             switch (imageSizeSetup) {
                                 case 0:
-                                    imageSize = 'width="20" height="20"';
+                                    imageSize = ' width="20" height="20"';
                                     break;
                                 case 1:
-                                    imageSize = 'width="40" height="40"';
+                                    imageSize = ' width="40" height="40"';
                                     break;
                                 case 2:
-                                    imageSize = 'width="60" height="60"';
+                                    imageSize = ' width="60" height="60"';
                                     break;
                                 default:
-                                    imageSize = 'width="40" height="40"';
+                                    imageSize = ' width="40" height="40"';
                                     break;
                              } 
                              //adapter.log.debug('Image Size: ' + imageSizeSetup + ' -> Result: ' + imageSize)
