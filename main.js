@@ -679,7 +679,7 @@ function checkTypeRelevant(type){
         case '2':
             return adapter.config.warningType2
             break;
-        case '3':
+        case 3:
             return adapter.config.warningType3
             break;
         case '4':
