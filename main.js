@@ -262,6 +262,8 @@ async function getData(){
                                     element.parameter.forEach(function (parameter){
                                         if (parameter.valueName == "awareness_type") {
                                             awarenesstype =parameter.value
+                                            var n = awarenesstype.indexOf(";");
+                                            awarenesstype = awarenesstype.substring(0, n)
                                             typeRelevant = checkTypeRelevant(awarenesstype)
                                             adapter.log.debug('Alarm ' + countURL + ' with type ' + awarenesstype + ' relevant: ' + typeRelevant)
 
