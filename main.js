@@ -263,6 +263,7 @@ async function getData(){
                                         if (parameter.valueName == "awareness_type") {
                                             awarenesstype =parameter.value
                                             typeRelevant = checkTypeRelevant()
+                                            adapter.log.debug('Alarm ' + countURL + ' with type ' + awarenesstype + ' relevant: ' + typeRelevant)
 
                                         }  
                                     })
