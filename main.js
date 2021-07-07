@@ -520,7 +520,7 @@ async function processDetails(content, countInt){
         Warnung_img += 't' + type + '.png'
     }
 
-    var path = 'alarms.' + 'Alarm ' + countInt
+    var path = 'alarms.' + 'Alarm_' + countInt
 
     await localCreateState(path + '.event', 'event', content.event);
     await localCreateState(path + '.headline', 'headline', content.headline);
@@ -615,7 +615,7 @@ async function createAlarms(AlarmNumber){
 
         adapter.setObjectNotExistsAsync(path, {
             common: {
-                name: 'Alarm ' + AlarmNumber
+                name: 'Alarm_' + AlarmNumber
             },
             type: 'channel',
             'native' : {}
