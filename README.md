@@ -106,7 +106,7 @@ If you don't find your country, please create an issue on github, and I will be 
 
 
 ## Changelog
-## 2.0.0 (2021-06-20)
+## 2.0.0 (2021-07-06)
 * (jack-blackson) Switch to Meteoalarm.org, complete rebuild
 ## 1.2.1 (2021-06-05)
 * (jack-blackson) Bugfix to handle incorrect XML (if country instead of region is used)

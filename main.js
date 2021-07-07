@@ -602,7 +602,7 @@ async function deleteAllAlarms(){
 
 async function createAlarms(AlarmNumber){
     var path = 'alarms.' + 'Alarm ' + AlarmNumber
-    channelNames.push('Alarm ' + AlarmNumber)
+    channelNames.push('Alarm_' + AlarmNumber)
     const promises = await Promise.all([
 
         adapter.setObjectNotExistsAsync('alarms', {
