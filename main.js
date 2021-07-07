@@ -670,16 +670,16 @@ function getTypeName(type){
 
 }
 
-function checkTypeRelevant(type){
+function checkTypeRelevant(warntype){
 
-    switch (type) {
+    switch (warntype) {
         case '1':
             return adapter.config.warningType1
             break;
         case '2':
             return adapter.config.warningType2
             break;
-        case 3:
+        case '3':
             return adapter.config.warningType3
             break;
         case '4':
@@ -716,6 +716,7 @@ function checkTypeRelevant(type){
             return ''
             break;
        default:
+           adapter.log.warn('No configuration found for type ' + warntype)
            return true
            break;
     }
