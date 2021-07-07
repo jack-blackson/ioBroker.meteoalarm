@@ -206,6 +206,7 @@ async function getData(){
                                     dateRelevant = true
                                 }
 
+
                                 if (locationRelevant && (dateRelevant) && statusRelevant && messagetypeRelevant){
                                     var detailsLink = element.link[0].$.href
                                     adapter.log.debug('4.1: Warning found: ' + detailsLink + ' of message type ' + messagetype)
@@ -242,7 +243,7 @@ async function getData(){
                 } catch (err){
                     adapter.log.debug('6.1: Details URL ' + URL + ' not valid any more - error ' + err) 
                 }
-               
+               var typeRelevant = false
                 if (xmlDetails ){
                     // Just go here if Request for Details is successful
                     adapter.log.debug('7: Received Details for URL ' + countURL)
@@ -261,6 +262,8 @@ async function getData(){
                                     element.parameter.forEach(function (parameter){
                                         if (parameter.valueName == "awareness_type") {
                                             awarenesstype =parameter.value
+                                            typeRelevant = checkTypeRelevant()
+
                                         }  
                                     })
                                     jsonResult = element 
@@ -273,24 +276,15 @@ async function getData(){
 
                 }
 
-                if (jsonResult){
-                    //adapter.log.debug(' Type of URL ' + countURL + ' :' + type);
-                    //if (typeArray.indexOf(awarenesstype) > -1) {
-                    //    adapter.log.debug('8: Alarm States ignored for Alarm ' + countURL)
-                    //    adapter.log.debug('9: Processed Details for Alarm ' + countURL)
+                if (jsonResult && typeRelevant){
 
-
-                    //} else {
-                        //Type not yet in the array
                         countEntries += 1
                 
-                        //typeArray.push(awarenesstype)
                         const created = await createAlarms(countEntries)
                         adapter.log.debug('8: Alarm States created for Alarm ' + countURL + ' type:  ' + awarenesstype)
                 
                         const promises = await processDetails(jsonResult,countEntries)
                         adapter.log.debug('9: Processed Details for Alarm ' + countURL)
-                    //}
 
                 }
                             
@@ -670,6 +664,58 @@ function getTypeName(type){
             break;
        default:
            return 'undefined'
+           break;
+    }
+
+}
+
+function checkTypeRelevant(type){
+
+    switch (type) {
+        case '1':
+            return adapter.config.warningType1
+            break;
+        case '2':
+            return adapter.config.warningType2
+            break;
+        case '3':
+            return adapter.config.warningType3
+            break;
+        case '4':
+            return adapter.config.warningType4
+            break;
+        case '5':
+            return adapter.config.warningType5
+            break;
+        case '6':
+            return adapter.config.warningType6
+            break;
+        case '7':
+            return adapter.config.warningType7
+            break;
+        case '8':
+            return adapter.config.warningType8
+            break;
+        case '9':
+            return adapter.config.warningType9
+            break;
+        case '10':
+            return adapter.config.warningType10
+            break;
+        case '11':
+            return 'Unknown'
+            break;
+        case '12':
+            return adapter.config.warningType12
+            break;
+        case '13':
+            return adapter.config.warningType13
+            break;
+        case '0':
+            return ''
+            break;
+       default:
+           return true
            break;
     }
 

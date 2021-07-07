@@ -106,6 +106,9 @@ If you don't find your country, please create an issue on github, and I will be 
 
 
 ## Changelog
+## 2.0.1 (2021-07-08)
+* (jack-blackson) Change Alarm Folder Name
+* (jack-blackson) Define in setup which Alarms you want to see
 ## 2.0.0 (2021-07-06)
 * (jack-blackson) Switch to Meteoalarm.org, complete rebuild
 ## 1.2.1 (2021-06-05)
