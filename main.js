@@ -601,7 +601,7 @@ async function deleteAllAlarms(){
 
 
 async function createAlarms(AlarmNumber){
-    var path = 'alarms.' + 'Alarm ' + AlarmNumber
+    var path = 'alarms.' + 'Alarm_' + AlarmNumber
     channelNames.push('Alarm_' + AlarmNumber)
     const promises = await Promise.all([
 
