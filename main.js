@@ -254,11 +254,11 @@ async function getData(){
 
 
             adapter.log.debug('5: Processed Atom')
-            var countTotalURLs = detailsURL.length
+            var countTotalURLs = urlArray.length
             adapter.log.debug('5.1 Found ' + countTotalURLs + ' URLs')
             var countURL = 0
-            //for (const URL of detailsURL){ 
-            urlArray.forEach(function (arrayItem) {
+            for (let arrayItem of urlArray){ 
+            //urlArray.forEach(function (arrayItem) {
                 countURL += 1
                 var jsonResult;
                 var awarenesstype = ""
