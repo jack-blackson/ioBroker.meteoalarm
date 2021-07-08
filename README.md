@@ -107,7 +107,7 @@ If you don't find your country, please create an issue on github, and I will be 
 
 ## Changelog
 ## 2.0.1 (2021-07-08)
-* (jack-blackson) Change Alarm Folder Name
+* (jack-blackson) Changed Alarm Folder Name to Alarm_X
 * (jack-blackson) Define in setup which Alarms you want to see
 * (jack-blackson) Sort Alarms by effective date
 ## 2.0.0 (2021-07-06)
