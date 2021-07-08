@@ -31,7 +31,6 @@ var countryConfig = '';
 var regionConfig = '';
 var countEntries = 0;
 var typeArray = [];
-var detailsURL = []
 var urlArray = [];
 
 var regionCSV = ""
@@ -216,7 +215,6 @@ async function getData(){
                                 if (locationRelevant && (dateRelevant) && statusRelevant && messagetypeRelevant){
                                     var detailsLink = element.link[0].$.href
                                     adapter.log.debug('4.1: Warning found: ' + detailsLink + ' of message type ' + messagetype)
-                                    //detailsURL.push(detailsLink)
 
                                     let obj = {
                                         "id": i,
@@ -238,7 +236,7 @@ async function getData(){
             
             // continue now to request details
             var countEntries = 0
-            adapter.log.debug('Object Result: ' + util.inspect(urlArray, {showHidden: false, depth: null}))
+            //adapter.log.debug('Object Result: ' + util.inspect(urlArray, {showHidden: false, depth: null}))
 
             urlArray.sort(function(a, b) {
                 var keyA = new Date(a.effective),
@@ -250,7 +248,7 @@ async function getData(){
               });
               
 
-            adapter.log.debug('Object Sorted Result: ' + util.inspect(urlArray, {showHidden: false, depth: null}))
+            //adapter.log.debug('Object Sorted Result: ' + util.inspect(urlArray, {showHidden: false, depth: null}))
 
 
             adapter.log.debug('5: Processed Atom')
@@ -258,7 +256,6 @@ async function getData(){
             adapter.log.debug('5.1 Found ' + countTotalURLs + ' URLs')
             var countURL = 0
             for (var i = 0, l = urlArray.length; i < l; i++){ 
-            //urlArray.forEach(function (arrayItem) {
                 countURL += 1
                 var jsonResult;
                 var awarenesstype = ""
