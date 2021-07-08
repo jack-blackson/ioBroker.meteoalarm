@@ -216,12 +216,12 @@ async function getData(){
                                 if (locationRelevant && (dateRelevant) && statusRelevant && messagetypeRelevant){
                                     var detailsLink = element.link[0].$.href
                                     adapter.log.debug('4.1: Warning found: ' + detailsLink + ' of message type ' + messagetype)
-                                    detailsURL.push(detailsLink)
+                                    //detailsURL.push(detailsLink)
 
                                     let obj = {
                                         "id": i,
                                         "event": eventType,
-                                        "url": detailsURL,
+                                        "url": detailsLink,
                                         "effective": effectiveDate,
                                         "expires": expiresDate
                                        }
@@ -262,16 +262,16 @@ async function getData(){
                 countURL += 1
                 var jsonResult;
                 var awarenesstype = ""
-                adapter.log.debug('6: Request Details from URL ' + countURL + ': ' + urlArray[i].url[i])
+                adapter.log.debug('6: Request Details from URL ' + countURL + ': ' + urlArray[i].url)
 
                 const getJSON1 = bent('string')
                 let xmlDetails
 
                 try {
-                    xmlDetails = await getJSON1(urlArray[i].url[i])
+                    xmlDetails = await getJSON1(urlArray[i].url)
 
                 } catch (err){
-                    adapter.log.debug('6.1: Details URL ' + urlArray[i].url[i] + ' not valid any more - error ' + err) 
+                    adapter.log.debug('6.1: Details URL ' + urlArray[i].url + ' not valid any more - error ' + err) 
                 }
                var typeRelevant = false
                 if (xmlDetails ){
