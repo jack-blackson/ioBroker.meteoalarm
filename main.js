@@ -12,6 +12,7 @@
 const utils = require('@iobroker/adapter-core');
 //const request = require('request');
 const moment = require('moment');
+const util = require('util')
 var parseString = require('xml2js').parseString;
 var parseStringPromise = require('xml2js').parseStringPromise;
 const stateAttr = require('./lib/stateAttr.js'); // State attribute definitions
@@ -30,7 +31,8 @@ var countryConfig = '';
 var regionConfig = '';
 var countEntries = 0;
 var typeArray = [];
-var detailsURL = []
+var urlArray = [];
+
 var regionCSV = ""
 var regionName = ""
 var xmlLanguage = ""
@@ -172,6 +174,8 @@ async function getData(){
                         var i = 0
                         var now = new Date();
                         if (result.feed.entry){
+
+
                             result.feed.entry.forEach(function (element){
                                 var expiresDate = new Date(element['cap:expires']);
                                 var effectiveDate = new Date(element['cap:onset']);
@@ -206,10 +210,20 @@ async function getData(){
                                     dateRelevant = true
                                 }
 
+                                var eventType = element['cap:event']
+
                                 if (locationRelevant && (dateRelevant) && statusRelevant && messagetypeRelevant){
                                     var detailsLink = element.link[0].$.href
                                     adapter.log.debug('4.1: Warning found: ' + detailsLink + ' of message type ' + messagetype)
-                                    detailsURL.push(detailsLink)
+
+                                    let obj = {
+                                        "id": i,
+                                        "event": eventType,
+                                        "url": detailsLink,
+                                        "effective": effectiveDate,
+                                        "expires": expiresDate
+                                       }
+                                    urlArray.push(obj)
                         
                                     i += 1;
                                 }
@@ -222,27 +236,41 @@ async function getData(){
             
             // continue now to request details
             var countEntries = 0
+            //adapter.log.debug('Object Result: ' + util.inspect(urlArray, {showHidden: false, depth: null}))
+
+            urlArray.sort(function(a, b) {
+                var keyA = new Date(a.effective),
+                  keyB = new Date(b.effective);
+                // Compare the 2 dates
+                if (keyA < keyB) return -1;
+                if (keyA > keyB) return 1;
+                return 0;
+              });
+              
+
+            //adapter.log.debug('Object Sorted Result: ' + util.inspect(urlArray, {showHidden: false, depth: null}))
+
 
             adapter.log.debug('5: Processed Atom')
-            var countTotalURLs = detailsURL.length
+            var countTotalURLs = urlArray.length
             adapter.log.debug('5.1 Found ' + countTotalURLs + ' URLs')
             var countURL = 0
-            for (const URL of detailsURL){ 
+            for (var i = 0, l = urlArray.length; i < l; i++){ 
                 countURL += 1
                 var jsonResult;
                 var awarenesstype = ""
-                adapter.log.debug('6: Request Details from URL ' + countURL + ': ' + URL)
+                adapter.log.debug('6: Request Details from URL ' + countURL + ': ' + urlArray[i].url)
 
                 const getJSON1 = bent('string')
                 let xmlDetails
 
                 try {
-                    xmlDetails = await getJSON1(URL)
+                    xmlDetails = await getJSON1(urlArray[i].url)
 
                 } catch (err){
-                    adapter.log.debug('6.1: Details URL ' + URL + ' not valid any more - error ' + err) 
+                    adapter.log.debug('6.1: Details URL ' + urlArray[i].url + ' not valid any more - error ' + err) 
                 }
-               
+               var typeRelevant = false
                 if (xmlDetails ){
                     // Just go here if Request for Details is successful
                     adapter.log.debug('7: Received Details for URL ' + countURL)
@@ -261,6 +289,11 @@ async function getData(){
                                     element.parameter.forEach(function (parameter){
                                         if (parameter.valueName == "awareness_type") {
                                             awarenesstype =parameter.value
+                                            var n = awarenesstype.indexOf(";");
+                                            awarenesstype = awarenesstype.substring(0, n)
+                                            typeRelevant = checkTypeRelevant(awarenesstype)
+                                            adapter.log.debug('Alarm ' + countURL + ' with type ' + awarenesstype + ' relevant: ' + typeRelevant)
+
                                         }  
                                     })
                                     jsonResult = element 
@@ -273,24 +306,15 @@ async function getData(){
 
                 }
 
-                if (jsonResult){
-                    //adapter.log.debug(' Type of URL ' + countURL + ' :' + type);
-                    //if (typeArray.indexOf(awarenesstype) > -1) {
-                    //    adapter.log.debug('8: Alarm States ignored for Alarm ' + countURL)
-                    //    adapter.log.debug('9: Processed Details for Alarm ' + countURL)
+                if (jsonResult && typeRelevant){
 
-
-                    //} else {
-                        //Type not yet in the array
                         countEntries += 1
                 
-                        //typeArray.push(awarenesstype)
                         const created = await createAlarms(countEntries)
                         adapter.log.debug('8: Alarm States created for Alarm ' + countURL + ' type:  ' + awarenesstype)
                 
                         const promises = await processDetails(jsonResult,countEntries)
                         adapter.log.debug('9: Processed Details for Alarm ' + countURL)
-                    //}
 
                 }
                             
@@ -520,7 +544,7 @@ async function processDetails(content, countInt){
         Warnung_img += 't' + type + '.png'
     }
 
-    var path = 'alarms.' + 'Alarm ' + countInt
+    var path = 'alarms.' + 'Alarm_' + countInt
 
     await localCreateState(path + '.event', 'event', content.event);
     await localCreateState(path + '.headline', 'headline', content.headline);
@@ -601,8 +625,8 @@ async function deleteAllAlarms(){
 
 
 async function createAlarms(AlarmNumber){
-    var path = 'alarms.' + 'Alarm ' + AlarmNumber
-    channelNames.push('Alarm ' + AlarmNumber)
+    var path = 'alarms.' + 'Alarm_' + AlarmNumber
+    channelNames.push('Alarm_' + AlarmNumber)
     const promises = await Promise.all([
 
         adapter.setObjectNotExistsAsync('alarms', {
@@ -615,7 +639,7 @@ async function createAlarms(AlarmNumber){
 
         adapter.setObjectNotExistsAsync(path, {
             common: {
-                name: 'Alarm ' + AlarmNumber
+                name: 'Alarm_' + AlarmNumber
             },
             type: 'channel',
             'native' : {}
@@ -670,6 +694,59 @@ function getTypeName(type){
             break;
        default:
            return 'undefined'
+           break;
+    }
+
+}
+
+function checkTypeRelevant(warntype){
+
+    switch (warntype) {
+        case '1':
+            return adapter.config.warningType1
+            break;
+        case '2':
+            return adapter.config.warningType2
+            break;
+        case '3':
+            return adapter.config.warningType3
+            break;
+        case '4':
+            return adapter.config.warningType4
+            break;
+        case '5':
+            return adapter.config.warningType5
+            break;
+        case '6':
+            return adapter.config.warningType6
+            break;
+        case '7':
+            return adapter.config.warningType7
+            break;
+        case '8':
+            return adapter.config.warningType8
+            break;
+        case '9':
+            return adapter.config.warningType9
+            break;
+        case '10':
+            return adapter.config.warningType10
+            break;
+        case '11':
+            return 'Unknown'
+            break;
+        case '12':
+            return adapter.config.warningType12
+            break;
+        case '13':
+            return adapter.config.warningType13
+            break;
+        case '0':
+            return ''
+            break;
+       default:
+           adapter.log.warn('No configuration found for type ' + warntype)
+           return true
            break;
     }
 
@@ -865,7 +942,7 @@ function getXMLLanguage(country){
             return 'el-GR'
             break;
         case 'CZ':
-            return ''
+            return 'cs'
             break;
         case 'DK':
             return 'da-DK'

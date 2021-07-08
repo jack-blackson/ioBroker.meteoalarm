@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "meteoalarm",
-        "version": "2.0.0",
+        "version": "2.0.1",
         "news": {
+            "2.0.1": {
+                "en": "Bugfixes",
+                "de": "Fehlerbehebung",
+                "ru": "Исправление ошибок",
+                "pt": "Correções de bugs",
+                "nl": "Bugfixes",
+                "fr": "Corrections de bugs",
+                "it": "Correzioni di bug",
+                "es": "Corrección de errores",
+                "pl": "Poprawki",
+                "zh-cn": "Bug修复"
+            },
             "2.0.0": {
                 "en": "Switch to new Meteoalarm Platform meteoalarm.org",
                 "de": "Wechseln zur neuen Meteoalarm-Plattform meteoalarm.org",
@@ -198,7 +210,19 @@
         "warningColorLevel4": "#FD0204",
         "country": "",
         "region": "",
-        "imageSize": 1
+        "imageSize": 1,
+        "warningType1": true,
+        "warningType2": true,
+        "warningType3": true,
+        "warningType4": true,
+        "warningType5": true,
+        "warningType6": true,
+        "warningType7": true,
+        "warningType8": true,
+        "warningType9": true,
+        "warningType10": true,
+        "warningType12": true,
+        "warningType13": true
     },
     "objects": [],
     "instanceObjects": [
@@ -228,7 +252,7 @@
             "_id": "htmlToday",
             "type": "state",
             "common": {
-                "name": "HTML Widget Today",
+                "name": "HTML Widget",
                 "type": "string",
                 "role": "value",
                 "read": true,

@@ -202,120 +202,198 @@
 <body>
 <div class="m adapter-container">
     <div class="row">
-        <div class="row">
-            <div class="input-field col s3">
-                <img src="meteoalarm.png" class="logo">
+        <div class="col s12">
+            <ul class="tabs">
+                <li class="tab col s2"><a href="#tab-settings"  class="translate active">settings</a></li>
+                <li class="tab col s2"><a href="#tab-alarmtypes" class="translate">alarmtypes</a></li>
+            </ul>
+        </div>
+        <div id="tab-settings"      class="col s12 page">
+            <div class="col s12">
+                <h6 class="title translate" data-lang="regionsetup">regionsetup</h6>
+            </div>
+            <div class="row">
+                <div class="input-field">
+                    <select class="value select-country" id="country">
+                        <option value="" class="translate">ChooseCountry</option>
+                        <option value="AT" class="translate">Austria</option>
+                        <!--<option value="CH" class="translate">Switzerland</option>   Auskommentiert da falsch in geocodes.json-->
+                        <option value="DE" class="translate">Germany</option>
+                        <option value="BE" class="translate">Belgium</option>
+                        <option value="BA" class="translate">BosniaHerzegovina</option>
+                        <!--<option value="BG" class="translate">Bulgaria</option> Auskommentiert da falsch in geocodes.json-->
+                        <option value="HR" class="translate">Croatia</option>
+                        <option value="CY" class="translate">Cyprus</option>
+                        <option value="CZ" class="translate">Czech Republic</option>
+                        <option value="DK" class="translate">Denmark</option>
+                        <option value="EE" class="translate">Estonia</option>
+                        <option value="FI" class="translate">Finland</option>
+                        <option value="FR" class="translate">France</option>
+                        <option value="GR" class="translate">Greece</option>
+                        <option value="HU" class="translate">Hungary</option>
+                        <option value="IE" class="translate">Ireland</option>
+                        <option value="IS" class="translate">Iceland</option>
+                        <option value="IL" class="translate">Israel</option>
+                        <option value="IT" class="translate">Italy</option>
+                        <option value="LV" class="translate">Latvia</option>
+                        <option value="LT" class="translate">Lithuania</option>
+                        <option value="LU" class="translate">Luxembourg</option>
+                        <option value="MT" class="translate">Malta</option>
+                        <option value="NL" class="translate">Netherlands</option>
+                        <option value="NO" class="translate">Norway</option>
+                        <option value="PL" class="translate">Poland</option>
+                        <!--<option value="PT" class="translate">Portugal</option> Auskommentiert da falsch in geocodes.json-->
+                        <option value="RO" class="translate">Romania</option>
+                        <option value="RS" class="translate">Serbia</option>
+                        <option value="SK" class="translate">Slovakia</option>
+                        <option value="SI" class="translate">Slovenia</option>
+                        <option value="ES" class="translate">Spain</option>
+                        <option value="SE" class="translate">Sweden</option>
+                        <option value="UK" class="translate">UK</option>
+                    </select>
+                    <label for="country" class="translate">country_select</label>
+                </div>
+            </div>
+        
+            <div class="row">
+                <div class="input-field">
+                    <select class="value select-region" id="region">
+                        <option value="0" class="translate">ChooseRegion</option>
+                    </select>
+                    <label for="region" class="translate">region_select</label>
+                </div>
+            </div>
+        
+            <div class="row">
+                
+            </div>
+        
+            <div class="col s12">
+                <h6 class="title translate" data-lang="layout">layout</h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s3">
+                    <input type="checkbox" id="noBackgroundColor" class="value" />
+                    <label for="noBackgroundColor" class="translate">noBackgroundColor</label>
+                </div> 
+                <div class="input-field col s3">
+                    <input type="checkbox" id="whiteIcons" class="value" />
+                    <label for="whiteIcons" class="translate">whiteIcons</label>
+                </div> 
+                <div class="input-field col s3">
+                    <input type="checkbox" id="noIcons" class="value" />
+                    <label for="noIcons" class="translate">noIcons</label>
+                </div> 
+                <div class="input-field col s3">
+                    <select class="value select-image-size" id="imageSize">
+                        <option value="0" class="translate">small</option>
+                        <option value="1" class="translate">medium</option>
+                        <option value="2" class="translate">large</option>
+                    </select>
+                    <label for="imageSize" class="translate">selectImageSize</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <div class="translate">ColorDefinition</div>
+                </div> 
+            </div>
+            <div class="row">
+                <div class="input-field col s3">
+                    <input type="text" id="warningColorLevel1" class="value" />
+                    <label for="warningColorLevel1" class="translate">TextwarningColorLevel1</label>
+                </div>
+                <div class="input-field col s3">
+                    <input type="text" id="warningColorLevel2" class="value" />
+                    <label for="warningColorLevel2" class="translate">TextwarningColorLevel2</label>
+                </div>
+                <div class="input-field col s3">
+                    <input type="text" id="warningColorLevel3" class="value" />
+                    <label for="warningColorLevel3" class="translate">TextwarningColorLevel3</label>
+                </div>
+                <div class="input-field col s3">
+                    <input type="text" id="warningColorLevel4" class="value" />
+                    <label for="warningColorLevel4" class="translate">TextwarningColorLevel4</label>
+                </div>
             </div>
         </div>
-    </div>
-    
- 
-    <div class="row">
-        <div class="input-field">
-            <select class="value select-country" id="country">
-                <option value="" class="translate">ChooseCountry</option>
-                <option value="AT" class="translate">Austria</option>
-                <!--<option value="CH" class="translate">Switzerland</option>   Auskommentiert da falsch in geocodes.json-->
-                <option value="DE" class="translate">Germany</option>
-                <option value="BE" class="translate">Belgium</option>
-                <option value="BA" class="translate">BosniaHerzegovina</option>
-                <!--<option value="BG" class="translate">Bulgaria</option> Auskommentiert da falsch in geocodes.json-->
-                <option value="HR" class="translate">Croatia</option>
-                <option value="CY" class="translate">Cyprus</option>
-                <option value="CZ" class="translate">Czech Republic</option>
-                <option value="DK" class="translate">Denmark</option>
-                <option value="EE" class="translate">Estonia</option>
-                <option value="FI" class="translate">Finland</option>
-                <option value="FR" class="translate">France</option>
-                <option value="GR" class="translate">Greece</option>
-                <option value="HU" class="translate">Hungary</option>
-                <option value="IE" class="translate">Ireland</option>
-                <option value="IS" class="translate">Iceland</option>
-                <option value="IL" class="translate">Israel</option>
-                <option value="IT" class="translate">Italy</option>
-                <option value="LV" class="translate">Latvia</option>
-                <option value="LT" class="translate">Lithuania</option>
-                <option value="LU" class="translate">Luxembourg</option>
-                <option value="MT" class="translate">Malta</option>
-                <option value="NL" class="translate">Netherlands</option>
-                <option value="NO" class="translate">Norway</option>
-                <option value="PL" class="translate">Poland</option>
-                <!--<option value="PT" class="translate">Portugal</option> Auskommentiert da falsch in geocodes.json-->
-                <option value="RO" class="translate">Romania</option>
-                <option value="RS" class="translate">Serbia</option>
-                <option value="SK" class="translate">Slovakia</option>
-                <option value="SI" class="translate">Slovenia</option>
-                <option value="ES" class="translate">Spain</option>
-                <option value="SE" class="translate">Sweden</option>
-                <option value="UK" class="translate">UK</option>
-            </select>
-            <label for="country" class="translate">country_select</label>
-        </div>
-    </div>
 
-    <div class="row">
-        <div class="input-field">
-            <select class="value select-region" id="region">
-                <option value="0" class="translate">ChooseRegion</option>
-            </select>
-            <label for="region" class="translate">region_select</label>
-        </div>
-    </div>
+        <div id="tab-alarmtypes"  class="col s12 page">
+            <div class="col s12">
+                <h6 class="title translate" data-lang="alarmtypesetup">alarmtypesetup</h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s3">
+                    <img width="20" height="20" src="icons/black/t1.png"/>
+                    <input type="checkbox" id="warningType1" class="value" />
+                    <label for="warningType1" class="translate">warningType1</label>
+                </div>
+                <div class="input-field col s3">
+                    <img width="20" height="20" src="icons/black/t2.png"/>
+                    <input type="checkbox" id="warningType2" class="value" />
+                    <label for="warningType2" class="translate">warningType2</label>
+                </div>
+                <div class="input-field col s3">
+                    <img width="20" height="20" src="icons/black/t3.png"/>
+                    <input type="checkbox" id="warningType3" class="value" />
+                    <label for="warningType3" class="translate">warningType3</label>
+                </div>
+                <div class="input-field col s3">
+                    <img width="20" height="20" src="icons/black/t4.png"/>
+                    <input type="checkbox" id="warningType4" class="value" />
+                    <label for="warningType4" class="translate">warningType4</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s3">
+                    <img width="20" height="20" src="icons/black/t5.png"/>
+                    <input type="checkbox" id="warningType5" class="value" />
+                    <label for="warningType5" class="translate">warningType5</label>
+                </div>
+                <div class="input-field col s3">
+                    <img width="20" height="20" src="icons/black/t6.png"/>
+                    <input type="checkbox" id="warningType6" class="value" />
+                    <label for="warningType6" class="translate">warningType6</label>
+                </div>
+                <div class="input-field col s3">
+                    <img width="20" height="20" src="icons/black/t7.png"/>
+                    <input type="checkbox" id="warningType7" class="value" />
+                    <label for="warningType7" class="translate">warningType7</label>
+                </div>
+                <div class="input-field col s3">
+                    <img width="20" height="20" src="icons/black/t8.png"/>
+                    <input type="checkbox" id="warningType8" class="value" />
+                    <label for="warningType8" class="translate">warningType8</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s3">
+                    <img width="20" height="20" src="icons/black/t9.png"/>
+                    <input type="checkbox" id="warningType9" class="value" />
+                    <label for="warningType9" class="translate">warningType9</label>
+                </div>
+                <div class="input-field col s3">
+                    <img width="20" height="20" src="icons/black/t10.png"/>
+                    <input type="checkbox" id="warningType10" class="value" />
+                    <label for="warningType10" class="translate">warningType10</label>
+                </div>
+                <div class="input-field col s3">
+                    <img width="20" height="20" src="icons/black/t12.png"/>
+                    <input type="checkbox" id="warningType12" class="value" />
+                    <label for="warningType12" class="translate">warningType12</label>
+                </div>
+                <div class="input-field col s3">
+                    <img width="20" height="20" src="icons/black/t13.png"/>
+                    <input type="checkbox" id="warningType13" class="value" />
+                    <label for="warningType13" class="translate">warningType13</label>
+                </div>
+            </div>
 
-    <div class="row">
-        
-    </div>
 
-    <div class="col s12">
-        <h6 class="title translate" data-lang="layout">layout</h6>
-    </div>
-    <div class="row">
-        <div class="input-field col s3">
-            <input type="checkbox" id="noBackgroundColor" class="value" />
-            <label for="noBackgroundColor" class="translate">noBackgroundColor</label>
-        </div> 
-        <div class="input-field col s3">
-            <input type="checkbox" id="whiteIcons" class="value" />
-            <label for="whiteIcons" class="translate">whiteIcons</label>
-        </div> 
-        <div class="input-field col s3">
-            <input type="checkbox" id="noIcons" class="value" />
-            <label for="noIcons" class="translate">noIcons</label>
-        </div> 
-        <div class="input-field col s3">
-            <select class="value select-image-size" id="imageSize">
-                <option value="0" class="translate">small</option>
-                <option value="1" class="translate">medium</option>
-                <option value="2" class="translate">large</option>
-            </select>
-            <label for="imageSize" class="translate">selectImageSize</label>
-        </div>
-    </div>
-    <div class="row">
-        <div class="input-field col s12">
-            <div class="translate">ColorDefinition</div>
-        </div> 
-    </div>
-    <div class="row">
-        <div class="input-field col s3">
-            <input type="text" id="warningColorLevel1" class="value" />
-            <label for="warningColorLevel1" class="translate">TextwarningColorLevel1</label>
-        </div>
-        <div class="input-field col s3">
-            <input type="text" id="warningColorLevel2" class="value" />
-            <label for="warningColorLevel2" class="translate">TextwarningColorLevel2</label>
-        </div>
-        <div class="input-field col s3">
-            <input type="text" id="warningColorLevel3" class="value" />
-            <label for="warningColorLevel3" class="translate">TextwarningColorLevel3</label>
-        </div>
-        <div class="input-field col s3">
-            <input type="text" id="warningColorLevel4" class="value" />
-            <label for="warningColorLevel4" class="translate">TextwarningColorLevel4</label>
-        </div>
-    </div>
-    <div class="row">
-        
+
+
+            </div>
+        </div>    
     </div>
 </div>
 </body>
