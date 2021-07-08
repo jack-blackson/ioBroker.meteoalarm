@@ -262,16 +262,16 @@ async function getData(){
                 countURL += 1
                 var jsonResult;
                 var awarenesstype = ""
-                adapter.log.debug('6: Request Details from URL ' + countURL + ': ' + urlArray[i].url)
+                adapter.log.debug('6: Request Details from URL ' + countURL + ': ' + urlArray[i].url[i])
 
                 const getJSON1 = bent('string')
                 let xmlDetails
 
                 try {
-                    xmlDetails = await getJSON1(urlArray[i].url)
+                    xmlDetails = await getJSON1(urlArray[i].url[i])
 
                 } catch (err){
-                    adapter.log.debug('6.1: Details URL ' + urlArray[i].url + ' not valid any more - error ' + err) 
+                    adapter.log.debug('6.1: Details URL ' + urlArray[i].url[i] + ' not valid any more - error ' + err) 
                 }
                var typeRelevant = false
                 if (xmlDetails ){
