@@ -31,7 +31,7 @@ var regionConfig = '';
 var countEntries = 0;
 var typeArray = [];
 var detailsURL = []
-var urlObject = {};
+var urlArray = [];
 
 var regionCSV = ""
 var regionName = ""
@@ -224,7 +224,7 @@ async function getData(){
                                         "effective": effectiveDate,
                                         "expires": expiresDate
                                        }
-                                    urlObject.push(obj)
+                                    urlArray.push(obj)
                         
                                     i += 1;
                                 }
@@ -237,7 +237,7 @@ async function getData(){
             
             // continue now to request details
             var countEntries = 0
-            adapter.log.debug('Object Result: ' + urlObject)
+            adapter.log.debug('Object Result: ' + urlArray)
 
             adapter.log.debug('5: Processed Atom')
             var countTotalURLs = detailsURL.length
