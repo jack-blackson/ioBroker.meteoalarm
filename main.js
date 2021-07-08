@@ -257,21 +257,21 @@ async function getData(){
             var countTotalURLs = urlArray.length
             adapter.log.debug('5.1 Found ' + countTotalURLs + ' URLs')
             var countURL = 0
-            for (let index = 0; index < urlArray.length; ++index){ 
+            for (var i = 0, l = urlArray.length; i < l; i++){ 
             //urlArray.forEach(function (arrayItem) {
                 countURL += 1
                 var jsonResult;
                 var awarenesstype = ""
-                adapter.log.debug('6: Request Details from URL ' + countURL + ': ' + urlArray[index].url)
+                adapter.log.debug('6: Request Details from URL ' + countURL + ': ' + urlArray[i].url)
 
                 const getJSON1 = bent('string')
                 let xmlDetails
 
                 try {
-                    xmlDetails = await getJSON1(urlArray[index].url)
+                    xmlDetails = await getJSON1(urlArray[i].url)
 
                 } catch (err){
-                    adapter.log.debug('6.1: Details URL ' + urlArray[index].url + ' not valid any more - error ' + err) 
+                    adapter.log.debug('6.1: Details URL ' + urlArray[i].url + ' not valid any more - error ' + err) 
                 }
                var typeRelevant = false
                 if (xmlDetails ){
