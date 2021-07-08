@@ -942,7 +942,7 @@ function getXMLLanguage(country){
             return 'el-GR'
             break;
         case 'CZ':
-            return ''
+            return 'cs'
             break;
         case 'DK':
             return 'da-DK'
