@@ -240,8 +240,13 @@ async function getData(){
             var countEntries = 0
             adapter.log.debug('Object Result: ' + util.inspect(urlArray, {showHidden: false, depth: null}))
 
-            urlArray = _.sortBy(urlArray, function(dateObj) {
-                return new Date(dateObj.effective);
+            urlArray.sort(function(a, b) {
+                var keyA = new Date(a.effective),
+                  keyB = new Date(b.effective);
+                // Compare the 2 dates
+                if (keyA < keyB) return -1;
+                if (keyA > keyB) return 1;
+                return 0;
               });
               
 
