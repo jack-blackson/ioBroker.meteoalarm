@@ -12,6 +12,7 @@
 const utils = require('@iobroker/adapter-core');
 //const request = require('request');
 const moment = require('moment');
+const util = require('util')
 var parseString = require('xml2js').parseString;
 var parseStringPromise = require('xml2js').parseStringPromise;
 const stateAttr = require('./lib/stateAttr.js'); // State attribute definitions
@@ -237,7 +238,15 @@ async function getData(){
             
             // continue now to request details
             var countEntries = 0
-            adapter.log.debug('Object Result: ' + urlArray)
+            adapter.log.debug('Object Result: ' + util.inspect(urlArray, {showHidden: false, depth: null}))
+
+            urlArray = _.sortBy(urlArray, function(dateObj) {
+                return new Date(dateObj.effective);
+              });
+              
+
+            adapter.log.debug('Object Sorted Result: ' + util.inspect(urlArray, {showHidden: false, depth: null}))
+
 
             adapter.log.debug('5: Processed Atom')
             var countTotalURLs = detailsURL.length
