@@ -31,6 +31,8 @@ var regionConfig = '';
 var countEntries = 0;
 var typeArray = [];
 var detailsURL = []
+var urlObject = {};
+
 var regionCSV = ""
 var regionName = ""
 var xmlLanguage = ""
@@ -172,6 +174,8 @@ async function getData(){
                         var i = 0
                         var now = new Date();
                         if (result.feed.entry){
+
+
                             result.feed.entry.forEach(function (element){
                                 var expiresDate = new Date(element['cap:expires']);
                                 var effectiveDate = new Date(element['cap:onset']);
@@ -206,11 +210,21 @@ async function getData(){
                                     dateRelevant = true
                                 }
 
+                                var eventType = element['cap:event']
 
                                 if (locationRelevant && (dateRelevant) && statusRelevant && messagetypeRelevant){
                                     var detailsLink = element.link[0].$.href
                                     adapter.log.debug('4.1: Warning found: ' + detailsLink + ' of message type ' + messagetype)
                                     detailsURL.push(detailsLink)
+
+                                    let obj = {
+                                        "id": i,
+                                        "event": eventType,
+                                        "url": detailsURL,
+                                        "effective": effectiveDate,
+                                        "expires": expiresDate
+                                       }
+                                    urlObject.push(obj)
                         
                                     i += 1;
                                 }
@@ -223,6 +237,7 @@ async function getData(){
             
             // continue now to request details
             var countEntries = 0
+            adapter.log.debug('Object Result: ' + urlObject)
 
             adapter.log.debug('5: Processed Atom')
             var countTotalURLs = detailsURL.length
