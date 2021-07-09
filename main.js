@@ -948,7 +948,7 @@ function getXMLLanguage(country){
             return 'da-DK'
             break;
         case 'EE':
-            return ''
+            return 'et-ET'
             break;
         case 'FI':
             return 'fi-FI'
