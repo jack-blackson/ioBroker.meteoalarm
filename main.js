@@ -984,7 +984,7 @@ function getXMLLanguage(country){
             return 'lt'
             break;
         case 'LU':
-            return ''
+            return 'de-DE'
             break;
         case 'ME':
             return ''
