@@ -966,7 +966,7 @@ function getXMLLanguage(country){
             return 'hu-HU'
             break;
         case 'IS':
-            return ''
+            return 'is-IS'
             break;
         case 'IE':
             return ''
