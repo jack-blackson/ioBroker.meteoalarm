@@ -26,7 +26,7 @@
     "@iobroker/testing": "^2.2.0",
     "moment": "2.29.1",
     "bent": "^7.3.12",
-    "csv-parse": "4.4.6",
+    "csv-parse": "4.16.0",
     "xml2js": "^0.4.22"
   },
   "scripts": {
