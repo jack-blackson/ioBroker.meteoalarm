@@ -948,7 +948,7 @@ function getXMLLanguage(country){
             return 'da-DK'
             break;
         case 'EE':
-            return ''
+            return 'et-ET'
             break;
         case 'FI':
             return 'fi-FI'
@@ -966,7 +966,7 @@ function getXMLLanguage(country){
             return 'hu-HU'
             break;
         case 'IS':
-            return ''
+            return 'is-IS'
             break;
         case 'IE':
             return ''
@@ -984,7 +984,7 @@ function getXMLLanguage(country){
             return 'lt'
             break;
         case 'LU':
-            return ''
+            return 'de-DE'
             break;
         case 'ME':
             return ''
