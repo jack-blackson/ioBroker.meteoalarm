@@ -174,16 +174,16 @@
             "zh-cn": "Meteoalarm"
         },
         "desc": {
-            "en": "Meteoalarm Adapter",
-            "de": "Meteoalarm Adapter",
-            "ru": "Метеосигнализатор",
-            "pt": "Adaptador Meteoalarm",
-            "nl": "Meteoalarm-adapter",
-            "fr": "Adaptateur Meteoalarm",
-            "it": "Adattatore Meteoalarm",
-            "es": "Adaptador Meteoalarm",
-            "pl": "Adapter Meteoalarm",
-            "zh-cn": "Meteoalarm适配器"
+            "en": "Weather alarms from meteoalarm.org for whole Europe",
+            "de": "Unwetterwarnungen von meteoalarm.org für ganz Europa",
+            "ru": "Погодные оповещения от meteoalarm.org для всей Европы",
+            "pt": "Alarmes meteorológicos de meteoalarm.org para toda a Europa",
+            "nl": "Weeralarmen van meteoalarm.org voor heel Europa",
+            "fr": "Alarmes météo de meteoalarm.org pour toute l'Europe",
+            "it": "Allarmi meteo da meteoalarm.org per tutta l'Europa",
+            "es": "Alarmas meteorológicas de meteoalarm.org para toda Europa",
+            "pl": "Alarmy pogodowe z meteoalarm.org dla całej Europy",
+            "zh-cn": "来自meteoalarm.org 的整个欧洲的天气警报"
         },
         "authors": [
             "Jack <blacksonj7@gmail.com>"
