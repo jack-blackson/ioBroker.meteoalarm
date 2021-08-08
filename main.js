@@ -477,7 +477,7 @@ function getAlarmTime(onset,expires){
         adapter.log.debug('Days difference onset: ' + dateDifferenceInWord(onsetDate,today) + ' : ' + onsetDate)
         adapter.log.debug('Days difference expires: ' + dateDifferenceInWord(expiresDate,today)+ ' : ' + expiresDate)
 
-        dateString = onsetDay + ' ' + dateDifferenceInWord(onsetDate,today) + ' - ' + expiresDay + ' ' +dateDifferenceInWord(expiresDate,today)
+        dateString = dateDifferenceInWord(onsetDate,today) + ' ' + getDateFormatedShort(onset) + ' - ' + dateDifferenceInWord(expiresDate,today) + ' ' + getDateFormatedShort(expires)
     }
 
     return dateString
