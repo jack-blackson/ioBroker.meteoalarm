@@ -492,6 +492,23 @@ function getDateFormatedShort(dateTimeString)
 function dateDifferenceInWord(inputDate,comparison){
     // Take the difference between the dates and divide by milliseconds per day.
     // Round to nearest whole number to deal with DST.
+    var difference = Math.round((comparison-inputDate)/(1000*60*60*24))
+
+    switch (difference) {
+        case 0:
+            return i18nHelper.today[lang]
+            break;
+        case 1:
+            return i18nHelper.yesterday[lang]
+            break;
+        case -1:
+            return i18nHelper.tomorrow[lang]
+            break;
+       default:
+           return 'undefined'
+           break;
+    }
+
     return Math.round((comparison-inputDate)/(1000*60*60*24));
 
 }
