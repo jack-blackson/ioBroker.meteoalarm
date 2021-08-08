@@ -470,8 +470,12 @@ function getAlarmTime(onset,expires){
     var onsetDay = moment(onset).locale(lang).format("ddd")
 
     if (expiresToday && onsetToday){
-        dateString = dateDifferenceInWord(onsetDate,today) + ' ' + getDateFormatedShort(onset) + ' - ' + getDateFormatedShort(expires)
-
+        if (adapter.config.dayInWords) {
+            dateString = dateDifferenceInWord(onsetDate,today) + ' ' + getDateFormatedShort(onset) + ' - ' + getDateFormatedShort(expires)
+        }
+        else{
+            dateString = getDateFormatedShort(onset) + ' - ' + getDateFormatedShort(expires)
+        }
     }
     else{
         //adapter.log.debug('Days difference onset: ' + dateDifferenceInWord(onsetDate,today) + ' : ' + onsetDate)
