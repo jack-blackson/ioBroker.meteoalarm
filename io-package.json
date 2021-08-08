@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "meteoalarm",
-        "version": "2.0.2",
+        "version": "2.0.3",
         "news": {
+            "2.0.3": {
+                "en": "Adjustent of date for widget",
+                "de": "Datumsanpassung für Widget",
+                "ru": "Корректировка даты для виджета",
+                "pt": "Ajuste de data para widget",
+                "nl": "Aanpassing van datum voor widget",
+                "fr": "Ajustement de la date pour le widget",
+                "it": "Regolazione della data per il widget",
+                "es": "Adjustent de fecha para widget",
+                "pl": "Dostosowanie daty dla widżetu",
+                "zh-cn": "小部件的日期调整"
+            },
             "2.0.2": {
                 "en": "Bugfixes",
                 "de": "Fehlerbehebung",

@@ -469,7 +469,7 @@ function getAlarmTime(onset,expires){
     var expiresDay = moment(expires).locale(lang).format("ddd")
     var onsetDay = moment(onset).locale(lang).format("ddd")
 
-    if (expiresToday && expiresToday){
+    if (expiresToday && onsetToday){
         dateString = getDateFormatedShort(onset) + ' - ' + getDateFormatedShort(expires)
 
     }
