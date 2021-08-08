@@ -477,7 +477,7 @@ function getAlarmTime(onset,expires){
         adapter.log.debug('Days difference onset: ' + dateDifferenceInWord(onsetDate,today) + ' : ' + onsetDate)
         adapter.log.debug('Days difference expires: ' + dateDifferenceInWord(expiresDate,today)+ ' : ' + expiresDate)
 
-        dateString = onsetDay + ' ' + getDateFormatedShort(onset) + ' - ' + expiresDay + ' ' + getDateFormatedShort(expires)
+        dateString = onsetDay + ' ' + dateDifferenceInWord(onsetDate,today) + ' - ' + expiresDay + ' ' +dateDifferenceInWord(expiresDate,today)
     }
 
     return dateString
@@ -505,7 +505,7 @@ function dateDifferenceInWord(inputDate,comparison){
             return i18nHelper.tomorrow[lang]
             break;
        default:
-           return 'undefined'
+           return getDateFormatedShort(inputDate)
            break;
     }
 
