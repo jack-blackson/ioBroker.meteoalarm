@@ -470,7 +470,7 @@ function getAlarmTime(onset,expires){
     var onsetDay = moment(onset).locale(lang).format("ddd")
 
     if (expiresToday && onsetToday){
-        dateString = getDateFormatedShort(onset) + ' - ' + getDateFormatedShort(expires)
+        dateString = dateDifferenceInWord(onsetDate,today) + ' ' + getDateFormatedShort(onset) + ' - ' + getDateFormatedShort(expires)
 
     }
     else{
@@ -955,7 +955,7 @@ function getXMLLanguage(country){
             return 'de-DE';
             break;
         case 'BE':
-            return '';
+            return 'nl-BE';
             break;
         case 'BA':
             return 'bs';
