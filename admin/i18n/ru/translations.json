@@ -53,6 +53,7 @@
     "alarmtypesetup": "Выберите типы сигналов тревоги, которые вы хотите отслеживать",
     "country": "Страна",
     "country_select": "Выберите страну",
+    "dayInWords": "Сегодня вместо буднего дня",
     "instruction": "Для помощи, пожалуйста, проверьте описание здесь: https://github.com/jack-blackson/ioBroker.meteoalarm",
     "instructionLoading": "Пожалуйста, сначала выберите страну и нажмите: загрузить регион",
     "large": "Большой",

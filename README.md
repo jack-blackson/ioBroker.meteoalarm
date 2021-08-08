@@ -53,6 +53,9 @@ Define the size of the icon in the HTML widget
 "No symbols in widget":
 Don't use the symbol in the HTML widget. You can still access it in the objects. This is usefill if you want to show the icon seperatly from the widget - e.g. in a bigger size.
 
+"Today instead of Weekday"
+Show in the header of the widget instead of the weekday "today", "tomorrow" or "yesterday.
+
 ## Alarm Levels
 |Alarm Level|Description|                                                                       
 |:---:|:---:|

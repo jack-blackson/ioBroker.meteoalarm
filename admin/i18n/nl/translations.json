@@ -53,6 +53,7 @@
     "alarmtypesetup": "Kies de alarmtypes die u wilt bewaken",
     "country": "Land",
     "country_select": "Selecteer land",
+    "dayInWords": "Vandaag in plaats van weekdag",
     "instruction": "Raadpleeg de beschrijving hier voor hulp: https://github.com/jack-blackson/ioBroker.meteoalarm",
     "instructionLoading": "Selecteer eerst het land en klik op: laad regio",
     "large": "Groot",
