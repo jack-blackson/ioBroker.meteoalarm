@@ -474,6 +474,9 @@ function getAlarmTime(onset,expires){
 
     }
     else{
+        adapter.log.debug('Days difference onset: ' + dateDifferenceInWord(onsetDate,today))
+        adapter.log.debug('Days difference expires: ' + dateDifferenceInWord(expiresDate,today))
+
         dateString = onsetDay + ' ' + getDateFormatedShort(onset) + ' - ' + expiresDay + ' ' + getDateFormatedShort(expires)
     }
 
@@ -484,8 +487,16 @@ function getDateFormatedShort(dateTimeString)
 {
    return new Date(dateTimeString).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
 
-      
 }
+
+function dateDifferenceInWord(inputDate,comparison){
+    // Take the difference between the dates and divide by milliseconds per day.
+    // Round to nearest whole number to deal with DST.
+    return Math.round((comparison-inputDate)/(1000*60*60*24));
+
+}
+
+
 
 
 async function cleanupOld(){
