@@ -474,10 +474,15 @@ function getAlarmTime(onset,expires){
 
     }
     else{
-        adapter.log.debug('Days difference onset: ' + dateDifferenceInWord(onsetDate,today) + ' : ' + onsetDate)
-        adapter.log.debug('Days difference expires: ' + dateDifferenceInWord(expiresDate,today)+ ' : ' + expiresDate)
+        //adapter.log.debug('Days difference onset: ' + dateDifferenceInWord(onsetDate,today) + ' : ' + onsetDate)
+        //adapter.log.debug('Days difference expires: ' + dateDifferenceInWord(expiresDate,today)+ ' : ' + expiresDate)
 
-        dateString = dateDifferenceInWord(onsetDate,today) + ' ' + getDateFormatedShort(onset) + ' - ' + dateDifferenceInWord(expiresDate,today) + ' ' + getDateFormatedShort(expires)
+        if (adapter.config.dayInWords) {
+            dateString = dateDifferenceInWord(onsetDate,today) + ' ' + getDateFormatedShort(onset) + ' - ' + dateDifferenceInWord(expiresDate,today) + ' ' + getDateFormatedShort(expires)
+        }
+        else{
+            dateString = onsetDay + ' ' + getDateFormatedShort(onset) + ' - ' + expiresDay + ' ' + getDateFormatedShort(expires)
+        }
     }
 
     return dateString
