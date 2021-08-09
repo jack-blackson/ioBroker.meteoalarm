@@ -53,6 +53,7 @@
     "alarmtypesetup": "选择要监控的警报类型",
     "country": "国家",
     "country_select": "选择国家",
+    "dayInWords": "今天而不是工作日",
     "instruction": "如需帮助，请查看以下说明：https：//github.com/jack-blackson/ioBroker.meteoalarm",
     "instructionLoading": "请首先选择国家，然后单击：加载区域",
     "large": "大",

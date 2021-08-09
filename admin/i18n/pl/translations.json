@@ -53,6 +53,7 @@
     "alarmtypesetup": "Wybierz typy alarmów, które chcesz monitorować",
     "country": "Kraj",
     "country_select": "Wybierz kraj",
+    "dayInWords": "Dzisiaj zamiast dnia powszedniego",
     "instruction": "Aby uzyskać pomoc, sprawdź opis tutaj: https://github.com/jack-blackson/ioBroker.meteoalarm",
     "instructionLoading": "Najpierw wybierz kraj i kliknij: wczytaj region",
     "large": "Duży",

@@ -469,12 +469,24 @@ function getAlarmTime(onset,expires){
     var expiresDay = moment(expires).locale(lang).format("ddd")
     var onsetDay = moment(onset).locale(lang).format("ddd")
 
-    if (expiresToday && expiresToday){
-        dateString = getDateFormatedShort(onset) + ' - ' + getDateFormatedShort(expires)
-
+    if (expiresToday && onsetToday){
+        if (adapter.config.dayInWords) {
+            dateString = dateDifferenceInWord(onsetDate,today) + ' ' + getDateFormatedShort(onset) + ' - ' + getDateFormatedShort(expires)
+        }
+        else{
+            dateString = getDateFormatedShort(onset) + ' - ' + getDateFormatedShort(expires)
+        }
     }
     else{
-        dateString = onsetDay + ' ' + getDateFormatedShort(onset) + ' - ' + expiresDay + ' ' + getDateFormatedShort(expires)
+        //adapter.log.debug('Days difference onset: ' + dateDifferenceInWord(onsetDate,today) + ' : ' + onsetDate)
+        //adapter.log.debug('Days difference expires: ' + dateDifferenceInWord(expiresDate,today)+ ' : ' + expiresDate)
+
+        if (adapter.config.dayInWords) {
+            dateString = dateDifferenceInWord(onsetDate,today) + ' ' + getDateFormatedShort(onset) + ' - ' + dateDifferenceInWord(expiresDate,today) + ' ' + getDateFormatedShort(expires)
+        }
+        else{
+            dateString = onsetDay + ' ' + getDateFormatedShort(onset) + ' - ' + expiresDay + ' ' + getDateFormatedShort(expires)
+        }
     }
 
     return dateString
@@ -484,8 +496,33 @@ function getDateFormatedShort(dateTimeString)
 {
    return new Date(dateTimeString).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
 
-      
 }
+
+function dateDifferenceInWord(inputDate,comparison){
+    // Take the difference between the dates and divide by milliseconds per day.
+    // Round to nearest whole number to deal with DST.
+    var difference = Math.round((comparison-inputDate)/(1000*60*60*24))
+
+    switch (difference) {
+        case 0:
+            return i18nHelper.today[lang]
+            break;
+        case 1:
+            return i18nHelper.yesterday[lang]
+            break;
+        case -1:
+            return i18nHelper.tomorrow[lang]
+            break;
+       default:
+           return getDateFormatedShort(inputDate)
+           break;
+    }
+
+    return Math.round((comparison-inputDate)/(1000*60*60*24));
+
+}
+
+
 
 
 async function cleanupOld(){
@@ -927,7 +964,7 @@ function getXMLLanguage(country){
             return 'de-DE';
             break;
         case 'BE':
-            return '';
+            return 'nl-BE';
             break;
         case 'BA':
             return 'bs';
