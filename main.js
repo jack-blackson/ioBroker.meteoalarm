@@ -469,12 +469,14 @@ function getAlarmTime(onset,expires){
     var expiresDay = moment(expires).locale(lang).format("ddd")
     var onsetDay = moment(onset).locale(lang).format("ddd")
 
-    if (expiresToday && onsetToday){
+    //if (expiresToday && onsetToday){
+    if (expiresDate.toDateString() == onsetDate.toDateString()){
+
         if (adapter.config.dayInWords) {
             dateString = dateDifferenceInWord(onsetDate,today) + ' ' + getDateFormatedShort(onset) + ' - ' + getDateFormatedShort(expires)
         }
         else{
-            dateString = getDateFormatedShort(onset) + ' - ' + getDateFormatedShort(expires)
+            dateString = onsetDay + ' '  + getDateFormatedShort(onset) + ' - ' + getDateFormatedShort(expires)
         }
     }
     else{
