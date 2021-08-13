@@ -476,7 +476,7 @@ function getAlarmTime(onset,expires){
             dateString = dateDifferenceInWord(onsetDate,today) + ' ' + getDateFormatedShort(onset) + ' - ' + getDateFormatedShort(expires)
         }
         else{
-            dateString = getDateFormatedShort(onset) + ' - ' + getDateFormatedShort(expires)
+            dateString = onsetDay + ' '  + getDateFormatedShort(onset) + ' - ' + getDateFormatedShort(expires)
         }
     }
     else{
