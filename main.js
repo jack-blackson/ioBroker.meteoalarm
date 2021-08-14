@@ -469,6 +469,10 @@ function getAlarmTime(onset,expires){
     var expiresDay = moment(expires).locale(lang).format("ddd")
     var onsetDay = moment(onset).locale(lang).format("ddd")
 
+    adapter.log.debug('Date onset: ' + onsetDate + ' in words: ' + dateDifferenceInWord(onsetDate,today))
+    adapter.log.debug('Date expores: ' + expiresDate + ' in words: ' + dateDifferenceInWord(expiresDate,today))
+
+
     //if (expiresToday && onsetToday){
     if (expiresDate.toDateString() == onsetDate.toDateString()){
 
@@ -518,9 +522,6 @@ function dateDifferenceInWord(inputDate,comparison){
            return getDateFormatedShort(inputDateDate)
            break;
     }
-
-    return Math.round((comparison-inputDate)/(1000*60*60*24));
-
 }
 
 
