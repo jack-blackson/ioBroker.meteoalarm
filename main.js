@@ -480,8 +480,6 @@ function getAlarmTime(onset,expires){
         }
     }
     else{
-        //adapter.log.debug('Days difference onset: ' + dateDifferenceInWord(onsetDate,today) + ' : ' + onsetDate)
-        //adapter.log.debug('Days difference expires: ' + dateDifferenceInWord(expiresDate,today)+ ' : ' + expiresDate)
 
         if (adapter.config.dayInWords) {
             dateString = dateDifferenceInWord(onsetDate,today) + ' ' + getDateFormatedShort(onset) + ' - ' + dateDifferenceInWord(expiresDate,today) + ' ' + getDateFormatedShort(expires)
@@ -504,6 +502,7 @@ function dateDifferenceInWord(inputDate,comparison){
     // Take the difference between the dates and divide by milliseconds per day.
     // Round to nearest whole number to deal with DST.
     var difference = Math.round((comparison-inputDate)/(1000*60*60*24))
+    var inputDateDate = new Date(inputDate)
 
     switch (difference) {
         case 0:
@@ -516,7 +515,7 @@ function dateDifferenceInWord(inputDate,comparison){
             return i18nHelper.tomorrow[lang]
             break;
        default:
-           return getDateFormatedShort(inputDate)
+           return getDateFormatedShort(inputDateDate)
            break;
     }
 
