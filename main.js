@@ -469,6 +469,10 @@ function getAlarmTime(onset,expires){
     var expiresDay = moment(expires).locale(lang).format("ddd")
     var onsetDay = moment(onset).locale(lang).format("ddd")
 
+    adapter.log.debug('Date onset: ' + onsetDate + ' in words: ' + dateDifferenceInWord(onsetDate,today))
+    adapter.log.debug('Date expires: ' + expiresDate + ' in words: ' + dateDifferenceInWord(expiresDate,today))
+
+
     //if (expiresToday && onsetToday){
     if (expiresDate.toDateString() == onsetDate.toDateString()){
 
@@ -480,8 +484,6 @@ function getAlarmTime(onset,expires){
         }
     }
     else{
-        //adapter.log.debug('Days difference onset: ' + dateDifferenceInWord(onsetDate,today) + ' : ' + onsetDate)
-        //adapter.log.debug('Days difference expires: ' + dateDifferenceInWord(expiresDate,today)+ ' : ' + expiresDate)
 
         if (adapter.config.dayInWords) {
             dateString = dateDifferenceInWord(onsetDate,today) + ' ' + getDateFormatedShort(onset) + ' - ' + dateDifferenceInWord(expiresDate,today) + ' ' + getDateFormatedShort(expires)
@@ -503,7 +505,18 @@ function getDateFormatedShort(dateTimeString)
 function dateDifferenceInWord(inputDate,comparison){
     // Take the difference between the dates and divide by milliseconds per day.
     // Round to nearest whole number to deal with DST.
-    var difference = Math.round((comparison-inputDate)/(1000*60*60*24))
+    //adapter.log.debug('Value without round: ' + (comparison-inputDate)/(1000*60*60*24))
+    //adapter.log.debug('Value after round: ' + Math.round((comparison-inputDate)/(1000*60*60*24)))
+    var one = new Date(inputDate.getFullYear(), inputDate.getMonth(), inputDate.getDate());
+    var two = new Date(comparison.getFullYear(), comparison.getMonth(), comparison.getDate());
+
+    // Do the math.
+    var millisecondsPerDay = 1000 * 60 * 60 * 24;
+    var millisBetween = two.getTime() - one.getTime();
+    var days = millisBetween / millisecondsPerDay;
+
+    var difference = Math.floor(days)
+    var inputDateDate = new Date(inputDate)
 
     switch (difference) {
         case 0:
@@ -516,12 +529,9 @@ function dateDifferenceInWord(inputDate,comparison){
             return i18nHelper.tomorrow[lang]
             break;
        default:
-           return getDateFormatedShort(inputDate)
+           return moment(inputDateDate).locale(lang).format("ddd")
            break;
     }
-
-    return Math.round((comparison-inputDate)/(1000*60*60*24));
-
 }
 
 
