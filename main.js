@@ -505,9 +505,17 @@ function getDateFormatedShort(dateTimeString)
 function dateDifferenceInWord(inputDate,comparison){
     // Take the difference between the dates and divide by milliseconds per day.
     // Round to nearest whole number to deal with DST.
-    adapter.log.debug('Value without round: ' + (comparison-inputDate)/(1000*60*60*24))
-    adapter.log.debug('Value after round: ' + Math.round((comparison-inputDate)/(1000*60*60*24)))
-    var difference = Math.round((comparison-inputDate)/(1000*60*60*24))
+    //adapter.log.debug('Value without round: ' + (comparison-inputDate)/(1000*60*60*24))
+    //adapter.log.debug('Value after round: ' + Math.round((comparison-inputDate)/(1000*60*60*24)))
+    var one = new Date(inputDate.getFullYear(), inputDate.getMonth(), inputDate.getDate());
+    var two = new Date(comparison.getFullYear(), comparison.getMonth(), comparison.getDate());
+
+    // Do the math.
+    var millisecondsPerDay = 1000 * 60 * 60 * 24;
+    var millisBetween = two.getTime() - one.getTime();
+    var days = millisBetween / millisecondsPerDay;
+
+    var difference = Math.floor(days)
     var inputDateDate = new Date(inputDate)
 
     switch (difference) {
