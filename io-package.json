@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "meteoalarm",
-        "version": "2.0.5",
+        "version": "2.0.6",
         "news": {
+            "2.0.6": {
+                "en": "Added North Macedonia",
+                "de": "Nordmazedonien hinzugefügt",
+                "ru": "Добавлена Северная Македония",
+                "pt": "Adicionado Macedônia do Norte",
+                "nl": "Noord-Macedonië toegevoegd",
+                "fr": "Ajout de la Macédoine du Nord",
+                "it": "Aggiunta Macedonia del Nord",
+                "es": "Macedonia del Norte agregada",
+                "pl": "Dodano Macedonia Północna",
+                "zh-cn": "添加北马其顿"
+            },
             "2.0.5": {
                 "en": "Adjustent of date for widget",
                 "de": "Datumsanpassung für Widget",

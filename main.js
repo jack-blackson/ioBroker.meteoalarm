@@ -926,6 +926,9 @@ function getCountryLink(country){
         case 'ME':
             return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-montenegro'
             break;
+        case 'MK':
+            return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-republic-of-north-macedonia'
+            break;
         case 'NL':
             return 'https://feeds.meteoalarm.org/feeds/meteoalarm-legacy-atom-netherlands'
             break;
@@ -1040,6 +1043,9 @@ function getXMLLanguage(country){
             break;
         case 'MD':
             return 'ro'
+            break;
+        case 'MK':
+            return ''
             break;
         case 'MT':
             return ''
