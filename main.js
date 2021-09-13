@@ -169,7 +169,7 @@ async function getData(){
                         adapter.log.debug('4: Process Atom')
                         var newdate = moment(new Date()).local().format('DD.MM.YYYY HH:mm')
                         adapter.setState({device: '' , channel: '',state: 'lastUpdate'}, {val: newdate, ack: true});
-                        adapter.log.debug('4.1 Content: ' + util.inspect(result, {showHidden: false, depth: null, colors: true}))
+                        adapter.log.debug('4.1 Content: ' + util.inspect(result.feed.entry, {showHidden: false, depth: null, colors: true}))
                         if (result.feed.entry){
                             checkRelevante(result.feed.entry)
 
