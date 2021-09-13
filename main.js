@@ -169,63 +169,10 @@ async function getData(){
                         adapter.log.debug('4: Process Atom')
                         var newdate = moment(new Date()).local().format('DD.MM.YYYY HH:mm')
                         adapter.setState({device: '' , channel: '',state: 'lastUpdate'}, {val: newdate, ack: true});
-
+                        adapter.log.debug('4.1 Content: ' + util.inspect(result, {showHidden: false, depth: null, colors: true}))
                         if (result.feed.entry){
                             checkRelevante(result.feed.entry)
-                            /*
-                            result.feed.entry.forEach(function (element){
-                                var expiresDate = new Date(element['cap:expires']);
-                                var effectiveDate = new Date(element['cap:onset']);
-                                var messagetype = ""
-                                var messagetypeRelevant = false
-                                if (element['cap:message_type']){
-                                    messagetype = element['cap:message_type']
-                                }
-                                // Ignore Cancles
-                                if (messagetype == "Alert"){
-                                    // show Alert only if no Update and no cancle found
-                                    messagetypeRelevant = true
-                                }
-                                if (messagetype == "Update"){
-                                    // Show all updates
-                                    messagetypeRelevant = true
-                                }
 
-                                var locationRelevant = checkLocation(element['cap:geocode'].valueName , element['cap:geocode'].value)
-                                var statusRelevant = false
-                                if (element['cap:status'] == 'Actual'){
-                                    statusRelevant = true
-                                }
-
-
-
-                                var given = moment(effectiveDate);
-                                var current = moment().startOf('day');
-                                var daysDifference = moment.duration(given.diff(current)).asDays()
-                                var dateRelevant = false
-                                if ((expiresDate >= now)&&(daysDifference < 2)){
-                                    dateRelevant = true
-                                }
-
-                                var eventType = element['cap:event']
-
-                                if (locationRelevant && (dateRelevant) && statusRelevant && messagetypeRelevant){
-                                    var detailsLink = element.link[0].$.href
-                                    adapter.log.debug('4.1: Warning found: ' + detailsLink + ' of message type ' + messagetype)
-
-                                    let obj = {
-                                        "id": i,
-                                        "event": eventType,
-                                        "url": detailsLink,
-                                        "effective": effectiveDate,
-                                        "expires": expiresDate
-                                       }
-                                    urlArray.push(obj)
-                        
-                                    i += 1;
-                                }
-                            });
-                            */
                         }
 
                     }
