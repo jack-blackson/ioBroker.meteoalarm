@@ -440,7 +440,7 @@ function checkRelevante(entry){
             i += 1;
         }
     });
-
+    adapter.log.debug('Checked relevance, found ' + i + ' relevant alarms')
 
 
 }
