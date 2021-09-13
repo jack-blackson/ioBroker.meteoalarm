@@ -170,7 +170,7 @@ async function getData(){
                         var newdate = moment(new Date()).local().format('DD.MM.YYYY HH:mm')
                         adapter.setState({device: '' , channel: '',state: 'lastUpdate'}, {val: newdate, ack: true});
                         adapter.log.debug('4.1 Content: ' + util.inspect(result.feed.entry, {showHidden: false, depth: null, colors: true}))
-                        if (result.feed.entry){
+                        if (result.feed.entry[0]){
                             checkRelevante(result.feed.entry)
 
                         }
@@ -440,7 +440,7 @@ function checkRelevante(entry){
             i += 1;
         }
     });
-    adapter.log.debug('Checked relevance, found ' + i + ' relevant alarms')
+    adapter.log.debug('4.2: Checked relevance, found ' + i + ' relevant alarms')
 
 
 }
