@@ -172,7 +172,15 @@ async function getData(){
                         adapter.log.debug('4.1 Content: ' + util.inspect(result.feed.entry, {showHidden: false, depth: null, colors: true}))
                         if (result.feed.entry[0]){
                             checkRelevante(result.feed.entry)
-
+                        }
+                        else if (result.feed.entry && !result.feed.entry[0]){
+                            // try to fix the damaged xml
+                            adapter.log.debug('4.1.1 tried to fix xml')
+                            let newObject = [result.feed.entry]
+                            if (newObject[0]){
+                                adapter.log.debug('4.1.2 new object after fixing: ' + util.inspect(newObject, {showHidden: false, depth: null, colors: true}))
+                                checkRelevante(newObject)
+                            }
                         }
 
                     }
