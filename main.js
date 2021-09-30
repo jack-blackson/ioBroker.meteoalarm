@@ -169,65 +169,18 @@ async function getData(){
                         adapter.log.debug('4: Process Atom')
                         var newdate = moment(new Date()).local().format('DD.MM.YYYY HH:mm')
                         adapter.setState({device: '' , channel: '',state: 'lastUpdate'}, {val: newdate, ack: true});
-
-
-                        var i = 0
-                        var now = new Date();
-                        if (result.feed.entry){
-
-
-                            result.feed.entry.forEach(function (element){
-                                var expiresDate = new Date(element['cap:expires']);
-                                var effectiveDate = new Date(element['cap:onset']);
-                                var messagetype = ""
-                                var messagetypeRelevant = false
-                                if (element['cap:message_type']){
-                                    messagetype = element['cap:message_type']
-                                }
-                                // Ignore Cancles
-                                if (messagetype == "Alert"){
-                                    // show Alert only if no Update and no cancle found
-                                    messagetypeRelevant = true
-                                }
-                                if (messagetype == "Update"){
-                                    // Show all updates
-                                    messagetypeRelevant = true
-                                }
-
-                                var locationRelevant = checkLocation(element['cap:geocode'].valueName , element['cap:geocode'].value)
-                                var statusRelevant = false
-                                if (element['cap:status'] == 'Actual'){
-                                    statusRelevant = true
-                                }
-
-
-
-                                var given = moment(effectiveDate);
-                                var current = moment().startOf('day');
-                                var daysDifference = moment.duration(given.diff(current)).asDays()
-                                var dateRelevant = false
-                                if ((expiresDate >= now)&&(daysDifference < 2)){
-                                    dateRelevant = true
-                                }
-
-                                var eventType = element['cap:event']
-
-                                if (locationRelevant && (dateRelevant) && statusRelevant && messagetypeRelevant){
-                                    var detailsLink = element.link[0].$.href
-                                    adapter.log.debug('4.1: Warning found: ' + detailsLink + ' of message type ' + messagetype)
-
-                                    let obj = {
-                                        "id": i,
-                                        "event": eventType,
-                                        "url": detailsLink,
-                                        "effective": effectiveDate,
-                                        "expires": expiresDate
-                                       }
-                                    urlArray.push(obj)
-                        
-                                    i += 1;
-                                }
-                            });
+                        adapter.log.debug('4.1 Content: ' + util.inspect(result.feed.entry, {showHidden: false, depth: null, colors: true}))
+                        if (result.feed.entry[0]){
+                            checkRelevante(result.feed.entry)
+                        }
+                        else if (result.feed.entry && !result.feed.entry[0]){
+                            // try to fix the damaged xml
+                            adapter.log.debug('4.1.1 tried to fix xml')
+                            let newObject = [result.feed.entry]
+                            if (newObject[0]){
+                                adapter.log.debug('4.1.2 new object after fixing: ' + util.inspect(newObject, {showHidden: false, depth: null, colors: true}))
+                                checkRelevante(newObject)
+                            }
                         }
 
                     }
@@ -440,6 +393,67 @@ async function getData(){
 
 }
 
+function checkRelevante(entry){
+    var i = 0
+    var now = new Date();
+    entry.forEach(function (element){
+        var expiresDate = new Date(element['cap:expires']);
+        var effectiveDate = new Date(element['cap:onset']);
+        var messagetype = ""
+        var messagetypeRelevant = false
+        if (element['cap:message_type']){
+            messagetype = element['cap:message_type']
+        }
+        // Ignore Cancles
+        if (messagetype == "Alert"){
+            // show Alert only if no Update and no cancle found
+            messagetypeRelevant = true
+        }
+        if (messagetype == "Update"){
+            // Show all updates
+            messagetypeRelevant = true
+        }
+
+        var locationRelevant = checkLocation(element['cap:geocode'].valueName , element['cap:geocode'].value)
+        var statusRelevant = false
+        if (element['cap:status'] == 'Actual'){
+            statusRelevant = true
+        }
+
+
+
+        var given = moment(effectiveDate);
+        var current = moment().startOf('day');
+        var daysDifference = moment.duration(given.diff(current)).asDays()
+        var dateRelevant = false
+        if ((expiresDate >= now)&&(daysDifference < 2)){
+            dateRelevant = true
+        }
+
+        var eventType = element['cap:event']
+
+        if (locationRelevant && (dateRelevant) && statusRelevant && messagetypeRelevant){
+            var detailsLink = element.link[0].$.href
+            adapter.log.debug('4.1: Warning found: ' + detailsLink + ' of message type ' + messagetype)
+
+            let obj = {
+                "id": i,
+                "event": eventType,
+                "url": detailsLink,
+                "effective": effectiveDate,
+                "expires": expiresDate
+               }
+            urlArray.push(obj)
+
+            i += 1;
+        }
+    });
+    adapter.log.debug('4.2: Checked relevance, found ' + i + ' relevant alarms')
+
+
+}
+
+
 function checkLocation(type,value){
     //check which type it is and if it is relevant for us
     if (type == "EMMA_ID"){
@@ -469,10 +483,6 @@ function getAlarmTime(onset,expires){
     var expiresDay = moment(expires).locale(lang).format("ddd")
     var onsetDay = moment(onset).locale(lang).format("ddd")
 
-    adapter.log.debug('Date onset: ' + onsetDate + ' in words: ' + dateDifferenceInWord(onsetDate,today))
-    adapter.log.debug('Date expires: ' + expiresDate + ' in words: ' + dateDifferenceInWord(expiresDate,today))
-
-
     //if (expiresToday && onsetToday){
     if (expiresDate.toDateString() == onsetDate.toDateString()){
 
@@ -484,6 +494,8 @@ function getAlarmTime(onset,expires){
         }
     }
     else{
+        //adapter.log.debug('Days difference onset: ' + dateDifferenceInWord(onsetDate,today) + ' : ' + onsetDate)
+        //adapter.log.debug('Days difference expires: ' + dateDifferenceInWord(expiresDate,today)+ ' : ' + expiresDate)
 
         if (adapter.config.dayInWords) {
             dateString = dateDifferenceInWord(onsetDate,today) + ' ' + getDateFormatedShort(onset) + ' - ' + dateDifferenceInWord(expiresDate,today) + ' ' + getDateFormatedShort(expires)
@@ -505,18 +517,7 @@ function getDateFormatedShort(dateTimeString)
 function dateDifferenceInWord(inputDate,comparison){
     // Take the difference between the dates and divide by milliseconds per day.
     // Round to nearest whole number to deal with DST.
-    //adapter.log.debug('Value without round: ' + (comparison-inputDate)/(1000*60*60*24))
-    //adapter.log.debug('Value after round: ' + Math.round((comparison-inputDate)/(1000*60*60*24)))
-    var one = new Date(inputDate.getFullYear(), inputDate.getMonth(), inputDate.getDate());
-    var two = new Date(comparison.getFullYear(), comparison.getMonth(), comparison.getDate());
-
-    // Do the math.
-    var millisecondsPerDay = 1000 * 60 * 60 * 24;
-    var millisBetween = two.getTime() - one.getTime();
-    var days = millisBetween / millisecondsPerDay;
-
-    var difference = Math.floor(days)
-    var inputDateDate = new Date(inputDate)
+    var difference = Math.round((comparison-inputDate)/(1000*60*60*24))
 
     switch (difference) {
         case 0:
@@ -529,9 +530,12 @@ function dateDifferenceInWord(inputDate,comparison){
             return i18nHelper.tomorrow[lang]
             break;
        default:
-           return moment(inputDateDate).locale(lang).format("ddd")
+           return getDateFormatedShort(inputDate) // Hier wird was falsches zurückgegeben!!
            break;
     }
+
+    return Math.round((comparison-inputDate)/(1000*60*60*24));
+
 }
 
 
