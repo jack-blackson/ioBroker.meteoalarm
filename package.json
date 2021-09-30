@@ -23,10 +23,10 @@
   },
   "dependencies": {
     "@iobroker/adapter-core": "^2.5.1",
-    "@iobroker/testing": "^2.2.0",
+    "@iobroker/testing": "^2.5.1",
     "moment": "2.29.1",
     "bent": "^7.3.12",
-    "csv-parse": "4.16.0",
+    "csv-parse": "4.16.2",
     "xml2js": "^0.4.22"
   },
   "scripts": {
