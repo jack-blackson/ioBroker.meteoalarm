@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "meteoalarm",
-        "version": "2.0.6",
+        "version": "2.0.7",
         "news": {
+            "2.0.7": {
+                "en": "Bugfixes",
+                "de": "Fehlerbehebung",
+                "ru": "Исправление ошибок",
+                "pt": "Correções de bugs",
+                "nl": "Bugfixes",
+                "fr": "Corrections de bugs",
+                "it": "Correzioni di bug",
+                "es": "Corrección de errores",
+                "pl": "Poprawki",
+                "zh-cn": "Bug修复"
+            },
             "2.0.6": {
                 "en": "Added North Macedonia",
                 "de": "Nordmazedonien hinzugefügt",
