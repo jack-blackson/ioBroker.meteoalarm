@@ -170,7 +170,7 @@ async function getData(){
                         var newdate = moment(new Date()).local().format('DD.MM.YYYY HH:mm')
                         adapter.setState({device: '' , channel: '',state: 'lastUpdate'}, {val: newdate, ack: true});
                         adapter.log.debug('4.1 Content: ' + util.inspect(result.feed.entry, {showHidden: false, depth: null, colors: true}))
-                        if (result.feed.entry[0]){
+                        if (result.feed.entry[0] && result.feed.entry){
                             checkRelevante(result.feed.entry)
                         }
                         else if (result.feed.entry && !result.feed.entry[0]){
