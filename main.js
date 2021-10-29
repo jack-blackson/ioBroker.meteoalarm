@@ -265,10 +265,10 @@ async function getData(){
 
                         countEntries += 1
                 
-                        const created = await createAlarms(countEntries)
+                        const created = await createAlarms(countEntries+1)
                         adapter.log.debug('8: Alarm States created for Alarm ' + countURL + ' type:  ' + awarenesstype)
                 
-                        const promises = await processDetails(jsonResult,countEntries)
+                        const promises = await processDetails(jsonResult,countEntries+1)
                         adapter.log.debug('9: Processed Details for Alarm ' + countURL)
 
                 }
@@ -372,13 +372,15 @@ async function getData(){
                 htmlCode += '</tbody></table>'
             } 
 
-
+            
             await Promise.all([
                 adapter.setStateAsync({device: '' , channel: '',state: 'level'}, {val: maxAlarmLevel, ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'htmlToday'}, {val: htmlCode, ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'location'}, {val: regionName, ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'link'}, {val: urlAtom, ack: true}),
-                adapter.setStateAsync({device: '' , channel: '',state: 'color'}, {val: getColor(maxAlarmLevel.toString()), ack: true})
+                adapter.setStateAsync({device: '' , channel: '',state: 'color'}, {val: getColor(maxAlarmLevel.toString()), ack: true}),
+                adapter.setStateAsync({device: '' , channel: '',state: 'noOfAlarms'}, {val: getColor(maxAlarmLevel.toString()), ack: true})
+
 
             ])
             adapter.log.debug('11: Set State for Widget')
