@@ -239,6 +239,19 @@
             "native": {}
         },
         {
+            "_id": "noOfAlarms",
+            "type": "state",
+            "common": {
+                "name": "Count of active Alarms",
+                "type": "number",
+                "role": "value",
+                "read": true,
+                "write": false,
+                "def": ""
+            },
+            "native": {}
+        },
+        {
             "_id": "color",
             "type": "state",
             "common": {
