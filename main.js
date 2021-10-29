@@ -265,10 +265,10 @@ async function getData(){
 
                         countEntries += 1
                 
-                        const created = await createAlarms(countEntries+1)
+                        const created = await createAlarms(countEntries)
                         adapter.log.debug('8: Alarm States created for Alarm ' + countURL + ' type:  ' + awarenesstype)
                 
-                        const promises = await processDetails(jsonResult,countEntries+1)
+                        const promises = await processDetails(jsonResult,countEntries)
                         adapter.log.debug('9: Processed Details for Alarm ' + countURL)
 
                 }
