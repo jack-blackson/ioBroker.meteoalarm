@@ -532,7 +532,7 @@ function dateDifferenceInWord(inputDate,comparison){
             return i18nHelper.tomorrow[lang]
             break;
        default:
-           return getDateFormatedShort(inputDate) // Hier wird was falsches zurückgegeben!!
+           return moment(inputDate).locale(lang).format("ddd") // Hier wird was falsches zurückgegeben!!
            break;
     }
 
@@ -1048,7 +1048,7 @@ function getXMLLanguage(country){
             return 'ro'
             break;
         case 'MT':
-            return ''
+            return 'mt-MT'
             break;
         case 'NL':
             return 'ne-NL'
