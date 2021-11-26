@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "meteoalarm",
-        "version": "2.0.7",
+        "version": "2.0.8",
         "news": {
+            "2.0.8": {
+                "en": "Adjusted package settings",
+                "de": "Paketeinstellungen angepasst",
+                "ru": "Скорректированные настройки пакета",
+                "pt": "Configurações de pacote ajustadas",
+                "nl": "Aangepaste pakketinstellingen",
+                "fr": "Paramètres de package ajustés",
+                "it": "Impostazioni del pacchetto modificate",
+                "es": "Configuración de paquete ajustada",
+                "pl": "Dostosowane ustawienia pakietu",
+                "zh-cn": "调整包设置"
+            },
             "2.0.7": {
                 "en": "Bugfixes",
                 "de": "Fehlerbehebung",
@@ -98,126 +110,6 @@
                 "es": "Cambiar a la nueva plataforma Meteoalarm meteoalarm.org",
                 "pl": "Przejdź na nową platformę Meteoalarm meteoalarm.org",
                 "zh-cn": "切换到新的 Meteoalarm 平台 meteoalarm.org"
-            },
-            "1.2.1": {
-                "en": "Small bugfix, added Luxembourg",
-                "de": "Kleiner Bugfix, Luxemburg hinzugefügt",
-                "ru": "Небольшое исправление, добавлен Люксембург",
-                "pt": "Pequena correção de bug adicionada em Luxemburgo",
-                "nl": "Kleine bugfix, Luxemburg toegevoegd",
-                "fr": "Petite correction de bug, ajout du Luxembourg",
-                "it": "Piccolo bugfix, aggiunto Lussemburgo",
-                "es": "Pequeña corrección de errores, añadido Luxemburgo",
-                "pl": "Mała poprawka, dodano Luksemburg",
-                "zh-cn": "小错误修正，添加卢森堡"
-            },
-            "1.2.0": {
-                "en": "Added new settings to adjust the HTML widget, added new icons",
-                "de": "Neue Einstellungen zum Anpassen des HTML-Widgets hinzugefügt, neue Symbole hinzugefügt",
-                "ru": "Добавлены новые настройки для настройки виджета HTML, добавлены новые значки",
-                "pt": "Adicionadas novas configurações para ajustar o widget HTML, novos ícones adicionados",
-                "nl": "Nieuwe instellingen toegevoegd om de HTML-widget aan te passen, nieuwe pictogrammen toegevoegd",
-                "fr": "Ajout de nouveaux paramètres pour ajuster le widget HTML, ajout de nouvelles icônes",
-                "it": "Aggiunte nuove impostazioni per regolare il widget HTML, aggiunte nuove icone",
-                "es": "Se agregaron nuevas configuraciones para ajustar el widget HTML, se agregaron nuevos íconos",
-                "pl": "Dodano nowe ustawienia, aby dostosować widżet HTML, dodano nowe ikony",
-                "zh-cn": "添加了新的设置来调整HTML小部件，添加了新的图标"
-            },
-            "1.1.11": {
-                "en": "Package Updates",
-                "de": "Pakete Aktualisiert",
-                "ru": "Обновления пакета",
-                "pt": "Atualizações de pacote",
-                "nl": "Pakketupdates",
-                "fr": "Mises à jour du package",
-                "it": "Aggiornamenti del pacchetto",
-                "es": "Actualizaciones de paquetes",
-                "pl": "Aktualizacje pakietów",
-                "zh-cn": "软件包更新"
-            },
-            "1.1.9": {
-                "en": "Package Updates",
-                "de": "Pakete Aktualisiert",
-                "ru": "Обновления пакета",
-                "pt": "Atualizações de pacote",
-                "nl": "Pakketupdates",
-                "fr": "Mises à jour du package",
-                "it": "Aggiornamenti del pacchetto",
-                "es": "Actualizaciones de paquetes",
-                "pl": "Aktualizacje pakietów",
-                "zh-cn": "软件包更新"
-            },
-            "1.1.5": {
-                "en": "Bugfix JS-Controller 3.3.1 errors, error handling no language defined",
-                "de": "Bugfix JS-Controller 3.3.1 Fehler, Fehlerbehandlung keine Sprache definiert",
-                "ru": "Исправление ошибок JS-Controller 3.3.1, обработка ошибок не определен язык",
-                "pt": "Bugfix JS-Controller 3.3.1 erros, tratamento de erros sem linguagem definida",
-                "nl": "Bugfix JS-Controller 3.3.1 fouten, foutafhandeling geen taal gedefinieerd",
-                "fr": "Bugfix JS-Controller 3.3.1 erreurs, gestion des erreurs aucune langue définie",
-                "it": "Bugfix JS-Controller 3.3.1 errori, gestione degli errori nessuna lingua definita",
-                "es": "Bugfix JS-Controller 3.3.1 errores, manejo de errores sin lenguaje definido",
-                "pl": "Bugfix JS-Controller 3.3.1 błędy, obsługa błędów brak zdefiniowanego języka",
-                "zh-cn": "Bugfix JS-Controller 3.3.1错误，错误处理未定义语言"
-            },
-            "1.1.4": {
-                "en": "Handling of network errors, added Sentry",
-                "de": "Behandlung von Netzwerkfehlern, hinzugefügt Sentry",
-                "ru": "Обработка сетевых ошибок, добавлен Sentry",
-                "pt": "Tratamento de erros de rede, adicionado Sentry",
-                "nl": "Afhandelen van netwerkfouten, Sentry toegevoegd",
-                "fr": "Gestion des erreurs réseau, ajout de Sentry",
-                "it": "Gestione degli errori di rete, ha aggiunto Sentry",
-                "es": "Manejo de errores de red, Sentry agregado",
-                "pl": "Obsługa błędów sieciowych, dodano Sentry",
-                "zh-cn": "处理网络错误，增加了Sentry"
-            },
-            "1.1.3": {
-                "en": "Error fixes adapter checker",
-                "de": "Fehler behebt Adapterprüfung",
-                "ru": "Исправления ошибок адаптера проверки",
-                "pt": "Erro corrige verificador de adaptador",
-                "nl": "Fout lost adapterchecker op",
-                "fr": "Erreur corrige le vérificateur d'adaptateur",
-                "it": "L'errore risolve il controllo dell'adattatore",
-                "es": "El error corrige el verificador del adaptador",
-                "pl": "Błąd rozwiązuje narzędzie sprawdzania adaptera",
-                "zh-cn": "错误修复了适配器检查器"
-            },
-            "1.1.2": {
-                "en": "Bugfix for new JavaScript Version",
-                "de": "Bugfix für neue JavaScript-Version",
-                "ru": "Исправление для новой версии JavaScript",
-                "pt": "Correção de bug para nova versão de JavaScript",
-                "nl": "Bugfix voor nieuwe JavaScript-versie",
-                "fr": "Correction de bug pour la nouvelle version de JavaScript",
-                "it": "Correzione di bug per la nuova versione di JavaScript",
-                "es": "Corrección de errores para la nueva versión de JavaScript",
-                "pl": "Poprawka błędu dla nowej wersji JavaScript",
-                "zh-cn": "新的JavaScript版本的错误修正"
-            },
-            "1.1.1": {
-                "en": "HTML Widget bugfix",
-                "de": "Bugfix für HTML-Widgets",
-                "ru": "Исправление ошибки HTML-виджета",
-                "pt": "Correção de bug do widget HTML",
-                "nl": "Bugfix voor HTML-widget",
-                "fr": "Correction d'un bug du widget HTML",
-                "it": "Correzione di bug del widget HTML",
-                "es": "Corrección de errores del widget HTML",
-                "pl": "Naprawiony błąd widżetu HTML",
-                "zh-cn": "HTML Widget错误修正"
-            },
-            "1.1.0": {
-                "en": "Restructuring of settings, generate link automatically",
-                "de": "Umstrukturierung der Einstellungen, Link automatisch generieren",
-                "ru": "Реструктуризация настроек, автоматическая генерация ссылки",
-                "pt": "Reestruturação de configurações, gerar link automaticamente",
-                "nl": "Herstructurering van instellingen, automatisch link genereren",
-                "fr": "Restructuration des paramètres, génération automatique du lien",
-                "it": "Ristrutturazione delle impostazioni, genera automaticamente il collegamento",
-                "es": "Reestructuración de configuraciones, generar enlace automáticamente",
-                "pl": "Restrukturyzacja ustawień, automatyczne generowanie linku",
-                "zh-cn": "重组设置，自动生成链接"
             }
         },
         "title": "Meteoalarm",
@@ -264,8 +156,8 @@
         "materialize": true,
         "extIcon": "https://raw.githubusercontent.com/jack-blackson/ioBroker.meteoalarm/master/admin/meteoalarm.png",
         "type": "weather",
-        "connectionType": "local",
-        "dataSource": "push",
+        "connectionType": "cloud",
+        "dataSource": "poll",
         "singletonHost": false,
         "plugins": {
             "sentry": {
@@ -339,6 +231,19 @@
             "common": {
                 "name": "Last Data Update",
                 "type": "string",
+                "role": "value",
+                "read": true,
+                "write": false,
+                "def": ""
+            },
+            "native": {}
+        },
+        {
+            "_id": "noOfAlarms",
+            "type": "state",
+            "common": {
+                "name": "Count of active Alarms",
+                "type": "number",
                 "role": "value",
                 "read": true,
                 "write": false,

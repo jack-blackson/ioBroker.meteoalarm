@@ -372,13 +372,15 @@ async function getData(){
                 htmlCode += '</tbody></table>'
             } 
 
-
+            
             await Promise.all([
                 adapter.setStateAsync({device: '' , channel: '',state: 'level'}, {val: maxAlarmLevel, ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'htmlToday'}, {val: htmlCode, ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'location'}, {val: regionName, ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'link'}, {val: urlAtom, ack: true}),
-                adapter.setStateAsync({device: '' , channel: '',state: 'color'}, {val: getColor(maxAlarmLevel.toString()), ack: true})
+                adapter.setStateAsync({device: '' , channel: '',state: 'color'}, {val: getColor(maxAlarmLevel.toString()), ack: true}),
+                adapter.setStateAsync({device: '' , channel: '',state: 'noOfAlarms'}, {val: countEntries, ack: true})
+
 
             ])
             adapter.log.debug('11: Set State for Widget')
@@ -532,7 +534,7 @@ function dateDifferenceInWord(inputDate,comparison){
             return i18nHelper.tomorrow[lang]
             break;
        default:
-           return getDateFormatedShort(inputDate) // Hier wird was falsches zurückgegeben!!
+           return moment(inputDate).locale(lang).format("ddd") // Hier wird was falsches zurückgegeben!!
            break;
     }
 
@@ -1048,7 +1050,7 @@ function getXMLLanguage(country){
             return 'ro'
             break;
         case 'MT':
-            return ''
+            return 'mt-MT'
             break;
         case 'NL':
             return 'ne-NL'
