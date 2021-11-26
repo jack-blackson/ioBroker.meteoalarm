@@ -107,6 +107,9 @@ If you don't find your country, please create an issue on github, and I will be 
 
 ## Changelog
 
+## 2.0.8 (2021-10-29)
+* (jack-blackson) Added new datapoint "No. of active alarms"
+
 ## 2.0.7 (2021-10-01)
 * (jack-blackson) Bugfix
 
