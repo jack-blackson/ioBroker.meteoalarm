@@ -620,6 +620,19 @@ async function processDetails(content, countInt){
 
 }
 
+function errorHandling(codePart, error, suppressFrontendLog) {
+    if (!suppressFrontendLog) {
+        adapter.log.error(`[${codePart}] error: ${error.message}, stack: ${error.stack}`);
+    }
+    if (adapter.supportsFeature && adapter.supportsFeature('PLUGINS')) {
+        const sentryInstance = adapter.getPluginInstance('sentry');
+        if (sentryInstance) {
+            sentryInstance.getSentryObject().captureException(error);
+        }
+    }
+}
+
+
 async function localCreateState(state, name, value) {
     adapter.log.debug(`Create_state called for : ${state} with value : ${value}`);
 
@@ -669,7 +682,7 @@ async function localCreateState(state, name, value) {
         // Subscribe on state changes if writable
         // writable && this.subscribeStates(state);
     } catch (error) {
-        adapter.errorHandling('localCreateState', error);
+        errorHandling('localCreateState', error);
     }
 }
 
