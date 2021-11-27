@@ -523,6 +523,9 @@ function dateDifferenceInWord(inputDate,comparison){
     // Round to nearest whole number to deal with DST.
     var difference = Math.round((comparison-inputDate)/(1000*60*60*24))
 
+    adapter.log.debug('Days difference: ' + inputDate + ' - ' + difference) 
+
+
     switch (difference) {
         case 0:
             return i18nHelper.today[lang]
