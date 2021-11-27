@@ -528,6 +528,7 @@ function dateDifferenceInWord(inputDate,comparison){
     var date1_tomorrow = new Date(inputDate.getFullYear(), inputDate.getMonth(), inputDate.getDate() + 1);
     var date1_today = new Date(inputDate.getFullYear(), inputDate.getMonth(), inputDate.getDate() );
     var date1_yesterday = new Date(inputDate.getFullYear(), inputDate.getMonth(), inputDate.getDate() - 1);
+    adapter.log.debug('Date  ' + inputDate)
     adapter.log.debug('Date tomorrow ' + date1_tomorrow)
     adapter.log.debug('Date today ' + date1_today)
     adapter.log.debug('Date yesterday ' + date1_yesterday)
