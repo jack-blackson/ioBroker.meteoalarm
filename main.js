@@ -521,16 +521,41 @@ function getDateFormatedShort(dateTimeString)
 function dateDifferenceInWord(inputDate,comparison){
     // Take the difference between the dates and divide by milliseconds per day.
     // Round to nearest whole number to deal with DST.
-    var difference = Math.round((comparison-inputDate)/(1000*60*60*24))
+    //var difference = Math.round((comparison-inputDate)/(1000*60*60*24))
+    var difference = 0
+
+    //adapter.log.debug('Days difference: ' + inputDate + ' - ' + difference) 
+
+     
+    var date1_tomorrow = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
+    var date1_today = new Date(today.getFullYear(), today.getMonth(), today.getDate() );
+    var date1_yesterday = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1);
+    //adapter.log.debug('Date tomorrow ' + date1_tomorrow)
+    //adapter.log.debug('Date today ' + date1_today)
+    //adapter.log.debug('Date yesterday ' + date1_yesterday)
+
+
+    if (date1_tomorrow.getFullYear() == inputDate.getFullYear() && date1_tomorrow.getMonth() == inputDate.getMonth() && date1_tomorrow.getDate() == inputDate.getDate()) {
+        //date is tomorrow
+        difference = 1
+    }
+    if (date1_today.getFullYear() == inputDate.getFullYear() && date1_today.getMonth() == inputDate.getMonth() && date1_today.getDate() == inputDate.getDate()) {
+        //date is today
+        difference = 2
+    }
+    if (date1_yesterday.getFullYear() == inputDate.getFullYear() && date1_yesterday.getMonth() == inputDate.getMonth() && date1_yesterday.getDate() == inputDate.getDate()) {
+        //date is yesterday
+        difference = 3
+    }
 
     switch (difference) {
-        case 0:
+        case 2:
             return i18nHelper.today[lang]
             break;
-        case 1:
+        case 3:
             return i18nHelper.yesterday[lang]
             break;
-        case -1:
+        case 1:
             return i18nHelper.tomorrow[lang]
             break;
        default:
@@ -620,6 +645,19 @@ async function processDetails(content, countInt){
 
 }
 
+function errorHandling(codePart, error, suppressFrontendLog) {
+    if (!suppressFrontendLog) {
+        adapter.log.error(`[${codePart}] error: ${error.message}, stack: ${error.stack}`);
+    }
+    if (adapter.supportsFeature && adapter.supportsFeature('PLUGINS')) {
+        const sentryInstance = adapter.getPluginInstance('sentry');
+        if (sentryInstance) {
+            sentryInstance.getSentryObject().captureException(error);
+        }
+    }
+}
+
+
 async function localCreateState(state, name, value) {
     adapter.log.debug(`Create_state called for : ${state} with value : ${value}`);
 
@@ -669,7 +707,7 @@ async function localCreateState(state, name, value) {
         // Subscribe on state changes if writable
         // writable && this.subscribeStates(state);
     } catch (error) {
-        adapter.errorHandling('localCreateState', error);
+        errorHandling('localCreateState', error);
     }
 }
 
