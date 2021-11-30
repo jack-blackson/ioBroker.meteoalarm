@@ -308,7 +308,6 @@ async function getData(){
                             maxAlarmLevel = Number(level.val)
                         }
                     }
-                    adapter.log.debug('10.1: Added Alarm for ' + headline.val)
                      
                     if (!adapter.config.noIcons){
                         // Dummy cell to move picture away from the left side
@@ -342,6 +341,7 @@ async function getData(){
 
                     htmlCode += '<td style="width: 90%; border-style: none; ' + colorHTML +  '">'
                     if (headline && headline.val){
+                        adapter.log.debug('10.1: Added Alarm for ' + headline.val)
                         htmlCode += '<h4 style = "margin-top: 5px;margin-bottom: 1px;">' + headline.val + ': '
                     }
                     if (effectiveDate && effectiveDate.val && expiresDate && expiresDate.val){
