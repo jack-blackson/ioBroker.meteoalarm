@@ -248,7 +248,7 @@ async function getData(){
                             else {
                                 info = [result.alert.info]
                             }
-                            adapter.log.debug('TEMP1: ' + info[0])
+                            adapter.log.debug('TEMP0: ' + info[0])
 
 
                             for (var j = 0, l = info.length; j < l; j++){ 
