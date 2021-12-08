@@ -1072,7 +1072,7 @@ function getXMLLanguage(country){
             return 'is-IS'
             break;
         case 'IE':
-            return ''
+            return 'en-GB'
             break;
         case 'IL':
             return 'he-IL'
