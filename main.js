@@ -239,6 +239,29 @@ async function getData(){
                             adapter.log.error("Fehler: " + err);
                             adapter.terminate ? adapter.terminate(0) : process.exit(0);
                         } else {
+                            for (var j = 0, l = result.alert.info.length; j < l; j++){ 
+                                var element = result.alert.info[i]
+                                if (element.language == xmlLanguage){
+                                    element.parameter.forEach(function (parameter){
+                                        if (parameter.valueName == "awareness_type") {
+                                            awarenesstype =parameter.value
+                                            var n = awarenesstype.indexOf(";");
+                                            awarenesstype = awarenesstype.substring(0, n)
+                                            typeRelevant = checkTypeRelevant(awarenesstype)
+                                            adapter.log.debug('Alarm ' + countURL + ' with type ' + awarenesstype + ' relevant: ' + typeRelevant)
+
+                                        }  
+                                    })
+                                    jsonResult = element 
+    
+                                }
+                            }
+
+
+
+
+
+                            /*
                             result.alert.info.forEach(function (element){
                                 if (element.language == xmlLanguage){
                                     element.parameter.forEach(function (parameter){
@@ -255,6 +278,7 @@ async function getData(){
     
                                 }
                             })
+                            */
     
                         }
                     });
