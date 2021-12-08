@@ -239,7 +239,7 @@ async function getData(){
                             adapter.log.error("Fehler: " + err);
                             adapter.terminate ? adapter.terminate(0) : process.exit(0);
                         } else {
-                            adapter.log.debug('7.1 Content: ' + util.inspect(result.alert.info[0], {showHidden: false, depth: null, colors: true}))
+                            adapter.log.debug('7.1 Content: ' + util.inspect(result.alert.info, {showHidden: false, depth: null, colors: true}))
 
                             for (var j = 0, l = countURL; j < l; j++){ 
                                 var element = result.alert.info[j]
