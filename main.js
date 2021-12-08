@@ -241,6 +241,7 @@ async function getData(){
                         } else {
                             for (var j = 0, l = result.alert.info.length; j < l; j++){ 
                                 var element = result.alert.info[i]
+                                adapter.log.debug('TEMP: ' + element.language)
                                 if (element.language == xmlLanguage){
                                     element.parameter.forEach(function (parameter){
                                         if (parameter.valueName == "awareness_type") {
