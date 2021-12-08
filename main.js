@@ -249,6 +249,7 @@ async function getData(){
                                 info = [result.alert.info]
                             }
                             adapter.log.debug('TEMP0: ' + util.inspect(info[0], {showHidden: false, depth: null, colors: true}))
+                            adapter.log.debug('Length:: ' + info.length)
 
 
                             for (var j = 0, l = info.length; j < l; j++){ 
