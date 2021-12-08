@@ -251,7 +251,7 @@ async function getData(){
 
 
                             for (var j = 0, l = info.length; j < l; j++){ 
-                                var element = result.alert.info[j]
+                                var element = info[j]
                                 adapter.log.debug('TEMP1: ' + result.alert.info[j].language)
                                 adapter.log.debug('TEMP2: ' + element.language)
                                 if (element.language == xmlLanguage){
