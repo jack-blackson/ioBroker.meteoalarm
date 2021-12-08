@@ -239,22 +239,16 @@ async function getData(){
                             adapter.log.error("Fehler: " + err);
                             adapter.terminate ? adapter.terminate(0) : process.exit(0);
                         } else {
-                            adapter.log.debug('7.1 Content: ' + util.inspect(result.alert.info, {showHidden: false, depth: null, colors: true}))
                             var info = []
-
                             if (result.alert.info[0]){
                                 info = result.alert.info
                             }
                             else {
                                 info = [result.alert.info]
                             }
-                            adapter.log.debug('TEMP0: ' + util.inspect(info[0], {showHidden: false, depth: null, colors: true}))
-                            adapter.log.debug('Length:: ' + info.length)
-
 
                             for (var j = 0, l = info.length; j < l; j++){ 
                                 var element = info[j]
-                                adapter.log.debug('TEMP2: ' + element.language)
                                 if (element.language == xmlLanguage){
                                     element.parameter.forEach(function (parameter){
                                         if (parameter.valueName == "awareness_type") {
@@ -263,17 +257,12 @@ async function getData(){
                                             awarenesstype = awarenesstype.substring(0, n)
                                             typeRelevant = checkTypeRelevant(awarenesstype)
                                             adapter.log.debug('Alarm ' + countURL + ' with type ' + awarenesstype + ' relevant: ' + typeRelevant)
-
                                         }  
                                     })
                                     jsonResult = element 
     
                                 }
                             }
-
-
-
-
 
                             /*
                             result.alert.info.forEach(function (element){
