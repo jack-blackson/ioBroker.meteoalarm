@@ -240,8 +240,17 @@ async function getData(){
                             adapter.terminate ? adapter.terminate(0) : process.exit(0);
                         } else {
                             adapter.log.debug('7.1 Content: ' + util.inspect(result.alert.info, {showHidden: false, depth: null, colors: true}))
+                            var info = []
 
-                            for (var j = 0, l = countURL; j < l; j++){ 
+                            if (result.alert.info[0]){
+                                info = result.alert.info
+                            }
+                            else {
+                                info = [result.alert.info]
+                            }
+
+
+                            for (var j = 0, l = info.length; j < l; j++){ 
                                 var element = result.alert.info[j]
                                 adapter.log.debug('TEMP1: ' + result.alert.info[j].language)
                                 adapter.log.debug('TEMP2: ' + element.language)
