@@ -239,9 +239,8 @@ async function getData(){
                             adapter.log.error("Fehler: " + err);
                             adapter.terminate ? adapter.terminate(0) : process.exit(0);
                         } else {
-                            adapter.log.debug('TEMP: ' + result.alert.info.length)
 
-                            for (var j = 0, l = result.alert.info.length; j < l; j++){ 
+                            for (var j = 0, l = countURL; j < l; j++){ 
                                 var element = result.alert.info[j]
                                 adapter.log.debug('TEMP1: ' + element.language)
                                 if (element.language == xmlLanguage){
