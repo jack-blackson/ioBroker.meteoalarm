@@ -4,16 +4,28 @@
         "version": "2.1.0",
         "news": {
             "2.1.0": {
-                "en": "Ability to show severity of danger in text",
-                "de": "Fähigkeit, die Schwere der Gefahr im Text anzuzeigen",
-                "ru": "Возможность показать серьезность опасности в тексте",
-                "pt": "Capacidade de mostrar a gravidade do perigo em texto",
-                "nl": "Mogelijkheid om de ernst van het gevaar in tekst weer te geven",
-                "fr": "Capacité à montrer la gravité du danger dans le texte",
-                "it": "Capacità di mostrare la gravità del pericolo nel testo",
-                "es": "Capacidad para mostrar la gravedad del peligro en el texto",
-                "pl": "Możliwość pokazania powagi zagrożenia w tekście",
-                "zh-cn": "能够在文本中显示危险的严重性"
+                "en": "Bugfixes",
+                "de": "Fehlerbehebung",
+                "ru": "Исправление ошибок",
+                "pt": "Correções de bugs",
+                "nl": "Bugfixes",
+                "fr": "Corrections de bugs",
+                "it": "Correzioni di bug",
+                "es": "Corrección de errores",
+                "pl": "Poprawki",
+                "zh-cn": "Bug修复"
+            },
+            "2.0.10": {
+                "en": "Bugfixes",
+                "de": "Fehlerbehebung",
+                "ru": "Исправление ошибок",
+                "pt": "Correções de bugs",
+                "nl": "Bugfixes",
+                "fr": "Corrections de bugs",
+                "it": "Correzioni di bug",
+                "es": "Corrección de errores",
+                "pl": "Poprawki",
+                "zh-cn": "Bug修复"
             },
             "2.0.9": {
                 "en": "Bugfixes",
