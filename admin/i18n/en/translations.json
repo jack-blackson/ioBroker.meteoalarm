@@ -68,6 +68,7 @@
     "regionsetup": "Setup the alarm region",
     "selectImageSize": "Select icon size in HTML widget",
     "settings": "Settings",
+    "indicateWarningLevel": "Indicate Warning level with !",
     "small": "Small",
     "warningType1": "Wind",
     "warningType10": "Rain",
