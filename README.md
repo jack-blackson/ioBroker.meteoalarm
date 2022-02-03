@@ -106,6 +106,15 @@ If you don't find your country, please create an issue on github, and I will be 
 
 
 ## Changelog
+## 2.1.0 (2022-02-03)
+* (jack-blackson) Added Switzerland
+
+## 2.0.10 (2021-12-10)
+* (jack-blackson) Bugfix Sentry IOBROKER-METEOALARM-2K
+* (jack-blackson) Bugfix for Ireland
+
+## 2.0.9 (2021-11-27)
+* (jack-blackson) Calculate date in words correctly - this time for real :)
 
 ## 2.0.9 (2021-11-27)
 * (jack-blackson) Calculate date in words correctly - this time for real :)
