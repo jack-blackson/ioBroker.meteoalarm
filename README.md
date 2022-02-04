@@ -94,12 +94,12 @@ Show in the header of the widget instead of the weekday "today", "tomorrow" or "
 * Slovenia
 * Spain
 * Sweden
+* Switzerland
 * UK
 
 If you don't find your country, please create an issue on github, and I will be happy to add it
 
 ## Not possible countries
-* Switzerland (geocode file from meteoalarm.org is probably incorrect)
 * Portugal (geocode file from meteoalarm.org is probably incorrect)
 * Bulgaria (geocode file from meteoalarm.org is probably incorrect)
 
