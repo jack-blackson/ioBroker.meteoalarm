@@ -169,7 +169,7 @@ async function getData(){
                         adapter.log.debug('4: Process Atom')
                         var newdate = moment(new Date()).local().format('DD.MM.YYYY HH:mm')
                         adapter.setState({device: '' , channel: '',state: 'lastUpdate'}, {val: newdate, ack: true});
-                        adapter.log.debug('4.1 Content: ' + util.inspect(result.feed.entry, {showHidden: false, depth: null, colors: true}))
+                        //adapter.log.debug('4.1 Content: ' + util.inspect(result.feed.entry, {showHidden: false, depth: null, colors: true}))
                         if (result.feed.entry){
                             if (result.feed.entry[0]){
                                 adapter.log.debug('4.1.1: Check Entries')
@@ -239,7 +239,16 @@ async function getData(){
                             adapter.log.error("Fehler: " + err);
                             adapter.terminate ? adapter.terminate(0) : process.exit(0);
                         } else {
-                            result.alert.info.forEach(function (element){
+                            var info = []
+                            if (result.alert.info[0]){
+                                info = result.alert.info
+                            }
+                            else {
+                                info = [result.alert.info]
+                            }
+
+                            for (var j = 0, l = info.length; j < l; j++){ 
+                                var element = info[j]
                                 if (element.language == xmlLanguage){
                                     element.parameter.forEach(function (parameter){
                                         if (parameter.valueName == "awareness_type") {
@@ -248,13 +257,12 @@ async function getData(){
                                             awarenesstype = awarenesstype.substring(0, n)
                                             typeRelevant = checkTypeRelevant(awarenesstype)
                                             adapter.log.debug('Alarm ' + countURL + ' with type ' + awarenesstype + ' relevant: ' + typeRelevant)
-
                                         }  
                                     })
                                     jsonResult = element 
     
                                 }
-                            })
+                            }
     
                         }
                     });
@@ -308,7 +316,6 @@ async function getData(){
                             maxAlarmLevel = Number(level.val)
                         }
                     }
-                    adapter.log.debug('10.1: Added Alarm for ' + headline.val)
                      
                     if (!adapter.config.noIcons){
                         // Dummy cell to move picture away from the left side
@@ -342,6 +349,7 @@ async function getData(){
 
                     htmlCode += '<td style="width: 90%; border-style: none; ' + colorHTML +  '">'
                     if (headline && headline.val){
+                        adapter.log.debug('10.1: Added Alarm for ' + headline.val)
                         htmlCode += '<h4 style = "margin-top: 5px;margin-bottom: 1px;">' + headline.val + ': '
                     }
                     if (effectiveDate && effectiveDate.val && expiresDate && expiresDate.val){
@@ -1064,7 +1072,7 @@ function getXMLLanguage(country){
             return 'is-IS'
             break;
         case 'IE':
-            return ''
+            return 'en-GB'
             break;
         case 'IL':
             return 'he-IL'
