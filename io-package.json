@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "meteoalarm",
-        "version": "2.1.0",
+        "version": "2.1.1",
         "news": {
+            "2.1.1": {
+                "en": "Bugfixes",
+                "de": "Fehlerbehebung",
+                "ru": "Исправление ошибок",
+                "pt": "Correções de bugs",
+                "nl": "Bugfixes",
+                "fr": "Corrections de bugs",
+                "it": "Correzioni di bug",
+                "es": "Corrección de errores",
+                "pl": "Poprawki",
+                "zh-cn": "Bug修复"
+            },
             "2.1.0": {
                 "en": "Added Switzerland",
                 "de": "Schweiz hinzugefügt",
@@ -180,6 +192,9 @@
         "platform": "Javascript/Node.js",
         "mode": "schedule",
         "schedule": "*/10 * * * *",
+        "dependencies": {
+            "js-controller": ">=3.0.0"
+            },
         "enabled": true,
         "compact": true,
         "readme": "https://github.com/jack-blackson/ioBroker.meteoalarm/blob/master/README.md",
@@ -283,7 +298,7 @@
                 "role": "value",
                 "read": true,
                 "write": false,
-                "def": ""
+                "def": 0
             },
             "native": {}
         },
@@ -309,7 +324,7 @@
                 "role": "value",
                 "read": true,
                 "write": false,
-                "def": ""
+                "def": 0
             },
             "native": {}
         },
