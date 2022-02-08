@@ -106,6 +106,11 @@ If you don't find your country, please create an issue on github, and I will be 
 
 
 ## Changelog
+
+## 2.1.1 (2022-02-08)
+* (jack-blackson) Updated License Info
+* (jack-blackson) Fixed errors for js-controller 4.x
+
 ## 2.1.0 (2022-02-03)
 * (jack-blackson) Added Switzerland
 

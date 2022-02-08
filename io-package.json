@@ -192,7 +192,9 @@
         "platform": "Javascript/Node.js",
         "mode": "schedule",
         "schedule": "*/10 * * * *",
-        
+        "dependencies": {
+            "js-controller": ">=3.0.0"
+            },
         "enabled": true,
         "compact": true,
         "readme": "https://github.com/jack-blackson/ioBroker.meteoalarm/blob/master/README.md",
@@ -296,7 +298,7 @@
                 "role": "value",
                 "read": true,
                 "write": false,
-                "def": ""
+                "def": 0
             },
             "native": {}
         },
@@ -322,7 +324,7 @@
                 "role": "value",
                 "read": true,
                 "write": false,
-                "def": ""
+                "def": 0
             },
             "native": {}
         },
