@@ -446,9 +446,11 @@ function checkRelevante(entry){
             var detailsLink = element.link[0].$.href
             adapter.log.debug('4.1: Warning found: ' + detailsLink + ' of message type ' + messagetype)
             // TEMP
+            adapter.log.debug('4.1.1: Link count: '+ element.link.length)
 
 
             for(var i = 0; i < element.link; i += 1) {
+
                 adapter.log.debug('4.1.1: Link ' + i + ': ' + element.link[i].$.href)
                 if (element.link[i].$.type){
                     adapter.log.debug('4.1.1: Typ ' + i + ': ' + element.link[i].$.type)
