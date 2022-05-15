@@ -446,12 +446,17 @@ function checkRelevante(entry){
             var detailsLink = element.link[0].$.href
             adapter.log.debug('4.1: Warning found: ' + detailsLink + ' of message type ' + messagetype)
             // TEMP
-            adapter.log.debug('4.1.1: Link 1: ' + element.link[0].$.href)
-            adapter.log.debug('4.1.1: Link 2: ' + element.link[1].$.href)
-            adapter.log.debug('4.1.1: Link 3: ' + element.link[2].$.href)
-            adapter.log.debug('4.1.1: Typ 1: ' + element.link[0].$.type)
-            adapter.log.debug('4.1.1: Typ 2: ' + element.link[1].$.type)
-            adapter.log.debug('4.1.1: Typ 3: ' + element.link[2].$.type)
+
+
+            for(var i = 0; i < element.link; i += 1) {
+                adapter.log.debug('4.1.1: Link ' + i + ': ' + element.link[i].$.href)
+                if (element.link[i].$.type){
+                    adapter.log.debug('4.1.1: Typ ' + i + ': ' + element.link[i].$.type)
+
+                }
+
+            }
+
 
             let obj = {
                 "id": i,
