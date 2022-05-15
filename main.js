@@ -449,7 +449,7 @@ function checkRelevante(entry){
             adapter.log.debug('4.1.1: Link count: '+ element.link.length)
 
 
-            for(var i = 0; i < element.link; i += 1) {
+            for(var i = 0; i < element.link.length; i += 1) {
 
                 adapter.log.debug('4.1.1: Link ' + i + ': ' + element.link[i].$.href)
                 if (element.link[i].$.type){
