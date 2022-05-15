@@ -388,8 +388,6 @@ async function getData(){
                 adapter.setStateAsync({device: '' , channel: '',state: 'link'}, {val: urlAtom, ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'color'}, {val: getColor(maxAlarmLevel.toString()), ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'noOfAlarms'}, {val: countEntries, ack: true})
-
-
             ])
             adapter.log.debug('11: Set State for Widget')
 
@@ -447,6 +445,11 @@ function checkRelevante(entry){
         if (locationRelevant && (dateRelevant) && statusRelevant && messagetypeRelevant){
             var detailsLink = element.link[0].$.href
             adapter.log.debug('4.1: Warning found: ' + detailsLink + ' of message type ' + messagetype)
+            // TEMP
+            adapter.log.debug('4.1.1: Link 1: ' + element.link[0].$.href)
+            adapter.log.debug('4.1.1: Link 2: ' + element.link[1].$.href)
+            adapter.log.debug('4.1.1: Link 3: ' + element.link[2].$.href)
+
 
             let obj = {
                 "id": i,
