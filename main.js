@@ -449,7 +449,9 @@ function checkRelevante(entry){
             adapter.log.debug('4.1.1: Link 1: ' + element.link[0].$.href)
             adapter.log.debug('4.1.1: Link 2: ' + element.link[1].$.href)
             adapter.log.debug('4.1.1: Link 3: ' + element.link[2].$.href)
-
+            adapter.log.debug('4.1.1: Typ 1: ' + element.link[0].$.type)
+            adapter.log.debug('4.1.1: Typ 2: ' + element.link[1].$.type)
+            adapter.log.debug('4.1.1: Typ 3: ' + element.link[2].$.type)
 
             let obj = {
                 "id": i,
