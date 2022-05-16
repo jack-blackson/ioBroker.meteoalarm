@@ -471,7 +471,7 @@ function checkRelevante(entry){
             i += 1;
         }
     });
-    adapter.log.debug('4.2: Checked relevance, found ' + i + ' relevant alarms')
+    adapter.log.debug('4.2: Checked relevance, found ' + urlArray.length + ' relevant alarms')
 
 
 }
