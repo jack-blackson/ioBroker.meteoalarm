@@ -449,7 +449,7 @@ function checkRelevante(entry){
                 if (element.link[i].$.type){
                     adapter.log.debug('4.1.1: Typ ' + i + ': ' + element.link[i].$.type)
                     if (element.link[i].$.type == 'application/cap+xml'){
-                        var detailsLink = element.link[0].$.href
+                        var detailsLink = element.link[i].$.href
                     }
                 }
 
