@@ -388,8 +388,6 @@ async function getData(){
                 adapter.setStateAsync({device: '' , channel: '',state: 'link'}, {val: urlAtom, ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'color'}, {val: getColor(maxAlarmLevel.toString()), ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'noOfAlarms'}, {val: countEntries, ack: true})
-
-
             ])
             adapter.log.debug('11: Set State for Widget')
 
@@ -426,7 +424,10 @@ function checkRelevante(entry){
             messagetypeRelevant = true
         }
 
-        var locationRelevant = checkLocation(element['cap:geocode'].valueName , element['cap:geocode'].value)
+        var locationRelevant = false
+        if (element['cap:geocode'].valueName ){
+             locationRelevant = checkLocation(element['cap:geocode'].valueName , element['cap:geocode'].value)
+        }
         var statusRelevant = false
         if (element['cap:status'] == 'Actual'){
             statusRelevant = true
@@ -445,8 +446,21 @@ function checkRelevante(entry){
         var eventType = element['cap:event']
 
         if (locationRelevant && (dateRelevant) && statusRelevant && messagetypeRelevant){
-            var detailsLink = element.link[0].$.href
+            for(var i = 0; i < element.link.length; i += 1) {
+
+                //adapter.log.debug('4.1.1: Link ' + i + ': ' + element.link[i].$.href)
+                if (element.link[i].$.type){
+                    //adapter.log.debug('4.1.1: Typ ' + i + ': ' + element.link[i].$.type)
+                    if (element.link[i].$.type == 'application/cap+xml'){
+                        var detailsLink = element.link[i].$.href
+                    }
+                }
+
+            }
+
             adapter.log.debug('4.1: Warning found: ' + detailsLink + ' of message type ' + messagetype)
+
+      
 
             let obj = {
                 "id": i,
@@ -460,7 +474,7 @@ function checkRelevante(entry){
             i += 1;
         }
     });
-    adapter.log.debug('4.2: Checked relevance, found ' + i + ' relevant alarms')
+    adapter.log.debug('4.2: Checked relevance, found ' + urlArray.length + ' relevant alarms')
 
 
 }
