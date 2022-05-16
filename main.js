@@ -445,9 +445,9 @@ function checkRelevante(entry){
         if (locationRelevant && (dateRelevant) && statusRelevant && messagetypeRelevant){
             for(var i = 0; i < element.link.length; i += 1) {
 
-                adapter.log.debug('4.1.1: Link ' + i + ': ' + element.link[i].$.href)
+                //adapter.log.debug('4.1.1: Link ' + i + ': ' + element.link[i].$.href)
                 if (element.link[i].$.type){
-                    adapter.log.debug('4.1.1: Typ ' + i + ': ' + element.link[i].$.type)
+                    //adapter.log.debug('4.1.1: Typ ' + i + ': ' + element.link[i].$.type)
                     if (element.link[i].$.type == 'application/cap+xml'){
                         var detailsLink = element.link[i].$.href
                     }
