@@ -24,7 +24,7 @@
   "dependencies": {
     "@iobroker/adapter-core": "^2.5.1",
     "@iobroker/testing": "^2.5.3",
-    "moment": "2.29.1",
+    "moment": "2.29.2",
     "bent": "^7.3.12",
     "csv-parse": "4.16.3",
     "xml2js": "^0.4.22"
