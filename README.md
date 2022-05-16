@@ -18,7 +18,7 @@ Choose your country, and afterwards the region you want the warnings for. If you
 
 
 ## Add it to your vis
-The easiest way to add it to your vis is by using the widget basic - string, and there choosing the datapoint htmlToday. This gives you a predesigned HTML widget, which you can adjust in the setup.
+The easiest way to add it to your vis is by using the widget basic - html, and there entering {meteoalarm.0.htmlToday}. This gives you a predesigned HTML widget, which you can adjust in the setup.
 
 ## Alarm Types
 |Alarm Type|Description|                                                                       
