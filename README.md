@@ -108,7 +108,7 @@ If you don't find your country, please create an issue on github, and I will be 
 ## Changelog
 
 ## 2.1.2 (2022-05-16)
-* (jack-blackson) Bugfix for change in xml (wrong link for warning was used)
+* (jack-blackson) Bugfix for change in xml (wrong link for warning was used) -> Sentry IOBROKER-METEOALARM-2Y and IOBROKER-METEOALARM-31
 
 ## 2.1.1 (2022-02-08)
 * (jack-blackson) Updated License Info

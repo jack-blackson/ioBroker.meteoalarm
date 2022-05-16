@@ -424,7 +424,10 @@ function checkRelevante(entry){
             messagetypeRelevant = true
         }
 
-        var locationRelevant = checkLocation(element['cap:geocode'].valueName , element['cap:geocode'].value)
+        var locationRelevant = false
+        if (element['cap:geocode'].valueName ){
+             locationRelevant = checkLocation(element['cap:geocode'].valueName , element['cap:geocode'].value)
+        }
         var statusRelevant = false
         if (element['cap:status'] == 'Actual'){
             statusRelevant = true
