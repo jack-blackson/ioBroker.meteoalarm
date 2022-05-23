@@ -427,11 +427,12 @@ function checkRelevante(entry){
         }
 
         var locationRelevant = false
-        adapter.log.debug('4.1.X1: Error Happens now')
         if (element['cap:geocode'] && element['cap:geocode'].valueName ){
              locationRelevant = checkLocation(element['cap:geocode'].valueName , element['cap:geocode'].value)
         }
-        adapter.log.debug('4.1.X2: Error happened')
+        else{
+            adapter.log.debug('4.1.2: Warning without geocode - cannot check')
+        }
 
         var statusRelevant = false
         if (element['cap:status'] == 'Actual'){
@@ -463,7 +464,7 @@ function checkRelevante(entry){
 
             }
 
-            adapter.log.debug('4.1: Warning found: ' + detailsLink + ' of message type ' + messagetype)
+            adapter.log.debug('4.2: Warning found: ' + detailsLink + ' of message type ' + messagetype)
 
       
 
