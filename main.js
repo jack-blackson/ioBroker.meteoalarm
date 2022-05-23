@@ -427,9 +427,13 @@ function checkRelevante(entry){
         }
 
         var locationRelevant = false
+        adapter.log.debug('4.1.X1: Error Happens now')
+
         if (element['cap:geocode'].valueName ){
              locationRelevant = checkLocation(element['cap:geocode'].valueName , element['cap:geocode'].value)
         }
+        adapter.log.debug('4.1.X2: Error happened')
+
         var statusRelevant = false
         if (element['cap:status'] == 'Actual'){
             statusRelevant = true
