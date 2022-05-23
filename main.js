@@ -114,7 +114,7 @@ async function getData(){
                 adapter.setStateAsync({device: '' , channel: '',state: 'level'}, {val: 0, ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'htmlToday'}, {val: htmlCode, ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'noOfAlarms'}, {val: 0, ack: true}),
-                adapter.setStateAsync({device: '' , channel: '',state: 'location'}, {val: 'CheckSetup!', ack: true})
+                adapter.setStateAsync({device: '' , channel: '',state: 'location'}, {val: 'Check Setup!', ack: true})
             ])
             adapter.terminate ? adapter.terminate(0) : process.exit(0);
         }
