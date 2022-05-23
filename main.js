@@ -111,8 +111,10 @@ async function getData(){
             let htmlCode = '<table style="border-collapse: collapse; width: 100%;" border="1"><tbody><tr>'
             htmlCode += '<td style="width: 100%; background-color: #fc3d03;">Please maintain country and region in setup!</td></tr></tbody></table>'
             await Promise.all([
-                adapter.setStateAsync({device: '' , channel: '',state: 'level'}, {val: '4', ack: true}),
-                adapter.setStateAsync({device: '' , channel: '',state: 'htmlToday'}, {val: htmlCode, ack: true})
+                adapter.setStateAsync({device: '' , channel: '',state: 'level'}, {val: 0, ack: true}),
+                adapter.setStateAsync({device: '' , channel: '',state: 'htmlToday'}, {val: htmlCode, ack: true}),
+                adapter.setStateAsync({device: '' , channel: '',state: 'noOfAlarms'}, {val: 0, ack: true}),
+                adapter.setStateAsync({device: '' , channel: '',state: 'location'}, {val: 'Check Setup!', ack: true})
             ])
             adapter.terminate ? adapter.terminate(0) : process.exit(0);
         }
@@ -425,9 +427,13 @@ function checkRelevante(entry){
         }
 
         var locationRelevant = false
-        if (element['cap:geocode'].valueName ){
+        if (element['cap:geocode'] && element['cap:geocode'].valueName ){
              locationRelevant = checkLocation(element['cap:geocode'].valueName , element['cap:geocode'].value)
         }
+        else{
+            adapter.log.debug('4.1.2: Warning without geocode - cannot check')
+        }
+
         var statusRelevant = false
         if (element['cap:status'] == 'Actual'){
             statusRelevant = true
@@ -458,7 +464,7 @@ function checkRelevante(entry){
 
             }
 
-            adapter.log.debug('4.1: Warning found: ' + detailsLink + ' of message type ' + messagetype)
+            adapter.log.debug('4.2: Warning found: ' + detailsLink + ' of message type ' + messagetype)
 
       
 

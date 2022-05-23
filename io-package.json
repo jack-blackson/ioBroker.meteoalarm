@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "meteoalarm",
-        "version": "2.1.2",
+        "version": "2.1.3",
         "news": {
+            "2.1.3": {
+                "en": "Bugfixes",
+                "de": "Fehlerbehebung",
+                "ru": "Исправление ошибок",
+                "pt": "Correções de bugs",
+                "nl": "Bugfixes",
+                "fr": "Corrections de bugs",
+                "it": "Correzioni di bug",
+                "es": "Corrección de errores",
+                "pl": "Poprawki",
+                "zh-cn": "Bug修复"
+            },
             "2.1.2": {
                 "en": "Bugfixes",
                 "de": "Fehlerbehebung",

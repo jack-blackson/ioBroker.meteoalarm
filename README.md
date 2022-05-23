@@ -107,6 +107,9 @@ If you don't find your country, please create an issue on github, and I will be 
 
 ## Changelog
 
+## 2.1.3 (2022-05-23)
+* (jack-blackson) Handle Warnings that are sent without a geocode -> Sentry IOBROKER-METEOALARM-3B
+
 ## 2.1.2 (2022-05-16)
 * (jack-blackson) Bugfix for change in xml (wrong link for warning was used) -> Sentry IOBROKER-METEOALARM-2Y and IOBROKER-METEOALARM-31
 
