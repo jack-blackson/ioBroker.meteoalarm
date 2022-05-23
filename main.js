@@ -111,7 +111,7 @@ async function getData(){
             let htmlCode = '<table style="border-collapse: collapse; width: 100%;" border="1"><tbody><tr>'
             htmlCode += '<td style="width: 100%; background-color: #fc3d03;">Please maintain country and region in setup!</td></tr></tbody></table>'
             await Promise.all([
-                adapter.setStateAsync({device: '' , channel: '',state: 'level'}, {val: '4', ack: true}),
+                adapter.setStateAsync({device: '' , channel: '',state: 'level'}, {val: 0, ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'htmlToday'}, {val: htmlCode, ack: true})
             ])
             adapter.terminate ? adapter.terminate(0) : process.exit(0);
@@ -649,9 +649,6 @@ async function processDetails(content, countInt){
     }
 
     var path = 'alarms.' + 'Alarm_' + countInt
-    if (level == ""){
-        level = "0";
-    }
 
     await localCreateState(path + '.event', 'event', content.event);
     await localCreateState(path + '.headline', 'headline', content.headline);
