@@ -649,6 +649,9 @@ async function processDetails(content, countInt){
     }
 
     var path = 'alarms.' + 'Alarm_' + countInt
+    if (level == ""){
+        level = "0";
+    }
 
     await localCreateState(path + '.event', 'event', content.event);
     await localCreateState(path + '.headline', 'headline', content.headline);
