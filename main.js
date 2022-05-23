@@ -112,7 +112,9 @@ async function getData(){
             htmlCode += '<td style="width: 100%; background-color: #fc3d03;">Please maintain country and region in setup!</td></tr></tbody></table>'
             await Promise.all([
                 adapter.setStateAsync({device: '' , channel: '',state: 'level'}, {val: 0, ack: true}),
-                adapter.setStateAsync({device: '' , channel: '',state: 'htmlToday'}, {val: htmlCode, ack: true})
+                adapter.setStateAsync({device: '' , channel: '',state: 'htmlToday'}, {val: htmlCode, ack: true}),
+                adapter.setStateAsync({device: '' , channel: '',state: 'noOfAlarms'}, {val: 0, ack: true}),
+                adapter.setStateAsync({device: '' , channel: '',state: 'location'}, {val: 'CheckSetup!', ack: true})
             ])
             adapter.terminate ? adapter.terminate(0) : process.exit(0);
         }
