@@ -233,19 +233,12 @@ async function getData(){
         }
         else{
             adapter.log.debug('Setup found: country ' + countryConfig + ' and region ' + regionConfig + ' - ' +  regionName )
-            //Sentry && Sentry.withScope(scope => {
-            //    scope.setLevel('info');
-            //   scope.setExtra("Region:" + countryConfig + 'Region '+ regionConfig + ' - ' +  regionName);
-            //    Sentry.captureMessage('Country ' + countryConfig + 'Region '+ regionConfig + ' - ' +  regionName, 'info');
-            //});
-
             Sentry.addBreadcrumb({
                 category: "info",
-                message: 'Country ' + countryConfig + 'Region '+ regionConfig + ' - ' +  regionName,
+                message: 'Country ' + countryConfig + ', Region '+ regionConfig + ' - ' +  regionName,
                 level: Sentry.Severity.Info,
               });
 
-            huhu();
             urlAtom = getCountryLink(countryConfig)
             xmlLanguage = getXMLLanguage(countryConfig)
             if (xmlLanguage == ""){
