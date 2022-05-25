@@ -545,6 +545,11 @@ function checkRelevante(entry){
         }
 
         var locationRelevant = false
+        Sentry && Sentry.withScope(scope => {
+            scope.setLevel('info');
+            scope.setExtra('Location: ', 'Country ' + countryConfig + ', Region '+ regionConfig + ' - ' +  regionName);
+            Sentry.captureMessage('No geocode included', 'info'); // Level "info"
+        });
         if (element['cap:geocode'] && element['cap:geocode'].valueName ){
              locationRelevant = checkLocation(element['cap:geocode'].valueName , element['cap:geocode'].value)
         }
