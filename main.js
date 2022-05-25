@@ -239,7 +239,7 @@ async function getData(){
                 Sentry.captureMessage('Country ' + countryConfig + 'Region '+ regionConfig + ' - ' +  regionName, 'info');
             });
 
-
+            huhu();
             urlAtom = getCountryLink(countryConfig)
             xmlLanguage = getXMLLanguage(countryConfig)
             if (xmlLanguage == ""){
