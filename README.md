@@ -107,6 +107,10 @@ If you don't find your country, please create an issue on github, and I will be 
 
 ## Changelog
 
+## 2.1.4 (2022-05-26)
+* (jack-blackson) Added breadcrumb for Sentry to see what location created an error
+* (jack-blackson) Start tracking in Sentry when XMLs without geocode are sent
+
 ## 2.1.3 (2022-05-23)
 * (jack-blackson) Handle Warnings that are sent without a geocode -> Sentry IOBROKER-METEOALARM-3B
 
