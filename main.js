@@ -234,7 +234,7 @@ async function getData(){
         else{
             adapter.log.debug('Setup found: country ' + countryConfig + ' and region ' + regionConfig + ' - ' +  regionName )
             if (Sentry){
-                adapter.log.debug('Sentry aktiv - Breadcrumb gesetzt: ')
+                adapter.log.debug('Sentry aktiv - Breadcrumb gesetzt')
                 Sentry.addBreadcrumb({
                     category: "info",
                     message: 'Country ' + countryConfig + ', Region '+ regionConfig + ' - ' +  regionName,
