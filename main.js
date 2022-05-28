@@ -238,7 +238,7 @@ async function getData(){
                 const sentryInstance = adapter.getPluginInstance('sentry');
                 
                 if (sentryInstance) {
-                    adapter.log.debug('Sentry aktiv - Breadcrumb gesetzt: '+ adapter.ioPack.common.plugins.sentry)
+                    adapter.log.debug('Sentry aktiv - Breadcrumb gesetzt: ')
                     const Sentry = sentryInstance.getSentryObject();
                     Sentry.addBreadcrumb({
                         category: "info",
