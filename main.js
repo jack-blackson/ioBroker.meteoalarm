@@ -241,27 +241,7 @@ async function getData(){
                     level: Sentry.Severity.Info,
                   });
             }
-            /*
-            if (adapter.supportsFeature && adapter.supportsFeature('PLUGINS')) {
-                const sentryInstance = adapter.getPluginInstance('sentry');
-                
-                if (sentryInstance) {
-                    const Sentry = sentryInstance.getSentryObject();
-                    if (Sentry){
-                        adapter.log.debug('Sentry aktiv - Breadcrumb gesetzt: ')
-                        Sentry.addBreadcrumb({
-                            category: "info",
-                            message: 'Country ' + countryConfig + ', Region '+ regionConfig + ' - ' +  regionName,
-                            level: Sentry.Severity.Info,
-                          });
-                    }
-                }
-            }
-            */
-
-
             
-
             urlAtom = getCountryLink(countryConfig)
             xmlLanguage = getXMLLanguage(countryConfig)
             if (xmlLanguage == ""){
@@ -574,11 +554,13 @@ function checkRelevante(entry){
         }
         else{
             adapter.log.debug('4.1.2: Warning without geocode - cannot check')
-            Sentry && Sentry.withScope(scope => {
-                scope.setLevel('info');
-                scope.setExtra('Location: ', 'Country ' + countryConfig + ', Region '+ regionConfig + ' - ' +  regionName);
-                Sentry.captureMessage('No geocode included', 'info'); // Level "info"
-            });
+            if(Sentry){
+                Sentry && Sentry.withScope(scope => {
+                    scope.setLevel('info');
+                    scope.setExtra('Location: ', 'Country ' + countryConfig + ', Region '+ regionConfig + ' - ' +  regionName);
+                    Sentry.captureMessage('No geocode included', 'info'); // Level "info"
+                });
+            }
         }
 
         var statusRelevant = false
