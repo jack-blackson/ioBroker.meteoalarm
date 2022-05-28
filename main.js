@@ -238,9 +238,9 @@ async function getData(){
                 const sentryInstance = adapter.getPluginInstance('sentry');
                 
                 if (sentryInstance) {
-                    adapter.log.debug('Sentry aktiv - Breadcrumb gesetzt: ')
                     const Sentry = sentryInstance.getSentryObject();
                     if (Sentry){
+                        adapter.log.debug('Sentry aktiv - Breadcrumb gesetzt: ')
                         Sentry.addBreadcrumb({
                             category: "info",
                             message: 'Country ' + countryConfig + ', Region '+ regionConfig + ' - ' +  regionName,
