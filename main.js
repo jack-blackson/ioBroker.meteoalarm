@@ -240,11 +240,13 @@ async function getData(){
                 if (sentryInstance) {
                     adapter.log.debug('Sentry aktiv - Breadcrumb gesetzt: ')
                     const Sentry = sentryInstance.getSentryObject();
-                    Sentry.addBreadcrumb({
-                        category: "info",
-                        message: 'Country ' + countryConfig + ', Region '+ regionConfig + ' - ' +  regionName,
-                        level: Sentry.Severity.Info,
-                      });
+                    if (Sentry){
+                        Sentry.addBreadcrumb({
+                            category: "info",
+                            message: 'Country ' + countryConfig + ', Region '+ regionConfig + ' - ' +  regionName,
+                            level: Sentry.Severity.Info,
+                          });
+                    }
                 }
             }
 
