@@ -197,6 +197,9 @@ function startAdapter(options) {
 
 function main() {
 
+    // TEMP
+    var i = 1
+
     adapter.getForeignObject('system.config', (err, systemConfig) => {
         if (!systemConfig.common.language){
             lang = 'en'
@@ -205,6 +208,8 @@ function main() {
             lang = systemConfig.common.language
         }
         adapter.log.debug('Language: ' + lang)
+        adapter.log.debug('Starting round: ' + i) // TEMP
+
         getData()
         
 
