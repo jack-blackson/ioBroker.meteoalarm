@@ -210,6 +210,7 @@ function main() {
         }
         adapter.log.debug('Language: ' + lang)
         adapter.log.debug('Starting round: ' + i) // TEMP
+        i += 1
 
         getData()
         
