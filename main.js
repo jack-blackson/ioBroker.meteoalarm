@@ -177,6 +177,7 @@ function startAdapter(options) {
         callback && callback();
     });
 
+    /*
     adapter.on('ready', function() {
         if (adapter.supportsFeature && adapter.supportsFeature('PLUGINS')) {
             const sentryInstance = adapter.getPluginInstance('sentry');
@@ -189,6 +190,7 @@ function startAdapter(options) {
             initSentry(main);
         }
     });
+    */
 
     return adapter;
 
