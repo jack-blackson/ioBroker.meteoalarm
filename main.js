@@ -23,6 +23,7 @@ const bent = require("bent");
 const parseCSV = require('csv-parse');
 const fs = require("fs");
 const path = require('path');
+const { hasUncaughtExceptionCaptureCallback } = require('process');
 
 var DescFilter1 = '';
 var DescFilter2 = '';
@@ -255,6 +256,7 @@ async function getData(){
             const deleted =  await deleteAllAlarms();
             adapter.log.debug('0.1: Deleted Alarms')
 
+            huh()
             const checkState = await adapter.getStateAsync('weatherMapCountry')
             if (checkState != null ){
 
