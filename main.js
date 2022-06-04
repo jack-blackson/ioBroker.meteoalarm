@@ -256,7 +256,6 @@ async function getData(){
             const deleted =  await deleteAllAlarms();
             adapter.log.debug('0.1: Deleted Alarms')
 
-            huh()
             const checkState = await adapter.getStateAsync('weatherMapCountry')
             if (checkState != null ){
 
@@ -872,9 +871,19 @@ async function localCreateState(state, name, value) {
 }
 
 async function deleteAllAlarms(){
-    const promises = await Promise.all([
-        adapter.deleteDeviceAsync('alarms')
-    ])
+    //const promises = await Promise.all([
+    //    adapter.deleteDeviceAsync('alarms')
+    //])
+
+    try {
+        const obj = await adapter.getObjectAsync('alarms');
+        if (obj) {
+            await adapter.delObjectAsync('alarms', {recursive: true});
+        }
+        
+    } catch (error) {
+        // do nothing
+    }
 }
 
 
