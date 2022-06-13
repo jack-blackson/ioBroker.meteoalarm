@@ -23,6 +23,7 @@ const bent = require("bent");
 const parseCSV = require('csv-parse');
 const fs = require("fs");
 const path = require('path');
+const { hasUncaughtExceptionCaptureCallback } = require('process');
 
 var DescFilter1 = '';
 var DescFilter2 = '';
@@ -165,7 +166,7 @@ function startAdapter(options) {
         name: 'meteoalarm',
         useFormatDate: true,
         ready: function() {
-            main()
+            //main()
         }
     });
 
@@ -176,6 +177,7 @@ function startAdapter(options) {
         callback && callback();
     });
 
+    
     adapter.on('ready', function() {
         if (adapter.supportsFeature && adapter.supportsFeature('PLUGINS')) {
             const sentryInstance = adapter.getPluginInstance('sentry');
@@ -196,6 +198,9 @@ function startAdapter(options) {
 
 function main() {
 
+    // TEMP
+    var i = 1
+
     adapter.getForeignObject('system.config', (err, systemConfig) => {
         if (!systemConfig.common.language){
             lang = 'en'
@@ -204,6 +209,9 @@ function main() {
             lang = systemConfig.common.language
         }
         adapter.log.debug('Language: ' + lang)
+        adapter.log.debug('Starting round: ' + i) // TEMP
+        i += 1
+
         getData()
         
 
@@ -253,11 +261,12 @@ async function getData(){
             adapter.log.debug('0: Delete Alarms')
 
             const deleted =  await deleteAllAlarms();
+            adapter.log.debug('0.1: Deleted Alarms')
 
             const checkState = await adapter.getStateAsync('weatherMapCountry')
             if (checkState != null ){
 
-                adapter.log.debug('0.1: Cleaning up old objects');
+                adapter.log.debug('0.2: Cleaning up old objects');
                 const cleaned = await cleanupOld()
             }
             
@@ -869,9 +878,19 @@ async function localCreateState(state, name, value) {
 }
 
 async function deleteAllAlarms(){
-    const promises = await Promise.all([
-        adapter.deleteDeviceAsync('alarms')
-    ])
+    //const promises = await Promise.all([
+    //    adapter.deleteDeviceAsync('alarms')
+    //])
+
+    try {
+        const obj = await adapter.getObjectAsync('alarms');
+        if (obj) {
+            await adapter.delObjectAsync('alarms', {recursive: true});
+        }
+        
+    } catch (error) {
+        // do nothing
+    }
 }
 
 
