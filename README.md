@@ -107,6 +107,9 @@ If you don't find your country, please create an issue on github, and I will be 
 
 ## Changelog
 
+## 2.1.5 (2022-06-13)
+* (jack-blackson) Fixed Error "Error from InMemDB: Error: Not exists"
+
 ## 2.1.4 (2022-05-26)
 * (jack-blackson) Added breadcrumb for Sentry to see what location created an error
 * (jack-blackson) Start tracking in Sentry when XMLs without geocode are sent
