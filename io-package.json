@@ -350,6 +350,19 @@
             "native": {}
         },
         {
+            "_id": "JSON",
+            "type": "state",
+            "common": {
+                "name": "Alarms in JSON Format",
+                "type": "string",
+                "role": "value",
+                "read": true,
+                "write": false,
+                "def": ""
+            },
+            "native": {}
+        },
+        {
             "_id": "noOfAlarms",
             "type": "state",
             "common": {

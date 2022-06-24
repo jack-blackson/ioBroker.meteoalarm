@@ -235,6 +235,7 @@ async function getData(){
                 adapter.setStateAsync({device: '' , channel: '',state: 'level'}, {val: 0, ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'htmlToday'}, {val: htmlCode, ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'noOfAlarms'}, {val: 0, ack: true}),
+                adapter.setStateAsync({device: '' , channel: '',state: 'JSON'}, {val: '', ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'location'}, {val: 'Check Setup!', ack: true})
             ])
             adapter.terminate ? adapter.terminate(0) : process.exit(0);
@@ -418,6 +419,7 @@ async function getData(){
             //const widget = await createHTMLWidget()
             adapter.log.debug('10: Creating HTML Widget')
             htmlCode = ''
+            var JSONAll = []
             var warningCount = 0
             if (channelNames.length >= 1){
                 htmlCode += '<table style="border-collapse: collapse; width: 100%;"><tbody>'
@@ -493,6 +495,13 @@ async function getData(){
 
     
                     htmlCode += '</td></tr>'
+                    JSONAll.push(
+						{
+							Event: event,
+							Description: description,
+							Level: level
+						}
+					);
                 }    
             }
             else{
@@ -519,7 +528,8 @@ async function getData(){
                 adapter.setStateAsync({device: '' , channel: '',state: 'location'}, {val: regionName, ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'link'}, {val: urlAtom, ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'color'}, {val: getColor(maxAlarmLevel.toString()), ack: true}),
-                adapter.setStateAsync({device: '' , channel: '',state: 'noOfAlarms'}, {val: countEntries, ack: true})
+                adapter.setStateAsync({device: '' , channel: '',state: 'noOfAlarms'}, {val: countEntries, ack: true}),
+                adapter.setStateAsync({device: '' , channel: '',state: 'JSON'}, {val: JSON.stringify(JSONAll), ack: true})
             ])
             adapter.log.debug('11: Set State for Widget')
 
