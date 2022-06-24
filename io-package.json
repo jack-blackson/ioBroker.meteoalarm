@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "meteoalarm",
-        "version": "2.1.5",
+        "version": "2.2.0",
         "news": {
+            "2.2.0": {
+                "en": "New Object: AllJSON to display alarms as JSON",
+                "de": "Neues Objekt: AllJSON Alarme als JSON anzeigen",
+                "ru": "Новый объект: AllJSON для отображения тревог как JSON",
+                "pt": "Novo objeto: AllJSON para exibir alarmes como JSON",
+                "nl": "New Object:",
+                "fr": "Nouvel objet: AllJSON pour afficher les alarmes comme JSON",
+                "it": "Nuovo oggetto: AllJSON per visualizzare gli allarmi come JSON",
+                "es": "Nuevo objeto: AllJSON para mostrar alarmas como JSON",
+                "pl": "Nowy obiekt: AllJSON wyświetla alarm JSON",
+                "zh-cn": "新的目的:所有新闻工作者作为联合新闻工作者表示震惊"
+            },
             "2.1.5": {
                 "en": "Bugfixes",
                 "de": "Fehlerbehebung",
