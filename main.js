@@ -497,9 +497,9 @@ async function getData(){
                     htmlCode += '</td></tr>'
                     JSONAll.push(
 						{
-							Event: event,
-							Description: description,
-							Level: level
+							Event: event.val,
+							Description: description.val,
+							Level: level.val
 						}
 					);
                 }    
