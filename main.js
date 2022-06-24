@@ -495,13 +495,19 @@ async function getData(){
 
     
                     htmlCode += '</td></tr>'
-                    JSONAll.push(
-						{
-							Event: event.val,
-							Description: description.val,
-							Level: level.val
-						}
-					);
+                    if (effectiveDate && effectiveDate.val && expiresDate && expiresDate.val){
+                        JSONAll.push(
+                            {
+                                Event: event.val,
+                                Description: description.val,
+                                Level: level.val,
+                                Effective: getAlarmTime(effectiveDate.val, expiresDate.val),
+                                Icon: icon.val
+                            }
+                        );
+                    }
+
+                    
                 }    
             }
             else{
