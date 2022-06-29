@@ -572,15 +572,17 @@ async function getData(){
 function checkDuplicates(){
     //var alarmAllChecked = alarmAll
 
-    // check for duplicate entries of type Alarm with the same Type, Level, Onset and Expires Date
+    // check for duplicate entries of type Alarm with the same Type, Level, Onset and Expires Date -> saved in Alarm_Key
     //alarmAll.forEach(function (element){
      //   if 
 
 
     //})
-    var alarmAllChecked = _.uniq(alarmAll, function(item, key, Alarm_Key) { 
-        return item.a;
-    });
+    var alarmAllChecked = _.map(_.groupBy(alarmAll,function(doc){
+        return doc.Alarm_Key;
+      }),function(grouped){
+        return grouped[0];
+      });
 
     alarmAll = alarmAllChecked
     adapter.log.debug('Finished checking alerts - ' + alarmAll.length + ' relevant alarms')
