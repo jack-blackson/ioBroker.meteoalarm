@@ -383,8 +383,8 @@ async function getData(){
                                 info = [result.alert.info]
                             }
 
-                            detailsType= result.msgType
-                            detailsIdentifier = result.identifier
+                            detailsType= result.alert.msgType
+                            detailsIdentifier = result.alert.identifier
 
                             for (var j = 0, l = info.length; j < l; j++){ 
                                 var element = info[j]
