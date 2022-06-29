@@ -576,8 +576,11 @@ function checkDuplicates(){
     for(var i = 0; i < alarmAll.length; i += 1) {
         adapter.log.debug('Key ' + alarmAll[i].Alarm_Key)
         //let check = alarmAllChecked.filter(function (alarm) { return alarm.Alarm_Key == alarmAll[i].Alarm_Key });
-        adapter.log.debug('Result check: ' + alarmAllChecked.filter(function (alarm) { return alarm.Alarm_Key == alarmAll[i].Alarm_Key }))
-        if (!alarmAllChecked.filter(function (alarm) { return alarm.Alarm_Key == alarmAll[i].Alarm_Key })){
+        let check = alarmAllChecked.some(function(item) {
+            return item.Alarm_Key === alarmAll[i].Alarm_Key})
+
+        adapter.log.debug('Result check: ' +  check)
+        if (!check){
             alarmAllChecked.push(alarmAll[i])
         }
     }
