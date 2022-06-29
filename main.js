@@ -820,6 +820,7 @@ async function processDetails(content, countInt,detailsType,detailsIdentifier){
     var path = 'alarms.' + 'Alarm_' + countInt
 
     //HERE!!
+    adapter.log.debug('Type: ' + detailsType + ' , Identifier: ' + detailsIdentifier)
 
     alarmAll.push(
         {
