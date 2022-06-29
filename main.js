@@ -346,6 +346,7 @@ async function getData(){
             var countURL = 0
             var detailsType = ""
             var detailsIdentifier = ""
+            var detailsReference = ""
             for (var i = 0, l = urlArray.length; i < l; i++){ 
                 countURL += 1
                 var jsonResult;
@@ -385,6 +386,10 @@ async function getData(){
 
                             detailsType= result.alert.msgType
                             detailsIdentifier = result.alert.identifier
+                            if (detailsType != "Alert"){
+                                detailsReference = result.alert.references
+
+                            }
 
                             for (var j = 0, l = info.length; j < l; j++){ 
                                 var element = info[j]
