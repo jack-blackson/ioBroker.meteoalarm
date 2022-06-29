@@ -570,14 +570,19 @@ async function getData(){
 }
 
 function checkDuplicates(){
-    //var alarmAllChecked = alarmAll
+    var alarmAllChecked = []
 
     // check for duplicate entries of type Alarm with the same Type, Level, Onset and Expires Date -> saved in Alarm_Key
     for(var i = 0; i < alarmAll.length; i += 1) {
         adapter.log.debug('Key ' + alarmAll[i].Alarm_Key)
+        //let check = alarmAllChecked.filter(function (alarm) { return alarm.Alarm_Key == alarmAll[i].Alarm_Key });
+        adapter.log.debug('Result check: ' + alarmAllChecked.filter(function (alarm) { return alarm.Alarm_Key == alarmAll[i].Alarm_Key }))
+        if (!alarmAllChecked.filter(function (alarm) { return alarm.Alarm_Key == alarmAll[i].Alarm_Key })){
+            alarmAllChecked.push(alarmAll[i])
+        }
     }
 
-   // alarmAll = alarmAllChecked
+    alarmAll = alarmAllChecked
     adapter.log.debug('Finished checking alerts - ' + alarmAll.length + ' relevant alarms')
 }
 
