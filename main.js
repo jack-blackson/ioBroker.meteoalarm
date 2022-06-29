@@ -428,10 +428,14 @@ async function getData(){
             
             }
             //const widget = await createHTMLWidget()
-            adapter.log.debug('9.1: alarmAll Array: ' + JSON.stringify(alarmAll))
+
+            adapter.log.debug('10: Check for duplicate alarms')
+            adapter.log.debug('10: alarmAll Array: ' + JSON.stringify(alarmAll))
+            checkDuplicates()
 
 
-            adapter.log.debug('10: Creating HTML Widget')
+
+            adapter.log.debug('11: Creating HTML Widget')
             htmlCode = ''
             var JSONAll = []
             var warningCount = 0
@@ -551,9 +555,9 @@ async function getData(){
                 adapter.setStateAsync({device: '' , channel: '',state: 'noOfAlarms'}, {val: countEntries, ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'JSON'}, {val: JSON.stringify(JSONAll), ack: true})
             ])
-            adapter.log.debug('11: Set State for Widget')
+            adapter.log.debug('12: Set State for Widget')
 
-            adapter.log.debug('12: All Done')
+            adapter.log.debug('13: All Done')
             if (regionName){
                 adapter.log.info('Updated Weather Alarms for ' + regionName + ' -> ' + warningCount + ' warning(s) found')
             }
@@ -563,6 +567,12 @@ async function getData(){
 
         }
 
+}
+
+function checkDuplicates(){
+
+
+    adapter.log.debug('Finished checking alerts - ' + alarmAll.length + ' relevant alarms')
 }
 
 function checkRelevante(entry){
