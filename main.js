@@ -417,11 +417,8 @@ async function getData(){
 
                         countEntries += 1
                 
-                        const created = await createAlarms(countEntries)
-                        adapter.log.debug('8: Alarm States created for Alarm ' + countURL + ' type:  ' + awarenesstype)
-                
                         const promises = await processDetails(jsonResult,countEntries,detailsType,detailsIdentifier,detailsReference)
-                        adapter.log.debug('9: Processed Details for Alarm ' + countURL)
+                        adapter.log.debug('8: Processed Details for Alarm ' + countURL)
 
                 }
                             
@@ -429,9 +426,18 @@ async function getData(){
             }
             //const widget = await createHTMLWidget()
 
-            adapter.log.debug('10: Check for duplicate alarms')
-            adapter.log.debug('10: alarmAll Array: ' + JSON.stringify(alarmAll))
+            adapter.log.debug('9: Check for duplicate alarms')
+            adapter.log.debug('9.1 alarmAll Array: ' + JSON.stringify(alarmAll))
             checkDuplicates()
+
+
+            //const created = await createAlarms(countEntries)
+            //            adapter.log.debug('8: Alarm States created for Alarm ' + countURL + ' type:  ' + awarenesstype)
+            adapter.log.debug('10: Create alarm states')
+            for (var j = 0, l = alarmAll.length; j < l; j++){ 
+                const promises = await fillAlarm(alarmAll, j)
+            }
+            adapter.log.debug('10.1: Created alarm states')
 
 
 
@@ -572,7 +578,7 @@ async function getData(){
 function checkDuplicates(){
     var alarmAllChecked = []
 
-    // check for duplicate entries of type Alarm with the same Type, Level, Onset and Expires Date -> saved in Alarm_Key
+    // 1. check for duplicate entries of type Alarm with the same Type, Level, Onset and Expires Date -> saved in Alarm_Key
     for(var i = 0; i < alarmAll.length; i += 1) {
         if (alarmAll[i].Alarm_Type == "Alert")
         {
@@ -587,6 +593,8 @@ function checkDuplicates(){
         }
         
     }
+
+    //2.  Check for Alarmupdates, duplicate updates and cancles
 
     alarmAll = alarmAllChecked
     adapter.log.debug('Finished checking alerts - ' + alarmAll.length + ' relevant alarms')
@@ -851,8 +859,7 @@ async function processDetails(content, countInt,detailsType,detailsIdentifier,de
 
     var path = 'alarms.' + 'Alarm_' + countInt
 
-    //HERE!!
-    adapter.log.debug('Type: ' + detailsType + ' , Identifier: ' + detailsIdentifier)
+    //adapter.log.debug('Type: ' + detailsType + ' , Identifier: ' + detailsIdentifier)
 
     alarmAll.push(
         {
@@ -876,19 +883,53 @@ async function processDetails(content, countInt,detailsType,detailsIdentifier,de
         }
     );
 
-    await localCreateState(path + '.event', 'event', content.event);
-    await localCreateState(path + '.headline', 'headline', content.headline);
-    await localCreateState(path + '.description', 'description', content.description);
-    await localCreateState(path + '.link', 'link', content.web);
-    await localCreateState(path + '.expires', 'expires', content.expires);
-    await localCreateState(path + '.effective', 'effective', content.onset);
-    await localCreateState(path + '.sender', 'sender', content.senderName);
-    await localCreateState(path + '.level', 'level', Number(level));
-    await localCreateState(path + '.levelText', 'levelText', getLevelName(level));
-    await localCreateState(path + '.type', 'type', Number(type));
-    await localCreateState(path + '.typeText', 'typeText', getTypeName(type));
-    await localCreateState(path + '.icon', 'icon', Warnung_img);
-    await localCreateState(path + '.color', 'color', getColor(level));
+}
+
+async function fillAlarm(content, countInt){
+
+    var path = 'alarms.' + 'Alarm_' + countInt
+    const created = await createAlarms(countInt)
+    adapter.log.debug('10.0.1: Created State')
+    //adapter.log.debug('Type: ' + detailsType + ' , Identifier: ' + detailsIdentifier)
+
+    /*
+    alarmAll.push(
+        {
+            Alarm_Type: detailsType,
+            Alarm_Identifier: detailsIdentifier,
+            Alarm_Reference: detailsReference,
+            Alarm_Key: detailsType + '-' + Number(level) + '-' + content.onset + '-' + content.expires,
+            Event: content.event,
+            Headline: content.headline,
+            Description: content.description,
+            Link: content.web,
+            Expires: content.expires,
+            Effective: content.onset,
+            Sender: content.senderName,
+            Level: Number(level),
+            Leveltext: getLevelName(level),
+            Type: Number(type),
+            Typetext: getTypeName(type),
+            Icon: Warnung_img,
+            Color: getColor(level)
+        }
+    );
+
+    */
+    
+    await localCreateState(path + '.event', 'event', content.Event);
+    await localCreateState(path + '.headline', 'headline', content.Headline);
+    await localCreateState(path + '.description', 'description', content.Description);
+    await localCreateState(path + '.link', 'link', content.Web);
+    await localCreateState(path + '.expires', 'expires', content.Expires);
+    await localCreateState(path + '.effective', 'effective', content.Effective);
+    await localCreateState(path + '.sender', 'sender', content.Sender);
+    await localCreateState(path + '.level', 'level', content.Level);
+    await localCreateState(path + '.levelText', 'levelText', content.Leveltext);
+    await localCreateState(path + '.type', 'type', content.Type);
+    await localCreateState(path + '.typeText', 'typeText', content.Typetext);
+    await localCreateState(path + '.icon', 'icon', content.Icon);
+    await localCreateState(path + '.color', 'color', content.Color);
    
 
 }
