@@ -41,6 +41,7 @@ const warnMessages = {};
 
 var channelNames = []
 var csvContent = [];
+var alarmAll = []
 var urlAtom = ""
 
 let adapter;
@@ -343,6 +344,8 @@ async function getData(){
             var countTotalURLs = urlArray.length
             adapter.log.debug('5.1 Found ' + countTotalURLs + ' URLs')
             var countURL = 0
+            var detailsType = ""
+            var detailsIdentifier = ""
             for (var i = 0, l = urlArray.length; i < l; i++){ 
                 countURL += 1
                 var jsonResult;
@@ -380,6 +383,9 @@ async function getData(){
                                 info = [result.alert.info]
                             }
 
+                            detailsReference= result.msgType
+                            detailsIdentifier = result.identifier
+
                             for (var j = 0, l = info.length; j < l; j++){ 
                                 var element = info[j]
                                 if (element.language == xmlLanguage){
@@ -409,7 +415,7 @@ async function getData(){
                         const created = await createAlarms(countEntries)
                         adapter.log.debug('8: Alarm States created for Alarm ' + countURL + ' type:  ' + awarenesstype)
                 
-                        const promises = await processDetails(jsonResult,countEntries)
+                        const promises = await processDetails(jsonResult,countEntries,detailsType,detailsIdentifier)
                         adapter.log.debug('9: Processed Details for Alarm ' + countURL)
 
                 }
@@ -417,6 +423,9 @@ async function getData(){
             
             }
             //const widget = await createHTMLWidget()
+            adapter.log.debug('9.1: alarmAll Array: ' + JSON.stringify(alarmAll))
+
+
             adapter.log.debug('10: Creating HTML Widget')
             htmlCode = ''
             var JSONAll = []
@@ -780,7 +789,7 @@ async function getCSVData(){
     })
 }
 
-async function processDetails(content, countInt){
+async function processDetails(content, countInt,detailsType,detailsIdentifier){
     var type = ""
     var level = ""
     content.parameter.forEach(function (element){
@@ -809,6 +818,29 @@ async function processDetails(content, countInt){
     }
 
     var path = 'alarms.' + 'Alarm_' + countInt
+
+    //HERE!!
+
+    alarmAll.push(
+        {
+            Alarm_Type: detailsType,
+            Alarm_Identifier: detailsIdentifier,
+            Alarm_Reference: '',
+            Event: content.event,
+            Headline: content.headline,
+            Description: content.description,
+            Link: content.web,
+            Expires: content.expires,
+            Effective: content.onset,
+            Sender: content.senderName,
+            Level: Number(level),
+            Leveltext: getLevelName(level),
+            Type: Number(type),
+            Typetext: getTypeName(type),
+            Icon: Warnung_img,
+            Color: getColor(level)
+        }
+    );
 
     await localCreateState(path + '.event', 'event', content.event);
     await localCreateState(path + '.headline', 'headline', content.headline);
