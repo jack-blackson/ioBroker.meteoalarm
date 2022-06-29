@@ -24,6 +24,7 @@ const parseCSV = require('csv-parse');
 const fs = require("fs");
 const path = require('path');
 const { hasUncaughtExceptionCaptureCallback } = require('process');
+const { count } = require('console');
 
 var DescFilter1 = '';
 var DescFilter2 = '';
@@ -917,19 +918,19 @@ async function fillAlarm(content, countInt){
 
     */
     
-    await localCreateState(path + '.event', 'event', content.Event);
-    await localCreateState(path + '.headline', 'headline', content.Headline);
-    await localCreateState(path + '.description', 'description', content.Description);
-    await localCreateState(path + '.link', 'link', content.Web);
-    await localCreateState(path + '.expires', 'expires', content.Expires);
-    await localCreateState(path + '.effective', 'effective', content.Effective);
-    await localCreateState(path + '.sender', 'sender', content.Sender);
-    await localCreateState(path + '.level', 'level', content.Level);
-    await localCreateState(path + '.levelText', 'levelText', content.Leveltext);
-    await localCreateState(path + '.type', 'type', content.Type);
-    await localCreateState(path + '.typeText', 'typeText', content.Typetext);
-    await localCreateState(path + '.icon', 'icon', content.Icon);
-    await localCreateState(path + '.color', 'color', content.Color);
+    await localCreateState(path + '.event', 'event', content[countInt].Event);
+    await localCreateState(path + '.headline', 'headline', content[countInt].Headline);
+    await localCreateState(path + '.description', 'description', content[countInt].Description);
+    await localCreateState(path + '.link', 'link', content[countInt].Web);
+    await localCreateState(path + '.expires', 'expires', content[countInt].Expires);
+    await localCreateState(path + '.effective', 'effective', content[countInt].Effective);
+    await localCreateState(path + '.sender', 'sender', content[countInt].Sender);
+    await localCreateState(path + '.level', 'level', content[countInt].Level);
+    await localCreateState(path + '.levelText', 'levelText', content[countInt].Leveltext);
+    await localCreateState(path + '.type', 'type', content[countInt].Type);
+    await localCreateState(path + '.typeText', 'typeText', content[countInt].Typetext);
+    await localCreateState(path + '.icon', 'icon', content[countInt].Icon);
+    await localCreateState(path + '.color', 'color', content[countInt].Color);
    
 
 }
