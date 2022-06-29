@@ -573,11 +573,6 @@ function checkDuplicates(){
     //var alarmAllChecked = alarmAll
 
     // check for duplicate entries of type Alarm with the same Type, Level, Onset and Expires Date -> saved in Alarm_Key
-    //alarmAll.forEach(function (element){
-     //   if 
-
-
-    //})
     var alarmAllChecked = _.map(_.groupBy(alarmAll,function(doc){
         return doc.Alarm_Key;
       }),function(grouped){
