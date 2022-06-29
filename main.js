@@ -420,7 +420,7 @@ async function getData(){
                         const created = await createAlarms(countEntries)
                         adapter.log.debug('8: Alarm States created for Alarm ' + countURL + ' type:  ' + awarenesstype)
                 
-                        const promises = await processDetails(jsonResult,countEntries,detailsType,detailsIdentifier)
+                        const promises = await processDetails(jsonResult,countEntries,detailsType,detailsIdentifier,detailsReference)
                         adapter.log.debug('9: Processed Details for Alarm ' + countURL)
 
                 }
@@ -794,7 +794,7 @@ async function getCSVData(){
     })
 }
 
-async function processDetails(content, countInt,detailsType,detailsIdentifier){
+async function processDetails(content, countInt,detailsType,detailsIdentifier,detailsReference){
     var type = ""
     var level = ""
     content.parameter.forEach(function (element){
@@ -831,7 +831,7 @@ async function processDetails(content, countInt,detailsType,detailsIdentifier){
         {
             Alarm_Type: detailsType,
             Alarm_Identifier: detailsIdentifier,
-            Alarm_Reference: '',
+            Alarm_Reference: detailsReference,
             Event: content.event,
             Headline: content.headline,
             Description: content.description,
