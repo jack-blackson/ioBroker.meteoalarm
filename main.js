@@ -570,8 +570,19 @@ async function getData(){
 }
 
 function checkDuplicates(){
+    //var alarmAllChecked = alarmAll
+
+    // check for duplicate entries of type Alarm with the same Type, Level, Onset and Expires Date
+    //alarmAll.forEach(function (element){
+     //   if 
 
 
+    //})
+    var alarmAllChecked = _.uniq(alarmAll, function(item, key, Alarm_Key) { 
+        return item.a;
+    });
+
+    alarmAll = alarmAllChecked
     adapter.log.debug('Finished checking alerts - ' + alarmAll.length + ' relevant alarms')
 }
 
@@ -842,6 +853,7 @@ async function processDetails(content, countInt,detailsType,detailsIdentifier,de
             Alarm_Type: detailsType,
             Alarm_Identifier: detailsIdentifier,
             Alarm_Reference: detailsReference,
+            Alarm_Key: detailsType + '-' + Number(level) + '-' + content.onset + '-' + content.expires,
             Event: content.event,
             Headline: content.headline,
             Description: content.description,
