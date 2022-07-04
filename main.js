@@ -554,7 +554,7 @@ async function getData(){
 
             adapter.log.debug('Length: ' + JSONAll.length)
 
-            if (JSONAll.length != 0){
+            if (JSONAll.length == 0){
                 JSONAll.push(
                     {
                         Event: "",
