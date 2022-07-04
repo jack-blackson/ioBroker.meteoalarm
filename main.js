@@ -552,6 +552,8 @@ async function getData(){
                 htmlCode += '</tbody></table>'
             } 
 
+            adapter.log.debug('Length: ' + JSONAll.length)
+
             if (JSONAll.length > 0){
                 JSONAll.push(
                     {
