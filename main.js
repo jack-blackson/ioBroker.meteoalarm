@@ -508,7 +508,7 @@ async function getData(){
 
                     htmlCode += '<td style="width: 90%; border-style: none; ' + colorHTML +  '">'
                     if (headline && headline.val){
-                        adapter.log.debug('10.1: Added Alarm for ' + headline.val)
+                        adapter.log.debug('11.1: Added Alarm to widget for ' + headline.val)
                         htmlCode += '<h4 style = "margin-top: 5px;margin-bottom: 1px;">' + headline.val + ': '
                     }
                     if (effectiveDate && effectiveDate.val && expiresDate && expiresDate.val){
@@ -551,6 +551,18 @@ async function getData(){
             if (htmlCode){
                 htmlCode += '</tbody></table>'
             } 
+
+            if (JSONAll.length > 0){
+                JSONAll.push(
+                    {
+                        Event: "",
+                        Description: getLevelName('1'),
+                        Level: "1",
+                        Effective: "",
+                        Icon: ""
+                    }
+                );
+            }
 
             
             await Promise.all([
