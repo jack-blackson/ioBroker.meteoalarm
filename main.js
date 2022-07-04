@@ -552,8 +552,7 @@ async function getData(){
                 htmlCode += '</tbody></table>'
             } 
 
-            adapter.log.debug('Length: ' + JSONAll.length)
-
+            // Check if no alarms are found, then add "no alarm found"
             if (JSONAll.length == 0){
                 JSONAll.push(
                     {
