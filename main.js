@@ -24,6 +24,7 @@ const parseCSV = require('csv-parse');
 const fs = require("fs");
 const path = require('path');
 const { hasUncaughtExceptionCaptureCallback } = require('process');
+const { count } = require('console');
 
 var DescFilter1 = '';
 var DescFilter2 = '';
@@ -41,6 +42,7 @@ const warnMessages = {};
 
 var channelNames = []
 var csvContent = [];
+var alarmAll = []
 var urlAtom = ""
 
 let adapter;
@@ -235,6 +237,7 @@ async function getData(){
                 adapter.setStateAsync({device: '' , channel: '',state: 'level'}, {val: 0, ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'htmlToday'}, {val: htmlCode, ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'noOfAlarms'}, {val: 0, ack: true}),
+                adapter.setStateAsync({device: '' , channel: '',state: 'JSON'}, {val: '', ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'location'}, {val: 'Check Setup!', ack: true})
             ])
             adapter.terminate ? adapter.terminate(0) : process.exit(0);
@@ -342,6 +345,9 @@ async function getData(){
             var countTotalURLs = urlArray.length
             adapter.log.debug('5.1 Found ' + countTotalURLs + ' URLs')
             var countURL = 0
+            var detailsType = ""
+            var detailsIdentifier = ""
+            var detailsReference = ""
             for (var i = 0, l = urlArray.length; i < l; i++){ 
                 countURL += 1
                 var jsonResult;
@@ -379,6 +385,13 @@ async function getData(){
                                 info = [result.alert.info]
                             }
 
+                            detailsType= result.alert.msgType
+                            detailsIdentifier = result.alert.identifier
+                            if (detailsType != "Alert"){
+                                detailsReference = result.alert.references
+
+                            }
+
                             for (var j = 0, l = info.length; j < l; j++){ 
                                 var element = info[j]
                                 if (element.language == xmlLanguage){
@@ -405,19 +418,33 @@ async function getData(){
 
                         countEntries += 1
                 
-                        const created = await createAlarms(countEntries)
-                        adapter.log.debug('8: Alarm States created for Alarm ' + countURL + ' type:  ' + awarenesstype)
-                
-                        const promises = await processDetails(jsonResult,countEntries)
-                        adapter.log.debug('9: Processed Details for Alarm ' + countURL)
+                        const promises = await processDetails(jsonResult,countEntries,detailsType,detailsIdentifier,detailsReference)
+                        adapter.log.debug('8: Processed Details for Alarm ' + countURL)
 
                 }
                             
             
             }
             //const widget = await createHTMLWidget()
-            adapter.log.debug('10: Creating HTML Widget')
+
+            adapter.log.debug('9: Check for duplicate alarms')
+            adapter.log.debug('9.1 alarmAll Array: ' + JSON.stringify(alarmAll))
+            checkDuplicates()
+
+
+            //const created = await createAlarms(countEntries)
+            //            adapter.log.debug('8: Alarm States created for Alarm ' + countURL + ' type:  ' + awarenesstype)
+            adapter.log.debug('10: Create alarm states')
+            for (var j = 0, l = alarmAll.length; j < l; j++){ 
+                const promises = await fillAlarm(alarmAll, j)
+            }
+            adapter.log.debug('10.1: Created alarm states')
+
+
+
+            adapter.log.debug('11: Creating HTML Widget')
             htmlCode = ''
+            var JSONAll = []
             var warningCount = 0
             if (channelNames.length >= 1){
                 htmlCode += '<table style="border-collapse: collapse; width: 100%;"><tbody>'
@@ -481,7 +508,7 @@ async function getData(){
 
                     htmlCode += '<td style="width: 90%; border-style: none; ' + colorHTML +  '">'
                     if (headline && headline.val){
-                        adapter.log.debug('10.1: Added Alarm for ' + headline.val)
+                        adapter.log.debug('11.1: Added Alarm to widget for ' + headline.val)
                         htmlCode += '<h4 style = "margin-top: 5px;margin-bottom: 1px;">' + headline.val + ': '
                     }
                     if (effectiveDate && effectiveDate.val && expiresDate && expiresDate.val){
@@ -493,6 +520,19 @@ async function getData(){
 
     
                     htmlCode += '</td></tr>'
+                    if (effectiveDate && effectiveDate.val && expiresDate && expiresDate.val){
+                        JSONAll.push(
+                            {
+                                Event: event.val,
+                                Description: description.val,
+                                Level: level.val,
+                                Effective: getAlarmTime(effectiveDate.val, expiresDate.val),
+                                Icon: icon.val
+                            }
+                        );
+                    }
+
+                    
                 }    
             }
             else{
@@ -512,6 +552,19 @@ async function getData(){
                 htmlCode += '</tbody></table>'
             } 
 
+            // Check if no alarms are found, then add "no alarm found"
+            if (JSONAll.length == 0){
+                JSONAll.push(
+                    {
+                        Event: "",
+                        Description: getLevelName('1'),
+                        Level: "1",
+                        Effective: "",
+                        Icon: ""
+                    }
+                );
+            }
+
             
             await Promise.all([
                 adapter.setStateAsync({device: '' , channel: '',state: 'level'}, {val: maxAlarmLevel, ack: true}),
@@ -519,11 +572,12 @@ async function getData(){
                 adapter.setStateAsync({device: '' , channel: '',state: 'location'}, {val: regionName, ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'link'}, {val: urlAtom, ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'color'}, {val: getColor(maxAlarmLevel.toString()), ack: true}),
-                adapter.setStateAsync({device: '' , channel: '',state: 'noOfAlarms'}, {val: countEntries, ack: true})
+                adapter.setStateAsync({device: '' , channel: '',state: 'noOfAlarms'}, {val: countEntries, ack: true}),
+                adapter.setStateAsync({device: '' , channel: '',state: 'JSON'}, {val: JSON.stringify(JSONAll), ack: true})
             ])
-            adapter.log.debug('11: Set State for Widget')
+            adapter.log.debug('12: Set State for Widget')
 
-            adapter.log.debug('12: All Done')
+            adapter.log.debug('13: All Done')
             if (regionName){
                 adapter.log.info('Updated Weather Alarms for ' + regionName + ' -> ' + warningCount + ' warning(s) found')
             }
@@ -533,6 +587,31 @@ async function getData(){
 
         }
 
+}
+
+function checkDuplicates(){
+    var alarmAllChecked = []
+
+    // 1. check for duplicate entries of type Alarm with the same Type, Level, Onset and Expires Date -> saved in Alarm_Key
+    for(var i = 0; i < alarmAll.length; i += 1) {
+        if (alarmAll[i].Alarm_Type == "Alert")
+        {
+            let check = alarmAllChecked.some(function(item) {
+                return item.Alarm_Key === alarmAll[i].Alarm_Key})
+            if (!check){
+                alarmAllChecked.push(alarmAll[i])
+            }
+        }
+        else{
+            alarmAllChecked.push(alarmAll[i])
+        }
+        
+    }
+
+    //2.  Check for Alarmupdates, duplicate updates and cancles
+
+    alarmAll = alarmAllChecked
+    adapter.log.debug('Finished checking alerts - ' + alarmAll.length + ' relevant alarms')
 }
 
 function checkRelevante(entry){
@@ -764,7 +843,7 @@ async function getCSVData(){
     })
 }
 
-async function processDetails(content, countInt){
+async function processDetails(content, countInt,detailsType,detailsIdentifier,detailsReference){
     var type = ""
     var level = ""
     content.parameter.forEach(function (element){
@@ -794,19 +873,77 @@ async function processDetails(content, countInt){
 
     var path = 'alarms.' + 'Alarm_' + countInt
 
-    await localCreateState(path + '.event', 'event', content.event);
-    await localCreateState(path + '.headline', 'headline', content.headline);
-    await localCreateState(path + '.description', 'description', content.description);
-    await localCreateState(path + '.link', 'link', content.web);
-    await localCreateState(path + '.expires', 'expires', content.expires);
-    await localCreateState(path + '.effective', 'effective', content.onset);
-    await localCreateState(path + '.sender', 'sender', content.senderName);
-    await localCreateState(path + '.level', 'level', Number(level));
-    await localCreateState(path + '.levelText', 'levelText', getLevelName(level));
-    await localCreateState(path + '.type', 'type', Number(type));
-    await localCreateState(path + '.typeText', 'typeText', getTypeName(type));
-    await localCreateState(path + '.icon', 'icon', Warnung_img);
-    await localCreateState(path + '.color', 'color', getColor(level));
+    //adapter.log.debug('Type: ' + detailsType + ' , Identifier: ' + detailsIdentifier)
+
+    alarmAll.push(
+        {
+            Alarm_Type: detailsType,
+            Alarm_Identifier: detailsIdentifier,
+            Alarm_Reference: detailsReference,
+            Alarm_Key: detailsType + '-' + Number(level) + '-' + content.onset + '-' + content.expires,
+            Event: content.event,
+            Headline: content.headline,
+            Description: content.description,
+            Link: content.web,
+            Expires: content.expires,
+            Effective: content.onset,
+            Sender: content.senderName,
+            Level: Number(level),
+            Leveltext: getLevelName(level),
+            Type: Number(type),
+            Typetext: getTypeName(type),
+            Icon: Warnung_img,
+            Color: getColor(level)
+        }
+    );
+
+}
+
+async function fillAlarm(content, countInt){
+
+    var path = 'alarms.' + 'Alarm_' + countInt
+    const created = await createAlarms(countInt)
+    adapter.log.debug('10.0.1: Created State')
+    //adapter.log.debug('Type: ' + detailsType + ' , Identifier: ' + detailsIdentifier)
+
+    /*
+    alarmAll.push(
+        {
+            Alarm_Type: detailsType,
+            Alarm_Identifier: detailsIdentifier,
+            Alarm_Reference: detailsReference,
+            Alarm_Key: detailsType + '-' + Number(level) + '-' + content.onset + '-' + content.expires,
+            Event: content.event,
+            Headline: content.headline,
+            Description: content.description,
+            Link: content.web,
+            Expires: content.expires,
+            Effective: content.onset,
+            Sender: content.senderName,
+            Level: Number(level),
+            Leveltext: getLevelName(level),
+            Type: Number(type),
+            Typetext: getTypeName(type),
+            Icon: Warnung_img,
+            Color: getColor(level)
+        }
+    );
+
+    */
+    
+    await localCreateState(path + '.event', 'event', content[countInt].Event);
+    await localCreateState(path + '.headline', 'headline', content[countInt].Headline);
+    await localCreateState(path + '.description', 'description', content[countInt].Description);
+    await localCreateState(path + '.link', 'link', content[countInt].Web);
+    await localCreateState(path + '.expires', 'expires', content[countInt].Expires);
+    await localCreateState(path + '.effective', 'effective', content[countInt].Effective);
+    await localCreateState(path + '.sender', 'sender', content[countInt].Sender);
+    await localCreateState(path + '.level', 'level', content[countInt].Level);
+    await localCreateState(path + '.levelText', 'levelText', content[countInt].Leveltext);
+    await localCreateState(path + '.type', 'type', content[countInt].Type);
+    await localCreateState(path + '.typeText', 'typeText', content[countInt].Typetext);
+    await localCreateState(path + '.icon', 'icon', content[countInt].Icon);
+    await localCreateState(path + '.color', 'color', content[countInt].Color);
    
 
 }
