@@ -4,16 +4,16 @@
         "version": "2.2.0",
         "news": {
             "2.2.0": {
-                "en": "New Object: AllJSON to display alarms as JSON",
-                "de": "Neues Objekt: AllJSON Alarme als JSON anzeigen",
-                "ru": "Новый объект: AllJSON для отображения тревог как JSON",
-                "pt": "Novo objeto: AllJSON para exibir alarmes como JSON",
-                "nl": "New Object:",
-                "fr": "Nouvel objet: AllJSON pour afficher les alarmes comme JSON",
-                "it": "Nuovo oggetto: AllJSON per visualizzare gli allarmi come JSON",
-                "es": "Nuevo objeto: AllJSON para mostrar alarmas como JSON",
-                "pl": "Nowy obiekt: AllJSON wyświetla alarm JSON",
-                "zh-cn": "新的目的:所有新闻工作者作为联合新闻工作者表示震惊"
+                "en": "New Object JSON to export data in JSON format, First step to get rid of duplicate alarms",
+                "de": "New Object JSON zum Export von Daten im JSON-Format, Erste Schritte, um doppelte Alarme loszuwerden",
+                "ru": "Новый объект JSON для экспорта данных в формате JSON, первый шаг, чтобы избавиться от повторяющихся тревог",
+                "pt": "Novo objeto JSON para exportar dados em formato JSON, Primeiro passo para se livrar de alarmes duplicados",
+                "nl": "New Object JSON om gegevens te exporteren in JSON format, eerste stap om van duplicaat alarm af te komen",
+                "fr": "Nouveau objet JSON pour exporter des données en format JSON, Première étape pour se débarrasser des alarmes en double",
+                "it": "Nuovo oggetto JSON per esportare i dati in formato JSON, primo passo per sbarazzarsi di allarmi duplicati",
+                "es": "Nuevo objeto JSON para exportar datos en formato JSON, primer paso para deshacerse de alarmas duplicadas",
+                "pl": "Nowy obiekt JSON w celu eksportu danych w formacie JSON, pierwszy krok, aby pozbyć się duplikacyjnych alarmów",
+                "zh-cn": "新的目标联合执行组织以联合执行形式出口数据,首先要克服重复的震惊"
             },
             "2.1.5": {
                 "en": "Bugfixes",
