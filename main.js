@@ -436,7 +436,7 @@ async function getData(){
             //            adapter.log.debug('8: Alarm States created for Alarm ' + countURL + ' type:  ' + awarenesstype)
             adapter.log.debug('10: Create alarm states')
             for (var j = 0, l = alarmAll.length; j < l; j++){ 
-                const promises = await fillAlarm(alarmAll, j)
+                const promises = await fillAlarm(alarmAll, j+1)
             }
             adapter.log.debug('10.1: Created alarm states')
 
