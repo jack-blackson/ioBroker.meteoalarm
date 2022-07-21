@@ -572,7 +572,7 @@ async function getData(){
                 adapter.setStateAsync({device: '' , channel: '',state: 'location'}, {val: regionName, ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'link'}, {val: urlAtom, ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'color'}, {val: getColor(maxAlarmLevel.toString()), ack: true}),
-                adapter.setStateAsync({device: '' , channel: '',state: 'noOfAlarms'}, {val: countEntries, ack: true}),
+                adapter.setStateAsync({device: '' , channel: '',state: 'noOfAlarms'}, {val: warningCount, ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'JSON'}, {val: JSON.stringify(JSONAll), ack: true})
             ])
             adapter.log.debug('12: Set State for Widget')
