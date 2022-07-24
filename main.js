@@ -901,7 +901,8 @@ async function processDetails(content, countInt,detailsType,detailsIdentifier,de
 
 async function fillAlarm(content, countInt){
 
-    var path = 'alarms.' + 'Alarm_' + countInt +1
+    var pathInt = countInt +1
+    var path = 'alarms.' + 'Alarm_' + pathInt
     const created = await createAlarms(countInt +1)
     adapter.log.debug('10.0.1: Created State')
     //adapter.log.debug('Type: ' + detailsType + ' , Identifier: ' + detailsIdentifier)
