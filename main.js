@@ -436,8 +436,7 @@ async function getData(){
             //            adapter.log.debug('8: Alarm States created for Alarm ' + countURL + ' type:  ' + awarenesstype)
             adapter.log.debug('10: Create alarm states')
             for (var j = 0, l = alarmAll.length; j < l; j++){ 
-                var countInt = j+1
-                const promises = await fillAlarm(alarmAll, countInt)
+                const promises = await fillAlarm(alarmAll, j)
             }
             adapter.log.debug('10.1: Created alarm states')
 
@@ -902,8 +901,8 @@ async function processDetails(content, countInt,detailsType,detailsIdentifier,de
 
 async function fillAlarm(content, countInt){
 
-    var path = 'alarms.' + 'Alarm_' + countInt
-    const created = await createAlarms(countInt)
+    var path = 'alarms.' + 'Alarm_' + countInt +1
+    const created = await createAlarms(countInt +1)
     adapter.log.debug('10.0.1: Created State')
     //adapter.log.debug('Type: ' + detailsType + ' , Identifier: ' + detailsIdentifier)
 
