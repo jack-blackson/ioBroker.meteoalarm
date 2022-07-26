@@ -106,10 +106,13 @@ If you don't find your country, please create an issue on github, and I will be 
 
 
 ## Changelog
+
+## 2.2.1 (2022-07-28)
+* (jack-blackson) Bugfix noOfAlarms and numbering of objects
+
 ## 2.2.0 (2022-07-05)
 * (jack-blackson) Added Object JSON that contains all activ errors in JSON format (e.g. for users of iqontrol)
 * (jack-blackson) First step to get rid of duplicate error messages
-
 
 ## 2.1.5 (2022-06-13)
 * (jack-blackson) Fixed Error "Error from InMemDB: Error: Not exists"
