@@ -572,7 +572,7 @@ async function getData(){
                 adapter.setStateAsync({device: '' , channel: '',state: 'location'}, {val: regionName, ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'link'}, {val: urlAtom, ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'color'}, {val: getColor(maxAlarmLevel.toString()), ack: true}),
-                adapter.setStateAsync({device: '' , channel: '',state: 'noOfAlarms'}, {val: countEntries, ack: true}),
+                adapter.setStateAsync({device: '' , channel: '',state: 'noOfAlarms'}, {val: warningCount, ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'JSON'}, {val: JSON.stringify(JSONAll), ack: true})
             ])
             adapter.log.debug('12: Set State for Widget')
@@ -901,8 +901,9 @@ async function processDetails(content, countInt,detailsType,detailsIdentifier,de
 
 async function fillAlarm(content, countInt){
 
-    var path = 'alarms.' + 'Alarm_' + countInt
-    const created = await createAlarms(countInt)
+    var pathInt = countInt +1
+    var path = 'alarms.' + 'Alarm_' + pathInt
+    const created = await createAlarms(countInt +1)
     adapter.log.debug('10.0.1: Created State')
     //adapter.log.debug('Type: ' + detailsType + ' , Identifier: ' + detailsIdentifier)
 
