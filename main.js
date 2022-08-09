@@ -249,7 +249,7 @@ async function getData(){
                 Sentry.addBreadcrumb({
                     category: "info",
                     message: 'Country ' + countryConfig + ', Region '+ regionConfig + ' - ' +  regionName,
-                    level: Sentry.Severity.Info,
+                    level: "info",
                   });
             }
             
@@ -348,6 +348,7 @@ async function getData(){
             var detailsType = ""
             var detailsIdentifier = ""
             var detailsReference = ""
+            var detailssent = ""
             for (var i = 0, l = urlArray.length; i < l; i++){ 
                 countURL += 1
                 var jsonResult;
@@ -387,6 +388,7 @@ async function getData(){
 
                             detailsType= result.alert.msgType
                             detailsIdentifier = result.alert.identifier
+                            detailssent = result.alert.sent
                             if (detailsType != "Alert"){
                                 detailsReference = result.alert.references
 
@@ -418,7 +420,7 @@ async function getData(){
 
                         countEntries += 1
                 
-                        const promises = await processDetails(jsonResult,countEntries,detailsType,detailsIdentifier,detailsReference)
+                        const promises = await processDetails(jsonResult,countEntries,detailsType,detailsIdentifier,detailsReference,detailssent)
                         adapter.log.debug('8: Processed Details for Alarm ' + countURL)
 
                 }
@@ -843,7 +845,7 @@ async function getCSVData(){
     })
 }
 
-async function processDetails(content, countInt,detailsType,detailsIdentifier,detailsReference){
+async function processDetails(content, countInt,detailsType,detailsIdentifier,detailsReference,detailssent){
     var type = ""
     var level = ""
     content.parameter.forEach(function (element){
@@ -881,6 +883,7 @@ async function processDetails(content, countInt,detailsType,detailsIdentifier,de
             Alarm_Identifier: detailsIdentifier,
             Alarm_Reference: detailsReference,
             Alarm_Key: detailsType + '-' + Number(level) + '-' + content.onset + '-' + content.expires,
+            Alarm_Sent: detailssent,
             Event: content.event,
             Headline: content.headline,
             Description: content.description,
