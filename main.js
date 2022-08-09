@@ -1011,14 +1011,14 @@ async function deleteAllAlarms(){
 
 
 
-async function createAlarms(AlarmNumber){
-    var path = 'alarms.' + 'Alarm_' + AlarmNumber
-    channelNames.push('Alarm_' + AlarmNumber)
+async function createAlarms(AlarmIdentifier){
+    var path = 'alarms.' + AlarmIdentifier
+    channelNames.push(AlarmIdentifier)
     const promises = await Promise.all([
 
         adapter.setObjectNotExistsAsync('alarms', {
             common: {
-                name: 'Alarm'
+                name: AlarmIdentifier
             },
             type: 'device',
             'native' : {}
@@ -1026,7 +1026,7 @@ async function createAlarms(AlarmNumber){
 
         adapter.setObjectNotExistsAsync(path, {
             common: {
-                name: 'Alarm_' + AlarmNumber
+                name: AlarmIdentifier
             },
             type: 'channel',
             'native' : {}
