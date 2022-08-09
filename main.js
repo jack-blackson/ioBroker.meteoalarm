@@ -893,11 +893,11 @@ async function processNotifications(alarms){
         for(var i = 0; i < notificationAlarmArray.length; i += 1) {
             alarms.map(function (alarms) {
                 if (alarms.Alarm_Identifier == notificationAlarmArray[i]) {
-                  notificationText = '<b>' + alarms.Headline + '</b>' 
+                  notificationText = '<b>' + '❗' + alarms.Headline + '</b>' 
                   if (alarms.Effective && alarms.Expires){
                     notificationText += ' (' + getAlarmTime(alarms.Effective, alarms.Expires) + ') '
                   }
-                  notificationAlarmArray +=  alarms.Description
+                  notificationText +=  alarms.Description
                   adapter.sendTo("telegram.1", "send", {
                     "text": notificationText,
                     "parse_mode": "HTML"
@@ -912,7 +912,7 @@ async function processNotifications(alarms){
 }
 
 
-async function processDetails(content, countInt,detailsType,detailsIdentifier,detailsReference,detailssent){
+async function processDetails(content, countInt,detailsType,detailsIdentifier,detailsReference,detailssent,detailsLink){
     var type = ""
     var level = ""
     content.parameter.forEach(function (element){
