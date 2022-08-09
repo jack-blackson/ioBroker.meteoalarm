@@ -865,7 +865,7 @@ async function fillAlarmArray(allAlarms){
     //const promises = await Promise.all([
     return new Promise(function(resolve){
         for(var i = 0; i < allAlarms.length; i += 1) {
-            var foundID = adapter.existsStateAsync('alams.'+ allAlarms[i].Alarm_Identifier)
+            var foundID = adapter.getObjectAsync('alams.'+ allAlarms[i].Alarm_Identifier)
             adapter.log.debug('found id: ' + foundID)
             if (allAlarms[i].Alarm_Identifier == "Alert"){
                 adapter.log.debug('9.2.1: New alarm found, added to notification array: ' + allAlarms[i].Alarm_Identifier)
