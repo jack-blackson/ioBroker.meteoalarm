@@ -908,7 +908,7 @@ async function fillAlarm(content, countInt){
 
     var pathInt = countInt +1
     var path = 'alarms.' + content[countInt].Alarm_Identifier
-    const checkDevice = await adapter.getStateAsync(path )
+    const checkDevice = adapter.existsState(path)
     adapter.log.debug('Alarm ' + content[countInt].Alarm_Identifier + ' existiert: ' + checkDevice)
     if (checkDevice == null ){
       const created = await createAlarms(content[countInt].Alarm_Identifier)
