@@ -885,9 +885,17 @@ async function getCSVData(){
 async function processNotifications(alarms){
     return new Promise(function(resolve,){
         adapter.log.debug('14.1: Notification necessary for alarms: ' + notificationAlarmArray)
-        adapter.sendTo("telegram.1", "send", {
-            "text": 'test'
-         });
+        var notificationText = ""
+
+        for(var i = 0; i < notificationAlarmArray.length; i += 1) {
+            alarms.map(function (alarms) {
+                if (alarms.Alarm_Identifier == notificationAlarmArray[i]) {
+                  notificationText = alarms.Description
+                }
+            adapter.sendTo("telegram.1", "send", {
+                "text": notificationText
+             });
+        })  
         
         resolve('done')
     })
@@ -956,7 +964,7 @@ async function fillAlarm(content, countInt){
     var pathInt = countInt +1
     var path = 'alarms.' + content[countInt].Alarm_Identifier
     const created = await createAlarms(content[countInt].Alarm_Identifier)
-    adapter.log.debug('10.0.1: Created State')
+    adapter.log.debug('10.2: Created State')
 
     
     await localCreateState(path + '.event', 'event', content[countInt].Event);
@@ -1061,7 +1069,7 @@ async function deleteAllAlarms(){
 */
 
 function fillNotificatinAlarmArray(identifier){
-    adapter.log.debug('Added Alert Notification for '+ identifier)
+    adapter.log.debug('10.1: Added Alert Notification for '+ identifier)
     notificationAlarmArray.push(identifier)
 }
 
