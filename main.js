@@ -845,7 +845,7 @@ async function cleanObsoleteAlarms(allAlarms){
                     return item.Alarm_Identifier === channel.common.name})
                 if (!check){
                     adapter.log.debug('11.0.2: Alarm ' + channel.common.name + 'will be deleted.')
-                    adapter.deleteChannel('alarms',channel.common.name);
+                    adapter.deleteChannelAsync('alarms',channel.common.name);
                 }
             
             }
