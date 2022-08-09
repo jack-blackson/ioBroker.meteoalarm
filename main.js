@@ -835,21 +835,21 @@ async function cleanupOld(){
 }
 
 async function cleanObsoleteAlarms(allAlarms){
-    const promises = await Promise.all([
+    //const promises = await Promise.all([
 
-        adapter.getChannelsOf('alarms', function (err, result) {
+        await adapter.getChannelsOf('alarms', function (err, result) {
             for (const channel of result) {
                 adapter.log.debug('11.0.1 checking alarm "' + channel.common.name)
                 let check = allAlarms.some(function(item) {
                     return item.Alarm_Identifier === channel.common.name})
                 if (!check){
                     adapter.log.debug('11.0.2: Alarm ' + channel.common.name + 'will be deleted.')
-                    adapter.deleteChannel('alarms',channel.common.name);
+                    adapter.deleteChannelAsync('alarms',channel.common.name);
                 }
             
             }
         })
-    ])
+    //])
 
 }
 
