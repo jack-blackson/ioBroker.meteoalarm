@@ -836,8 +836,9 @@ async function cleanupOld(){
 
 async function cleanObsoleteAlarms(allAlarms){
     //const promises = await Promise.all([
+    return new Promise(function(resolve){
 
-        await adapter.getChannelsOf('alarms', function (err, result) {
+        adapter.getChannelsOf('alarms', function (err, result) {
             for (const channel of result) {
                 adapter.log.debug('11.0.1 checking alarm "' + channel.common.name)
                 let check = allAlarms.some(function(item) {
@@ -848,9 +849,9 @@ async function cleanObsoleteAlarms(allAlarms){
                 }
             
             }
+            resolve('done')
         })
-    //])
-
+    })
 }
 
 async function getCSVData(){
