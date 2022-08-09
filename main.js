@@ -517,7 +517,7 @@ async function getData(){
 
                     htmlCode += '<td style="width: 90%; border-style: none; ' + colorHTML +  '">'
                     if (headline && headline.val){
-                        adapter.log.debug('11.1: Added Alarm to widget for ' + headline.val)
+                        adapter.log.debug('12.1: Added Alarm to widget for ' + headline.val)
                         htmlCode += '<h4 style = "margin-top: 5px;margin-bottom: 1px;">' + headline.val + ': '
                     }
                     if (effectiveDate && effectiveDate.val && expiresDate && expiresDate.val){
@@ -834,10 +834,16 @@ async function cleanupOld(){
     ])
 }
 
-async function cleanObsoleteAlarms(){
+async function cleanObsoleteAlarms(allAlarms){
     adapter.getChannelsOf('alarms', function (err, result) {
         for (const channel of result) {
-            adapter.log.debug('checking alarm "' + channel.common.name)
+            adapter.log.debug('11.0.1 checking alarm "' + channel.common.name)
+            let check = allAlarms.some(function(item) {
+                return item.Alarm_Identifier === channel.common.name})
+            if (!check){
+                adapter.log.debug('11.0.2: Alarm ' + channel.common.name + 'can be deleted.')
+                //alarmAllChecked.push(alarmAll[i])
+            }
             /*
             adapter.getObject('setup.' + channel.common.name, function (err, state) {
                 //check if setup is still existing
