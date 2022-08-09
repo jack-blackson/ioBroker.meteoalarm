@@ -893,7 +893,7 @@ async function processNotifications(alarms){
         for(var i = 0; i < notificationAlarmArray.length; i += 1) {
             alarms.map(function (alarms) {
                 if (alarms.Alarm_Identifier == notificationAlarmArray[i]) {
-                  notificationText = '<b>' + alarms.Headline + '<b>' + ' - '  + alarms.Description
+                  notificationText = '<b>' + alarms.Headline + '</b>' + ' - '  + alarms.Description
                   adapter.sendTo("telegram.1", "send", {
                     "text": notificationText,
                     "parse_mode": "HTML"
