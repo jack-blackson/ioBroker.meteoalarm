@@ -867,6 +867,8 @@ async function fillAlarmArray(allAlarms){
         for(var i = 0; i < allAlarms.length; i += 1) {
             var foundID = adapter.getObjectAsync('alams.'+ allAlarms[i].Alarm_Identifier)
             adapter.log.debug('found id: ' + foundID)
+            adapter.log.debug('found id1: ' + foundID.id)
+
             if (allAlarms[i].Alarm_Identifier == "Alert"){
                 adapter.log.debug('9.2.1: New alarm found, added to notification array: ' + allAlarms[i].Alarm_Identifier)
                 sendAlarmArray.push(allAlarms[i].Alarm_Identifier)
