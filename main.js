@@ -1060,7 +1060,9 @@ async function deleteAllAlarms(){
     }
 }
 
-
+function test(){
+    adapter.log.debug('function test executed')
+}
 
 async function createAlarms(AlarmIdentifier){
     var path = 'alarms.' + AlarmIdentifier
@@ -1072,7 +1074,8 @@ async function createAlarms(AlarmIdentifier){
                 name: AlarmIdentifier
             },
             type: 'device',
-            'native' : {}
+            'native' : {},
+            function: test()
         }),
 
         adapter.setObjectNotExistsAsync(path, {
