@@ -53,7 +53,7 @@ var htmlCode = ""
 var today = new Date();
 var maxAlarmLevel = 1
 
-var sendAlarmArray = []
+var notificaationAlarmArray = []
 
 var imageSizeSetup = 0
 
@@ -437,8 +437,6 @@ async function getData(){
             adapter.log.debug('9.1 alarmAll Array: ' + JSON.stringify(alarmAll))
             checkDuplicates()
 
-            adapter.log.debug('9.2: fill alarmNotification Array')
-            const alarmArrDone = await fillAlarmArray(alarmAll)
 
             
 
@@ -592,9 +590,12 @@ async function getData(){
             ])
             adapter.log.debug('13: Set State for Widget')
 
-            adapter.log.debug('14: All Done')
+            adapter.log.debug('14: Process Notifications')
+            const promises = await processNotifications(alarmAll)
+
+            adapter.log.debug('15: All Done')
             if (regionName){
-                adapter.log.info('Updated Weather Alarms for ' + regionName + ' -> ' + warningCount + ' warning(s) found')
+                adapter.log.info('Updated Weather Alarms for ' + regionName + ' -> ' + warningCount + ' alarm(s) found')
             }
             
             adapter.terminate ? adapter.terminate(0) : process.exit(0);
@@ -860,23 +861,6 @@ async function cleanObsoleteAlarms(allAlarms){
     })
 }
 
-async function fillAlarmArray(allAlarms){
-    sendAlarmArray
-    //const promises = await Promise.all([
-    return new Promise(function(resolve){
-        for(var i = 0; i < allAlarms.length; i += 1) {
-            var foundID = adapter.getObjectAsync('alams.'+ allAlarms[i].Alarm_Identifier)
-            adapter.log.debug('found id: ' + foundID)
-            adapter.log.debug('found id1: ' + foundID.id)
-
-            if (allAlarms[i].Alarm_Identifier == "Alert"){
-                adapter.log.debug('9.2.1: New alarm found, added to notification array: ' + allAlarms[i].Alarm_Identifier)
-                sendAlarmArray.push(allAlarms[i].Alarm_Identifier)
-            }
-        }
-        resolve('done')
-    })
-}
 
 async function getCSVData(){
     return new Promise(function(resolve,reject){
@@ -895,6 +879,16 @@ async function getCSVData(){
         .on('error', reject); 
     })
 }
+
+
+async function processNotifications(alarms){
+    return new Promise(function(resolve,){
+        adapter.log.debu('14.1: Notification necessary for alarms: ' + notificaationAlarmArray)
+
+        resolve('done')
+    })
+}
+
 
 async function processDetails(content, countInt,detailsType,detailsIdentifier,detailsReference,detailssent){
     var type = ""
@@ -1044,6 +1038,7 @@ async function localCreateState(state, name, value) {
     }
 }
 
+/*
 async function deleteAllAlarms(){
     //const promises = await Promise.all([
     //    adapter.deleteDeviceAsync('alarms')
@@ -1059,9 +1054,11 @@ async function deleteAllAlarms(){
         // do nothing
     }
 }
+*/
 
-function test(){
+function fillNotificatinAlarmArray(identifier){
     adapter.log.debug('function test executed')
+    notificaationAlarmArray.push(identifier)
 }
 
 async function createAlarms(AlarmIdentifier){
@@ -1075,7 +1072,7 @@ async function createAlarms(AlarmIdentifier){
             },
             type: 'device',
             'native' : {},
-            function: test()
+            function: fillNotificatinAlarmArray(AlarmIdentifier)
         }),
 
         adapter.setObjectNotExistsAsync(path, {
