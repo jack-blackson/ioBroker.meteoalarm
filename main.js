@@ -885,7 +885,7 @@ async function processNotifications(alarms){
     return new Promise(function(resolve,){
         adapter.log.debug('14.1: Notification necessary for alarms: ' + notificaationAlarmArray)
         adapter.sendTo("telegram.1", "send", {
-            "parameter1": 'test'
+            "text": 'test'
          });
         
         resolve('done')
