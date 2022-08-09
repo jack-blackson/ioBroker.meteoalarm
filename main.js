@@ -884,7 +884,10 @@ async function getCSVData(){
 
 async function processNotifications(alarms){
     return new Promise(function(resolve,){
-        adapter.log.debug('14.1: Notification necessary for alarms: ' + notificationAlarmArray)
+        if (notificationAlarmArray.length >= 1){
+            adapter.log.debug('14.1: Notifications available for alarms: ' + util.inspect(notificationAlarmArray, {showHidden: false, depth: null, colors: true}))
+        }
+
         var notificationText = ""
 
         for(var i = 0; i < notificationAlarmArray.length; i += 1) {
