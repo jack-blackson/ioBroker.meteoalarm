@@ -893,15 +893,33 @@ async function processNotifications(alarms){
         for(var i = 0; i < notificationAlarmArray.length; i += 1) {
             alarms.map(function (alarms) {
                 if (alarms.Alarm_Identifier == notificationAlarmArray[i]) {
-                  notificationText = '<b>' + '❗' + alarms.Headline + '</b>' 
-                  if (alarms.Effective && alarms.Expires){
-                    notificationText += ' (' + getAlarmTime(alarms.Effective, alarms.Expires) + ') '
-                  }
-                  notificationText +=  alarms.Description
-                  adapter.sendTo("telegram.1", "send", {
-                    "text": notificationText,
-                    "parse_mode": "HTML"
-                 });
+                    switch (alarms.Level) {
+                        case 1:
+                            notificationText += ''
+                            break;
+                        case 2:
+                            notificationText += '❗'
+                            break;
+                        case 3:
+                            notificationText += '❗❗'
+                            break;
+                        case 4:
+                            notificationText += '❗❗❗'
+                            break;
+                       default:
+                           return ''
+                           break;
+                    }
+
+                    notificationText = '<b>' +  alarms.Headline + '</b>' 
+                    if (alarms.Effective && alarms.Expires){
+                        notificationText += ' (' + getAlarmTime(alarms.Effective, alarms.Expires) + ') '
+                    }
+                    notificationText +=  alarms.Description
+                    adapter.sendTo("telegram.1", "send", {
+                        "text": notificationText,
+                        "parse_mode": "HTML"
+                    });
                 }
             
             })  
