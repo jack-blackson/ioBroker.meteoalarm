@@ -53,6 +53,8 @@ var htmlCode = ""
 var today = new Date();
 var maxAlarmLevel = 1
 
+var sendAlarmArray = []
+
 var imageSizeSetup = 0
 
 let Sentry;
@@ -435,6 +437,10 @@ async function getData(){
             adapter.log.debug('9.1 alarmAll Array: ' + JSON.stringify(alarmAll))
             checkDuplicates()
 
+            adapter.log.debug('9.2: fill alarmNotification Array')
+            const alarmArrDone = await fillAlarmArray(alarmAll)
+
+            
 
             //const created = await createAlarms(countEntries)
             //            adapter.log.debug('8: Alarm States created for Alarm ' + countURL + ' type:  ' + awarenesstype)
@@ -840,7 +846,7 @@ async function cleanObsoleteAlarms(allAlarms){
 
         adapter.getChannelsOf('alarms', function (err, result) {
             for (const channel of result) {
-                adapter.log.debug('11.0.1 checking alarm "' + channel.common.name)
+                adapter.log.debug('11.0.1: checking alarm "' + channel.common.name)
                 let check = allAlarms.some(function(item) {
                     return item.Alarm_Identifier === channel.common.name})
                 if (!check){
@@ -851,6 +857,22 @@ async function cleanObsoleteAlarms(allAlarms){
             }
             resolve('done')
         })
+    })
+}
+
+async function fillAlarmArray(allAlarms){
+    sendAlarmArray
+    //const promises = await Promise.all([
+    return new Promise(function(resolve){
+        for(var i = 0; i < allAlarms.length; i += 1) {
+            var foundID = await adapter.existsStateAsync('alams.'+ allAlarms[i].Alarm_Identifier)
+            adapter.log.debug('found id: ' + foundID)
+            if (allAlarms[i].Alarm_Identifier == "Alert"){
+                adapter.log.debug('9.2.1: New alarm found, added to notification array: ' + allAlarms[i].Alarm_Identifier)
+                sendAlarmArray.push(allAlarms[i].Alarm_Identifier)
+            }
+        }
+        resolve('done')
     })
 }
 
