@@ -1078,7 +1078,14 @@ function fillNotificatinAlarmArray(identifier){
 async function createAlarms(AlarmIdentifier){
     var path = 'alarms.' + AlarmIdentifier
     channelNames.push(AlarmIdentifier)
+    const obj = await adapter.getObjectAsync('alarms.' + AlarmIdentifier);
+
+    if(!obj) {
+        fillNotificatinAlarmArray(AlarmIdentifier)
+    };
+
     const promises = await Promise.all([
+
 
         adapter.setObjectNotExistsAsync('alarms', {
             common: {
@@ -1093,8 +1100,7 @@ async function createAlarms(AlarmIdentifier){
                 name: AlarmIdentifier
             },
             type: 'channel',
-            'native' : {},
-            function: fillNotificatinAlarmArray(AlarmIdentifier)
+            'native' : {}
         })
     ])
 }
