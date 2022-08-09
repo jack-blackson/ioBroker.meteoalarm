@@ -883,8 +883,11 @@ async function getCSVData(){
 
 async function processNotifications(alarms){
     return new Promise(function(resolve,){
-        adapter.log.debu('14.1: Notification necessary for alarms: ' + notificaationAlarmArray)
-
+        adapter.log.debug('14.1: Notification necessary for alarms: ' + notificaationAlarmArray)
+        adapter.sendto("telegram.1", "send", {
+            "parameter1": 'test'
+         });
+        
         resolve('done')
     })
 }
