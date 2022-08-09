@@ -447,7 +447,7 @@ async function getData(){
             for (var j = 0, l = alarmAll.length; j < l; j++){ 
                 const promises = await fillAlarm(alarmAll, j)
             }
-            adapter.log.debug('10.1: Created alarm states')
+            adapter.log.debug('10.2: Created alarm states')
 
 
             adapter.log.debug('11: Clean up obsolete alarms')
@@ -898,8 +898,8 @@ async function processNotifications(alarms){
             
             })  
         
-            resolve('done')
         }
+        resolve('done')
     })
 }
 
@@ -966,7 +966,6 @@ async function fillAlarm(content, countInt){
     var pathInt = countInt +1
     var path = 'alarms.' + content[countInt].Alarm_Identifier
     const created = await createAlarms(content[countInt].Alarm_Identifier)
-    adapter.log.debug('10.2: Created State')
 
     
     await localCreateState(path + '.event', 'event', content[countInt].Event);
