@@ -898,7 +898,7 @@ async function processNotifications(alarms){
         })  
         
         resolve('done')
-    })
+        }})
 }
 
 
