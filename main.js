@@ -442,6 +442,7 @@ async function getData(){
 
             //const created = await createAlarms(countEntries)
             //            adapter.log.debug('8: Alarm States created for Alarm ' + countURL + ' type:  ' + awarenesstype)
+            notificationAlarmArray = []
             adapter.log.debug('10: Create alarm states')
             for (var j = 0, l = alarmAll.length; j < l; j++){ 
                 const promises = await fillAlarm(alarmAll, j)
@@ -1060,7 +1061,7 @@ async function deleteAllAlarms(){
 */
 
 function fillNotificatinAlarmArray(identifier){
-    adapter.log.debug('function test executed')
+    adapter.log.debug('Added Alert Notification for '+ identifier)
     notificationAlarmArray.push(identifier)
 }
 
@@ -1071,11 +1072,10 @@ async function createAlarms(AlarmIdentifier){
 
         adapter.setObjectNotExistsAsync('alarms', {
             common: {
-                name: AlarmIdentifier
+                name: 'Alarms'
             },
             type: 'device',
-            'native' : {},
-            function: fillNotificatinAlarmArray(AlarmIdentifier)
+            'native' : {}
         }),
 
         adapter.setObjectNotExistsAsync(path, {
@@ -1083,7 +1083,8 @@ async function createAlarms(AlarmIdentifier){
                 name: AlarmIdentifier
             },
             type: 'channel',
-            'native' : {}
+            'native' : {},
+            function: fillNotificatinAlarmArray(AlarmIdentifier)
         })
     ])
 }
