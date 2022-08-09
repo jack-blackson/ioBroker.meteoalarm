@@ -896,7 +896,7 @@ async function processNotifications(alarms){
                   notificationText = '<b>' + alarms.Headline + '<b>' + ' - '  + alarms.Description
                   adapter.sendTo("telegram.1", "send", {
                     "text": notificationText,
-                    parse_mode: "HTML"
+                    "parse_mode": "HTML"
                  });
                 }
             
