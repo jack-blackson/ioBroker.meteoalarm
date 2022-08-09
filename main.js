@@ -53,7 +53,7 @@ var htmlCode = ""
 var today = new Date();
 var maxAlarmLevel = 1
 
-var notificaationAlarmArray = []
+var notificationAlarmArray = []
 
 var imageSizeSetup = 0
 
@@ -883,7 +883,7 @@ async function getCSVData(){
 
 async function processNotifications(alarms){
     return new Promise(function(resolve,){
-        adapter.log.debug('14.1: Notification necessary for alarms: ' + notificaationAlarmArray)
+        adapter.log.debug('14.1: Notification necessary for alarms: ' + notificationAlarmArray)
         adapter.sendTo("telegram.1", "send", {
             "text": 'test'
          });
@@ -1061,7 +1061,7 @@ async function deleteAllAlarms(){
 
 function fillNotificatinAlarmArray(identifier){
     adapter.log.debug('function test executed')
-    notificaationAlarmArray.push(identifier)
+    notificationAlarmArray.push(identifier)
 }
 
 async function createAlarms(AlarmIdentifier){
