@@ -905,35 +905,10 @@ async function processDetails(content, countInt,detailsType,detailsIdentifier,de
 async function fillAlarm(content, countInt){
 
     var pathInt = countInt +1
-    var path = 'alarms.' + 'Alarm_' + pathInt
-    const created = await createAlarms(countInt +1)
+    var path = 'alarms.' + content[countInt].Alarm_Identifier
+    const created = await createAlarms(content[countInt].Alarm_Identifier)
     adapter.log.debug('10.0.1: Created State')
-    //adapter.log.debug('Type: ' + detailsType + ' , Identifier: ' + detailsIdentifier)
 
-    /*
-    alarmAll.push(
-        {
-            Alarm_Type: detailsType,
-            Alarm_Identifier: detailsIdentifier,
-            Alarm_Reference: detailsReference,
-            Alarm_Key: detailsType + '-' + Number(level) + '-' + content.onset + '-' + content.expires,
-            Event: content.event,
-            Headline: content.headline,
-            Description: content.description,
-            Link: content.web,
-            Expires: content.expires,
-            Effective: content.onset,
-            Sender: content.senderName,
-            Level: Number(level),
-            Leveltext: getLevelName(level),
-            Type: Number(type),
-            Typetext: getTypeName(type),
-            Icon: Warnung_img,
-            Color: getColor(level)
-        }
-    );
-
-    */
     
     await localCreateState(path + '.event', 'event', content[countInt].Event);
     await localCreateState(path + '.headline', 'headline', content[countInt].Headline);
