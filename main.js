@@ -891,14 +891,16 @@ async function processNotifications(alarms){
             alarms.map(function (alarms) {
                 if (alarms.Alarm_Identifier == notificationAlarmArray[i]) {
                   notificationText = alarms.Description
+                  adapter.sendTo("telegram.1", "send", {
+                    "text": notificationText
+                 });
                 }
-            adapter.sendTo("telegram.1", "send", {
-                "text": notificationText
-             });
-        })  
+            
+            })  
         
-        resolve('done')
-        }})
+            resolve('done')
+        }
+    })
 }
 
 
