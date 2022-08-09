@@ -445,8 +445,13 @@ async function getData(){
             adapter.log.debug('10.1: Created alarm states')
 
 
+            adapter.log.debug('11: Clean up obsolete alarms')
 
-            adapter.log.debug('11: Creating HTML Widget')
+            const clean = await cleanObsoleteAlarms(alarmAll)
+            adapter.log.debug('11.1: Cleaned up obsolete alarms')
+
+
+            adapter.log.debug('12: Creating HTML Widget')
             htmlCode = ''
             var JSONAll = []
             var warningCount = 0
@@ -579,9 +584,9 @@ async function getData(){
                 adapter.setStateAsync({device: '' , channel: '',state: 'noOfAlarms'}, {val: warningCount, ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'JSON'}, {val: JSON.stringify(JSONAll), ack: true})
             ])
-            adapter.log.debug('12: Set State for Widget')
+            adapter.log.debug('13: Set State for Widget')
 
-            adapter.log.debug('13: All Done')
+            adapter.log.debug('14: All Done')
             if (regionName){
                 adapter.log.info('Updated Weather Alarms for ' + regionName + ' -> ' + warningCount + ' warning(s) found')
             }
@@ -827,6 +832,34 @@ async function cleanupOld(){
         adapter.deleteStateAsync('weatherMapCountry')
 
     ])
+}
+
+async function cleanObsoleteAlarms(){
+    adapter.getChannelsOf('alarms', function (err, result) {
+        for (const channel of result) {
+            adapter.log.debug('checking alarm "' + channel.common.name)
+            /*
+            adapter.getObject('setup.' + channel.common.name, function (err, state) {
+                //check if setup is still existing
+                if(state === null && typeof state === "object") {
+                    //if not - delete results
+                    deleteCountdownResults(channel.common.name)
+                }
+                
+            }); */  
+        }
+      });
+
+
+    /*
+    const promises = await Promise.all([
+
+        adapter.deleteChannelAsync('today'),
+        adapter.deleteChannelAsync('tomorrow'),
+        adapter.deleteStateAsync('weatherMapCountry')
+
+    ])
+    */
 }
 
 async function getCSVData(){
