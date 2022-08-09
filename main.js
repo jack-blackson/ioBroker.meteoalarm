@@ -907,11 +907,11 @@ async function processNotifications(alarms){
                             notificationText += '❗❗❗'
                             break;
                        default:
-                           return ''
+                        notificationText +=  ''
                            break;
                     }
 
-                    notificationText += '<b>' +  alarms.Headline + '</b>' 
+                    notificationText += '<b>' +  alarms.Headline + '</b>' + '\r\n'
                     if (alarms.Effective && alarms.Expires){
                         notificationText += ' (' + getAlarmTime(alarms.Effective, alarms.Expires) + ') '
                     }
