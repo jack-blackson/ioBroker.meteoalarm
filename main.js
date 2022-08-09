@@ -388,6 +388,7 @@ async function getData(){
 
                             detailsType= result.alert.msgType
                             detailsIdentifier = result.alert.identifier
+                            detailsIdentifier = detailsIdentifier.replace(/./gi, '') // remove dots
                             detailssent = result.alert.sent
                             if (detailsType != "Alert"){
                                 detailsReference = result.alert.references
