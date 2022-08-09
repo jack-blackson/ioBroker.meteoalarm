@@ -261,10 +261,11 @@ async function getData(){
             adapter.log.debug(' XML Language: ' + xmlLanguage)
 
             // Delete old alarms
-            adapter.log.debug('0: Delete Alarms')
+            //adapter.log.debug('0: Delete Alarms')
+            // Alarms will not be deleted here any more
 
-            const deleted =  await deleteAllAlarms();
-            adapter.log.debug('0.1: Deleted Alarms')
+            //const deleted =  await deleteAllAlarms();
+            //adapter.log.debug('0.1: Deleted Alarms')
 
             const checkState = await adapter.getStateAsync('weatherMapCountry')
             if (checkState != null ){
