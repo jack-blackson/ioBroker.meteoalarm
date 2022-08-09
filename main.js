@@ -835,37 +835,22 @@ async function cleanupOld(){
 }
 
 async function cleanObsoleteAlarms(allAlarms){
-    adapter.getChannelsOf('alarms', function (err, result) {
-        for (const channel of result) {
-            adapter.log.debug('11.0.1 checking alarm "' + channel.common.name)
-            let check = allAlarms.some(function(item) {
-                return item.Alarm_Identifier === channel.common.name})
-            if (!check){
-                adapter.log.debug('11.0.2: Alarm ' + channel.common.name + 'can be deleted.')
-                //alarmAllChecked.push(alarmAll[i])
-            }
-            /*
-            adapter.getObject('setup.' + channel.common.name, function (err, state) {
-                //check if setup is still existing
-                if(state === null && typeof state === "object") {
-                    //if not - delete results
-                    deleteCountdownResults(channel.common.name)
-                }
-                
-            }); */  
-        }
-      });
-
-
-    /*
     const promises = await Promise.all([
 
-        adapter.deleteChannelAsync('today'),
-        adapter.deleteChannelAsync('tomorrow'),
-        adapter.deleteStateAsync('weatherMapCountry')
-
+        adapter.getChannelsOf('alarms', function (err, result) {
+            for (const channel of result) {
+                adapter.log.debug('11.0.1 checking alarm "' + channel.common.name)
+                let check = allAlarms.some(function(item) {
+                    return item.Alarm_Identifier === channel.common.name})
+                if (!check){
+                    adapter.log.debug('11.0.2: Alarm ' + channel.common.name + 'will be deleted.')
+                    adapter.deleteChannel('alarms',channel.common.name);
+                }
+            
+            }
+        })
     ])
-    */
+
 }
 
 async function getCSVData(){
