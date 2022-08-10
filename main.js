@@ -979,7 +979,7 @@ function sendMail(alarms){
         adapter.log.debug('14.4: Sent email for alarm '+ alarms.Alarm_Identifier + ' to ' + adapter.config.mailAddress)
     }
     else{
-        adapter.log.warn('Please maintain an email adress for the warning notification, or deactivate mail.')
+        adapter.log.warn('Please maintain an email address for the warning notification, or deactivate mail.')
     }
 }
 
