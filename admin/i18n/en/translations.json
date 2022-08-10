@@ -81,5 +81,6 @@
     "warningType7": "Coast event",
     "warningType8": "Forrest fire",
     "warningType9": "Avalanche",
-    "whiteIcons": "White Icons for Widgets"
+    "whiteIcons": "White Icons for Widgets",
+    "notification": "Notification"
 }
