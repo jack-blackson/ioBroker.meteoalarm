@@ -84,5 +84,6 @@
     "whiteIcons": "White Icons for Widgets",
     "notification": "Notification",
     "activate": "Activate",
-    "addMailAddress": "Insert mail address (comma seperated)"
+    "addMailAddress": "Insert mail address (comma seperated)",
+    "telegramInstanz": "Add telegram instanc"
 }

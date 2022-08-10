@@ -937,12 +937,14 @@ function sendTelegram(alarms){
         notificationText += ' (' + getAlarmTime(alarms.Effective, alarms.Expires) + ') ' + '\r\n'
     }
     notificationText +=  alarms.Description
-    adapter.sendTo("telegram.1", "send", {
+
+    adapter.sendTo(adapter.config.telegramInstanz, "send", {
         "text": notificationText,
         "parse_mode": "HTML"
     });
     adapter.log.debug('14.3: Sent telegram message for alarm '+ alarms.Alarm_Identifier)
 }
+
 function sendMail(alarms){
     
     var notificationText = ""
