@@ -83,5 +83,6 @@
     "warningType9": "Avalanche",
     "whiteIcons": "White Icons for Widgets",
     "notification": "Notification",
-    "activate": "Activate"
+    "activate": "Activate",
+    "addMailAddress": "Insert mail address (comma seperated)"
 }

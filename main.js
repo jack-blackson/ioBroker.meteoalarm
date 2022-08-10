@@ -897,6 +897,7 @@ async function processNotifications(alarms){
                     if (adapter.config.activateMail){
                         sendMail(alarms)
                     }
+
                     if (adapter.config.activatePushover){
                         sendPushover(alarms)
                     }
@@ -943,7 +944,7 @@ function sendTelegram(alarms){
     adapter.log.debug('14.3: Sent telegram message for alarm '+ alarms.Alarm_Identifier)
 }
 function sendMail(alarms){
-    /*
+    
     var notificationText = ""
 
     switch (alarms.Level) {
@@ -964,17 +965,18 @@ function sendMail(alarms){
            break;
     }
 
-    notificationText += '<b>' +  alarms.Headline + '</b>' + '\r\n'
+    notificationText += alarms.Headline 
     if (alarms.Effective && alarms.Expires){
-        notificationText += ' (' + getAlarmTime(alarms.Effective, alarms.Expires) + ') ' + '\r\n'
+        notificationText += ' (' + getAlarmTime(alarms.Effective, alarms.Expires) + ') '
     }
-    notificationText +=  alarms.Description
-    adapter.sendTo("telegram.1", "send", {
-        "text": notificationText,
-        "parse_mode": "HTML"
-    });
-    adapter.log.debug('14.3: Sent telegram message for alarm '+ alarms.Alarm_Identifier)
-    */
+
+    adapter.sendTo("email", {
+    to:      adapter.config.mailAddress, // comma separated multiple recipients.
+    subject: notificationText,
+    text:    alarms.Description
+});
+    adapter.log.debug('14.4: Sent email for alarm '+ alarms.Alarm_Identifier + ' to ' + adapter.config.mailAddress)
+    
 }
 
 function sendPushover(alarms){
