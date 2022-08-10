@@ -970,13 +970,17 @@ function sendMail(alarms){
         notificationText += ' (' + getAlarmTime(alarms.Effective, alarms.Expires) + ') '
     }
 
-    adapter.sendTo("email", {
-    to:      adapter.config.mailAddress, // comma separated multiple recipients.
-    subject: notificationText,
-    text:    alarms.Description
-});
-    adapter.log.debug('14.4: Sent email for alarm '+ alarms.Alarm_Identifier + ' to ' + adapter.config.mailAddress)
-    
+    if (adapter.config.mailAddress != ""){
+        adapter.sendTo("email", {
+            to:      adapter.config.mailAddress, // comma separated multiple recipients.
+            subject: notificationText,
+            text:    alarms.Description
+        });
+        adapter.log.debug('14.4: Sent email for alarm '+ alarms.Alarm_Identifier + ' to ' + adapter.config.mailAddress)
+    }
+    else{
+        adapter.log.warn('Please maintain an email adress for the warning notification, or deactivate mail.')
+    }
 }
 
 function sendPushover(alarms){
