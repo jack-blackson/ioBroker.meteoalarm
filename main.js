@@ -891,8 +891,9 @@ async function processNotifications(alarms){
         for(var i = 0; i < notificationAlarmArray.length; i += 1) {
             alarms.map(function (alarms) {
                 if (alarms.Alarm_Identifier == notificationAlarmArray[i]) {
-                    
-                    sendTelegram(alarms)
+                    if (adapter.config.activateTelegram){
+                        sendTelegram(alarms)
+                    }
                     
                 }
             
@@ -933,6 +934,7 @@ function sendTelegram(alarms){
         "text": notificationText,
         "parse_mode": "HTML"
     });
+    adapter.log.debug('Sent telegram message for alarm '+ alarms.Alarm_Identifier)
 }
 
 async function processDetails(content, countInt,detailsType,detailsIdentifier,detailsReference,detailssent,detailsLink){
