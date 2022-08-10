@@ -894,6 +894,12 @@ async function processNotifications(alarms){
                     if (adapter.config.activateTelegram){
                         sendTelegram(alarms)
                     }
+                    if (adapter.config.activateMail){
+                        sendMail(alarms)
+                    }
+                    if (adapter.config.activatePushover){
+                        sendPushover(alarms)
+                    }
                     
                 }
             
@@ -934,7 +940,74 @@ function sendTelegram(alarms){
         "text": notificationText,
         "parse_mode": "HTML"
     });
-    adapter.log.debug('Sent telegram message for alarm '+ alarms.Alarm_Identifier)
+    adapter.log.debug('14.3: Sent telegram message for alarm '+ alarms.Alarm_Identifier)
+}
+function sendMail(alarms){
+    /*
+    var notificationText = ""
+
+    switch (alarms.Level) {
+        case 1:
+            notificationText += ''
+            break;
+        case 2:
+            notificationText += '❗'
+            break;
+        case 3:
+            notificationText += '❗❗'
+            break;
+        case 4:
+            notificationText += '❗❗❗'
+            break;
+       default:
+        notificationText +=  ''
+           break;
+    }
+
+    notificationText += '<b>' +  alarms.Headline + '</b>' + '\r\n'
+    if (alarms.Effective && alarms.Expires){
+        notificationText += ' (' + getAlarmTime(alarms.Effective, alarms.Expires) + ') ' + '\r\n'
+    }
+    notificationText +=  alarms.Description
+    adapter.sendTo("telegram.1", "send", {
+        "text": notificationText,
+        "parse_mode": "HTML"
+    });
+    adapter.log.debug('14.3: Sent telegram message for alarm '+ alarms.Alarm_Identifier)
+    */
+}
+
+function sendPushover(alarms){
+    
+    var notificationText = ""
+
+    switch (alarms.Level) {
+        case 1:
+            notificationText += ''
+            break;
+        case 2:
+            notificationText += '❗'
+            break;
+        case 3:
+            notificationText += '❗❗'
+            break;
+        case 4:
+            notificationText += '❗❗❗'
+            break;
+       default:
+        notificationText +=  ''
+           break;
+    }
+
+    notificationText += alarms.Headline
+    if (alarms.Effective && alarms.Expires){
+        notificationText += ' (' + getAlarmTime(alarms.Effective, alarms.Expires) + ') '
+    }
+    notificationText +=  alarms.Description
+
+    adapter.sendTo('pushover', notificationText);
+    adapter.log.debug('14.5: Sent pushover message for alarm '+ alarms.Alarm_Identifier)
+    
 }
 
 async function processDetails(content, countInt,detailsType,detailsIdentifier,detailsReference,detailssent,detailsLink){
