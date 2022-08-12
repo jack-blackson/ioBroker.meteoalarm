@@ -932,7 +932,7 @@ function sendTelegram(alarms){
            break;
     }
 
-    notificationText += '<b>' +  alarms.Headline + '</b>' + '\r\n'
+    notificationText += '<b>' +  alarms.Headline + ' - ' + regionName + '</b>' + '\r\n'
     if (alarms.Effective && alarms.Expires){
         notificationText += ' (' + getAlarmTime(alarms.Effective, alarms.Expires) + ') ' + '\r\n'
     }
@@ -969,7 +969,7 @@ function sendMail(alarms){
 
     notificationText += alarms.Headline 
     if (alarms.Effective && alarms.Expires){
-        notificationText += ' (' + getAlarmTime(alarms.Effective, alarms.Expires) + ') '
+        notificationText +=  ' - ' + regionName + ' (' + getAlarmTime(alarms.Effective, alarms.Expires) + ') '
     }
 
     if (adapter.config.mailAddress != ""){
@@ -1007,7 +1007,7 @@ function sendPushover(alarms){
            break;
     }
 
-    notificationText += alarms.Headline
+    notificationText += alarms.Headline + ' - ' + regionName
     if (alarms.Effective && alarms.Expires){
         notificationText += ' (' + getAlarmTime(alarms.Effective, alarms.Expires) + ') '
     }
