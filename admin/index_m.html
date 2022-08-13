@@ -40,6 +40,11 @@
                 loadRegions(settings.region)
             }
 
+            getAdapterInstances('telegram', function (arr) {
+            instances = arr;
+            fillInstances('Telegram_instanz', arr, settings['Telegram_instanz']);
+            })
+
 			$('.value').each(function () {
 				var $key = $(this);
 				var id = $key.attr('id');
@@ -75,6 +80,22 @@
             console.log('Settings loaded')
 
 		}
+
+
+        function fillInstances(id, arr, val) {
+            var $sel = $('#' + id);
+            $sel.html('<option value="">' + _('none') + '</option>');
+            var _id;
+            for (var i = 0; i < arr.length; i++) {
+                var _id = arr[i]._id.replace('system.adapter.', '');
+
+                // Take first value
+                if (!val && preset) val = _id;
+
+                $sel.append('<option value="' + _id + '"' + ((_id === val) ? ' selected' : '') + '>' + _id + '</option>');
+            }
+            $sel.select();
+        }
 
 		function loadRegions(initValue){
             $('#loader1').removeClass('seenot');
@@ -409,9 +430,9 @@
                     <input type="checkbox" id="activateTelegram" class="value" />
                     <label for="warningType1" class="translate">activate</label>
                 </div>
-                <div class="input-field col s3">
-                    <input type="text" id="telegramInstanz" class="value" />
-                    <label for="telegramInstanz" class="translate">telegramInstanz</label>
+                <div class="input-field col s4 m2">
+                    <select id="telegramInstanz" class="value"></select>
+                    <label class="translate" for="telegramInstanz">telegramInstanz</label>
                 </div>
 
             </div>
