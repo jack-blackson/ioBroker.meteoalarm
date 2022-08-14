@@ -40,29 +40,21 @@
                 loadRegions(settings.region)
             }
 
-            getAdapterInstances('email', function (arr) {
-            instances = arr;
-            fillInstances('mailInstanz', arr, settings['mailInstanz']);
-            })
+            getAdapterInstances('telegram', function (instances) {
+                fillInstances('telegramInstanz', instances, settings['telegramInstanz'], 'telegram');
+             });
 
-            getAdapterInstances('telegram', function (arr) {
-            instances = arr;
-            fillInstances('telegramInstanz', arr, settings['telegramInstanz']);
-            })
+             getAdapterInstances('email', function (instances) {
+                fillInstances('mailInstanz', instances, settings['mailInstanz'], 'email');
+             });
 
-            //getAdapterInstances('pushover', function (arr) {
-            //instances = arr;
-            //fillInstances('pushInstanz', arr, settings['pushInstanz']);
-            //})
-
-            getAdapterInstances('pushover', function (instances) {
+             getAdapterInstances('pushover', function (instances) {
                 fillInstances('pushInstanz', instances, settings['pushInstanz'], 'pushover');
              });
 
-            getAdapterInstances('signal-cmb', function (arr) {
-            instances = arr;
-            fillInstances('signalInstanz', arr, settings['signalInstanz']);
-            })
+            getAdapterInstances('signal-cmb', function (instances) {
+                fillInstances('signalInstanz', instances, settings['signalInstanz'], 'signal-cmb');
+             });
 
 			$('.value').each(function () {
 				var $key = $(this);
@@ -83,8 +75,6 @@
 				}
 			});
 			onChange(false);
-
-
 
 
 			// reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
@@ -133,23 +123,6 @@
             }
             $sel.select();
         }
-
-        /*
-        function fillInstances(id, arr, val) {
-            var $sel = $('#' + id);
-            $sel.html('<option value="">' + _('none') + '</option>');
-            var _id;
-            for (var i = 0; i < arr.length; i++) {
-                var _id = arr[i]._id.replace('system.adapter.', '');
-
-                // Take first value
-                if (!val && preset) val = _id;
-
-                $sel.append('<option value="' + _id + '"' + ((_id === val) ? ' selected' : '') + '>' + _id + '</option>');
-            }
-            $sel.select();
-        }
-        */
 
 		function loadRegions(initValue){
             $('#loader1').removeClass('seenot');

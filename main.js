@@ -961,14 +961,14 @@ function sendSignal(alarms){
 
     notificationText+= getNotificationLevel(alarms.Level)
 
-    notificationText += '<b>' +  alarms.Headline + ' - ' + regionName + '</b>' + '\r\n'
+    notificationText += alarms.Headline + ' - ' + regionName 
     if (alarms.Effective && alarms.Expires){
-        notificationText += ' (' + getAlarmTime(alarms.Effective, alarms.Expires) + ') ' + '\r\n'
+        notificationText += ' (' + getAlarmTime(alarms.Effective, alarms.Expires) + ') ' 
     }
     notificationText +=  alarms.Description
 
     adapter.sendTo(adapter.config.signalInstanz, "send", {
-        "text": notificationText
+        "text": notificationText,
     });
     adapter.log.debug('14.6: Sent Signal message for alarm '+ alarms.Alarm_Identifier)
 }
