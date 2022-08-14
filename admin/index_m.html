@@ -50,10 +50,14 @@
             fillInstances('telegramInstanz', arr, settings['telegramInstanz']);
             })
 
-            getAdapterInstances('pushover', function (arr) {
-            instances = arr;
-            fillInstances('pushInstanz', arr, settings['pushInstanz']);
-            })
+            //getAdapterInstances('pushover', function (arr) {
+            //instances = arr;
+            //fillInstances('pushInstanz', arr, settings['pushInstanz']);
+            //})
+
+            getAdapterInstances('pushover', function (instances) {
+                fillInstances('pushInstanz', instances, settings['pushInstanz'], 'pushover');
+             });
 
             getAdapterInstances('signal-cmb', function (arr) {
             instances = arr;
@@ -96,7 +100,41 @@
 
 		}
 
+        function getAdapterInstances(_adapter, callback) {
+            if (typeof _adapter === 'function') {
+                callback = _adapter;
+                _adapter = null;
+            }
 
+            socket.emit('getObjectView', 'system', 'instance', { startkey: 'system.adapter.' + (_adapter || adapter), endkey: 'system.adapter.' + (_adapter || adapter) + '.\u9999' }, function (err, doc) {
+                if (err) {
+                    callback && callback([]);
+                } else {
+                    if (doc.rows.length === 0) {
+                        callback && callback([]);
+                    } else {
+                        var res = [];
+                        for (var i = 0; i < doc.rows.length; i++) {
+                            res.push(doc.rows[i].value);
+                        }
+                        callback && callback(res);
+                    }
+                }
+
+            });
+        }
+
+        function fillInstances(id, arr, val, name) {
+            var $sel = $('#' + id);
+            $sel.html('<option value="">' + _('none') + '</option>');
+            for (var i = 0; i < arr.length; i++) {
+                var _id = arr[i]._id.replace('system.adapter.', '');
+                $sel.append('<option value="' + _id + '"' + (_id === val ? ' selected' : '') + '>' + _id + '</option>');
+            }
+            $sel.select();
+        }
+
+        /*
         function fillInstances(id, arr, val) {
             var $sel = $('#' + id);
             $sel.html('<option value="">' + _('none') + '</option>');
@@ -111,6 +149,7 @@
             }
             $sel.select();
         }
+        */
 
 		function loadRegions(initValue){
             $('#loader1').removeClass('seenot');
@@ -447,7 +486,7 @@
                 </div>
                 <div class="input-field col s4 m2">
                     <select id="telegramInstanz" class="value"></select>
-                    <label class="translate" for="telegramInstanz">chooseInstance</label>
+                    <label class="translate" for="telegramInstanz">chooseTelegramInstance</label>
                 </div>
             </div>
 
@@ -461,7 +500,7 @@
                 </div>
                 <div class="input-field col s4 m2">
                     <select id="mailInstanz" class="value"></select>
-                    <label class="translate" for="mailInstanz">chooseInstance</label>
+                    <label class="translate" for="mailInstanz">chooseMailInstance</label>
                 </div>
                 <div class="input-field col s3">
                     <input type="text" id="mailAddress" class="value" />
@@ -479,7 +518,7 @@
                 </div>
                 <div class="input-field col s4 m2">
                     <select id="pushInstanz" class="value"></select>
-                    <label class="translate" for="pushInstanz">chooseInstance</label>
+                    <label class="translate" for="pushInstanz">choosePushOverInstance</label>
                 </div>
             </div>
 
@@ -493,7 +532,7 @@
                 </div>
                 <div class="input-field col s4 m2">
                     <select id="signalInstanz" class="value"></select>
-                    <label class="translate" for="signalInstanz">chooseInstance</label>
+                    <label class="translate" for="signalInstanz">chooseSignalInstance</label>
                 </div>
             </div>
 
