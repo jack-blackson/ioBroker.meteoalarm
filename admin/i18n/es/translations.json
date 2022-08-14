@@ -71,6 +71,7 @@
     "noBackgroundColor": "Sin color de fondo en el widget HTML",
     "noIcons": "No mostrar el icono en el widget HTML",
     "notification": "Notificación",
+    "notifications": "Notificaciones",
     "region_select": "Seleccione región",
     "regions": "Regiones",
     "regionsetup": "Configurar la región de alarma",
