@@ -901,6 +901,10 @@ async function processNotifications(alarms){
                     if (adapter.config.activatePushover){
                         sendPushover(alarms)
                     }
+
+                    if (adapter.config.activateSignal){
+                        sendSignal(alarms)
+                    }
                     
                 }
             
@@ -911,10 +915,9 @@ async function processNotifications(alarms){
     })
 }
 
-function sendTelegram(alarms){
+function getNotificationLevel(level){
     var notificationText = ""
-
-    switch (alarms.Level) {
+    switch (level) {
         case 1:
             notificationText += ''
             break;
@@ -931,6 +934,14 @@ function sendTelegram(alarms){
         notificationText +=  ''
            break;
     }
+    return notificationText
+
+}
+
+function sendTelegram(alarms){
+    var notificationText = ""
+
+    notificationText+= getNotificationLevel(alarms.Level)
 
     notificationText += '<b>' +  alarms.Headline + ' - ' + regionName + '</b>' + '\r\n'
     if (alarms.Effective && alarms.Expires){
@@ -945,27 +956,28 @@ function sendTelegram(alarms){
     adapter.log.debug('14.3: Sent telegram message for alarm '+ alarms.Alarm_Identifier)
 }
 
+function sendSignal(alarms){
+    var notificationText = ""
+
+    notificationText+= getNotificationLevel(alarms.Level)
+
+    notificationText += '<b>' +  alarms.Headline + ' - ' + regionName + '</b>' + '\r\n'
+    if (alarms.Effective && alarms.Expires){
+        notificationText += ' (' + getAlarmTime(alarms.Effective, alarms.Expires) + ') ' + '\r\n'
+    }
+    notificationText +=  alarms.Description
+
+    adapter.sendTo(adapter.config.signalInstanz, "send", {
+        "text": notificationText
+    });
+    adapter.log.debug('14.6: Sent Signal message for alarm '+ alarms.Alarm_Identifier)
+}
+
 function sendMail(alarms){
     
     var notificationText = ""
 
-    switch (alarms.Level) {
-        case 1:
-            notificationText += ''
-            break;
-        case 2:
-            notificationText += '❗'
-            break;
-        case 3:
-            notificationText += '❗❗'
-            break;
-        case 4:
-            notificationText += '❗❗❗'
-            break;
-       default:
-        notificationText +=  ''
-           break;
-    }
+    notificationText+= getNotificationLevel(alarms.Level)
 
     notificationText += alarms.Headline 
     if (alarms.Effective && alarms.Expires){
@@ -989,23 +1001,7 @@ function sendPushover(alarms){
     
     var notificationText = ""
 
-    switch (alarms.Level) {
-        case 1:
-            notificationText += ''
-            break;
-        case 2:
-            notificationText += '❗'
-            break;
-        case 3:
-            notificationText += '❗❗'
-            break;
-        case 4:
-            notificationText += '❗❗❗'
-            break;
-       default:
-        notificationText +=  ''
-           break;
-    }
+    notificationText+= getNotificationLevel(alarms.Level)
 
     notificationText += alarms.Headline + ' - ' + regionName
     if (alarms.Effective && alarms.Expires){

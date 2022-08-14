@@ -50,14 +50,15 @@
             fillInstances('telegramInstanz', arr, settings['telegramInstanz']);
             })
 
-
-
             getAdapterInstances('pushover', function (arr) {
             instances = arr;
             fillInstances('pushInstanz', arr, settings['pushInstanz']);
             })
 
-            
+            getAdapterInstances('signal-cmb', function (arr) {
+            instances = arr;
+            fillInstances('signalInstanz', arr, settings['signalInstanz']);
+            })
 
 			$('.value').each(function () {
 				var $key = $(this);
@@ -448,8 +449,8 @@
                     <select id="telegramInstanz" class="value"></select>
                     <label class="translate" for="telegramInstanz">chooseInstance</label>
                 </div>
-
             </div>
+
             <div class="col s12">
                 <h6 class="title translate" data-lang="mail">Mail</h6>
             </div>
@@ -467,6 +468,7 @@
                     <label for="mailAddress" class="translate">addMailAddress</label>
                 </div>
             </div>
+
             <div class="col s12">
                 <h6 class="title translate" data-lang="pushover">Pushover</h6>
             </div>
@@ -479,7 +481,20 @@
                     <select id="pushInstanz" class="value"></select>
                     <label class="translate" for="pushInstanz">chooseInstance</label>
                 </div>
+            </div>
 
+            <div class="col s12">
+                <h6 class="title translate" data-lang="signal">Signal</h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s3">
+                    <input type="checkbox" id="activateSignal" class="value" />
+                    <label for="warningType1" class="translate">activate</label>
+                </div>
+                <div class="input-field col s4 m2">
+                    <select id="signalhInstanz" class="value"></select>
+                    <label class="translate" for="signalInstanz">chooseInstance</label>
+                </div>
             </div>
 
     </div>
