@@ -40,15 +40,17 @@
                 loadRegions(settings.region)
             }
 
+            getAdapterInstances('email', function (arr) {
+            instances = arr;
+            fillInstances('mailInstanz', arr, settings['mailInstanz']);
+            })
+
             getAdapterInstances('telegram', function (arr) {
             instances = arr;
             fillInstances('telegramInstanz', arr, settings['telegramInstanz']);
             })
 
-            getAdapterInstances('email', function (arr) {
-            instances = arr;
-            fillInstances('mailInstanz', arr, settings['mailInstanz']);
-            })
+
 
             getAdapterInstances('pushover', function (arr) {
             instances = arr;
