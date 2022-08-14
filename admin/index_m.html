@@ -45,6 +45,18 @@
             fillInstances('telegramInstanz', arr, settings['telegramInstanz']);
             })
 
+            getAdapterInstances('email', function (arr) {
+            instances = arr;
+            fillInstances('mailInstanz', arr, settings['mailInstanz']);
+            })
+
+            getAdapterInstances('pushover', function (arr) {
+            instances = arr;
+            fillInstances('pushInstanz', arr, settings['pushInstanz']);
+            })
+
+            
+
 			$('.value').each(function () {
 				var $key = $(this);
 				var id = $key.attr('id');
@@ -432,7 +444,7 @@
                 </div>
                 <div class="input-field col s4 m2">
                     <select id="telegramInstanz" class="value"></select>
-                    <label class="translate" for="telegramInstanz">telegramInstanz</label>
+                    <label class="translate" for="telegramInstanz">chooseInstance</label>
                 </div>
 
             </div>
@@ -443,6 +455,10 @@
                 <div class="input-field col s3">
                     <input type="checkbox" id="activateMail" class="value" />
                     <label for="activateMail" class="translate">activate</label>
+                </div>
+                <div class="input-field col s4 m2">
+                    <select id="mailInstanz" class="value"></select>
+                    <label class="translate" for="mailInstanz">chooseInstance</label>
                 </div>
                 <div class="input-field col s3">
                     <input type="text" id="mailAddress" class="value" />
@@ -456,6 +472,10 @@
                 <div class="input-field col s3">
                     <input type="checkbox" id="activatePushover" class="value" />
                     <label for="warningType1" class="translate">activate</label>
+                </div>
+                <div class="input-field col s4 m2">
+                    <select id="pushInstanz" class="value"></select>
+                    <label class="translate" for="pushInstanz">chooseInstance</label>
                 </div>
 
             </div>

@@ -85,5 +85,5 @@
     "notification": "Notification",
     "activate": "Activate",
     "addMailAddress": "Insert mail address (comma seperated)",
-    "telegramInstanz": "Add telegram instanc"
+    "chooseInstance": "Choose instance"
 }
