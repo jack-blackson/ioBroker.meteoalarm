@@ -85,5 +85,10 @@
     "notification": "Notification",
     "activate": "Activate",
     "addMailAddress": "Insert mail address (comma seperated)",
-    "chooseInstance": "Choose instance"
+    "chooseTelegramInstance": "Choose instance",
+    "chooseMailInstance": "Choose instance",
+    "choosePushOverInstance": "Choose instance",
+    "chooseSignalInstance": "Choose instance"
+
+
 }
