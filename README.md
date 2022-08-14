@@ -64,6 +64,15 @@ Show in the header of the widget instead of the weekday "today", "tomorrow" or "
 |Orange|The weather is dangerous. Unusual meteorological phenomena have been predicted. Damage and accidents are likely. Be very attentive and careful and keep up to date with the expected meteorological conditions. |
 |Red|The weather is very dangerous. Unusually intense meteorological phenomena were predicted. Extreme damage and accidents, often over large areas, threaten life and property. |
 
+## Notifications
+It is possible to let the adapter send you the notifications by mail, telegram, signal or pushover. 
+
+* Signal: Please first install the signal adapter. Then hit "activate" and choose the correct instance. 
+* Mail: Please first install the email adapter. Then hit "activate" and choose the correct instance. Furthermore, enter the email address where the warning should be sent to
+* Pushover: Please first install the pushover adapter. Then hit "activate" and choose the correct instance. 
+* Telegram: Please first install the telegram adapter. Then hit "activate" and choose the correct instance. 
+
+
 ## Supported countries
 * Austria
 * Germany
