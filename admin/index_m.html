@@ -111,12 +111,12 @@
 
         function showSettings(settings){
             //$('#notificationsType').on('change', function () {
-            if ($(this).val() === 'None') {
+            if ($(notificationsType).val() === 'None') {
                 $('.Mail').hide();
                 $('.Pushover').hide();
                 $('.Signal').hide();
                 $('.Telegram').hide();
-            } else if ($(this).val() === 'Telegram') {
+            } else if ($(notificationsType).val() === 'Telegram') {
                 getAdapterInstances('telegram', function (instances) {
                     fillInstances('telegramInstanz', instances, settings['telegramInstanz'], 'telegram');
                 });
@@ -124,7 +124,7 @@
                 $('.Pushover').hide();
                 $('.Signal').hide();
                 $('.Telegram').show();
-            } else if ($(this).val() === 'Mail') {
+            } else if ($(notificationsType).val() === 'Mail') {
                 getAdapterInstances('email', function (instances) {
                     fillInstances('mailInstanz', instances, settings['mailInstanz'], 'email');
                 });
@@ -132,7 +132,7 @@
                 $('.Pushover').hide();
                 $('.Signal').hide();
                 $('.Mail').show();
-            } else if ($(this).val() === 'Pushover') {
+            } else if ($(notificationsType).val() === 'Pushover') {
                 getAdapterInstances('pushover', function (instances) {
                     fillInstances('pushInstanz', instances, settings['pushInstanz'], 'pushover');
                 });
@@ -140,7 +140,7 @@
                 $('.Mail').hide();
                 $('.Signal').hide();
                 $('.Pushover').show();
-            } else if ($(this).val() === 'Signal') {
+            } else if ($(notificationsType).val() === 'Signal') {
                 getAdapterInstances('signal-cmb', function (instances) {
                     fillInstances('signalInstanz', instances, settings['signalInstanz'], 'signal-cmb');
                 });
