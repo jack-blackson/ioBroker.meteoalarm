@@ -40,6 +40,8 @@
                 loadRegions(settings.region)
             }
 
+            showSettings(settings)
+
             getAdapterInstances('telegram', function (instances) {
                 fillInstances('telegramInstanz', instances, settings['telegramInstanz'], 'telegram');
              });
@@ -64,6 +66,7 @@
 				if ($key.attr('type') === 'checkbox') {
 					// do not call onChange direct, because onChange could expect some arguments
 					$key.prop('checked', settings[id])
+                        showSettings(settings)
 						.on('change', () => onChange())
 						;
 				} else {
@@ -112,6 +115,32 @@
                 }
 
             });
+        }
+
+        function showSettings(settings){
+            $('#notificationsType').on('change', function () {
+            if ($(this).val() === 'Telegram') {
+                $('.Mail').hide();
+                $('.Pushover').hide();
+                $('.Signal').hide();
+                $('.Telegram').show();
+            } else if ($(this).val() === 'Mail') {
+                $('.Telegram').hide();
+                $('.Pushover').hide();
+                $('.Signal').hide();
+                $('.Mail').show();
+            } else if ($(this).val() === 'Pushover') {
+                $('.Telegram').hide();
+                $('.Mail').hide();
+                $('.Signal').hide();
+                $('.Pushover').show();
+            } else if ($(this).val() === 'Signal') {
+                $('.Telegram').hide();
+                $('.Mail').hide();
+                $('.Pushover').hide();
+                $('.Signal').show();
+        }
+    }).trigger('change');
         }
 
         function fillInstances(id, arr, val, name) {
@@ -465,12 +494,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="translate col s2">Telegram</div>
-                <div class="input-field col s2">
-                    <input type="checkbox" id="activateTelegram" class="value" />
-                    <label for="warningType1" class="translate">activ</label>
-                </div>
-                <div class="input-field col s4 m2">
+                <div class="input-field col s4 m2 Telegram">
                     <select id="telegramInstanz" class="value"></select>
                     <label class="translate" for="telegramInstanz">chooseTelegramInstance</label>
                 </div>
@@ -478,15 +502,11 @@
 
             <div class="row">
                 <div class="translate">Mail</div>
-                <div class="input-field col s3">
-                    <input type="checkbox" id="activateMail" class="value" />
-                    <label for="activateMail" class="translate">activ</label>
-                </div>
-                <div class="input-field col s4 m2">
+                <div class="input-field col s4 m2 Mail">
                     <select id="mailInstanz" class="value"></select>
                     <label class="translate" for="mailInstanz">chooseMailInstance</label>
                 </div>
-                <div class="input-field col s3">
+                <div class="input-field col s3 Mail">
                     <input type="text" id="mailAddress" class="value" />
                     <label for="mailAddress" class="translate">addMailAddress</label>
                 </div>
@@ -494,11 +514,7 @@
 
             <div class="row">
                 <div class="translate">Pushover</div>
-                <div class="input-field col s3">
-                    <input type="checkbox" id="activatePushover" class="value" />
-                    <label for="warningType1" class="translate">activ</label>
-                </div>
-                <div class="input-field col s4 m2">
+                <div class="input-field col s4 m2 Pushover">
                     <select id="pushInstanz" class="value"></select>
                     <label class="translate" for="pushInstanz">choosePushOverInstance</label>
                 </div>
@@ -506,11 +522,7 @@
 
             <div class="row">
                 <div class="translate">Signal</div>
-                <div class="input-field col s3">
-                    <input type="checkbox" id="activateSignal" class="value" />
-                    <label for="warningType1" class="translate">activ</label>
-                </div>
-                <div class="input-field col s4 m2">
+                <div class="input-field col s4 m2 Signal">
                     <select id="signalInstanz" class="value"></select>
                     <label class="translate" for="signalInstanz">chooseSignalInstance</label>
                 </div>
