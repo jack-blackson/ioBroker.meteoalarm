@@ -830,9 +830,6 @@ function dateDifferenceInWord(inputDate,comparison){
 
 }
 
-
-
-
 async function cleanupOld(){
     const promises = await Promise.all([
 
@@ -898,14 +895,12 @@ async function processNotifications(alarms){
                     }
                     var region = ""
                     if (adapter.config.showLocation){
-                        region = ' ' + regionName
+                        region = ' - ' + regionName
                     }
                     sendNotification(alarms.Headline,alarms.Description,tempDate,region,getNotificationLevel(alarms.Level),alarms.Alarm_Identifier)  
                     
                 }
-            
             })  
-        
         }
         resolve('done')
     })
@@ -936,7 +931,6 @@ function sendNotification(headline,description,date,region,level,identifier){
 
 }
 
-
 function getNotificationLevel(level){
     var notificationText = ""
     switch (level) {
@@ -960,8 +954,8 @@ function getNotificationLevel(level){
 
 }
 
-function sendTelegram(headline,description,date,regio,level,identifier){
-    var notificationText = level + '<b>' +  headline + ' - ' + regio + '</b>' + '\r\n'
+function sendTelegram(headline,description,date,region,level,identifier){
+    var notificationText = level + '<b>' +  headline + region + '</b>' + '\r\n'
     notificationText += ' (' + date + ') ' + '\r\n'
     notificationText +=  description
 
@@ -973,7 +967,7 @@ function sendTelegram(headline,description,date,regio,level,identifier){
 }
 
 function sendSignal(headline,description,date,region,level,identifier){
-    var notificationText = level+ headline + ' - ' + region + ' (' + date + ') ' + description
+    var notificationText = level+ headline + region + ' (' + date + ') ' + description
 
     adapter.sendTo(adapter.config.signalInstanz, "send", {
         "text": notificationText,
@@ -983,7 +977,7 @@ function sendSignal(headline,description,date,region,level,identifier){
 
 function sendMail(headline,description,date,region,level,identifier){
     
-    var notificationText =  level + headline + ' - ' + region + ' (' + date + ') '
+    var notificationText =  level + headline + region + ' (' + date + ') '
 
     if (adapter.config.mailAddress != ""){
         adapter.sendTo("email", {
@@ -1000,7 +994,7 @@ function sendMail(headline,description,date,region,level,identifier){
 
 function sendPushover(headline,description,date,region,level,identifier){
     
-    var notificationText = level + headline + ' - ' + region + ' (' + date + ') ' + description
+    var notificationText = level + headline + region + ' (' + date + ') ' + description
 
     adapter.sendTo('pushover', notificationText);
     adapter.log.debug('14.5: Sent pushover message for alarm '+ identifier)
