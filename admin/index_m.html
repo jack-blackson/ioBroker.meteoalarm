@@ -38,7 +38,11 @@
 			if (!settings) return;
             if (settings.region){
                 showSettings(settings)
-                $('#notificationsType').onChange();
+                //$('#notificationsType').onChange();
+                var event = new Event('change');
+                // Dispatch it.
+                $('#notificationsType').dispatchEvent(event);
+
                 loadRegions(settings.region)
             }
 
