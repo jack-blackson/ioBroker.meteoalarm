@@ -55,6 +55,7 @@
     "addMailAddress": "Insira o endereço de e-mail (separado por vírgula)",
     "alarmtypes": "Tipos de Alarme",
     "alarmtypesetup": "Escolha os tipos de alarme que deseja monitorar",
+    "chooseAdapter": "Escolha o adaptador",
     "chooseMailInstance": "Escolher instância",
     "choosePushOverInstance": "Escolher instância",
     "chooseSignalInstance": "Escolher instância",

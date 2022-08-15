@@ -55,6 +55,7 @@
     "addMailAddress": "插入邮件地址（逗号分隔）",
     "alarmtypes": "报警类型",
     "alarmtypesetup": "选择要监控的警报类型",
+    "chooseAdapter": "选择适配器",
     "chooseMailInstance": "选择实例",
     "choosePushOverInstance": "选择实例",
     "chooseSignalInstance": "选择实例",

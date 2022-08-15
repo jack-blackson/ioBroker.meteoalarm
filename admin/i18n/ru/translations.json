@@ -55,6 +55,7 @@
     "addMailAddress": "Вставьте адрес электронной почты (через запятую)",
     "alarmtypes": "Типы сигналов тревоги",
     "alarmtypesetup": "Выберите типы сигналов тревоги, которые вы хотите отслеживать",
+    "chooseAdapter": "Выберите адаптер",
     "chooseMailInstance": "Выберите экземпляр",
     "choosePushOverInstance": "Выберите экземпляр",
     "chooseSignalInstance": "Выберите экземпляр",

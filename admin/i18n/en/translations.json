@@ -55,6 +55,7 @@
     "addMailAddress": "Insert mail address (comma seperated)",
     "alarmtypes": "Alarm Types",
     "alarmtypesetup": "Choose the alarm types you want to monitor",
+    "chooseAdapter": "Choose Adapter",
     "chooseMailInstance": "Choose instance",
     "choosePushOverInstance": "Choose instance",
     "chooseSignalInstance": "Choose instance",
