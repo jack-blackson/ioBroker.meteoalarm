@@ -40,7 +40,6 @@
                 loadRegions(settings.region)
             }
 
-            showSettings(settings)
 
             getAdapterInstances('telegram', function (instances) {
                 fillInstances('telegramInstanz', instances, settings['telegramInstanz'], 'telegram');
@@ -79,6 +78,8 @@
 			});
 			onChange(false);
 
+
+            showSettings(settings)
 
 			// reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
 			if (M) M.updateTextFields();
@@ -119,6 +120,11 @@
 
         function showSettings(settings){
             $('#notificationsType').on('change', function () {
+            if ($(this).val() === 'None') {
+                $('.Mail').hide();
+                $('.Pushover').hide();
+                $('.Signal').hide();
+                $('.Telegram').hide();
             if ($(this).val() === 'Telegram') {
                 $('.Mail').hide();
                 $('.Pushover').hide();
