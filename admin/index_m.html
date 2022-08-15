@@ -41,7 +41,7 @@
                 loadRegions(settings.region)
             }
 
-            notificationsType.onChange();
+            //notificationsType.onChange();
 
 			$('.value').each(function () {
 				var $key = $(this);
@@ -50,9 +50,16 @@
 
 				if ($key.attr('type') === 'checkbox') {
 					// do not call onChange direct, because onChange could expect some arguments
-					$key.prop('checked', settings[id])
+					//$key.prop('checked', settings[id])
                         //showSettings(settings);
-                        .on('change', () => onChange())
+                        //.on('change', () => onChange())
+
+                    $key.prop('checked', settings[id]).on('change', function () {
+                        showHideSettings(settings);
+                        onChange();
+                    });
+
+
 				} else {
 					// do not call onChange direct, because onChange could expect some arguments
 					$key.val(settings[id])
