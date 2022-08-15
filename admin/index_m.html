@@ -55,7 +55,7 @@
                         //.on('change', () => onChange())
 
                     $key.prop('checked', settings[id]).on('change', function () {
-                        showHideSettings(settings);
+                        showSettings(settings);
                         onChange();
                     });
 
@@ -110,13 +110,13 @@
         }
 
         function showSettings(settings){
-            //$('#notificationsType').on('change', function () {
-            if ($(notificationsType).val() === 'None') {
+            $('#notificationsType').on('change', function () {
+            if ($(this).val() === 'None') {
                 $('.Mail').hide();
                 $('.Pushover').hide();
                 $('.Signal').hide();
                 $('.Telegram').hide();
-            } else if ($(notificationsType).val() === 'Telegram') {
+            } else if ($(this).val() === 'Telegram') {
                 getAdapterInstances('telegram', function (instances) {
                     fillInstances('telegramInstanz', instances, settings['telegramInstanz'], 'telegram');
                 });
@@ -124,7 +124,7 @@
                 $('.Pushover').hide();
                 $('.Signal').hide();
                 $('.Telegram').show();
-            } else if ($(notificationsType).val() === 'Mail') {
+            } else if ($(this).val() === 'Mail') {
                 getAdapterInstances('email', function (instances) {
                     fillInstances('mailInstanz', instances, settings['mailInstanz'], 'email');
                 });
@@ -132,7 +132,7 @@
                 $('.Pushover').hide();
                 $('.Signal').hide();
                 $('.Mail').show();
-            } else if ($(notificationsType).val() === 'Pushover') {
+            } else if ($(this).val() === 'Pushover') {
                 getAdapterInstances('pushover', function (instances) {
                     fillInstances('pushInstanz', instances, settings['pushInstanz'], 'pushover');
                 });
@@ -140,7 +140,7 @@
                 $('.Mail').hide();
                 $('.Signal').hide();
                 $('.Pushover').show();
-            } else if ($(notificationsType).val() === 'Signal') {
+            } else if ($(this).val() === 'Signal') {
                 getAdapterInstances('signal-cmb', function (instances) {
                     fillInstances('signalInstanz', instances, settings['signalInstanz'], 'signal-cmb');
                 });
@@ -149,7 +149,7 @@
                 $('.Pushover').hide();
                 $('.Signal').show();
             }
-            //}).trigger('change');
+            }).trigger('change');
         }
 
         function fillInstances(id, arr, val, name) {
