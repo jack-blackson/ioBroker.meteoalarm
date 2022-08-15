@@ -55,7 +55,7 @@
     "addMailAddress": "Insert mail address (comma seperated)",
     "alarmtypes": "Alarm Types",
     "alarmtypesetup": "Choose the alarm types you want to monitor",
-    "chooseAdapter": "Choose Adapter",
+    "chooseAdapter": "Choose your notification adapter",
     "chooseMailInstance": "Choose instance",
     "choosePushOverInstance": "Choose instance",
     "chooseSignalInstance": "Choose instance",
@@ -74,11 +74,13 @@
     "none": "None",
     "notification": "Notification",
     "notifications": "Notifications",
+    "notifications type": "Notifications type",
     "region_select": "Select region",
     "regions": "Regions",
     "regionsetup": "Setup the alarm region",
     "selectImageSize": "Select icon size in HTML widget",
     "settings": "Settings",
+    "showLocation": "Show location",
     "small": "Small",
     "warningType1": "Wind",
     "warningType10": "Rain",
@@ -92,6 +94,5 @@
     "warningType7": "Coast event",
     "warningType8": "Forrest fire",
     "warningType9": "Avalanche",
-    "whiteIcons": "White Icons for Widgets",
-    "notifications type": "Notifications type"
+    "whiteIcons": "White Icons for Widgets"
 }

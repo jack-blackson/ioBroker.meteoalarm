@@ -25,6 +25,7 @@ const fs = require("fs");
 const path = require('path');
 const { hasUncaughtExceptionCaptureCallback } = require('process');
 const { count } = require('console');
+const { level } = require('./lib/stateAttr.js');
 
 var DescFilter1 = '';
 var DescFilter2 = '';
@@ -891,26 +892,15 @@ async function processNotifications(alarms){
         for(var i = 0; i < notificationAlarmArray.length; i += 1) {
             alarms.map(function (alarms) {
                 if (alarms.Alarm_Identifier == notificationAlarmArray[i]) {
-                    switch (adapter.config.notificationsType){
-                        case 'None':
-                            // Do nothing
-                            break;
-                        case 'Telegram':
-                            sendTelegram(alarms)
-                            break;
-                        case 'Mail':
-                            sendMail(alarms)
-                            break;
-                        case 'Pushover':
-                            sendPushover(alarms)
-                            break;
-                        case 'Signal':
-                            sendSignal(alarms)
-                            break;
-                        default:
-                            //Do nothing
-                        break;
+                    var tempDate = ""
+                    if (alarms.Effective && alarms.Expires){
+                        tempDate = getAlarmTime(alarms.Effective, alarms.Expires)
                     }
+                    var region = ""
+                    if (adapter.config.showLocation){
+                        region = ' ' + regionName
+                    }
+                    sendNotification(alarms.Headline,alarms.Description,tempDate,regionName,getNotificationLevel(alarms.Level),alarms.Alarm_Identifier)  
                     
                 }
             
@@ -920,6 +910,32 @@ async function processNotifications(alarms){
         resolve('done')
     })
 }
+
+function sendNotification(headline,description,date,region,level,identifier){
+    switch (adapter.config.notificationsType){
+        case 'None':
+            // Do nothing
+            break;
+        case 'Telegram':
+            sendTelegram(headline,description,date,region,level,identifier)
+            break;
+        case 'Mail':
+            sendMail(headline,description,date,region,level,identifier)
+            break;
+        case 'Pushover':
+            sendPushover(headline,description,date,region,level,identifier)
+            break;
+        case 'Signal':
+            sendSignal(headline,description,date,region,level,identifier)
+            break;
+        default:
+            //Do nothing
+        break;
+    }
+
+
+}
+
 
 function getNotificationLevel(level){
     var notificationText = ""
@@ -944,79 +960,50 @@ function getNotificationLevel(level){
 
 }
 
-function sendTelegram(alarms){
-    var notificationText = ""
-
-    notificationText+= getNotificationLevel(alarms.Level)
-
-    notificationText += '<b>' +  alarms.Headline + ' - ' + regionName + '</b>' + '\r\n'
-    if (alarms.Effective && alarms.Expires){
-        notificationText += ' (' + getAlarmTime(alarms.Effective, alarms.Expires) + ') ' + '\r\n'
-    }
-    notificationText +=  alarms.Description
+function sendTelegram(headline,description,date,regio,level,identifier){
+    var notificationText = level + '<b>' +  headline + ' - ' + regio + '</b>' + '\r\n'
+    notificationText += ' (' + date + ') ' + '\r\n'
+    notificationText +=  description
 
     adapter.sendTo(adapter.config.telegramInstanz, "send", {
         "text": notificationText,
         "parse_mode": "HTML"
     });
-    adapter.log.debug('14.3: Sent telegram message for alarm '+ alarms.Alarm_Identifier)
+    adapter.log.debug('14.3: Sent telegram message for alarm '+ identifier)
 }
 
-function sendSignal(alarms){
-    var notificationText = ""
-
-    notificationText+= getNotificationLevel(alarms.Level)
-
-    notificationText += alarms.Headline + ' - ' + regionName 
-    if (alarms.Effective && alarms.Expires){
-        notificationText += ' (' + getAlarmTime(alarms.Effective, alarms.Expires) + ') ' 
-    }
-    notificationText +=  alarms.Description
+function sendSignal(headline,description,date,region,level,identifier){
+    var notificationText = level+ headline + ' - ' + region + ' (' + date + ') ' + description
 
     adapter.sendTo(adapter.config.signalInstanz, "send", {
         "text": notificationText,
     });
-    adapter.log.debug('14.6: Sent Signal message for alarm '+ alarms.Alarm_Identifier)
+    adapter.log.debug('14.6: Sent Signal message for alarm '+ identifier)
 }
 
-function sendMail(alarms){
+function sendMail(headline,description,date,region,level,identifier){
     
-    var notificationText = ""
-
-    notificationText+= getNotificationLevel(alarms.Level)
-
-    notificationText += alarms.Headline 
-    if (alarms.Effective && alarms.Expires){
-        notificationText +=  ' - ' + regionName + ' (' + getAlarmTime(alarms.Effective, alarms.Expires) + ') '
-    }
+    var notificationText =  level + headline + ' - ' + region + ' (' + date + ') '
 
     if (adapter.config.mailAddress != ""){
         adapter.sendTo("email", {
             to:      adapter.config.mailAddress, // comma separated multiple recipients.
             subject: notificationText,
-            text:    alarms.Description
+            text:    description
         });
-        adapter.log.debug('14.4: Sent email for alarm '+ alarms.Alarm_Identifier + ' to ' + adapter.config.mailAddress)
+        adapter.log.debug('14.4: Sent email for alarm '+ identifier + ' to ' + adapter.config.mailAddress)
     }
     else{
         adapter.log.warn('Please maintain an email address for the warning notification, or deactivate mail.')
     }
 }
 
-function sendPushover(alarms){
+function sendPushover(headline,description,date,region,level,identifier){
     
-    var notificationText = ""
-
-    notificationText+= getNotificationLevel(alarms.Level)
-
-    notificationText += alarms.Headline + ' - ' + regionName
-    if (alarms.Effective && alarms.Expires){
-        notificationText += ' (' + getAlarmTime(alarms.Effective, alarms.Expires) + ') '
-    }
-    notificationText +=  alarms.Description
+    var notificationText = level + headline + ' - ' + region + ' (' + date + ') ' + description
 
     adapter.sendTo('pushover', notificationText);
-    adapter.log.debug('14.5: Sent pushover message for alarm '+ alarms.Alarm_Identifier)
+    adapter.log.debug('14.5: Sent pushover message for alarm '+ identifier)
     
 }
 
