@@ -66,8 +66,8 @@
 				if ($key.attr('type') === 'checkbox') {
 					// do not call onChange direct, because onChange could expect some arguments
 					$key.prop('checked', settings[id])
-                        showSettings(settings)
-						.on('change', () => onChange())
+                        showSettings(settings);
+						onChange()
 						;
 				} else {
 					// do not call onChange direct, because onChange could expect some arguments
@@ -139,8 +139,8 @@
                 $('.Mail').hide();
                 $('.Pushover').hide();
                 $('.Signal').show();
-        }
-    }).trigger('change');
+            }
+            }).trigger('change');
         }
 
         function fillInstances(id, arr, val, name) {
@@ -501,7 +501,6 @@
             </div>
 
             <div class="row">
-                <div class="translate">Mail</div>
                 <div class="input-field col s4 m2 Mail">
                     <select id="mailInstanz" class="value"></select>
                     <label class="translate" for="mailInstanz">chooseMailInstance</label>
@@ -513,7 +512,6 @@
             </div>
 
             <div class="row">
-                <div class="translate">Pushover</div>
                 <div class="input-field col s4 m2 Pushover">
                     <select id="pushInstanz" class="value"></select>
                     <label class="translate" for="pushInstanz">choosePushOverInstance</label>
@@ -521,7 +519,6 @@
             </div>
 
             <div class="row">
-                <div class="translate">Signal</div>
                 <div class="input-field col s4 m2 Signal">
                     <select id="signalInstanz" class="value"></select>
                     <label class="translate" for="signalInstanz">chooseSignalInstance</label>
