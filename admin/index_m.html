@@ -66,8 +66,8 @@
 				if ($key.attr('type') === 'checkbox') {
 					// do not call onChange direct, because onChange could expect some arguments
 					$key.prop('checked', settings[id])
-                        showSettings(settings);
-						onChange();
+                        //showSettings(settings);
+                        .on('change', () => onChange())
 				} else {
 					// do not call onChange direct, because onChange could expect some arguments
 					$key.val(settings[id])
