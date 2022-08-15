@@ -38,6 +38,7 @@
 			if (!settings) return;
             if (settings.region){
                 showSettings(settings)
+                $('#notificationsType').onChange();
                 loadRegions(settings.region)
             }
 
