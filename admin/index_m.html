@@ -42,22 +42,6 @@
             }
 
 
-            getAdapterInstances('telegram', function (instances) {
-                fillInstances('telegramInstanz', instances, settings['telegramInstanz'], 'telegram');
-             });
-
-             getAdapterInstances('email', function (instances) {
-                fillInstances('mailInstanz', instances, settings['mailInstanz'], 'email');
-             });
-
-             getAdapterInstances('pushover', function (instances) {
-                fillInstances('pushInstanz', instances, settings['pushInstanz'], 'pushover');
-             });
-
-            getAdapterInstances('signal-cmb', function (instances) {
-                fillInstances('signalInstanz', instances, settings['signalInstanz'], 'signal-cmb');
-             });
-
 			$('.value').each(function () {
 				var $key = $(this);
 				var id = $key.attr('id');
@@ -118,6 +102,22 @@
         }
 
         function showSettings(settings){
+            getAdapterInstances('telegram', function (instances) {
+                fillInstances('telegramInstanz', instances, settings['telegramInstanz'], 'telegram');
+             });
+
+             getAdapterInstances('email', function (instances) {
+                fillInstances('mailInstanz', instances, settings['mailInstanz'], 'email');
+             });
+
+             getAdapterInstances('pushover', function (instances) {
+                fillInstances('pushInstanz', instances, settings['pushInstanz'], 'pushover');
+             });
+
+            getAdapterInstances('signal-cmb', function (instances) {
+                fillInstances('signalInstanz', instances, settings['signalInstanz'], 'signal-cmb');
+             });
+
             $('#notificationsType').on('change', function () {
             if ($(this).val() === 'None') {
                 $('.Mail').hide();
