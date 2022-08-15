@@ -37,7 +37,7 @@
 			// example: select elements with id=key and class=value and insert value
 			if (!settings) return;
             if (settings.region){
-                //showSettings(settings)
+                showSettings(settings)
                 loadRegions(settings.region)
             }
 
@@ -55,7 +55,7 @@
                         //.on('change', () => onChange())
 
                     $key.prop('checked', settings[id]).on('change', function () {
-                        showSettings(settings);
+                        //showSettings(settings);
                         onChange();
                     });
 
