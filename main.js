@@ -900,7 +900,7 @@ async function processNotifications(alarms){
                     if (adapter.config.showLocation){
                         region = ' ' + regionName
                     }
-                    sendNotification(alarms.Headline,alarms.Description,tempDate,regionName,getNotificationLevel(alarms.Level),alarms.Alarm_Identifier)  
+                    sendNotification(alarms.Headline,alarms.Description,tempDate,region,getNotificationLevel(alarms.Level),alarms.Alarm_Identifier)  
                     
                 }
             
