@@ -71,6 +71,7 @@
     "medium": "Середина",
     "noBackgroundColor": "В виджете HTML нет цвета фона",
     "noIcons": "Не показывать значок в виджете HTML",
+    "none": "Никто",
     "notification": "Уведомление",
     "notifications": "Уведомления",
     "region_select": "Выберите регион",

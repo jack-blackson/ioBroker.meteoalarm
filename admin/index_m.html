@@ -453,8 +453,20 @@
                 <h6 class="title translate" data-lang="chooseAdapter">chooseAdapter</h6>
             </div>
             <div class="row">
-                <div class="translate col s3">Telegram</div>
-                <div class="input-field col s3">
+                <div class="input-field col s11 m2">
+                    <select class="value" id="notificationsType">
+                    <option value="None" class="translate">none</option>
+                    <option value="Telegram" class="translate">Telegram</option>
+                    <option value="Mail" class="translate">E-Mail</option>
+                    <option value="Pushover" class="translate">Pushover</option>
+                    <option value="Signal" class="translate">Signal</option>
+                    </select>
+                    <label for="notificationsType" class="translate">notifications type</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="translate col s2">Telegram</div>
+                <div class="input-field col s2">
                     <input type="checkbox" id="activateTelegram" class="value" />
                     <label for="warningType1" class="translate">activ</label>
                 </div>

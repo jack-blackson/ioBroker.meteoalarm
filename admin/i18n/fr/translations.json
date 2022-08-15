@@ -71,6 +71,7 @@
     "medium": "Moyen",
     "noBackgroundColor": "Aucune couleur d'arrière-plan dans le widget HTML",
     "noIcons": "Ne pas afficher l'icône dans le widget HTML",
+    "none": "Aucun",
     "notification": "Notification",
     "notifications": "Notifications",
     "region_select": "Choisissez une région",

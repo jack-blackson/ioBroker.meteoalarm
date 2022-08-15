@@ -891,19 +891,25 @@ async function processNotifications(alarms){
         for(var i = 0; i < notificationAlarmArray.length; i += 1) {
             alarms.map(function (alarms) {
                 if (alarms.Alarm_Identifier == notificationAlarmArray[i]) {
-                    if (adapter.config.activateTelegram){
-                        sendTelegram(alarms)
-                    }
-                    if (adapter.config.activateMail){
-                        sendMail(alarms)
-                    }
-
-                    if (adapter.config.activatePushover){
-                        sendPushover(alarms)
-                    }
-
-                    if (adapter.config.activateSignal){
-                        sendSignal(alarms)
+                    switch (adapter.config.notificationsType){
+                        case 'None':
+                            // Do nothing
+                            break;
+                        case 'Telegram':
+                            sendTelegram(alarms)
+                            break;
+                        case 'Mail':
+                            sendMail(alarms)
+                            break;
+                        case 'Pushover':
+                            sendPushover(alarms)
+                            break;
+                        case 'Signal':
+                            sendSignal(alarms)
+                            break;
+                        default:
+                            //Do nothing
+                        break;
                     }
                     
                 }
