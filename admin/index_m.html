@@ -37,7 +37,7 @@
 			// example: select elements with id=key and class=value and insert value
 			if (!settings) return;
             if (settings.region){
-                //showSettings(settings)
+                showSettings(settings)
                 loadRegions(settings.region)
             }
 
@@ -67,8 +67,7 @@
 					// do not call onChange direct, because onChange could expect some arguments
 					$key.prop('checked', settings[id])
                         showSettings(settings);
-						onChange()
-						;
+						onChange();
 				} else {
 					// do not call onChange direct, because onChange could expect some arguments
 					$key.val(settings[id])
@@ -125,7 +124,7 @@
                 $('.Pushover').hide();
                 $('.Signal').hide();
                 $('.Telegram').hide();
-            if ($(this).val() === 'Telegram') {
+            } else if ($(this).val() === 'Telegram') {
                 $('.Mail').hide();
                 $('.Pushover').hide();
                 $('.Signal').hide();
