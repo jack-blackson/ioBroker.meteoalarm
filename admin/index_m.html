@@ -110,7 +110,7 @@
         }
 
         function showSettings(settings){
-            $('#notificationsType').on('change', function () {
+            //$('#notificationsType').on('change', function () {
             if ($(this).val() === 'None') {
                 $('.Mail').hide();
                 $('.Pushover').hide();
@@ -149,7 +149,7 @@
                 $('.Pushover').hide();
                 $('.Signal').show();
             }
-            }).trigger('change');
+            //}).trigger('change');
         }
 
         function fillInstances(id, arr, val, name) {
