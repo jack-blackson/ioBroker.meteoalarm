@@ -37,14 +37,13 @@
 			// example: select elements with id=key and class=value and insert value
 			if (!settings) return;
             if (settings.region){
-                showSettings(settings)
                 //$('#notificationsType').onChange();
-                var event = new Event('change');
-                // Dispatch it.
-                $('#notificationsType').dispatchEvent(event);
+            
 
                 loadRegions(settings.region)
             }
+
+            //showSettings(settings)
 
             //notificationsType.onChange();
 
@@ -56,11 +55,10 @@
 				if ($key.attr('type') === 'checkbox') {
 					// do not call onChange direct, because onChange could expect some arguments
 					//$key.prop('checked', settings[id])
-                        //showSettings(settings);
+                        showSettings(settings);
                         //.on('change', () => onChange())
 
                     $key.prop('checked', settings[id]).on('change', function () {
-                        //showSettings(settings);
                         onChange();
                     });
 
@@ -87,6 +85,12 @@
 
 
             console.log('Settings loaded')
+
+            $('#notificationsType').on('change', function () {
+                showSettings(settings);
+
+            }).trigger('change');
+
 
 		}
 
@@ -115,6 +119,46 @@
         }
 
         function showSettings(settings){
+
+            //console.log('Notification Type: ' + $("#notificationsType").val())
+            
+            if ($("#notificationsType").children("option:selected").val() === 'Telegram') {
+                getAdapterInstances('telegram', function (instances) {
+                    fillInstances('telegramInstanz', instances, settings['telegramInstanz'], 'telegram');
+                });
+                $('.Mail').hide();
+                $('.Pushover').hide();
+                $('.Signal').hide();
+                $('.Telegram').show();
+            } else if ($("#notificationsType").children("option:selected").val() ==='Mail') {
+                getAdapterInstances('email', function (instances) {
+                    fillInstances('mailInstanz', instances, settings['mailInstanz'], 'email');
+                });
+                $('.Telegram').hide();
+                $('.Pushover').hide();
+                $('.Signal').hide();
+                $('.Mail').show();
+            } else if ($("#notificationsType").children("option:selected").val() === 'Pushover') {
+                getAdapterInstances('pushover', function (instances) {
+                    fillInstances('pushInstanz', instances, settings['pushInstanz'], 'pushover');
+                });
+                $('.Telegram').hide();
+                $('.Mail').hide();
+                $('.Signal').hide();
+                $('.Pushover').show();
+            } else if ($("#notificationsType").children("option:selected").val() === 'Signal') {
+                getAdapterInstances('signal-cmb', function (instances) {
+                    fillInstances('signalInstanz', instances, settings['signalInstanz'], 'signal-cmb');
+                });
+                $('.Telegram').hide();
+                $('.Mail').hide();
+                $('.Pushover').hide();
+                $('.Signal').show();
+            }
+            
+            
+            /////HIER!!!! versuchen, this richtig zu ersetzen, und wenn es geht, dann die Funktion normal ausführen ohne trigger
+            /*
             $('#notificationsType').on('change', function () {
             if ($(this).val() === 'None') {
                 $('.Mail').hide();
@@ -155,6 +199,7 @@
                 $('.Signal').show();
             }
             }).trigger('change');
+            */
         }
 
         function fillInstances(id, arr, val, name) {

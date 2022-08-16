@@ -927,8 +927,6 @@ function sendNotification(headline,description,date,region,level,identifier){
             //Do nothing
         break;
     }
-
-
 }
 
 function getNotificationLevel(level){
@@ -959,46 +957,65 @@ function sendTelegram(headline,description,date,region,level,identifier){
     notificationText += ' (' + date + ') ' + '\r\n'
     notificationText +=  description
 
-    adapter.sendTo(adapter.config.telegramInstanz, "send", {
-        "text": notificationText,
-        "parse_mode": "HTML"
-    });
-    adapter.log.debug('14.3: Sent telegram message for alarm '+ identifier)
+    if (adapter.config.telegramInstanz !== null){
+        adapter.sendTo(adapter.config.telegramInstanz, "send", {
+            "text": notificationText,
+            "parse_mode": "HTML"
+        });
+        adapter.log.debug('14.3: Sent telegram message for alarm '+ identifier)
+    }
+    else{
+        adapter.log.warn('No instance in setup maintained for telegram!')
+    }
 }
 
 function sendSignal(headline,description,date,region,level,identifier){
     var notificationText = level+ headline + region + ' (' + date + ') ' + description
 
-    adapter.sendTo(adapter.config.signalInstanz, "send", {
-        "text": notificationText,
-    });
-    adapter.log.debug('14.6: Sent Signal message for alarm '+ identifier)
+    if (adapter.config.signalInstanz !== null){
+        adapter.sendTo(adapter.config.signalInstanz, "send", {
+            "text": notificationText,
+        });
+        adapter.log.debug('14.6: Sent Signal message for alarm '+ identifier)
+    }
+    else{
+        adapter.log.warn('No instance in setup maintained for signal!')
+    }
 }
 
 function sendMail(headline,description,date,region,level,identifier){
     
     var notificationText =  level + headline + region + ' (' + date + ') '
 
-    if (adapter.config.mailAddress != ""){
-        adapter.sendTo("email", {
-            to:      adapter.config.mailAddress, // comma separated multiple recipients.
-            subject: notificationText,
-            text:    description
-        });
-        adapter.log.debug('14.4: Sent email for alarm '+ identifier + ' to ' + adapter.config.mailAddress)
+    if (adapter.config.mailInstanz !== null){
+        if (adapter.config.mailAddress != ""){
+            adapter.sendTo(adapter.config.mailInstanz, {
+                to:      adapter.config.mailAddress, // comma separated multiple recipients.
+                subject: notificationText,
+                text:    description
+            });
+            adapter.log.debug('14.4: Sent email for alarm '+ identifier + ' to ' + adapter.config.mailAddress)
+        }
+        else{
+            adapter.log.warn('Please maintain an email address for the warning notification, or deactivate mail.')
+        }
     }
     else{
-        adapter.log.warn('Please maintain an email address for the warning notification, or deactivate mail.')
-    }
+        adapter.log.warn('No instance in setup maintained for mail!')
+    }    
 }
 
 function sendPushover(headline,description,date,region,level,identifier){
     
     var notificationText = level + headline + region + ' (' + date + ') ' + description
 
-    adapter.sendTo('pushover', notificationText);
-    adapter.log.debug('14.5: Sent pushover message for alarm '+ identifier)
-    
+    if (adapter.config.mailInstanz !== null){
+        adapter.sendTo('pushover', notificationText);
+        adapter.log.debug('14.5: Sent pushover message for alarm '+ identifier)
+    }
+    else{
+        adapter.log.warn('No instance in setup maintained for pushover!')
+    }   
 }
 
 async function processDetails(content, countInt,detailsType,detailsIdentifier,detailsReference,detailssent,detailsLink){
