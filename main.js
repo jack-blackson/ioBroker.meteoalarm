@@ -632,9 +632,7 @@ function checkDuplicates(){
     alarmAll = alarmAllChecked
     adapter.log.debug('9.2 Finished checking alerts - ' + alarmAll.length + ' relevant alarms')
     adapter.log.debug('9.3 alarmAll Array after removing duplicates: ' + JSON.stringify(alarmAll))
-    adapter.log.debug('9.1.1 alarmAll sorted by sent date:', multiSort(alarmAll, {
-        Alarm_Sent: 'desc'
-    }));
+    adapter.log.debug('9.3.1 alarmAll sorted by sent date:', alarmAll.sort((a, b) => a.Alarm_Sent - b.Alarm_Sent))
 }
 
 function checkRelevante(entry){
