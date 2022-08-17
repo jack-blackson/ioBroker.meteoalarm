@@ -37,31 +37,31 @@
 			// example: select elements with id=key and class=value and insert value
 			if (!settings) return;
             if (settings.region){
-
                 loadRegions(settings.region)
             }
+
 
 			$('.value').each(function () {
 				var $key = $(this);
 				var id = $key.attr('id');
                 var value = $key.attr('val');
 				if ($key.attr('type') === 'checkbox') {
-                        showSettings(settings);
-                        onChange();
+                    showSettings(settings);
                     $key.prop('checked', settings[id]).on('change', function () {
                         onChange();
                     });
-
-
 				} else {
 					// do not call onChange direct, because onChange could expect some arguments
-					$key.val(settings[id])
-						.on('change', () => onChange())
-						.on('keyup', () => onChange())
-						;
-				}
+                const val = settings[id];    
+                $key.val(val).change(function () {
+                                    if ($(this).attr('id') !== 'notificationsType')
+                                        onChange();
+                                }).keyup(function () {
+                                    onChange();
+                                });
+                            }
+
 			});
-			onChange(false);
 
 
 
@@ -74,13 +74,13 @@
             });
 
 
-            console.log('Settings loaded')
-
+            showSettings(settings);
             $('#notificationsType').on('change', function () {
                 showSettings(settings);
 
             }).trigger('change');
-
+            onChange(false);
+            console.log('Settings loaded')
 
 		}
 
@@ -148,7 +148,8 @@
                 $('.Pushover').hide();
                 $('.Signal').hide();
             }
-            
+
+
         }
 
         function fillInstances(id, arr, val, name) {
