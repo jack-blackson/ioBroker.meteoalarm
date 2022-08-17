@@ -37,27 +37,17 @@
 			// example: select elements with id=key and class=value and insert value
 			if (!settings) return;
             if (settings.region){
-                //$('#notificationsType').onChange();
-            
 
                 loadRegions(settings.region)
             }
-
-            //showSettings(settings)
-
-            //notificationsType.onChange();
 
 			$('.value').each(function () {
 				var $key = $(this);
 				var id = $key.attr('id');
                 var value = $key.attr('val');
-
 				if ($key.attr('type') === 'checkbox') {
-					// do not call onChange direct, because onChange could expect some arguments
-					//$key.prop('checked', settings[id])
                         showSettings(settings);
-                        //.on('change', () => onChange())
-
+                        onChange();
                     $key.prop('checked', settings[id]).on('change', function () {
                         onChange();
                     });
@@ -120,8 +110,6 @@
 
         function showSettings(settings){
 
-            //console.log('Notification Type: ' + $("#notificationsType").val())
-            
             if ($("#notificationsType").children("option:selected").val() === 'Telegram') {
                 getAdapterInstances('telegram', function (instances) {
                     fillInstances('telegramInstanz', instances, settings['telegramInstanz'], 'telegram');
@@ -161,50 +149,6 @@
                 $('.Signal').hide();
             }
             
-            
-            /////HIER!!!! versuchen, this richtig zu ersetzen, und wenn es geht, dann die Funktion normal ausführen ohne trigger
-            /*
-            $('#notificationsType').on('change', function () {
-            if ($(this).val() === 'None') {
-                $('.Mail').hide();
-                $('.Pushover').hide();
-                $('.Signal').hide();
-                $('.Telegram').hide();
-            } else if ($(this).val() === 'Telegram') {
-                getAdapterInstances('telegram', function (instances) {
-                    fillInstances('telegramInstanz', instances, settings['telegramInstanz'], 'telegram');
-                });
-                $('.Mail').hide();
-                $('.Pushover').hide();
-                $('.Signal').hide();
-                $('.Telegram').show();
-            } else if ($(this).val() === 'Mail') {
-                getAdapterInstances('email', function (instances) {
-                    fillInstances('mailInstanz', instances, settings['mailInstanz'], 'email');
-                });
-                $('.Telegram').hide();
-                $('.Pushover').hide();
-                $('.Signal').hide();
-                $('.Mail').show();
-            } else if ($(this).val() === 'Pushover') {
-                getAdapterInstances('pushover', function (instances) {
-                    fillInstances('pushInstanz', instances, settings['pushInstanz'], 'pushover');
-                });
-                $('.Telegram').hide();
-                $('.Mail').hide();
-                $('.Signal').hide();
-                $('.Pushover').show();
-            } else if ($(this).val() === 'Signal') {
-                getAdapterInstances('signal-cmb', function (instances) {
-                    fillInstances('signalInstanz', instances, settings['signalInstanz'], 'signal-cmb');
-                });
-                $('.Telegram').hide();
-                $('.Mail').hide();
-                $('.Pushover').hide();
-                $('.Signal').show();
-            }
-            }).trigger('change');
-            */
         }
 
         function fillInstances(id, arr, val, name) {
