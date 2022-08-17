@@ -435,7 +435,7 @@ async function getData(){
             //const widget = await createHTMLWidget()
 
             adapter.log.debug('9: Check for duplicate alarms')
-            adapter.log.debug('9.1 alarmAll Array: ' + JSON.stringify(alarmAll))
+            adapter.log.debug('9.1 alarmAll Array before removing duplicates: ' + JSON.stringify(alarmAll))
             checkDuplicates()
 
 
@@ -629,7 +629,9 @@ function checkDuplicates(){
     //2.  Check for Alarmupdates, duplicate updates and cancles
 
     alarmAll = alarmAllChecked
-    adapter.log.debug('Finished checking alerts - ' + alarmAll.length + ' relevant alarms')
+    adapter.log.debug('9.2 Finished checking alerts - ' + alarmAll.length + ' relevant alarms')
+    adapter.log.debug('9.3 alarmAll Array after removing duplicates: ' + JSON.stringify(alarmAll))
+
 }
 
 function checkRelevante(entry){
