@@ -154,6 +154,11 @@
                 $('.Mail').hide();
                 $('.Pushover').hide();
                 $('.Signal').show();
+            } else if ($("#notificationsType").children("option:selected").val() === 'None') {
+                $('.Telegram').hide();
+                $('.Mail').hide();
+                $('.Pushover').hide();
+                $('.Signal').hide();
             }
             
             
