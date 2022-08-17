@@ -436,6 +436,7 @@ async function getData(){
 
             adapter.log.debug('9: Check for duplicate alarms')
             adapter.log.debug('9.1 alarmAll Array before removing duplicates: ' + JSON.stringify(alarmAll))
+
             checkDuplicates()
 
 
@@ -631,7 +632,9 @@ function checkDuplicates(){
     alarmAll = alarmAllChecked
     adapter.log.debug('9.2 Finished checking alerts - ' + alarmAll.length + ' relevant alarms')
     adapter.log.debug('9.3 alarmAll Array after removing duplicates: ' + JSON.stringify(alarmAll))
-
+    adapter.log.debug('9.1.1 alarmAll sorted by sent date:', multiSort(alarmAll, {
+        Alarm_Sent: 'desc'
+    }));
 }
 
 function checkRelevante(entry){
@@ -1490,6 +1493,50 @@ function getCountryLink(country){
            return ''
            break;
     }
+}
+
+function multiSort(array, sortObject = {}) {
+    const sortKeys = Object.keys(sortObject);
+
+    // Return array if no sort object is supplied.
+    if (!sortKeys.length) {
+        return array;
+    }
+
+    // Change the values of the sortObject keys to -1, 0, or 1.
+    for (let key in sortObject) {
+        sortObject[key] = sortObject[key] === 'desc' || sortObject[key] === -1 ? -1 : (sortObject[key] === 'skip' || sortObject[key] === 0 ? 0 : 1);
+    }
+
+    const keySort = (a, b, direction) => {
+        direction = direction !== null ? direction : 1;
+
+        if (a === b) { // If the values are the same, do not switch positions.
+            return 0;
+        }
+
+        // If b > a, multiply by -1 to get the reverse direction.
+        return a > b ? direction : -1 * direction;
+    };
+
+    return array.sort((a, b) => {
+        let sorted = 0;
+        let index = 0;
+
+        // Loop until sorted (-1 or 1) or until the sort keys have been processed.
+        while (sorted === 0 && index < sortKeys.length) {
+            const key = sortKeys[index];
+
+            if (key) {
+                const direction = sortObject[key];
+
+                sorted = keySort(a[key], b[key], direction);
+                index++;
+            }
+        }
+
+        return sorted;
+    });
 }
 
 function getXMLLanguage(country){
