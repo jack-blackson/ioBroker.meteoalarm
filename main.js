@@ -910,26 +910,30 @@ async function processNotifications(alarms){
 }
 
 function sendNotification(headline,description,date,region,level,identifier){
+    var notificationText = ""
+    var descriptionText = ""
     switch (adapter.config.notificationsType){
         case 'None':
             // Do nothing
             break;
         case 'Telegram':
-            sendTelegram(headline,description,date,region,level,identifier)
+            notificationText =+ level + '<b>' +  headline + region + '</b>' + '\r\n' + ' (' + date + ') ' + '\r\n' + description
             break;
         case 'Mail':
-            sendMail(headline,description,date,region,level,identifier)
+            notificationText =  level + headline + region + ' (' + date + ') ';
+            descriptionText = description
             break;
         case 'Pushover':
-            sendPushover(headline,description,date,region,level,identifier)
+            notificationText = level + headline + region + ' (' + date + ') ' + description
             break;
         case 'Signal':
-            sendSignal(headline,description,date,region,level,identifier)
+            notificationText = level+ headline + region + ' (' + date + ') ' + description
             break;
         default:
             //Do nothing
         break;
     }
+    sendMessage(identifier,notificationText,descriptionText)
 }
 
 function getNotificationLevel(level){
@@ -955,70 +959,80 @@ function getNotificationLevel(level){
 
 }
 
-function sendTelegram(headline,description,date,region,level,identifier){
-    var notificationText = level + '<b>' +  headline + region + '</b>' + '\r\n'
-    notificationText += ' (' + date + ') ' + '\r\n'
-    notificationText +=  description
-
-    if (adapter.config.telegramInstanz !== null){
-        adapter.sendTo(adapter.config.telegramInstanz, "send", {
-            "text": notificationText,
-            "parse_mode": "HTML"
-        });
-        adapter.log.debug('14.3: Sent telegram message for alarm '+ identifier)
+function sendMessage(identifier,content,subject){
+    var sentMessage = false
+    var instanceMissing = false
+    switch (adapter.config.notificationsType){
+        case 'None':
+            // Do nothing
+            break;
+        case 'Telegram':
+            if (adapter.config.telegramInstanz){
+                adapter.sendTo(adapter.config.telegramInstanz, "send", {
+                    "text": content,
+                    "parse_mode": "HTML"
+                });
+                sentMessage = true
+            }
+            else{
+                instanceMissing = true
+            }
+            break;
+        case 'Mail':
+            if (adapter.config.mailInstanz){
+                if (adapter.config.mailAddress != ""){
+                    adapter.sendTo(adapter.config.mailInstanz, {
+                        to:      adapter.config.mailAddress, // comma separated multiple recipients.
+                        subject: subject,
+                        text:    content
+                    });
+                    sentMessage = true
+                }
+                else{
+                    adapter.log.warn('14.3: Please maintain an email address for the warning notification, or deactivate mail.')
+                }
+            }
+            else{
+                instanceMissing = true
+            }    
+            break;
+        case 'Pushover':
+            if (adapter.config.pushInstanz){
+                adapter.sendTo('pushover', content);
+                sentMessage = true
+            }
+            else{
+                instanceMissing = true
+            }   
+            break;
+        case 'Signal':
+            if (adapter.config.signalInstanz){
+                adapter.sendTo(adapter.config.signalInstanz, "send", {
+                    "text": content,
+                });
+                sentMessage = true
+            }
+            else{
+                instanceMissing = true
+            }
+            break;
+        default:
+            //Do nothing
+        break;
     }
-    else{
-        adapter.log.warn('No instance in setup maintained for telegram!')
-    }
-}
-
-function sendSignal(headline,description,date,region,level,identifier){
-    var notificationText = level+ headline + region + ' (' + date + ') ' + description
-
-    if (adapter.config.signalInstanz !== null){
-        adapter.sendTo(adapter.config.signalInstanz, "send", {
-            "text": notificationText,
-        });
-        adapter.log.debug('14.6: Sent Signal message for alarm '+ identifier)
-    }
-    else{
-        adapter.log.warn('No instance in setup maintained for signal!')
-    }
-}
-
-function sendMail(headline,description,date,region,level,identifier){
-    
-    var notificationText =  level + headline + region + ' (' + date + ') '
-
-    if (adapter.config.mailInstanz !== null){
-        if (adapter.config.mailAddress != ""){
-            adapter.sendTo(adapter.config.mailInstanz, {
-                to:      adapter.config.mailAddress, // comma separated multiple recipients.
-                subject: notificationText,
-                text:    description
-            });
-            adapter.log.debug('14.4: Sent email for alarm '+ identifier + ' to ' + adapter.config.mailAddress)
+    if (sentMessage){
+        if (identifier != "")
+        {
+            adapter.log.debug('14.3: Sent ' + adapter.config.notificationsType + ' message for alarm '+ identifier)
         }
         else{
-            adapter.log.warn('Please maintain an email address for the warning notification, or deactivate mail.')
+            adapter.log.debug('14.3: Sent ' + adapter.config.notificationsType + ' message')
         }
-    }
-    else{
-        adapter.log.warn('No instance in setup maintained for mail!')
-    }    
-}
 
-function sendPushover(headline,description,date,region,level,identifier){
-    
-    var notificationText = level + headline + region + ' (' + date + ') ' + description
-
-    if (adapter.config.mailInstanz !== null){
-        adapter.sendTo('pushover', notificationText);
-        adapter.log.debug('14.5: Sent pushover message for alarm '+ identifier)
     }
-    else{
-        adapter.log.warn('No instance in setup maintained for pushover!')
-    }   
+    if (instanceMissing){
+        adapter.log.warn('14.3: No instance in setup maintained for ' + adapter.config.notificationsType + '!') 
+    }
 }
 
 async function processDetails(content, countInt,detailsType,detailsIdentifier,detailsReference,detailssent,detailsLink){
