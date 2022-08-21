@@ -72,6 +72,7 @@
     "loadRegions": "Laad regio's",
     "medium": "Medium",
     "noBackgroundColor": "Geen achtergrondkleur in HTML-widget",
+    "noDetails": "Geen details",
     "noIcons": "Pictogram niet weergeven in HTML-widget",
     "none": "Geen",
     "notification": "Kennisgeving",
@@ -98,5 +99,6 @@
     "warningType7": "Kust evenement",
     "warningType8": "bosbrand",
     "warningType9": "Lawine",
+    "warninglevel": "Waarschuwingsniveau",
     "whiteIcons": "Gebruik witte pictogrammen voor widgets"
 }

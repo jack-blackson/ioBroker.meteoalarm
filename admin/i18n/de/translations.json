@@ -72,6 +72,7 @@
     "loadRegions": "Regionen laden",
     "medium": "Mittel",
     "noBackgroundColor": "Keine Hintergrundfarbe im HTML-Widget",
+    "noDetails": "Keine Details",
     "noIcons": "Symbol im HTML-Widget nicht anzeigen",
     "none": "Keiner",
     "notification": "Benachrichtigung",
@@ -98,5 +99,6 @@
     "warningType7": "Küstenereignis",
     "warningType8": "Waldbrand",
     "warningType9": "Lawine",
+    "warninglevel": "Warnstufe",
     "whiteIcons": "Weiße Symbole für Widgets"
 }

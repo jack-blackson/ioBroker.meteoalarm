@@ -72,6 +72,7 @@
     "loadRegions": "Load regions",
     "medium": "Medium",
     "noBackgroundColor": "No background color in HTML widget",
+    "noDetails": "No details",
     "noIcons": "Don't show icon in HTML Widget",
     "none": "None",
     "notification": "Notification",
@@ -98,5 +99,6 @@
     "warningType7": "Coast event",
     "warningType8": "Forrest fire",
     "warningType9": "Avalanche",
+    "warninglevel": "Warning level",
     "whiteIcons": "White Icons for Widgets"
 }

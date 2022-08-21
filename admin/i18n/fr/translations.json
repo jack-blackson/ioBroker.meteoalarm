@@ -72,6 +72,7 @@
     "loadRegions": "Charger les régions",
     "medium": "Moyen",
     "noBackgroundColor": "Aucune couleur d'arrière-plan dans le widget HTML",
+    "noDetails": "Pas de détails",
     "noIcons": "Ne pas afficher l'icône dans le widget HTML",
     "none": "Aucun",
     "notification": "Notification",
@@ -98,5 +99,6 @@
     "warningType7": "Événement côtier",
     "warningType8": "Feu de forêt",
     "warningType9": "avalanche",
+    "warninglevel": "Niveau d'avertissement",
     "whiteIcons": "Utiliser des icônes blanches pour les widgets"
 }

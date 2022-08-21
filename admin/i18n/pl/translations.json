@@ -72,6 +72,7 @@
     "loadRegions": "Załaduj regiony",
     "medium": "Średni",
     "noBackgroundColor": "Brak koloru tła w widżecie HTML",
+    "noDetails": "Bez szczegółów",
     "noIcons": "Nie pokazuj ikony w widżecie HTML",
     "none": "Nic",
     "notification": "Powiadomienie",
@@ -98,5 +99,6 @@
     "warningType7": "Impreza na wybrzeżu",
     "warningType8": "Pożar lasu",
     "warningType9": "Lawina",
+    "warninglevel": "Poziom ostrzeżenia",
     "whiteIcons": "Użyj białych ikon dla widżetów"
 }

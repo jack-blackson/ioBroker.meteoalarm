@@ -72,6 +72,7 @@
     "loadRegions": "Загрузить регионы",
     "medium": "Середина",
     "noBackgroundColor": "В виджете HTML нет цвета фона",
+    "noDetails": "Нет подробностей",
     "noIcons": "Не показывать значок в виджете HTML",
     "none": "Никто",
     "notification": "Уведомление",
@@ -98,5 +99,6 @@
     "warningType7": "Побережье событие",
     "warningType8": "Лесной огонь",
     "warningType9": "Лавина",
+    "warninglevel": "Уровень предупреждения",
     "whiteIcons": "Используйте белые значки для виджетов"
 }

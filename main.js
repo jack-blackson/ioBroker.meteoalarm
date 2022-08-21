@@ -929,22 +929,26 @@ function prepareNotificationText(headline,description,date,region,level,identifi
 function sendNotification(headline,description,date,region,levelText,identifier){
     var notificationText = ""
     var descriptionText = ""
+    if (adapter.config.notificationsType == 'Mail' || !adapter.config.noDetails ){
+        descriptionText = description
+    }
+
+
     switch (adapter.config.notificationsType){
         case 'None':
             // Do nothing
             break;
         case 'Telegram':
-            notificationText = levelText + '<b>' +  headline + region + '</b>' + '\r\n' + ' (' + date + ') ' + '\r\n' + description
+            notificationText = levelText + '<b>' +  headline + region + '</b>' + '\r\n' + ' (' + date + ') ' + '\r\n' + descriptionText
             break;
         case 'Mail':
             notificationText =  levelText + headline + region + ' (' + date + ') ';
-            descriptionText = description
             break;
         case 'Pushover':
-            notificationText = levelText + headline + region + ' (' + date + ') ' + description
+            notificationText = levelText + headline + region + ' (' + date + ') ' + descriptionText
             break;
         case 'Signal':
-            notificationText = levelText+ headline + region + ' (' + date + ') ' + description
+            notificationText = levelText+ headline + region + ' (' + date + ') ' + descriptionText
             break;
         default:
             //Do nothing
@@ -955,7 +959,6 @@ function sendNotification(headline,description,date,region,levelText,identifier)
 }
 
 function getNotificationLevel(level){
-    level = level.toString()
     var notificationText = ""
     switch (level) {
         case 1:
@@ -976,7 +979,7 @@ function getNotificationLevel(level){
     }
 
     if (adapter.config.notificationsType){
-        notificationText += ' ' + getLevelName(level.toString()) + ' '
+        notificationText += '(' + i18nHelper.warninglevel[lang] + ' ' + level + '/4' + ') '
     }
 
     return notificationText

@@ -72,6 +72,7 @@
     "loadRegions": "加载区域",
     "medium": "中等的",
     "noBackgroundColor": "HTML小部件中没有背景色",
+    "noDetails": "没有细节",
     "noIcons": "在HTML窗口小部件中不显示图标",
     "none": "没有任何",
     "notification": "通知",
@@ -98,5 +99,6 @@
     "warningType7": "海岸事件",
     "warningType8": "福雷斯特火",
     "warningType9": "雪崩",
+    "warninglevel": "警告级别",
     "whiteIcons": "对小部件使用白色图标"
 }
