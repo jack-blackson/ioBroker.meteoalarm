@@ -375,6 +375,19 @@
             "native": {}
         },
         {
+            "_id": "notification",
+            "type": "state",
+            "common": {
+                "name": "Notification Datapoint",
+                "type": "string",
+                "role": "value",
+                "read": true,
+                "write": false,
+                "def": ""
+            },
+            "native": {}
+        },
+        {
             "_id": "JSON",
             "type": "state",
             "common": {

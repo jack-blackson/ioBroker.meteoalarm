@@ -889,6 +889,8 @@ async function processNotifications(alarms){
             adapter.log.debug('14.1: Notifications available for alarms: ' + util.inspect(notificationAlarmArray, {showHidden: false, depth: null, colors: true}))
         }
 
+
+
         for(var i = 0; i < notificationAlarmArray.length; i += 1) {
             alarms.map(function (alarms) {
                 if (alarms.Alarm_Identifier == notificationAlarmArray[i]) {
@@ -900,7 +902,14 @@ async function processNotifications(alarms){
                     if (adapter.config.showLocation){
                         region = ' - ' + regionName
                     }
-                    sendNotification(alarms.Headline,alarms.Description,tempDate,region,getNotificationLevel(alarms.Level),alarms.Alarm_Identifier)  
+
+                    var notificationLevel = getNotificationLevel(alarms.Level)
+                    var notificationText = prepareNotificationText(alarms.Headline,alarms.Description,tempDate,region,notificationLevel,alarms.Alarm_Identifier)
+                    
+
+                    adapter.setStateAsync({device: '' , channel: '',state: 'notification'}, {val: notificationText, ack: true})
+
+                    sendNotification(alarms.Headline,alarms.Description,tempDate,region,notificationLevel,alarms.Alarm_Identifier)  
                     
                 }
             })  
@@ -909,7 +918,15 @@ async function processNotifications(alarms){
     })
 }
 
-function sendNotification(headline,description,date,region,level,identifier){
+function prepareNotificationText(headline,description,date,region,level,identifier){
+    var notificationText = ""
+
+    notificationText += level + headline + region + ' (' + date + ') ' + description
+
+    return notificationText
+}
+
+function sendNotification(headline,description,date,region,levelText,identifier){
     var notificationText = ""
     var descriptionText = ""
     switch (adapter.config.notificationsType){
@@ -917,26 +934,28 @@ function sendNotification(headline,description,date,region,level,identifier){
             // Do nothing
             break;
         case 'Telegram':
-            notificationText =+ level + '<b>' +  headline + region + '</b>' + '\r\n' + ' (' + date + ') ' + '\r\n' + description
+            notificationText = levelText + '<b>' +  headline + region + '</b>' + '\r\n' + ' (' + date + ') ' + '\r\n' + description
             break;
         case 'Mail':
-            notificationText =  level + headline + region + ' (' + date + ') ';
+            notificationText =  levelText + headline + region + ' (' + date + ') ';
             descriptionText = description
             break;
         case 'Pushover':
-            notificationText = level + headline + region + ' (' + date + ') ' + description
+            notificationText = levelText + headline + region + ' (' + date + ') ' + description
             break;
         case 'Signal':
-            notificationText = level+ headline + region + ' (' + date + ') ' + description
+            notificationText = levelText+ headline + region + ' (' + date + ') ' + description
             break;
         default:
             //Do nothing
         break;
     }
+
     sendMessage(identifier,notificationText,descriptionText)
 }
 
 function getNotificationLevel(level){
+    level = level.toString()
     var notificationText = ""
     switch (level) {
         case 1:
@@ -955,6 +974,11 @@ function getNotificationLevel(level){
         notificationText +=  ''
            break;
     }
+
+    if (adapter.config.notificationsType){
+        notificationText += ' ' + getLevelName(level.toString()) + ' '
+    }
+
     return notificationText
 
 }
