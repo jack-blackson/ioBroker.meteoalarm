@@ -929,7 +929,7 @@ function prepareNotificationText(headline,description,date,region,level,identifi
 function sendNotification(headline,description,date,region,levelText,identifier){
     var notificationText = ""
     var descriptionText = ""
-    if (adapter.config.notificationsType == 'Mail' || !adapter.config.noDetails ){
+    if (!adapter.config.noDetails ){
         descriptionText = description
     }
 
@@ -939,10 +939,16 @@ function sendNotification(headline,description,date,region,levelText,identifier)
             // Do nothing
             break;
         case 'Telegram':
-            notificationText = levelText + '<b>' +  headline + region + '</b>' + '\r\n' + ' (' + date + ') ' + '\r\n' + descriptionText
+            if (adapter.config.notificationsType){
+                notificationText = '<b>' +  headline + region + '</b>' + '\r\n' + levelText + '\r\n' + descriptionText + '\r\n' + date
+            }
+            else{
+                notificationText = levelText + '<b>' +  headline + region + '</b>' + '\r\n' + ' (' + date + ') ' + '\r\n' + descriptionText
+            }
             break;
         case 'Mail':
             notificationText =  levelText + headline + region + ' (' + date + ') ';
+            descriptionText = description
             break;
         case 'Pushover':
             notificationText = levelText + headline + region + ' (' + date + ') ' + descriptionText
@@ -979,7 +985,7 @@ function getNotificationLevel(level){
     }
 
     if (adapter.config.notificationsType){
-        notificationText += '(' + i18nHelper.warninglevel[lang] + ' ' + level + '/4' + ') '
+        notificationText +=  i18nHelper.warninglevel[lang] + ' ' + level + '/4' + ' '
     }
 
     return notificationText
@@ -1010,8 +1016,8 @@ function sendMessage(identifier,content,subject){
                 if (adapter.config.mailAddress != ""){
                     adapter.sendTo(adapter.config.mailInstanz, {
                         to:      adapter.config.mailAddress, // comma separated multiple recipients.
-                        subject: subject,
-                        text:    content
+                        subject: content,
+                        text:    subject
                     });
                     sentMessage = true
                 }
