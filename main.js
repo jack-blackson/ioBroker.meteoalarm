@@ -909,7 +909,7 @@ async function processNotifications(alarms){
 
                     adapter.setStateAsync({device: '' , channel: '',state: 'notification'}, {val: notificationText, ack: true})
 
-                    sendNotification(alarms.Headline,alarms.Description,tempDate,region,notificationLevel,alarms.Alarm_Identifier)  
+                    sendNotification(alarms.Headline,alarms.Description,tempDate,region,notificationLevel,alarms.Alarm_Identifier,alarms.Alarm_Type)  
                     
                 }
             })  
@@ -926,9 +926,13 @@ function prepareNotificationText(headline,description,date,region,level,identifi
     return notificationText
 }
 
-function sendNotification(headline,description,date,region,levelText,identifier){
+function sendNotification(headline,description,date,region,levelText,identifier,type){
     var notificationText = ""
     var descriptionText = ""
+    var typeText = ""
+    if (type = 'Update'){
+        typeText = i18nHelper.update[lang] + ' '
+    }
     if (!adapter.config.noDetails ){
         descriptionText = description
     }
@@ -940,21 +944,24 @@ function sendNotification(headline,description,date,region,levelText,identifier)
             break;
         case 'Telegram':
             if (adapter.config.notificationsType){
-                notificationText = '<b>' +  headline + region + '</b>' + '\r\n' + levelText + '\r\n' + descriptionText + '\r\n' + date
+                notificationText = '<b>' + typeText + headline + region + '</b>' + '\r\n' + levelText + '\r\n' + descriptionText + '\r\n' + date
             }
             else{
-                notificationText = levelText + '<b>' +  headline + region + '</b>' + '\r\n' + ' (' + date + ') ' + '\r\n' + descriptionText
+                notificationText = levelText + '<b>' + typeText +  headline + region + '</b>' + '\r\n' + ' (' + date + ') ' + '\r\n' + descriptionText
             }
             break;
         case 'Mail':
-            notificationText =  levelText + headline + region + ' (' + date + ') ';
+            notificationText =  levelText + typeText + headline + region + ' (' + date + ') ';
             descriptionText = description
             break;
         case 'Pushover':
-            notificationText = levelText + headline + region + ' (' + date + ') ' + descriptionText
+            notificationText = levelText + typeText + headline + region + ' (' + date + ') ' + descriptionText
             break;
         case 'Signal':
-            notificationText = levelText+ headline + region + ' (' + date + ') ' + descriptionText
+            notificationText = levelText+ typeText+ headline + region + ' (' + date + ') ' + descriptionText
+            break;
+        case 'SynoChat':
+            notificationText = levelText+ typeText+ headline + region + ' (' + date + ') ' + descriptionText
             break;
         default:
             //Do nothing
@@ -1032,6 +1039,16 @@ function sendMessage(identifier,content,subject){
         case 'Pushover':
             if (adapter.config.pushInstanz){
                 adapter.sendTo('pushover', content);
+                sentMessage = true
+            }
+            else{
+                instanceMissing = true
+            }   
+            break;
+        case 'SynoChat':
+            if (adapter.config.synoInstanz){
+                var state = adapter.config.synoInstanz + '.' +  adapter.config.SynoChannel + '.message'
+                adapter.setForeignStateAsync(state, content);
                 sentMessage = true
             }
             else{
