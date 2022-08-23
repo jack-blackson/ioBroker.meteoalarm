@@ -25,6 +25,7 @@ const fs = require("fs");
 const path = require('path');
 const { hasUncaughtExceptionCaptureCallback } = require('process');
 const { count } = require('console');
+const { level } = require('./lib/stateAttr.js');
 
 var DescFilter1 = '';
 var DescFilter2 = '';
@@ -52,6 +53,8 @@ var htmlCode = ""
 
 var today = new Date();
 var maxAlarmLevel = 1
+
+var notificationAlarmArray = []
 
 var imageSizeSetup = 0
 
@@ -249,7 +252,7 @@ async function getData(){
                 Sentry.addBreadcrumb({
                     category: "info",
                     message: 'Country ' + countryConfig + ', Region '+ regionConfig + ' - ' +  regionName,
-                    level: Sentry.Severity.Info,
+                    level: "info",
                   });
             }
             
@@ -261,10 +264,11 @@ async function getData(){
             adapter.log.debug(' XML Language: ' + xmlLanguage)
 
             // Delete old alarms
-            adapter.log.debug('0: Delete Alarms')
+            //adapter.log.debug('0: Delete Alarms')
+            // Alarms will not be deleted here any more
 
-            const deleted =  await deleteAllAlarms();
-            adapter.log.debug('0.1: Deleted Alarms')
+            //const deleted =  await deleteAllAlarms();
+            //adapter.log.debug('0.1: Deleted Alarms')
 
             const checkState = await adapter.getStateAsync('weatherMapCountry')
             if (checkState != null ){
@@ -348,6 +352,7 @@ async function getData(){
             var detailsType = ""
             var detailsIdentifier = ""
             var detailsReference = ""
+            var detailssent = ""
             for (var i = 0, l = urlArray.length; i < l; i++){ 
                 countURL += 1
                 var jsonResult;
@@ -387,6 +392,8 @@ async function getData(){
 
                             detailsType= result.alert.msgType
                             detailsIdentifier = result.alert.identifier
+                            detailsIdentifier = detailsIdentifier.replace(/\./g,'') // remove dots
+                            detailssent = result.alert.sent
                             if (detailsType != "Alert"){
                                 detailsReference = result.alert.references
 
@@ -418,7 +425,7 @@ async function getData(){
 
                         countEntries += 1
                 
-                        const promises = await processDetails(jsonResult,countEntries,detailsType,detailsIdentifier,detailsReference)
+                        const promises = await processDetails(jsonResult,countEntries,detailsType,detailsIdentifier,detailsReference,detailssent)
                         adapter.log.debug('8: Processed Details for Alarm ' + countURL)
 
                 }
@@ -428,21 +435,30 @@ async function getData(){
             //const widget = await createHTMLWidget()
 
             adapter.log.debug('9: Check for duplicate alarms')
-            adapter.log.debug('9.1 alarmAll Array: ' + JSON.stringify(alarmAll))
+            adapter.log.debug('9.1 alarmAll Array before removing duplicates: ' + JSON.stringify(alarmAll))
+
             checkDuplicates()
 
 
+            
+
             //const created = await createAlarms(countEntries)
             //            adapter.log.debug('8: Alarm States created for Alarm ' + countURL + ' type:  ' + awarenesstype)
+            notificationAlarmArray = []
             adapter.log.debug('10: Create alarm states')
             for (var j = 0, l = alarmAll.length; j < l; j++){ 
                 const promises = await fillAlarm(alarmAll, j)
             }
-            adapter.log.debug('10.1: Created alarm states')
+            adapter.log.debug('10.2: Created alarm states')
 
 
+            adapter.log.debug('11: Clean up obsolete alarms')
 
-            adapter.log.debug('11: Creating HTML Widget')
+            const clean = await cleanObsoleteAlarms(alarmAll)
+            adapter.log.debug('11.1: Cleaned up obsolete alarms')
+
+
+            adapter.log.debug('12: Creating HTML Widget')
             htmlCode = ''
             var JSONAll = []
             var warningCount = 0
@@ -508,7 +524,7 @@ async function getData(){
 
                     htmlCode += '<td style="width: 90%; border-style: none; ' + colorHTML +  '">'
                     if (headline && headline.val){
-                        adapter.log.debug('11.1: Added Alarm to widget for ' + headline.val)
+                        adapter.log.debug('12.1: Added Alarm to widget for ' + headline.val)
                         htmlCode += '<h4 style = "margin-top: 5px;margin-bottom: 1px;">' + headline.val + ': '
                     }
                     if (effectiveDate && effectiveDate.val && expiresDate && expiresDate.val){
@@ -575,11 +591,14 @@ async function getData(){
                 adapter.setStateAsync({device: '' , channel: '',state: 'noOfAlarms'}, {val: warningCount, ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'JSON'}, {val: JSON.stringify(JSONAll), ack: true})
             ])
-            adapter.log.debug('12: Set State for Widget')
+            adapter.log.debug('13: Set State for Widget')
 
-            adapter.log.debug('13: All Done')
+            adapter.log.debug('14: Process Notifications')
+            const promises = await processNotifications(alarmAll)
+
+            adapter.log.debug('15: All Done')
             if (regionName){
-                adapter.log.info('Updated Weather Alarms for ' + regionName + ' -> ' + warningCount + ' warning(s) found')
+                adapter.log.info('Updated Weather Alarms for ' + regionName + ' -> ' + warningCount + ' alarm(s) found')
             }
             
             adapter.terminate ? adapter.terminate(0) : process.exit(0);
@@ -611,7 +630,9 @@ function checkDuplicates(){
     //2.  Check for Alarmupdates, duplicate updates and cancles
 
     alarmAll = alarmAllChecked
-    adapter.log.debug('Finished checking alerts - ' + alarmAll.length + ' relevant alarms')
+    adapter.log.debug('9.2 Finished checking alerts - ' + alarmAll.length + ' relevant alarms')
+    adapter.log.debug('9.3 alarmAll Array after removing duplicates: ' + JSON.stringify(alarmAll))
+    adapter.log.debug('9.3.1 alarmAll sorted by sent1 date:' + JSON.stringify(alarmAll.sort((a, b) => a.Alarm_Sent - b.Alarm_Sent)))
 }
 
 function checkRelevante(entry){
@@ -812,9 +833,6 @@ function dateDifferenceInWord(inputDate,comparison){
 
 }
 
-
-
-
 async function cleanupOld(){
     const promises = await Promise.all([
 
@@ -824,6 +842,27 @@ async function cleanupOld(){
 
     ])
 }
+
+async function cleanObsoleteAlarms(allAlarms){
+    //const promises = await Promise.all([
+    return new Promise(function(resolve){
+
+        adapter.getChannelsOf('alarms', function (err, result) {
+            for (const channel of result) {
+                adapter.log.debug('11.0.1: checking alarm "' + channel.common.name)
+                let check = allAlarms.some(function(item) {
+                    return item.Alarm_Identifier === channel.common.name})
+                if (!check){
+                    adapter.log.debug('11.0.2: Alarm ' + channel.common.name + 'will be deleted.')
+                    adapter.deleteChannelAsync('alarms',channel.common.name);
+                }
+            
+            }
+            resolve('done')
+        })
+    })
+}
+
 
 async function getCSVData(){
     return new Promise(function(resolve,reject){
@@ -843,7 +882,210 @@ async function getCSVData(){
     })
 }
 
-async function processDetails(content, countInt,detailsType,detailsIdentifier,detailsReference){
+
+async function processNotifications(alarms){
+    return new Promise(function(resolve,){
+        if (notificationAlarmArray.length >= 1){
+            adapter.log.debug('14.1: Notifications available for alarms: ' + util.inspect(notificationAlarmArray, {showHidden: false, depth: null, colors: true}))
+        }
+
+
+
+        for(var i = 0; i < notificationAlarmArray.length; i += 1) {
+            alarms.map(function (alarms) {
+                if (alarms.Alarm_Identifier == notificationAlarmArray[i]) {
+                    var tempDate = ""
+                    if (alarms.Effective && alarms.Expires){
+                        tempDate = getAlarmTime(alarms.Effective, alarms.Expires)
+                    }
+                    var region = ""
+                    if (adapter.config.showLocation){
+                        region = ' - ' + regionName
+                    }
+
+                    var notificationLevel = getNotificationLevel(alarms.Level)
+                    var notificationText = prepareNotificationText(alarms.Headline,alarms.Description,tempDate,region,notificationLevel,alarms.Alarm_Identifier)
+                    
+
+                    adapter.setStateAsync({device: '' , channel: '',state: 'notification'}, {val: notificationText, ack: true})
+
+                    sendNotification(alarms.Headline,alarms.Description,tempDate,region,notificationLevel,alarms.Alarm_Identifier,alarms.Alarm_Type)  
+                    
+                }
+            })  
+        }
+        resolve('done')
+    })
+}
+
+function prepareNotificationText(headline,description,date,region,level,identifier){
+    var notificationText = ""
+
+    notificationText += level + headline + region + ' (' + date + ') ' + description
+
+    return notificationText
+}
+
+function sendNotification(headline,description,date,region,levelText,identifier,type){
+    var notificationText = ""
+    var descriptionText = ""
+    var typeText = ""
+    if (type = 'Update'){
+        typeText = i18nHelper.update[lang] + ' '
+    }
+    if (!adapter.config.noDetails ){
+        descriptionText = description
+    }
+
+
+    switch (adapter.config.notificationsType){
+        case 'None':
+            // Do nothing
+            break;
+        case 'Telegram':
+            if (adapter.config.notificationsType){
+                notificationText = '<b>' + typeText + headline + region + '</b>' + '\r\n' + levelText + '\r\n' + descriptionText + '\r\n' + date
+            }
+            else{
+                notificationText = levelText + '<b>' + typeText +  headline + region + '</b>' + '\r\n' + ' (' + date + ') ' + '\r\n' + descriptionText
+            }
+            break;
+        case 'Mail':
+            notificationText =  levelText + typeText + headline + region + ' (' + date + ') ';
+            descriptionText = description
+            break;
+        case 'Pushover':
+            notificationText = levelText + typeText + headline + region + ' (' + date + ') ' + descriptionText
+            break;
+        case 'Signal':
+            notificationText = levelText+ typeText+ headline + region + ' (' + date + ') ' + descriptionText
+            break;
+        case 'SynoChat':
+            notificationText = levelText+ typeText+ headline + region + ' (' + date + ') ' + descriptionText
+            break;
+        default:
+            //Do nothing
+        break;
+    }
+
+    sendMessage(identifier,notificationText,descriptionText)
+}
+
+function getNotificationLevel(level){
+    var notificationText = ""
+    switch (level) {
+        case 1:
+            notificationText += ''
+            break;
+        case 2:
+            notificationText += '❗'
+            break;
+        case 3:
+            notificationText += '❗❗'
+            break;
+        case 4:
+            notificationText += '❗❗❗'
+            break;
+       default:
+        notificationText +=  ''
+           break;
+    }
+
+    if (adapter.config.notificationsType){
+        notificationText +=  i18nHelper.warninglevel[lang] + ' ' + level + '/4' + ' '
+    }
+
+    return notificationText
+
+}
+
+function sendMessage(identifier,content,subject){
+    var sentMessage = false
+    var instanceMissing = false
+    switch (adapter.config.notificationsType){
+        case 'None':
+            // Do nothing
+            break;
+        case 'Telegram':
+            if (adapter.config.telegramInstanz){
+                adapter.sendTo(adapter.config.telegramInstanz, "send", {
+                    "text": content,
+                    "parse_mode": "HTML"
+                });
+                sentMessage = true
+            }
+            else{
+                instanceMissing = true
+            }
+            break;
+        case 'Mail':
+            if (adapter.config.mailInstanz){
+                if (adapter.config.mailAddress != ""){
+                    adapter.sendTo(adapter.config.mailInstanz, {
+                        to:      adapter.config.mailAddress, // comma separated multiple recipients.
+                        subject: content,
+                        text:    subject
+                    });
+                    sentMessage = true
+                }
+                else{
+                    adapter.log.warn('14.3: Please maintain an email address for the warning notification, or deactivate mail.')
+                }
+            }
+            else{
+                instanceMissing = true
+            }    
+            break;
+        case 'Pushover':
+            if (adapter.config.pushInstanz){
+                adapter.sendTo('pushover', content);
+                sentMessage = true
+            }
+            else{
+                instanceMissing = true
+            }   
+            break;
+        case 'SynoChat':
+            if (adapter.config.synoInstanz){
+                var state = adapter.config.synoInstanz + '.' +  adapter.config.SynoChannel + '.message'
+                adapter.setForeignStateAsync(state, content);
+                sentMessage = true
+            }
+            else{
+                instanceMissing = true
+            }   
+            break;
+        case 'Signal':
+            if (adapter.config.signalInstanz){
+                adapter.sendTo(adapter.config.signalInstanz, "send", {
+                    "text": content,
+                });
+                sentMessage = true
+            }
+            else{
+                instanceMissing = true
+            }
+            break;
+        default:
+            //Do nothing
+        break;
+    }
+    if (sentMessage){
+        if (identifier != "")
+        {
+            adapter.log.debug('14.3: Sent ' + adapter.config.notificationsType + ' message for alarm '+ identifier)
+        }
+        else{
+            adapter.log.debug('14.3: Sent ' + adapter.config.notificationsType + ' message')
+        }
+
+    }
+    if (instanceMissing){
+        adapter.log.warn('14.3: No instance in setup maintained for ' + adapter.config.notificationsType + '!') 
+    }
+}
+
+async function processDetails(content, countInt,detailsType,detailsIdentifier,detailsReference,detailssent,detailsLink){
     var type = ""
     var level = ""
     content.parameter.forEach(function (element){
@@ -881,6 +1123,7 @@ async function processDetails(content, countInt,detailsType,detailsIdentifier,de
             Alarm_Identifier: detailsIdentifier,
             Alarm_Reference: detailsReference,
             Alarm_Key: detailsType + '-' + Number(level) + '-' + content.onset + '-' + content.expires,
+            Alarm_Sent: detailssent,
             Event: content.event,
             Headline: content.headline,
             Description: content.description,
@@ -902,35 +1145,9 @@ async function processDetails(content, countInt,detailsType,detailsIdentifier,de
 async function fillAlarm(content, countInt){
 
     var pathInt = countInt +1
-    var path = 'alarms.' + 'Alarm_' + pathInt
-    const created = await createAlarms(countInt +1)
-    adapter.log.debug('10.0.1: Created State')
-    //adapter.log.debug('Type: ' + detailsType + ' , Identifier: ' + detailsIdentifier)
+    var path = 'alarms.' + content[countInt].Alarm_Identifier
+    const created = await createAlarms(content[countInt].Alarm_Identifier)
 
-    /*
-    alarmAll.push(
-        {
-            Alarm_Type: detailsType,
-            Alarm_Identifier: detailsIdentifier,
-            Alarm_Reference: detailsReference,
-            Alarm_Key: detailsType + '-' + Number(level) + '-' + content.onset + '-' + content.expires,
-            Event: content.event,
-            Headline: content.headline,
-            Description: content.description,
-            Link: content.web,
-            Expires: content.expires,
-            Effective: content.onset,
-            Sender: content.senderName,
-            Level: Number(level),
-            Leveltext: getLevelName(level),
-            Type: Number(type),
-            Typetext: getTypeName(type),
-            Icon: Warnung_img,
-            Color: getColor(level)
-        }
-    );
-
-    */
     
     await localCreateState(path + '.event', 'event', content[countInt].Event);
     await localCreateState(path + '.headline', 'headline', content[countInt].Headline);
@@ -1015,6 +1232,7 @@ async function localCreateState(state, name, value) {
     }
 }
 
+/*
 async function deleteAllAlarms(){
     //const promises = await Promise.all([
     //    adapter.deleteDeviceAsync('alarms')
@@ -1030,17 +1248,28 @@ async function deleteAllAlarms(){
         // do nothing
     }
 }
+*/
 
+function fillNotificatinAlarmArray(identifier){
+    adapter.log.debug('10.1: Added Alert Notification for '+ identifier)
+    notificationAlarmArray.push(identifier)
+}
 
+async function createAlarms(AlarmIdentifier){
+    var path = 'alarms.' + AlarmIdentifier
+    channelNames.push(AlarmIdentifier)
+    const obj = await adapter.getObjectAsync('alarms.' + AlarmIdentifier);
 
-async function createAlarms(AlarmNumber){
-    var path = 'alarms.' + 'Alarm_' + AlarmNumber
-    channelNames.push('Alarm_' + AlarmNumber)
+    if(!obj) {
+        fillNotificatinAlarmArray(AlarmIdentifier)
+    };
+
     const promises = await Promise.all([
+
 
         adapter.setObjectNotExistsAsync('alarms', {
             common: {
-                name: 'Alarm'
+                name: 'Alarms'
             },
             type: 'device',
             'native' : {}
@@ -1048,7 +1277,7 @@ async function createAlarms(AlarmNumber){
 
         adapter.setObjectNotExistsAsync(path, {
             common: {
-                name: 'Alarm_' + AlarmNumber
+                name: AlarmIdentifier
             },
             type: 'channel',
             'native' : {}
@@ -1326,6 +1555,50 @@ function getCountryLink(country){
            return ''
            break;
     }
+}
+
+function multiSort(array, sortObject = {}) {
+    const sortKeys = Object.keys(sortObject);
+
+    // Return array if no sort object is supplied.
+    if (!sortKeys.length) {
+        return array;
+    }
+
+    // Change the values of the sortObject keys to -1, 0, or 1.
+    for (let key in sortObject) {
+        sortObject[key] = sortObject[key] === 'desc' || sortObject[key] === -1 ? -1 : (sortObject[key] === 'skip' || sortObject[key] === 0 ? 0 : 1);
+    }
+
+    const keySort = (a, b, direction) => {
+        direction = direction !== null ? direction : 1;
+
+        if (a === b) { // If the values are the same, do not switch positions.
+            return 0;
+        }
+
+        // If b > a, multiply by -1 to get the reverse direction.
+        return a > b ? direction : -1 * direction;
+    };
+
+    return array.sort((a, b) => {
+        let sorted = 0;
+        let index = 0;
+
+        // Loop until sorted (-1 or 1) or until the sort keys have been processed.
+        while (sorted === 0 && index < sortKeys.length) {
+            const key = sortKeys[index];
+
+            if (key) {
+                const direction = sortObject[key];
+
+                sorted = keySort(a[key], b[key], direction);
+                index++;
+            }
+        }
+
+        return sorted;
+    });
 }
 
 function getXMLLanguage(country){

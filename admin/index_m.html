@@ -40,26 +40,28 @@
                 loadRegions(settings.region)
             }
 
+
 			$('.value').each(function () {
 				var $key = $(this);
 				var id = $key.attr('id');
                 var value = $key.attr('val');
-
 				if ($key.attr('type') === 'checkbox') {
-					// do not call onChange direct, because onChange could expect some arguments
-					$key.prop('checked', settings[id])
-						.on('change', () => onChange())
-						;
+                    showSettings(settings);
+                    $key.prop('checked', settings[id]).on('change', function () {
+                        onChange();
+                    });
 				} else {
 					// do not call onChange direct, because onChange could expect some arguments
-					$key.val(settings[id])
-						.on('change', () => onChange())
-						.on('keyup', () => onChange())
-						;
-				}
-			});
-			onChange(false);
+                const val = settings[id];    
+                $key.val(val).change(function () {
+                                    if ($(this).attr('id') !== 'notificationsType')
+                                        onChange();
+                                }).keyup(function () {
+                                    onChange();
+                                });
+                            }
 
+			});
 
 
 
@@ -72,9 +74,107 @@
             });
 
 
+            showSettings(settings);
+            $('#notificationsType').on('change', function () {
+                showSettings(settings);
+
+            }).trigger('change');
+            onChange(false);
             console.log('Settings loaded')
 
 		}
+
+        function getAdapterInstances(_adapter, callback) {
+            if (typeof _adapter === 'function') {
+                callback = _adapter;
+                _adapter = null;
+            }
+
+            socket.emit('getObjectView', 'system', 'instance', { startkey: 'system.adapter.' + (_adapter || adapter), endkey: 'system.adapter.' + (_adapter || adapter) + '.\u9999' }, function (err, doc) {
+                if (err) {
+                    callback && callback([]);
+                } else {
+                    if (doc.rows.length === 0) {
+                        callback && callback([]);
+                    } else {
+                        var res = [];
+                        for (var i = 0; i < doc.rows.length; i++) {
+                            res.push(doc.rows[i].value);
+                        }
+                        callback && callback(res);
+                    }
+                }
+
+            });
+        }
+
+        function showSettings(settings){
+
+            if ($("#notificationsType").children("option:selected").val() === 'Telegram') {
+                getAdapterInstances('telegram', function (instances) {
+                    fillInstances('telegramInstanz', instances, settings['telegramInstanz'], 'telegram');
+                });
+                $('.Mail').hide();
+                $('.Pushover').hide();
+                $('.Signal').hide();
+                $('.Telegram').show();
+                $('.SynoChat').hide();            
+            } else if ($("#notificationsType").children("option:selected").val() ==='Mail') {
+                getAdapterInstances('email', function (instances) {
+                    fillInstances('mailInstanz', instances, settings['mailInstanz'], 'email');
+                });
+                $('.Telegram').hide();
+                $('.Pushover').hide();
+                $('.Signal').hide();
+                $('.Mail').show();
+                $('.SynoChat').hide();            
+            } else if ($("#notificationsType").children("option:selected").val() === 'Pushover') {
+                getAdapterInstances('pushover', function (instances) {
+                    fillInstances('pushInstanz', instances, settings['pushInstanz'], 'pushover');
+                });
+                $('.Telegram').hide();
+                $('.Mail').hide();
+                $('.Signal').hide();
+                $('.Pushover').show();
+                $('.SynoChat').hide();            
+            } else if ($("#notificationsType").children("option:selected").val() === 'Signal') {
+                getAdapterInstances('signal-cmb', function (instances) {
+                    fillInstances('signalInstanz', instances, settings['signalInstanz'], 'signal-cmb');
+                });
+                $('.Telegram').hide();
+                $('.Mail').hide();
+                $('.Pushover').hide();
+                $('.Signal').show();
+                $('.SynoChat').hide();            
+            } else if ($("#notificationsType").children("option:selected").val() === 'None') {
+                $('.Telegram').hide();
+                $('.Mail').hide();
+                $('.Pushover').hide();
+                $('.Signal').hide();
+                $('.SynoChat').hide();            
+            } else if ($("#notificationsType").children("option:selected").val() === 'SynoChat') {
+                getAdapterInstances('synochat', function (instances) {
+                    fillInstances('synoInstanz', instances, settings['synoInstanz'], 'synochat');
+                });
+                $('.Telegram').hide();
+                $('.Mail').hide();
+                $('.Pushover').hide();
+                $('.Signal').hide();
+                $('.SynoChat').show();
+            }
+
+
+        }
+
+        function fillInstances(id, arr, val, name) {
+            var $sel = $('#' + id);
+            $sel.html('<option value="">' + _('none') + '</option>');
+            for (var i = 0; i < arr.length; i++) {
+                var _id = arr[i]._id.replace('system.adapter.', '');
+                $sel.append('<option value="' + _id + '"' + (_id === val ? ' selected' : '') + '>' + _id + '</option>');
+            }
+            $sel.select();
+        }
 
 		function loadRegions(initValue){
             $('#loader1').removeClass('seenot');
@@ -206,6 +306,7 @@
             <ul class="tabs">
                 <li class="tab col s2"><a href="#tab-settings"  class="translate active">settings</a></li>
                 <li class="tab col s2"><a href="#tab-alarmtypes" class="translate">alarmtypes</a></li>
+                <li class="tab col s2"><a href="#tab-notification" class="translate">notifications</a></li>
             </ul>
         </div>
         <div id="tab-settings"      class="col s12 page">
@@ -396,11 +497,71 @@
                 </div>
             </div>
 
-
-
-
             </div>
-        </div>    
+        </div>
+        
+        <div id="tab-notification"  class="col s12 page">
+            <div class="col s12">
+                <h6 class="title translate" data-lang="notifications type">notifications type</h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s11 m2">
+                    <select class="value" id="notificationsType">
+                    <option value="None" class="translate">none</option>
+                    <option value="Telegram" class="translate">Telegram</option>
+                    <option value="Mail" class="translate">E-Mail</option>
+                    <option value="Pushover" class="translate">Pushover</option>
+                    <option value="Signal" class="translate">Signal</option>
+                    <option value="SynoChat" class="translate">SynoChat</option>
+                    </select>
+                    <label for="notificationsType" class="translate">notifications type</label>
+                </div>
+                <div class="input-field col s4 m2 Telegram">
+                    <select id="telegramInstanz" class="value"></select>
+                    <label class="translate" for="telegramInstanz">chooseTelegramInstance</label>
+                </div>
+                <div class="input-field col s4 m2 Mail">
+                    <select id="mailInstanz" class="value"></select>
+                    <label class="translate" for="mailInstanz">chooseMailInstance</label>
+                </div>
+                <div class="input-field col s3 Mail">
+                    <input type="text" id="mailAddress" class="value" />
+                    <label for="mailAddress" class="translate">addMailAddress</label>
+                </div>
+                <div class="input-field col s4 m2 Pushover">
+                    <select id="pushInstanz" class="value"></select>
+                    <label class="translate" for="pushInstanz">choosePushOverInstance</label>
+                </div>
+                <div class="input-field col s4 m2 Signal">
+                    <select id="signalInstanz" class="value"></select>
+                    <label class="translate" for="signalInstanz">chooseSignalInstance</label>
+                </div>
+                <div class="input-field col s4 m2 SynoChat">
+                    <select id="synoInstanz" class="value"></select>
+                    <label class="translate" for="synoInstanz">chooseSynoChatInstance</label>
+                </div>
+                <div class="input-field col s3 SynoChat">
+                    <input type="text" id="SynoChannel" class="value" />
+                    <label for="SynoChannel" class="translate">synoChatChannel</label>
+                </div>
+            </div>
+            <div class="col s12">
+                <h6 class="title translate" data-lang="notification settings">notification settings</h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s3">
+                    <input type="checkbox" id="showLocation" class="value" />
+                    <label for="showLocation" class="translate">showLocation</label>
+                </div>
+                <div class="input-field col s3">
+                    <input type="checkbox" id="levelInWords" class="value" />
+                    <label for="levelInWords" class="translate">warningLevelInWords</label>
+                </div>
+                <div class="input-field col s3">
+                    <input type="checkbox" id="noDetails" class="value" />
+                    <label for="noDetails" class="translate">noDetails</label>
+                </div>
+            </div>
     </div>
 </div>
 </body>

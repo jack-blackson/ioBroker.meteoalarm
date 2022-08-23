@@ -11,7 +11,9 @@ meteoalarm Adapter for ioBroker
 ------------------------------------------------------------------------------
 This adapter is pulling weather alarms from https://meteoalarm.org, which includes wind, snow, rain, high and low temperature,etc. This information is available in local language and for detailed regions.
 
-Disclaimer: Time delays between this website and the www.meteoalarm.org website are possible, for the most up to date information about alert levels as published by the participating National Meteorological Services please use https://www.meteoalarm.org.
+DISCLAIMER: Time delays between this website and the www.meteoalarm.org website are possible, for the most up to date information about alert levels as published by the participating National Meteorological Services please use https://www.meteoalarm.org. 
+
+The developer can't guarantee that the warnings are handled in time or that there are errors and problems that lead to not handling warnings at all!
 
 ## How to use it
 Choose your country, and afterwards the region you want the warnings for. If you are unsure what your region name is, please go to https://meteoalarm.org and try to find it on the map. 
@@ -63,6 +65,15 @@ Show in the header of the widget instead of the weekday "today", "tomorrow" or "
 |Yellow|The weather is potentially dangerous. The predicted weather phenomena are not unusual, but increased attention should be paid to activities exposed to meteorological risks. Keep yourself informed about the meteorological conditions to be expected and do not take any avoidable risks.|
 |Orange|The weather is dangerous. Unusual meteorological phenomena have been predicted. Damage and accidents are likely. Be very attentive and careful and keep up to date with the expected meteorological conditions. |
 |Red|The weather is very dangerous. Unusually intense meteorological phenomena were predicted. Extreme damage and accidents, often over large areas, threaten life and property. |
+
+## Notifications
+It is possible to let the adapter send you the notifications by mail, telegram, signal or pushover. 
+
+* Signal: Please first install the signal adapter. Then hit "activate" and choose the correct instance. 
+* Mail: Please first install the email adapter. Then hit "activate" and choose the correct instance. Furthermore, enter the email address where the warning should be sent to
+* Pushover: Please first install the pushover adapter. Then hit "activate" and choose the correct instance. 
+* Telegram: Please first install the telegram adapter. Then hit "activate" and choose the correct instance. 
+
 
 ## Supported countries
 * Austria
