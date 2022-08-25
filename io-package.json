@@ -299,10 +299,10 @@
                 "dsn": "https://336269261940428d9f3093e61a6e06c6@sentry.iobroker.net/124"
             }
         }
-    },   
+    },
     "adminUI": {
         "config": "materialize"
-     },
+    },
     "native": {
         "interval": 120000,
         "pathXML": "",
@@ -325,7 +325,8 @@
         "warningType10": true,
         "warningType12": true,
         "warningType13": true,
-        "notificationsType": "None"
+        "notificationsType": "None",
+        "levelType": "Kreise"
     },
     "objects": [],
     "instanceObjects": [

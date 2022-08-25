@@ -973,23 +973,45 @@ function sendNotification(headline,description,date,region,levelText,identifier,
 
 function getNotificationLevel(level){
     var notificationText = ""
-    switch (level) {
-        case 1:
-            notificationText += ''
-            break;
-        case 2:
-            notificationText += '❗'
-            break;
-        case 3:
-            notificationText += '❗❗'
-            break;
-        case 4:
-            notificationText += '❗❗❗'
-            break;
-       default:
-        notificationText +=  ''
-           break;
+    adapter.log.debug('Alarm  level Type: ' + adapter.config.levelType)
+    if(adapter.config.levelType == "Rufezeichen"){
+        switch (level) {
+            case 1:
+                notificationText += ''
+                break;
+            case 2:
+                notificationText += '❗'
+                break;
+            case 3:
+                notificationText += '❗❗'
+                break;
+            case 4:
+                notificationText += '❗❗❗'
+                break;
+           default:
+            notificationText +=  ''
+               break;
+        }
+    } else if (adapter.config.levelType == "Kreise"){
+        switch (level) {
+            case 1:
+                notificationText += '🟢 '
+                break;
+            case 2:
+                notificationText += '🟡 '
+                break;
+            case 3:
+                notificationText += '🟠 '
+                break;
+            case 4:
+                notificationText += '🔴 '
+                break;
+           default:
+            notificationText +=  ''
+               break;
+        }
     }
+    
 
     if (adapter.config.notificationsType){
         notificationText +=  i18nHelper.warninglevel[lang] + ' ' + level + '/4' + ' '
