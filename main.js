@@ -49,6 +49,9 @@ var urlAtom = ""
 let adapter;
 let lang;
 
+var noOfAlarmsAtEnd= 0
+var noOfAlarmsAtStart = 0
+
 var htmlCode = ""
 
 var today = new Date();
@@ -278,6 +281,10 @@ async function getData(){
             }
             
             const csv = await getCSVData()
+
+            const temp = await adapter.getStateAsync('noOfAlarms')
+            noOfAlarmsAtStart = temp.val
+            adapter.log.debug('0: No. of existing alarm objects at adapter start: ' + noOfAlarmsAtStart)
                 
             adapter.log.debug('1: Parsed CSV File')
             
@@ -581,7 +588,7 @@ async function getData(){
                 );
             }
 
-            
+            noOfAlarmsAtEnd = warningCount
             await Promise.all([
                 adapter.setStateAsync({device: '' , channel: '',state: 'level'}, {val: maxAlarmLevel, ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'htmlToday'}, {val: htmlCode, ack: true}),
@@ -914,6 +921,20 @@ async function processNotifications(alarms){
                 }
             })  
         }
+
+        if ((noOfAlarmsAtStart >= 1)  &&(noOfAlarmsAtEnd == 0) && (adapter.config.noWarningsNotification)){
+            // all Alarms Ended notification should be sent
+            var region = ""
+            if (adapter.config.showLocation){
+                region = ' - ' + regionName
+            }
+            var notificationLevel = getNotificationLevel(1)
+            var notificationText = notificationLevel  + region + ': ' + i18nHelper.warningsLifted[lang]
+            sendMessage('',notificationText,'')
+            adapter.setStateAsync({device: '' , channel: '',state: 'notification'}, {val: notificationText, ack: true})
+        }
+
+
         resolve('done')
     })
 }
