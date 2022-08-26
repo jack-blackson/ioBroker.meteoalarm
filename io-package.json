@@ -300,6 +300,9 @@
             }
         }
     },
+    "adminUI": {
+        "config": "materialize"
+    },
     "native": {
         "interval": 120000,
         "pathXML": "",
@@ -322,7 +325,8 @@
         "warningType10": true,
         "warningType12": true,
         "warningType13": true,
-        "notificationsType": "None"
+        "notificationsType": "None",
+        "levelType": "Kreise"
     },
     "objects": [],
     "instanceObjects": [
