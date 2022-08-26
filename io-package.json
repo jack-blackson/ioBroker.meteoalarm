@@ -4,15 +4,15 @@
         "version": "2.3.0",
         "news": {
             "2.3.0": {
-                "en": "Ability to send alarms to other adapters like telegram or mail",
-                "de": "Möglichkeit, Alarme an andere Adapter wie Telegramm oder Post zu senden",
+                "en": "Ability to send alarms to other adapters (Telegramm, eMail, Pushover, Signal,Synochat)",
+                "de": "Möglichkeit, Benachrichtigungen an andere Adapter (Telegramm, eMail, Pushover, Signal,Synochat) zu senden",
                 "ru": "Возможность отправки сигналов другим адаптерам, таким как телеграм или почта",
                 "pt": "Capacidade de enviar alarmes para outros adaptadores como telegrama ou correio",
-                "nl": "Vermogen om alarmen te sturen naar andere adapters zoals telegram of post",
-                "fr": "Possibilité d'envoyer des alarmes à d'autres adaptateurs comme le télégramme ou le courrier",
-                "it": "Capacità di inviare allarmi ad altri adattatori come il telegramma o la posta",
-                "es": "Capacidad para enviar alarmas a otros adaptadores como telegrama o correo",
-                "pl": "Możliwość wysyłania alarmów do innych adapterów, takich jak telegram czy mail",
+                "nl": "Vermogen om alarmen te sturen naar andere adapters zoals (Telegramm, eMail, Pushover, Signal,Synochat)",
+                "fr": "Possibilité d'envoyer des alarmes à d'autres adaptateurs (Telegramm, eMail, Pushover, Signal,Synochat)",
+                "it": "Capacità di inviare allarmi ad altri adattatori (Telegramm, eMail, Pushover, Signal,Synochat)",
+                "es": "Capacidad para enviar alarmas a otros adaptadores (Telegramm, eMail, Pushover, Signal,Synochat)",
+                "pl": "Możliwość wysyłania alarmów do innych adapterów, takich jak (Telegramm, eMail, Pushover, Signal,Synochat)",
                 "zh-cn": "是否能够向电报或邮件等其他适应者发出震惊"
             },
             "2.2.1": {
