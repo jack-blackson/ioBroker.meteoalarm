@@ -69,10 +69,18 @@ Show in the header of the widget instead of the weekday "today", "tomorrow" or "
 ## Notifications
 It is possible to let the adapter send you the notifications by mail, telegram, signal or pushover. 
 
-* Signal: Please first install the signal adapter. Then hit "activate" and choose the correct instance. 
-* Mail: Please first install the email adapter. Then hit "activate" and choose the correct instance. Furthermore, enter the email address where the warning should be sent to
-* Pushover: Please first install the pushover adapter. Then hit "activate" and choose the correct instance. 
-* Telegram: Please first install the telegram adapter. Then hit "activate" and choose the correct instance. 
+* Signal
+* Mail
+* Pushover
+* Telegram
+* Synochat
+
+Available Settings:
+* Show Location: If this setting is activated, the location name is added to the notification
+* Warning Level in Words: Add the warning level in words additionally to the warning symbols
+* No details: Don't add the description of the warning to the notification - e.g. for Alexa
+* Send "no warnings": Send a notification if all alarms are ended and there is no warning at the moment
+* Warning Level Symbols: Choose what symbols should be added to the notification
 
 
 ## Supported countries
