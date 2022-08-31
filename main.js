@@ -206,7 +206,7 @@ function startAdapter(options) {
 
 function main() {
 
-    var i = 1
+    //var i = 1
 
     adapter.getForeignObject('system.config', (err, systemConfig) => {
         if (!systemConfig.common.language){
@@ -216,8 +216,8 @@ function main() {
             lang = systemConfig.common.language
         }
         adapter.log.debug('Language: ' + lang)
-        adapter.log.debug('Starting round: ' + i) // TEMP
-        i += 1
+        //adapter.log.debug('Starting round: ' + i) // TEMP
+        //i += 1
 
         getData()
         
@@ -414,7 +414,7 @@ async function getData(){
                                             var n = awarenesstype.indexOf(";");
                                             awarenesstype = awarenesstype.substring(0, n)
                                             typeRelevant = checkTypeRelevant(awarenesstype)
-                                            adapter.log.debug('Alarm ' + countURL + ' with type ' + awarenesstype + ' relevant: ' + typeRelevant)
+                                            //adapter.log.debug('Alarm ' + countURL + ' with type ' + awarenesstype + ' relevant: ' + typeRelevant)
                                         }  
                                     })
                                     jsonResult = element 
@@ -440,7 +440,7 @@ async function getData(){
             }
             //const widget = await createHTMLWidget()
 
-            adapter.log.debug('9: Check for duplicate alarms')
+            adapter.log.debug('9: Checking for duplicate alarms')
             //adapter.log.debug('9.0.1 alarmAll Array before removing duplicates: ' + JSON.stringify(alarmAll))
 
             checkDuplicates()
@@ -458,10 +458,10 @@ async function getData(){
             adapter.log.debug('10.2: Created alarm states')
 
 
-            adapter.log.debug('11: Clean up obsolete alarms')
+            adapter.log.debug('11: Cleaning up obsolete alarms')
 
             const clean = await cleanObsoleteAlarms(alarmAll)
-            adapter.log.debug('11.1: Cleaned up obsolete alarms')
+            //adapter.log.debug('11.1: Cleaned up obsolete alarms')
 
 
             adapter.log.debug('12: Creating HTML Widget')
@@ -599,8 +599,13 @@ async function getData(){
             ])
             adapter.log.debug('13: Set State for Widget')
 
-            adapter.log.debug('14: Process Notifications')
-            const promises = await processNotifications(alarmAll)
+            if (notificationAlarmArray.length >= 1){
+                adapter.log.debug('14: Processing notifications')
+                const promises = await processNotifications(alarmAll)
+            }else{
+                adapter.log.debug('14: No new notifications to send')
+            }
+
 
             adapter.log.debug('15: All Done')
             if (regionName){
@@ -855,7 +860,7 @@ async function cleanObsoleteAlarms(allAlarms){
 
         adapter.getChannelsOf('alarms', function (err, result) {
             for (const channel of result) {
-                adapter.log.debug('11.0.1: checking alarm "' + channel.common.name)
+                //adapter.log.debug('11.0.1: checking alarm "' + channel.common.name)
                 let check = allAlarms.some(function(item) {
                     return item.Alarm_Identifier === channel.common.name})
                 if (!check){
@@ -993,7 +998,6 @@ function sendNotification(headline,description,date,region,levelText,identifier,
 
 function getNotificationLevel(level){
     var notificationText = ""
-    adapter.log.debug('Alarm  level Type: ' + adapter.config.levelType)
     if(adapter.config.levelType == "Rufezeichen"){
         switch (level) {
             case 1:
@@ -1186,7 +1190,6 @@ async function processDetails(content, countInt,detailsType,detailsIdentifier,de
 
 async function fillAlarm(content, countInt){
 
-    var pathInt = countInt +1
     var path = 'alarms.' + content[countInt].Alarm_Identifier
     const created = await createAlarms(content[countInt].Alarm_Identifier)
 
@@ -1221,7 +1224,7 @@ function errorHandling(codePart, error, suppressFrontendLog) {
 
 
 async function localCreateState(state, name, value) {
-    adapter.log.debug(`Create_state called for : ${state} with value : ${value}`);
+    //adapter.log.debug(`Create_state called for : ${state} with value : ${value}`);
 
     try {
         // Try to get details from state lib, if not use defaults. throw warning if states is not known in attribute list
