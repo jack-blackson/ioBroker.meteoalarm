@@ -206,7 +206,6 @@ function startAdapter(options) {
 
 function main() {
 
-    // TEMP
     var i = 1
 
     adapter.getForeignObject('system.config', (err, systemConfig) => {
@@ -442,7 +441,7 @@ async function getData(){
             //const widget = await createHTMLWidget()
 
             adapter.log.debug('9: Check for duplicate alarms')
-            adapter.log.debug('9.1 alarmAll Array before removing duplicates: ' + JSON.stringify(alarmAll))
+            //adapter.log.debug('9.0.1 alarmAll Array before removing duplicates: ' + JSON.stringify(alarmAll))
 
             checkDuplicates()
 
@@ -637,9 +636,9 @@ function checkDuplicates(){
     //2.  Check for Alarmupdates, duplicate updates and cancles
 
     alarmAll = alarmAllChecked
-    adapter.log.debug('9.2 Finished checking alerts - ' + alarmAll.length + ' relevant alarms')
-    adapter.log.debug('9.3 alarmAll Array after removing duplicates: ' + JSON.stringify(alarmAll))
-    adapter.log.debug('9.3.1 alarmAll sorted by sent1 date:' + JSON.stringify(alarmAll.sort((a, b) => a.Alarm_Sent - b.Alarm_Sent)))
+    adapter.log.debug('9.1 Finished checking alerts - ' + alarmAll.length + ' relevant alarms')
+    //adapter.log.debug('9.3 alarmAll Array after removing duplicates: ' + JSON.stringify(alarmAll))
+    //adapter.log.debug('9.3.1 alarmAll sorted by sent1 date:' + JSON.stringify(alarmAll.sort((a, b) => a.Alarm_Sent - b.Alarm_Sent)))
 }
 
 function checkRelevante(entry){
@@ -1191,11 +1190,10 @@ async function fillAlarm(content, countInt){
     var path = 'alarms.' + content[countInt].Alarm_Identifier
     const created = await createAlarms(content[countInt].Alarm_Identifier)
 
-    
     await localCreateState(path + '.event', 'event', content[countInt].Event);
     await localCreateState(path + '.headline', 'headline', content[countInt].Headline);
     await localCreateState(path + '.description', 'description', content[countInt].Description);
-    await localCreateState(path + '.link', 'link', content[countInt].Web);
+    await localCreateState(path + '.link', 'link', content[countInt].Link);
     await localCreateState(path + '.expires', 'expires', content[countInt].Expires);
     await localCreateState(path + '.effective', 'effective', content[countInt].Effective);
     await localCreateState(path + '.sender', 'sender', content[countInt].Sender);
