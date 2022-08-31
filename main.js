@@ -402,6 +402,11 @@ async function getData(){
                             detailssent = result.alert.sent
                             if (detailsType != "Alert"){
                                 detailsReference = result.alert.references
+                                var searchTerm = ","
+                                const indexOfFirstComma = detailsReference.indexOf(searchTerm);
+                                const indexOfSecondComma = detailsReference.indexOf(searchTerm, indexOfFirstComma +1);
+                                detailsReference = detailsReference.substring(indexOfFirstComma +1,indexOfSecondComma)
+                                detailsReference = detailsReference.replace(/\./g,'') // remove dots
 
                             }
 
@@ -441,7 +446,7 @@ async function getData(){
             //const widget = await createHTMLWidget()
 
             adapter.log.debug('9: Checking for duplicate alarms')
-            //adapter.log.debug('9.0.1 alarmAll Array before removing duplicates: ' + JSON.stringify(alarmAll))
+            adapter.log.debug('9.0.1 alarmAll Array before removing duplicates: ' + JSON.stringify(alarmAll))
 
             checkDuplicates()
 
@@ -860,11 +865,13 @@ async function cleanObsoleteAlarms(allAlarms){
 
         adapter.getChannelsOf('alarms', function (err, result) {
             for (const channel of result) {
-                //adapter.log.debug('11.0.1: checking alarm "' + channel.common.name)
+                // check if the alarm is included in the new alarms, either as identifier or reference for the updates
                 let check = allAlarms.some(function(item) {
                     return item.Alarm_Identifier === channel.common.name})
-                if (!check){
-                    adapter.log.debug('11.0.2: Alarm ' + channel.common.name + 'will be deleted.')
+                let check1 = allAlarms.some(function(item) {
+                    return item.Alarm_Reference === channel.common.name})    
+                if (!check && !check1){
+                    adapter.log.debug('11.0.2: Alarm ' + channel.common.name + ' will be deleted.')
                     adapter.deleteChannelAsync('alarms',channel.common.name);
                 }
             
@@ -1189,9 +1196,19 @@ async function processDetails(content, countInt,detailsType,detailsIdentifier,de
 }
 
 async function fillAlarm(content, countInt){
+    var path = ""
+    if (content[countInt].Alarm_Type == "Alarm"){
+        path = 'alarms.' + content[countInt].Alarm_Identifier
+        const created = await createAlarms(content[countInt].Alarm_Identifier)
+        await localCreateState(path + '.updateIdentifier', 'updateIdentifier', '');
+    }
+    else if (content[countInt].Alarm_Type == "Update"){
+        path = 'alarms.' + content[countInt].Alarm_Reference
+        const created = await createAlarms(content[countInt].Alarm_Reference)
+        await localCreateState(path + '.updateIdentifier', 'updateIdentifier', content[countInt].Alarm_Identifier);
+    }
 
-    var path = 'alarms.' + content[countInt].Alarm_Identifier
-    const created = await createAlarms(content[countInt].Alarm_Identifier)
+    adapter.log.debug('TEMP: path: ' + path)
 
     await localCreateState(path + '.event', 'event', content[countInt].Event);
     await localCreateState(path + '.headline', 'headline', content[countInt].Headline);
@@ -1206,7 +1223,7 @@ async function fillAlarm(content, countInt){
     await localCreateState(path + '.typeText', 'typeText', content[countInt].Typetext);
     await localCreateState(path + '.icon', 'icon', content[countInt].Icon);
     await localCreateState(path + '.color', 'color', content[countInt].Color);
-   
+    await localCreateState(path + '.sent', 'sent', content[countInt].Alarm_Sent);
 
 }
 
