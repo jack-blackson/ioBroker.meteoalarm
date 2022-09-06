@@ -1207,7 +1207,7 @@ async function processDetails(content, countInt,detailsType,detailsIdentifier,de
 
 async function fillAlarm(content, countInt){
     var path = ""
-    if (content[countInt].Alarm_Type == "Alarm"){
+    if (content[countInt].Alarm_Type == "Alert"){
         path = 'alarms.' + content[countInt].Alarm_Identifier
         const created = await createAlarms(content[countInt].Alarm_Identifier)
         await localCreateState(path + '.updateIdentifier', 'updateIdentifier', '');
@@ -1218,7 +1218,7 @@ async function fillAlarm(content, countInt){
         await localCreateState(path + '.updateIdentifier', 'updateIdentifier', content[countInt].Alarm_Identifier);
     }
 
-    adapter.log.debug('TEMP: path: ' + path)
+    //adapter.log.debug('TEMP: path: ' + path + ' for alarm type ' + content[countInt].Alarm_Type)
 
     await localCreateState(path + '.event', 'event', content[countInt].Event);
     await localCreateState(path + '.headline', 'headline', content[countInt].Headline);
