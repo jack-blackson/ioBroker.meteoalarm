@@ -859,7 +859,7 @@ async function cleanupOld(){
     ])
 }
 
-async function cleanObsoleteAlarms(allAlarms){
+function cleanObsoleteAlarms(allAlarms){
     //const promises = await Promise.all([
     return new Promise(function(resolve){
 
@@ -872,7 +872,9 @@ async function cleanObsoleteAlarms(allAlarms){
                     return item.Alarm_Reference === channel.common.name})    
                 if (!check && !check1){
                     adapter.log.debug('11.0.2: Alarm ' + channel.common.name + ' will be deleted.')
-                    adapter.deleteChannelAsync('alarms',channel.common.name);
+                    adapter.deleteChannel('alarms',channel.common.name);
+                    //const promises = await deleteAlarm(alarmAll)
+                    //const promises = await deleteAlarm(channel.common.name)
                 }
             
             }
@@ -881,6 +883,12 @@ async function cleanObsoleteAlarms(allAlarms){
     })
 }
 
+/*
+async function deleteAlarm(channelName){
+    await adapter.deleteChannelAsync('alarms',channelName);
+
+}
+*/
 
 async function getCSVData(){
     return new Promise(function(resolve,reject){
@@ -949,6 +957,8 @@ async function processNotifications(alarms){
         resolve('done')
     })
 }
+
+
 
 function prepareNotificationText(headline,description,date,region,level,identifier){
     var notificationText = ""
