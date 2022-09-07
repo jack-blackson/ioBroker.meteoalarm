@@ -646,7 +646,7 @@ function checkDuplicates(){
     //2.  Check for Alarmupdates, duplicate updates and cancles
 
     alarmAll = alarmAllChecked
-    adapter.log.debug('9.1 Finished checking alerts - ' + alarmAll.length + ' relevant alarms')
+    adapter.log.debug('9.1 Finished checking alerts - ' + alarmAll.length + ' relevant alarm(s)')
     //adapter.log.debug('9.3 alarmAll Array after removing duplicates: ' + JSON.stringify(alarmAll))
     //adapter.log.debug('9.3.1 alarmAll sorted by sent1 date:' + JSON.stringify(alarmAll.sort((a, b) => a.Alarm_Sent - b.Alarm_Sent)))
 }
@@ -934,7 +934,6 @@ async function processNotifications(alarms){
                     
 
                     adapter.setStateAsync({device: '' , channel: '',state: 'notification'}, {val: notificationText, ack: true})
-
                     sendNotification(alarms.Headline,alarms.Description,tempDate,region,notificationLevel,alarms.Alarm_Identifier,alarms.Alarm_Type)  
                     
                 }
@@ -973,7 +972,7 @@ function sendNotification(headline,description,date,region,levelText,identifier,
     var descriptionText = ""
     var typeText = ""
     if (type = 'Update'){
-        typeText = i18nHelper.update[lang] + ' '
+        typeText = i18nHelper.update[lang] + ': '
     }
     if (!adapter.config.noDetails ){
         descriptionText = description
@@ -1209,12 +1208,12 @@ async function fillAlarm(content, countInt){
     var path = ""
     if (content[countInt].Alarm_Type == "Alert"){
         path = 'alarms.' + content[countInt].Alarm_Identifier
-        const created = await createAlarms(content[countInt].Alarm_Identifier)
+        const created = await createAlarms(content[countInt].Alarm_Identifier,content[countInt].Alarm_Identifier)
         await localCreateState(path + '.updateIdentifier', 'updateIdentifier', '');
     }
     else if (content[countInt].Alarm_Type == "Update"){
         path = 'alarms.' + content[countInt].Alarm_Reference
-        const created = await createAlarms(content[countInt].Alarm_Reference)
+        const created = await createAlarms(content[countInt].Alarm_Reference,content[countInt].Alarm_Identifier)
         await localCreateState(path + '.updateIdentifier', 'updateIdentifier', content[countInt].Alarm_Identifier);
     }
 
@@ -1326,13 +1325,14 @@ function fillNotificatinAlarmArray(identifier){
     notificationAlarmArray.push(identifier)
 }
 
-async function createAlarms(AlarmIdentifier){
+async function createAlarms(AlarmIdentifier,notificationReference){
     var path = 'alarms.' + AlarmIdentifier
     channelNames.push(AlarmIdentifier)
     const obj = await adapter.getObjectAsync('alarms.' + AlarmIdentifier);
 
     if(!obj) {
-        fillNotificatinAlarmArray(AlarmIdentifier)
+        fillNotificatinAlarmArray(notificationReference) 
+        
     };
 
     const promises = await Promise.all([
