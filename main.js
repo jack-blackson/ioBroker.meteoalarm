@@ -971,7 +971,7 @@ function sendNotification(headline,description,date,region,levelText,identifier,
     var notificationText = ""
     var descriptionText = ""
     var typeText = ""
-    if (type = 'Update'){
+    if (type == 'Update'){
         typeText = i18nHelper.update[lang] + ': '
     }
     if (!adapter.config.noDetails ){
