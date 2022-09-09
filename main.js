@@ -614,7 +614,7 @@ async function getData(){
 
             adapter.log.debug('15: All Done')
             if (regionName){
-                adapter.log.info('Updated Weather Alarms for ' + regionName + ' -> ' + warningCount + ' alarm(s) found')
+                adapter.log.info('15.1: Updated Weather Alarms for ' + regionName + ' -> ' + warningCount + ' alarm(s) found')
             }
             
             adapter.terminate ? adapter.terminate(0) : process.exit(0);
