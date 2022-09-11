@@ -44,6 +44,8 @@ const warnMessages = {};
 var channelNames = []
 var csvContent = [];
 var alarmAll = []
+var alarmOldIdentifier = []
+var alarmOldArray = []
 var urlAtom = ""
 
 let adapter;
@@ -60,6 +62,8 @@ var maxAlarmLevel = 1
 var notificationAlarmArray = []
 
 var imageSizeSetup = 0
+
+var updateError = false
 
 let Sentry;
 let SentryIntegrations;
@@ -284,7 +288,16 @@ async function getData(){
             const temp = await adapter.getStateAsync('noOfAlarms')
             noOfAlarmsAtStart = temp.val
             adapter.log.debug('0: No. of existing alarm objects at adapter start: ' + noOfAlarmsAtStart)
-                
+            
+            const temp2 = await saveAlarmNamesForLater()
+            for (const alarm of alarmOldIdentifier) {
+                const temp1 = await saveAlarmsForLater(alarm)
+
+
+            };
+
+
+
             adapter.log.debug('1: Parsed CSV File')
             
             adapter.log.debug('2: Request Atom from ' + urlAtom )
@@ -373,6 +386,7 @@ async function getData(){
 
                 } catch (err){
                     adapter.log.debug('6.1: Details URL ' + urlArray[i].url + ' not valid any more - error ' + err) 
+                    updateError = true
                 }
                var typeRelevant = false
                 if (xmlDetails ){
@@ -464,8 +478,9 @@ async function getData(){
 
 
             adapter.log.debug('11: Cleaning up obsolete alarms')
-
-            const clean = await cleanObsoleteAlarms(alarmAll)
+            if (!updateError){
+                const clean = await cleanObsoleteAlarms(alarmAll)
+            }
             //adapter.log.debug('11.1: Cleaned up obsolete alarms')
 
 
@@ -857,6 +872,55 @@ async function cleanupOld(){
         adapter.deleteStateAsync('weatherMapCountry')
 
     ])
+}
+
+async function saveAlarmNamesForLater(){
+    return new Promise(function(resolve){
+
+        adapter.getChannelsOf('alarms', function (err, result) {
+            for (const channel of result) {
+                alarmOldIdentifier.push(channel.common.name
+            );
+            
+            }
+            adapter.log.debug('TEMP Identifier: ' + JSON.stringify(alarmOldIdentifier))
+            resolve('done')
+        })
+    })
+
+}
+
+async function saveAlarmsForLater(){
+    return new Promise(function(resolve){
+
+        adapter.getChannelsOf('alarms', function (err, result) {
+            for (const channel of result) {
+                let path = channel.common.name
+                let effective = adapter.getState(path + '.effective');
+                let expires = adapter.getState(path + '.expires');
+                let type = adapter.getState(path + '.type');
+                let tempLevel = adapter.getState(path + '.level');
+                let sent = adapter.getState(path + '.sent');
+                let referenz = adapter.getState(path + '.updateIdentifier');
+                
+                alarmOldArray.push(
+                    {
+                        Alarm_Identifier: path,
+                        Alarm_Reference: referenz,
+                        Alarm_Sent: sent,
+                        Expires: expires,
+                        Effective: effective,
+                        Level: Number(tempLevel),
+                        Type: Number(type)
+                    }
+            );
+            
+            }
+            adapter.log.debug('TEMP: ' + JSON.stringify(alarmOldArray))
+            resolve('done')
+        })
+    })
+
 }
 
 function cleanObsoleteAlarms(allAlarms){
