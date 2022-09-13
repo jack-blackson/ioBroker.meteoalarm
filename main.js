@@ -290,10 +290,9 @@ async function getData(){
             adapter.log.debug('0: No. of existing alarm objects at adapter start: ' + noOfAlarmsAtStart)
             
             const temp2 = await saveAlarmNamesForLater()
-            for (const alarm of alarmOldIdentifier) {
-                const temp1 = await saveAlarmsForLater(alarm)
-
-
+            for (const alarmLoop of alarmOldIdentifier) {
+                //HERE SIND WIR
+                const temp1 = await saveAlarmsForLater(alarmLoop)
             };
 
 
@@ -632,7 +631,7 @@ async function getData(){
                 adapter.log.info('15.1: Updated Weather Alarms for ' + regionName + ' -> ' + warningCount + ' alarm(s) found')
             }
             
-            adapter.terminate ? adapter.terminate(0) : process.exit(0);
+            adapter.terminate ? adapter.terminate('All data processed. Adapter stopped until next scheduled process.') : process.exit(0);
 
 
         }
@@ -874,6 +873,7 @@ async function cleanupOld(){
     ])
 }
 
+
 async function saveAlarmNamesForLater(){
     return new Promise(function(resolve){
 
@@ -890,9 +890,37 @@ async function saveAlarmNamesForLater(){
 
 }
 
-async function saveAlarmsForLater(){
+async function saveAlarmsForLater(alarmName){
+    let path = 'alarms.' + alarmName
+    //await Promise.all([
+    //    let effective = adapter.getStateAsync(path + '.effective'),
+
+    //])
+    const effective = await adapter.getStateAsync(path + '.effective')
+    const referenz = await adapter.getStateAsync(path + '.updateIdentifier')
+    const sent = await adapter.getStateAsync(path + '.sent')
+    const expires = await adapter.getStateAsync(path + '.expires')
+    const tempLevel = await adapter.getStateAsync(path + '.effective')
+    const type = await adapter.getStateAsync(path + '.type')
+    alarmOldArray.push(
+        {
+            Alarm_Identifier: alarmName,
+            Alarm_Reference: referenz.val,
+            Alarm_Sent: sent.val,
+            Expires: expires.val,
+            Effective: effective.val,
+            Level: Number(tempLevel.val),
+            Type: Number(type.val)
+        }
+    );
+    adapter.log.debug('TEMP: ' + JSON.stringify(alarmOldArray))
+
+
+
+    /*
     return new Promise(function(resolve){
 
+        await 
         adapter.getChannelsOf('alarms', function (err, result) {
             for (const channel of result) {
                 let path = channel.common.name
@@ -919,7 +947,7 @@ async function saveAlarmsForLater(){
             adapter.log.debug('TEMP: ' + JSON.stringify(alarmOldArray))
             resolve('done')
         })
-    })
+    })*/
 
 }
 
