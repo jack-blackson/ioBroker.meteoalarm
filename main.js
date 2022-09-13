@@ -287,7 +287,7 @@ async function getData(){
 
             const temp = await adapter.getStateAsync('noOfAlarms')
             noOfAlarmsAtStart = temp.val
-            adapter.log.debug('0: No. of existing alarm objects at adapter start: ' + noOfAlarmsAtStart)
+            adapter.log.debug('0: Existing alarm objects at adapter start: ' + noOfAlarmsAtStart)
             
             const temp2 = await saveAlarmNamesForLater()
             for (const alarmLoop of alarmOldIdentifier) {
@@ -883,7 +883,6 @@ async function saveAlarmNamesForLater(){
             );
             
             }
-            adapter.log.debug('TEMP Identifier: ' + JSON.stringify(alarmOldIdentifier))
             resolve('done')
         })
     })
@@ -913,42 +912,6 @@ async function saveAlarmsForLater(alarmName){
             Type: Number(type.val)
         }
     );
-    adapter.log.debug('TEMP: ' + JSON.stringify(alarmOldArray))
-
-
-
-    /*
-    return new Promise(function(resolve){
-
-        await 
-        adapter.getChannelsOf('alarms', function (err, result) {
-            for (const channel of result) {
-                let path = channel.common.name
-                let effective = adapter.getState(path + '.effective');
-                let expires = adapter.getState(path + '.expires');
-                let type = adapter.getState(path + '.type');
-                let tempLevel = adapter.getState(path + '.level');
-                let sent = adapter.getState(path + '.sent');
-                let referenz = adapter.getState(path + '.updateIdentifier');
-                
-                alarmOldArray.push(
-                    {
-                        Alarm_Identifier: path,
-                        Alarm_Reference: referenz,
-                        Alarm_Sent: sent,
-                        Expires: expires,
-                        Effective: effective,
-                        Level: Number(tempLevel),
-                        Type: Number(type)
-                    }
-            );
-            
-            }
-            adapter.log.debug('TEMP: ' + JSON.stringify(alarmOldArray))
-            resolve('done')
-        })
-    })*/
-
 }
 
 function cleanObsoleteAlarms(allAlarms){
