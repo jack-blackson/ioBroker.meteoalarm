@@ -923,9 +923,11 @@ function cleanObsoleteAlarms(allAlarms){
                 // check if the alarm is included in the new alarms, either as identifier or reference for the updates
                 let check = allAlarms.some(function(item) {
                     return item.Alarm_Identifier === channel.common.name})
-                let check1 = allAlarms.some(function(item) {
-                    return item.Alarm_Reference === channel.common.name})    
-                if (!check && !check1){
+                //let check1 = allAlarms.some(function(item) {
+                //    return item.Alarm_Reference === channel.common.name})    
+                if (!check){
+                //if (!check && !check1){
+
                     adapter.log.debug('11.0.2: Alarm ' + channel.common.name + ' will be deleted.')
                     adapter.deleteChannel('alarms',channel.common.name);
                     //const promises = await deleteAlarm(alarmAll)
@@ -1261,15 +1263,16 @@ async function processDetails(content, countInt,detailsType,detailsIdentifier,de
 
 async function fillAlarm(content, countInt){
     var path = ""
+    path = 'alarms.' + content[countInt].Alarm_Identifier
+    const created = await createAlarms(content[countInt].Alarm_Identifier,content[countInt].Alarm_Identifier)
     if (content[countInt].Alarm_Type == "Alert"){
-        path = 'alarms.' + content[countInt].Alarm_Identifier
-        const created = await createAlarms(content[countInt].Alarm_Identifier,content[countInt].Alarm_Identifier)
         await localCreateState(path + '.updateIdentifier', 'updateIdentifier', '');
     }
     else if (content[countInt].Alarm_Type == "Update"){
-        path = 'alarms.' + content[countInt].Alarm_Reference
-        const created = await createAlarms(content[countInt].Alarm_Reference,content[countInt].Alarm_Identifier)
-        await localCreateState(path + '.updateIdentifier', 'updateIdentifier', content[countInt].Alarm_Identifier);
+        //path = 'alarms.' + content[countInt].Alarm_Reference
+        //const created = await createAlarms(content[countInt].Alarm_Reference,content[countInt].Alarm_Identifier)
+        adapter.log.debug('TEMP:: ' + content[countInt].Alarm_Alarm_Reference)
+        await localCreateState(path + '.updateIdentifier', 'updateIdentifier', content[countInt].Alarm_Reference);
     }
 
     //adapter.log.debug('TEMP: path: ' + path + ' for alarm type ' + content[countInt].Alarm_Type)
