@@ -292,6 +292,7 @@ async function getData(){
             const temp2 = await saveAlarmNamesForLater()
             for (const alarmLoop of alarmOldIdentifier) {
                 //HERE SIND WIR
+                adapter.log.debug('TEMP: ' + alarmLoop)
                 const temp1 = await saveAlarmsForLater(alarmLoop)
             };
 
@@ -425,6 +426,7 @@ async function getData(){
 
                             for (var j = 0, l = info.length; j < l; j++){ 
                                 var element = info[j]
+
                                 if (element.language == xmlLanguage){
                                     element.parameter.forEach(function (parameter){
                                         if (parameter.valueName == "awareness_type") {
@@ -446,7 +448,6 @@ async function getData(){
                 }
 
                 if (jsonResult && typeRelevant){
-
                         countEntries += 1
                 
                         const promises = await processDetails(jsonResult,countEntries,detailsType,detailsIdentifier,detailsReference,detailssent)
@@ -891,13 +892,16 @@ async function saveAlarmNamesForLater(){
 
 async function saveAlarmsForLater(alarmName){
     let path = 'alarms.' + alarmName
-    //await Promise.all([
-    //    let effective = adapter.getStateAsync(path + '.effective'),
 
-    //])
     const effective = await adapter.getStateAsync(path + '.effective')
-    const referenz = await adapter.getStateAsync(path + '.updateIdentifier')
-    const sent = await adapter.getStateAsync(path + '.sent')
+    var referenz = await adapter.getStateAsync(path + '.updateIdentifier')
+    if (referenz == null){
+        referenz = ""
+    }
+    var sent = await adapter.getStateAsync(path + '.sent')
+    if (sent == null){
+        sent = ""
+    }
     const expires = await adapter.getStateAsync(path + '.expires')
     const tempLevel = await adapter.getStateAsync(path + '.effective')
     const type = await adapter.getStateAsync(path + '.type')
@@ -1806,7 +1810,7 @@ function getXMLLanguage(country){
             return 'mt-MT'
             break;
         case 'NL':
-            return 'ne-NL'
+            return 'nl-NL'
             break;
          case 'NO':
             return 'no'
