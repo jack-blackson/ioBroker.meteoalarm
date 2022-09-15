@@ -44,6 +44,8 @@ const warnMessages = {};
 var channelNames = []
 var csvContent = [];
 var alarmAll = []
+var alarmOldIdentifier = []
+var alarmOldArray = []
 var urlAtom = ""
 
 let adapter;
@@ -60,6 +62,8 @@ var maxAlarmLevel = 1
 var notificationAlarmArray = []
 
 var imageSizeSetup = 0
+
+var updateError = false
 
 let Sentry;
 let SentryIntegrations;
@@ -206,8 +210,7 @@ function startAdapter(options) {
 
 function main() {
 
-    // TEMP
-    var i = 1
+    //var i = 1
 
     adapter.getForeignObject('system.config', (err, systemConfig) => {
         if (!systemConfig.common.language){
@@ -217,8 +220,8 @@ function main() {
             lang = systemConfig.common.language
         }
         adapter.log.debug('Language: ' + lang)
-        adapter.log.debug('Starting round: ' + i) // TEMP
-        i += 1
+        //adapter.log.debug('Starting round: ' + i) // TEMP
+        //i += 1
 
         getData()
         
@@ -284,8 +287,16 @@ async function getData(){
 
             const temp = await adapter.getStateAsync('noOfAlarms')
             noOfAlarmsAtStart = temp.val
-            adapter.log.debug('0: No. of existing alarm objects at adapter start: ' + noOfAlarmsAtStart)
-                
+            adapter.log.debug('0: Existing alarm objects at adapter start: ' + noOfAlarmsAtStart)
+            
+            const temp2 = await saveAlarmNamesForLater()
+            for (const alarmLoop of alarmOldIdentifier) {
+                //HERE SIND WIR
+                const temp1 = await saveAlarmsForLater(alarmLoop)
+            };
+
+
+
             adapter.log.debug('1: Parsed CSV File')
             
             adapter.log.debug('2: Request Atom from ' + urlAtom )
@@ -374,6 +385,7 @@ async function getData(){
 
                 } catch (err){
                     adapter.log.debug('6.1: Details URL ' + urlArray[i].url + ' not valid any more - error ' + err) 
+                    updateError = true
                 }
                var typeRelevant = false
                 if (xmlDetails ){
@@ -403,6 +415,11 @@ async function getData(){
                             detailssent = result.alert.sent
                             if (detailsType != "Alert"){
                                 detailsReference = result.alert.references
+                                var searchTerm = ","
+                                const indexOfFirstComma = detailsReference.indexOf(searchTerm);
+                                const indexOfSecondComma = detailsReference.indexOf(searchTerm, indexOfFirstComma +1);
+                                detailsReference = detailsReference.substring(indexOfFirstComma +1,indexOfSecondComma)
+                                detailsReference = detailsReference.replace(/\./g,'') // remove dots
 
                             }
 
@@ -415,7 +432,7 @@ async function getData(){
                                             var n = awarenesstype.indexOf(";");
                                             awarenesstype = awarenesstype.substring(0, n)
                                             typeRelevant = checkTypeRelevant(awarenesstype)
-                                            adapter.log.debug('Alarm ' + countURL + ' with type ' + awarenesstype + ' relevant: ' + typeRelevant)
+                                            //adapter.log.debug('Alarm ' + countURL + ' with type ' + awarenesstype + ' relevant: ' + typeRelevant)
                                         }  
                                     })
                                     jsonResult = element 
@@ -441,8 +458,8 @@ async function getData(){
             }
             //const widget = await createHTMLWidget()
 
-            adapter.log.debug('9: Check for duplicate alarms')
-            adapter.log.debug('9.1 alarmAll Array before removing duplicates: ' + JSON.stringify(alarmAll))
+            adapter.log.debug('9: Checking for duplicate alarms')
+            adapter.log.debug('9.0.1 alarmAll Array before removing duplicates: ' + JSON.stringify(alarmAll))
 
             checkDuplicates()
 
@@ -459,10 +476,11 @@ async function getData(){
             adapter.log.debug('10.2: Created alarm states')
 
 
-            adapter.log.debug('11: Clean up obsolete alarms')
-
-            const clean = await cleanObsoleteAlarms(alarmAll)
-            adapter.log.debug('11.1: Cleaned up obsolete alarms')
+            adapter.log.debug('11: Cleaning up obsolete alarms')
+            if (!updateError){
+                const clean = await cleanObsoleteAlarms(alarmAll)
+            }
+            //adapter.log.debug('11.1: Cleaned up obsolete alarms')
 
 
             adapter.log.debug('12: Creating HTML Widget')
@@ -600,15 +618,20 @@ async function getData(){
             ])
             adapter.log.debug('13: Set State for Widget')
 
-            adapter.log.debug('14: Process Notifications')
-            const promises = await processNotifications(alarmAll)
+            if (notificationAlarmArray.length >= 1){
+                adapter.log.debug('14: Processing notifications')
+                const promises = await processNotifications(alarmAll)
+            }else{
+                adapter.log.debug('14: No new notifications to send')
+            }
+
 
             adapter.log.debug('15: All Done')
             if (regionName){
-                adapter.log.info('Updated Weather Alarms for ' + regionName + ' -> ' + warningCount + ' alarm(s) found')
+                adapter.log.info('15.1: Updated Weather Alarms for ' + regionName + ' -> ' + warningCount + ' alarm(s) found')
             }
             
-            adapter.terminate ? adapter.terminate(0) : process.exit(0);
+            adapter.terminate ? adapter.terminate('All data processed. Adapter stopped until next scheduled process.') : process.exit(0);
 
 
         }
@@ -637,9 +660,9 @@ function checkDuplicates(){
     //2.  Check for Alarmupdates, duplicate updates and cancles
 
     alarmAll = alarmAllChecked
-    adapter.log.debug('9.2 Finished checking alerts - ' + alarmAll.length + ' relevant alarms')
-    adapter.log.debug('9.3 alarmAll Array after removing duplicates: ' + JSON.stringify(alarmAll))
-    adapter.log.debug('9.3.1 alarmAll sorted by sent1 date:' + JSON.stringify(alarmAll.sort((a, b) => a.Alarm_Sent - b.Alarm_Sent)))
+    adapter.log.debug('9.1 Finished checking alerts - ' + alarmAll.length + ' relevant alarm(s)')
+    //adapter.log.debug('9.3 alarmAll Array after removing duplicates: ' + JSON.stringify(alarmAll))
+    //adapter.log.debug('9.3.1 alarmAll sorted by sent1 date:' + JSON.stringify(alarmAll.sort((a, b) => a.Alarm_Sent - b.Alarm_Sent)))
 }
 
 function checkRelevante(entry){
@@ -850,18 +873,65 @@ async function cleanupOld(){
     ])
 }
 
-async function cleanObsoleteAlarms(allAlarms){
+
+async function saveAlarmNamesForLater(){
+    return new Promise(function(resolve){
+
+        adapter.getChannelsOf('alarms', function (err, result) {
+            for (const channel of result) {
+                alarmOldIdentifier.push(channel.common.name
+            );
+            
+            }
+            resolve('done')
+        })
+    })
+
+}
+
+async function saveAlarmsForLater(alarmName){
+    let path = 'alarms.' + alarmName
+    //await Promise.all([
+    //    let effective = adapter.getStateAsync(path + '.effective'),
+
+    //])
+    const effective = await adapter.getStateAsync(path + '.effective')
+    const referenz = await adapter.getStateAsync(path + '.updateIdentifier')
+    const sent = await adapter.getStateAsync(path + '.sent')
+    const expires = await adapter.getStateAsync(path + '.expires')
+    const tempLevel = await adapter.getStateAsync(path + '.effective')
+    const type = await adapter.getStateAsync(path + '.type')
+    alarmOldArray.push(
+        {
+            Alarm_Identifier: alarmName,
+            Alarm_Reference: referenz.val,
+            Alarm_Sent: sent.val,
+            Expires: expires.val,
+            Effective: effective.val,
+            Level: Number(tempLevel.val),
+            Type: Number(type.val)
+        }
+    );
+}
+
+function cleanObsoleteAlarms(allAlarms){
     //const promises = await Promise.all([
     return new Promise(function(resolve){
 
         adapter.getChannelsOf('alarms', function (err, result) {
             for (const channel of result) {
-                adapter.log.debug('11.0.1: checking alarm "' + channel.common.name)
+                // check if the alarm is included in the new alarms, either as identifier or reference for the updates
                 let check = allAlarms.some(function(item) {
                     return item.Alarm_Identifier === channel.common.name})
+                //let check1 = allAlarms.some(function(item) {
+                //    return item.Alarm_Reference === channel.common.name})    
                 if (!check){
-                    adapter.log.debug('11.0.2: Alarm ' + channel.common.name + 'will be deleted.')
-                    adapter.deleteChannelAsync('alarms',channel.common.name);
+                //if (!check && !check1){
+
+                    adapter.log.debug('11.0.2: Alarm ' + channel.common.name + ' will be deleted.')
+                    adapter.deleteChannel('alarms',channel.common.name);
+                    //const promises = await deleteAlarm(alarmAll)
+                    //const promises = await deleteAlarm(channel.common.name)
                 }
             
             }
@@ -870,6 +940,12 @@ async function cleanObsoleteAlarms(allAlarms){
     })
 }
 
+/*
+async function deleteAlarm(channelName){
+    await adapter.deleteChannelAsync('alarms',channelName);
+
+}
+*/
 
 async function getCSVData(){
     return new Promise(function(resolve,reject){
@@ -915,7 +991,6 @@ async function processNotifications(alarms){
                     
 
                     adapter.setStateAsync({device: '' , channel: '',state: 'notification'}, {val: notificationText, ack: true})
-
                     sendNotification(alarms.Headline,alarms.Description,tempDate,region,notificationLevel,alarms.Alarm_Identifier,alarms.Alarm_Type)  
                     
                 }
@@ -939,6 +1014,8 @@ async function processNotifications(alarms){
     })
 }
 
+
+
 function prepareNotificationText(headline,description,date,region,level,identifier){
     var notificationText = ""
 
@@ -951,8 +1028,8 @@ function sendNotification(headline,description,date,region,levelText,identifier,
     var notificationText = ""
     var descriptionText = ""
     var typeText = ""
-    if (type = 'Update'){
-        typeText = i18nHelper.update[lang] + ' '
+    if (type == 'Update'){
+        typeText = i18nHelper.update[lang] + ': '
     }
     if (!adapter.config.noDetails ){
         descriptionText = description
@@ -994,7 +1071,6 @@ function sendNotification(headline,description,date,region,levelText,identifier,
 
 function getNotificationLevel(level){
     var notificationText = ""
-    adapter.log.debug('Alarm  level Type: ' + adapter.config.levelType)
     if(adapter.config.levelType == "Rufezeichen"){
         switch (level) {
             case 1:
@@ -1186,16 +1262,24 @@ async function processDetails(content, countInt,detailsType,detailsIdentifier,de
 }
 
 async function fillAlarm(content, countInt){
+    var path = ""
+    path = 'alarms.' + content[countInt].Alarm_Identifier
+    const created = await createAlarms(content[countInt].Alarm_Identifier,content[countInt].Alarm_Identifier)
+    if (content[countInt].Alarm_Type == "Alert"){
+        await localCreateState(path + '.updateIdentifier', 'updateIdentifier', '');
+    }
+    else if (content[countInt].Alarm_Type == "Update"){
+        //path = 'alarms.' + content[countInt].Alarm_Reference
+        //const created = await createAlarms(content[countInt].Alarm_Reference,content[countInt].Alarm_Identifier)
+        await localCreateState(path + '.updateIdentifier', 'updateIdentifier', content[countInt].Alarm_Reference);
+    }
 
-    var pathInt = countInt +1
-    var path = 'alarms.' + content[countInt].Alarm_Identifier
-    const created = await createAlarms(content[countInt].Alarm_Identifier)
+    //adapter.log.debug('TEMP: path: ' + path + ' for alarm type ' + content[countInt].Alarm_Type)
 
-    
     await localCreateState(path + '.event', 'event', content[countInt].Event);
     await localCreateState(path + '.headline', 'headline', content[countInt].Headline);
     await localCreateState(path + '.description', 'description', content[countInt].Description);
-    await localCreateState(path + '.link', 'link', content[countInt].Web);
+    await localCreateState(path + '.link', 'link', content[countInt].Link);
     await localCreateState(path + '.expires', 'expires', content[countInt].Expires);
     await localCreateState(path + '.effective', 'effective', content[countInt].Effective);
     await localCreateState(path + '.sender', 'sender', content[countInt].Sender);
@@ -1205,7 +1289,7 @@ async function fillAlarm(content, countInt){
     await localCreateState(path + '.typeText', 'typeText', content[countInt].Typetext);
     await localCreateState(path + '.icon', 'icon', content[countInt].Icon);
     await localCreateState(path + '.color', 'color', content[countInt].Color);
-   
+    await localCreateState(path + '.sent', 'sent', content[countInt].Alarm_Sent);
 
 }
 
@@ -1223,7 +1307,7 @@ function errorHandling(codePart, error, suppressFrontendLog) {
 
 
 async function localCreateState(state, name, value) {
-    adapter.log.debug(`Create_state called for : ${state} with value : ${value}`);
+    //adapter.log.debug(`Create_state called for : ${state} with value : ${value}`);
 
     try {
         // Try to get details from state lib, if not use defaults. throw warning if states is not known in attribute list
@@ -1298,13 +1382,14 @@ function fillNotificatinAlarmArray(identifier){
     notificationAlarmArray.push(identifier)
 }
 
-async function createAlarms(AlarmIdentifier){
+async function createAlarms(AlarmIdentifier,notificationReference){
     var path = 'alarms.' + AlarmIdentifier
     channelNames.push(AlarmIdentifier)
     const obj = await adapter.getObjectAsync('alarms.' + AlarmIdentifier);
 
     if(!obj) {
-        fillNotificatinAlarmArray(AlarmIdentifier)
+        fillNotificatinAlarmArray(notificationReference) 
+        
     };
 
     const promises = await Promise.all([
