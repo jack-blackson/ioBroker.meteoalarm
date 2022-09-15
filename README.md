@@ -126,9 +126,9 @@ If you don't find your country, please create an issue on github, and I will be 
 
 ## Changelog
 
-## 2.3.0 (2022-07-28)
+## 2.3.0 (2022-09-15)
 * (jack-blackson) Ability to send alarms to other adapters (Telegramm, eMail, Pushover, Signal,Synochat
-* (jack-blackson) Fixe link in alarms folder
+* (jack-blackson) Fix link in alarms folder
 
 ## 2.2.1 (2022-07-28)
 * (jack-blackson) Bugfix noOfAlarms and numbering of objects
