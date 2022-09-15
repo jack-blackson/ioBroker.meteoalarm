@@ -694,6 +694,7 @@ function checkRelevante(entry){
         }
         else{
             adapter.log.debug('4.1.2: Warning without geocode - cannot check')
+            /*
             if(Sentry){
                 Sentry && Sentry.withScope(scope => {
                     scope.setLevel('info');
@@ -701,6 +702,7 @@ function checkRelevante(entry){
                     Sentry.captureMessage('No geocode included', 'info'); // Level "info"
                 });
             }
+            */
         }
 
         var statusRelevant = false
