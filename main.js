@@ -1271,7 +1271,6 @@ async function fillAlarm(content, countInt){
     else if (content[countInt].Alarm_Type == "Update"){
         //path = 'alarms.' + content[countInt].Alarm_Reference
         //const created = await createAlarms(content[countInt].Alarm_Reference,content[countInt].Alarm_Identifier)
-        adapter.log.debug('TEMP:: ' + content[countInt].Alarm_Alarm_Reference)
         await localCreateState(path + '.updateIdentifier', 'updateIdentifier', content[countInt].Alarm_Reference);
     }
 
