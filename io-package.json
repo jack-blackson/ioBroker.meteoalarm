@@ -1,9 +1,9 @@
 {
     "common": {
         "name": "meteoalarm",
-        "version": "2.3.0",
+        "version": "2.3.1",
         "news": {
-            "2.3.0": {
+            "2.3.1": {
                 "en": "Ability to send alarms to other adapters (Telegramm, eMail, Pushover, Signal,Synochat)",
                 "de": "Möglichkeit, Benachrichtigungen an andere Adapter (Telegramm, eMail, Pushover, Signal,Synochat) zu senden",
                 "ru": "Возможность отправки сигналов другим адаптерам, таким как телеграм или почта",
