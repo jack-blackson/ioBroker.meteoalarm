@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "meteoalarm",
-        "version": "2.3.1",
+        "version": "2.3.2",
         "news": {
+            "2.3.2": {
+                "en": "Bugfixes",
+                "de": "Fehlerbehebung",
+                "ru": "Исправление ошибок",
+                "pt": "Correções de bugs",
+                "nl": "Bugfixes",
+                "fr": "Corrections de bugs",
+                "it": "Correzioni di bug",
+                "es": "Corrección de errores",
+                "pl": "Poprawki",
+                "zh-cn": "Bug修复"
+            },
             "2.3.1": {
                 "en": "Ability to send alarms to other adapters (Telegramm, eMail, Pushover, Signal,Synochat)",
                 "de": "Möglichkeit, Benachrichtigungen an andere Adapter (Telegramm, eMail, Pushover, Signal,Synochat) zu senden",
