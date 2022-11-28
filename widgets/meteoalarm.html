@@ -1,0 +1,25 @@
+<!--
+    ioBroker.vis meteoalarm Widget-Set
+
+    Copyright 2022 blacksonj blacksonj7@gmail.com
+-->
+<!-- here you can include so many css as you want -->
+<link rel="stylesheet" href="widgets/meteoalarm/css/style.css" />
+<!-- here you can include so many js-files as you want -->
+<script type="text/javascript" src="widgets/meteoalarm/js/meteoalarm.js"></script>
+
+<script id="tplmeteoAlarmWidget"
+        type="text/ejs"
+        class="vis-tpl"
+		data-vis-prev='<img style="display: block;margin-left: auto;margin-right: auto;width: 50%;" src="widgets/rssfeed/img/rssfeed-vis.png"></img>'
+        data-vis-attrs="rss_oid/id;rss_template/custom,rssfeed.editEjs;rss_maxarticles/number,1;rss_filter;"
+        data-vis-set="meteoalarm"
+        data-vis-type="val"
+        data-vis-beta="false"
+        data-vis-update-style="true"
+        data-vis-name="Meteoalarm Widget">
+    <div class="vis-widget <%== this.data.attr('class') %>" style="overflow:visible; width: 230px; height: 210px" id="<%= this.data.attr('wid') %>"><%
+        vis.binds.meteoalarm.meteoalarm.createWidget(this.data.wid, this.view, this.data, this.style);
+    %></div>
+</script>
+

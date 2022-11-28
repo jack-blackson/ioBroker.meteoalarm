@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "meteoalarm",
-        "version": "2.3.1",
+        "version": "2.4.0",
         "news": {
+            "2.4.0": {
+                "en": "Added Widget",
+                "de": "Widget hinzufügen",
+                "ru": "Добавлен Widget",
+                "pt": "Adicionado Widget",
+                "nl": "Vertaling:",
+                "fr": "Ajouté Widget",
+                "it": "Aggiunto Widget",
+                "es": "Añadido Widget",
+                "pl": "Added Widget",
+                "uk": "Додати віджет",
+                "zh-cn": "增 编"
+            },
             "2.3.1": {
                 "en": "Ability to send alarms to other adapters (Telegramm, eMail, Pushover, Signal,Synochat)",
                 "de": "Möglichkeit, Benachrichtigungen an andere Adapter (Telegramm, eMail, Pushover, Signal,Synochat) zu senden",
