@@ -12,16 +12,18 @@
         type="text/ejs"
         class="vis-tpl"
 		data-vis-prev='<img style="display: block;margin-left: auto;margin-right: auto;width: 50%;" src="widgets/rssfeed/img/rssfeed-vis.png"></img>'
-        data-vis-attrs="meteo_Loc[meteoalarm.0.location]/id"
-        data-vis-attrs0="group.effect;
-                        show_Loc/checkbox"
+        data-vis-attrs="meteo_Loc[meteoalarm.0.location]/id;"
+        data-vis-attrs0="group.showElements;
+                        show_Loc/checkbox;"
         data-vis-set="meteoalarm"
         data-vis-type="val"
-        data-vis-beta="false"
+        data-vis-beta="true"
         data-vis-update-style="true"
         data-vis-name="Meteoalarm Widget">
-    <div class="vis-widget <%== this.data.attr('class') %>" style="overflow:visible; width: 230px; height: 210px" id="<%= this.data.attr('wid') %>"><%
-        vis.binds.meteoalarm.meteoalarm.createWidget(this.data.wid, this.view, this.data, this.style);
-    %></div>
+        <div class="vis-widget <%== this.data.attr('class') %>" style="width:230px; height:210px;" id="<%= this.data.attr('wid') %>" >
+            <div class="meteoalarm-class vis-widget-body <%== this.data.attr('class') %>" style="padding:2px" >
+                <% vis.binds['meteoalarm'].createWidget(this.data.wid, this.view, this.data, this.style); %>
+            </div>
+        </div>
 </script>
 
