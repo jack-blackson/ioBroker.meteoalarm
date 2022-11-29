@@ -76,7 +76,8 @@ vis.binds["meteoalarm"] = {
 			}, 100);
 		}
 		console.log(`Creating Meteoalarm Widget for widget #${widgetID}`);
-
+        console.log('Location: ' + data.meteo_Loc)
+        $('#' + widgetID).html("text");
         /*
 		function onChange(e, newVal, oldVal) {
 			let img = new Image();
