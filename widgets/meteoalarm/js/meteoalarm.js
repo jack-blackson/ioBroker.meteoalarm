@@ -76,7 +76,7 @@ vis.binds["meteoalarm"] = {
 			}, 100);
 		}
 		console.log(`Creating Meteoalarm Widget for widget #${widgetID}`);
-        console.log('Location: ' + data.meteo_Loc)
+        console.log('Location1: ' + data.meteo_Loc)
         $('#' + widgetID).html('Location: ' + data.meteo_Loc);
         vis.conn.gettingStates = 0;
         vis.conn.getState(data.meteo_Loc, function (error, states) {
