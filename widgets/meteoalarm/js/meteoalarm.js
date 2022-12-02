@@ -77,7 +77,21 @@ vis.binds["meteoalarm"] = {
 		}
 		console.log(`Creating Meteoalarm Widget for widget #${widgetID}`);
         console.log('Location: ' + data.meteo_Loc)
-        $('#' + widgetID).html("text");
+        $('#' + widgetID).html('Location: ' + data.meteo_Loc);
+        vis.conn.gettingStates = 0;
+        vis.conn.getState(data.meteo_Loc, function (error, states) {
+            //vis.conn.subscribe(bound);
+            //$div.data('bound', bound);
+            //$div.data('bindHandler', change_callback);
+            //for (var i=0;i<bound.length;i++) {
+            //    bound[i]=bound[i]+'.val';
+            //    vis.states.bind(bound[i] , change_callback);
+            //}
+            //vis.updateStates(states);
+            console.log('state: ' + states)
+
+        }.bind({change_callback}));
+        //*/
         /*
 		function onChange(e, newVal, oldVal) {
 			let img = new Image();
@@ -91,6 +105,31 @@ vis.binds["meteoalarm"] = {
 		if (data.oid) {
 			vis.states.bind(data.oid + ".val", onChange);
 		}
+        */
+
+        /*
+          bindStates: function(elem, bound, change_callback) {
+        var $div = $(elem);
+        var boundstates = $div.data('bound');
+        if (boundstates) {
+            for (var i = 0; i < boundstates.length; i++) {
+                vis.states.unbind(boundstates[i], change_callback);
+            }
+        }
+        $div.data('bound', null);
+        $div.data('bindHandler', null);
+
+        vis.conn.gettingStates = 0;
+        vis.conn.getStates(bound, function (error, states) {
+            vis.conn.subscribe(bound);
+            $div.data('bound', bound);
+            $div.data('bindHandler', change_callback);
+            for (var i=0;i<bound.length;i++) {
+                bound[i]=bound[i]+'.val';
+                vis.states.bind(bound[i] , change_callback);
+            }
+            vis.updateStates(states);
+        }.bind({change_callback}));
         */
 	}
 };
