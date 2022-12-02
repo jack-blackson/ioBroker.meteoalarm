@@ -139,5 +139,5 @@ vis.binds["meteoalarm"] = {
 
 
 vis.binds['meteoalarm'].showVersion();
-vis.binds['meteoalarm'].showWidget();
+vis.binds['meteoalarm'].createWidget();
 
