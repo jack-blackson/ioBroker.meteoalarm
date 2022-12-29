@@ -479,9 +479,39 @@ async function getData(){
 
             adapter.log.debug('11: Cleaning up obsolete alarms')
             if (!updateError){
-                const clean = await cleanObsoleteAlarms(alarmAll)
+                adapter.getChannelsOf('alarms', function (err, result) {
+                    for (const channel of result) {
+                        // check if the alarm is included in the new alarms, either as identifier or reference for the updates
+                        let check = alarmAll.some(function(item) {
+                            return item.Alarm_Identifier === channel.common.name})
+                        //let check1 = allAlarms.some(function(item) {
+                        //    return item.Alarm_Reference === channel.common.name})    
+                        if (!check){
+                        //if (!check && !check1){
+        
+                            adapter.log.debug('11.0.2: Alarm ' + channel.common.name + ' will be deleted.')
+                            const obj = await cleanObsoleteAlarms(channel.common.name)
+        
+                            
+                            //const promises = await deleteAlarm(alarmAll)
+                            //const promises = await deleteAlarm(channel.common.name)
+                            adapter.log.debug('11.0.3: After delete channel')
+                        }
+                    
+                    }
+                    //resolve('done')
+                })
+
+
+
+
+
+
+
+                //const clean = await cleanObsoleteAlarms(alarmAll)
+                adapter.log.debug('11.1: Cleaned up obsolete alarms')
+
             }
-            //adapter.log.debug('11.1: Cleaned up obsolete alarms')
 
 
             adapter.log.debug('12: Creating HTML Widget')
@@ -920,8 +950,9 @@ async function saveAlarmsForLater(alarmName){
     );
 }
 
-function cleanObsoleteAlarms(allAlarms){
+async function cleanObsoleteAlarms(channelName){
     //const promises = await Promise.all([
+        /*
     return new Promise(function(resolve){
 
         adapter.getChannelsOf('alarms', function (err, result) {
@@ -935,15 +966,47 @@ function cleanObsoleteAlarms(allAlarms){
                 //if (!check && !check1){
 
                     adapter.log.debug('11.0.2: Alarm ' + channel.common.name + ' will be deleted.')
-                    adapter.deleteChannel('alarms',channel.common.name);
+                    const obj = await adapter.deleteChannelAsync('alarms',channel.common.name);
+
+                    
                     //const promises = await deleteAlarm(alarmAll)
                     //const promises = await deleteAlarm(channel.common.name)
+                    adapter.log.debug('11.0.3: After delete channel')
                 }
             
             }
             resolve('done')
         })
     })
+    */
+
+        //const promises = await Promise.all([
+            return new Promise(function(resolve){
+
+                //adapter.getChannelsOf('alarms', function (err, result) {
+                  //  for (const channel of result) {
+                        // check if the alarm is included in the new alarms, either as identifier or reference for the updates
+                    //    let check = allAlarms.some(function(item) {
+                      //      return item.Alarm_Identifier === channel.common.name})
+                        //let check1 = allAlarms.some(function(item) {
+                        //    return item.Alarm_Reference === channel.common.name})    
+                        //if (!check){
+                        //if (!check && !check1){
+        
+                          //  adapter.log.debug('11.0.2: Alarm ' + channel.common.name + ' will be deleted.')
+                            //const obj = await adapter.deleteChannelAsync('alarms',channel.common.name);
+                            adapter.deleteChannelAsync('alarms',channelName);
+
+                            
+                            //const promises = await deleteAlarm(alarmAll)
+                            //const promises = await deleteAlarm(channel.common.name)
+                           // adapter.log.debug('11.0.3: After delete channel')
+                        //}
+                    
+                    //}
+                    resolve('done')
+                //})
+            })
 }
 
 /*
