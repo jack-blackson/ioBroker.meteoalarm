@@ -479,36 +479,7 @@ async function getData(){
 
             adapter.log.debug('11: Cleaning up obsolete alarms')
             if (!updateError){
-                adapter.getChannelsOf('alarms', function (err, result) {
-                    for (const channel of result) {
-                        // check if the alarm is included in the new alarms, either as identifier or reference for the updates
-                        let check = alarmAll.some(function(item) {
-                            return item.Alarm_Identifier === channel.common.name})
-                        //let check1 = allAlarms.some(function(item) {
-                        //    return item.Alarm_Reference === channel.common.name})    
-                        if (!check){
-                        //if (!check && !check1){
-        
-                            adapter.log.debug('11.0.2: Alarm ' + channel.common.name + ' will be deleted.')
-                            const obj = await cleanObsoleteAlarms(channel.common.name)
-        
-                            
-                            //const promises = await deleteAlarm(alarmAll)
-                            //const promises = await deleteAlarm(channel.common.name)
-                            adapter.log.debug('11.0.3: After delete channel')
-                        }
-                    
-                    }
-                    //resolve('done')
-                })
-
-
-
-
-
-
-
-                //const clean = await cleanObsoleteAlarms(alarmAll)
+                const clean = await cleanObsoleteAlarms(alarmAll)
                 adapter.log.debug('11.1: Cleaned up obsolete alarms')
 
             }
@@ -534,6 +505,8 @@ async function getData(){
                     let effectiveDate = await adapter.getStateAsync(path + '.effective');
                     let expiresDate = await adapter.getStateAsync(path + '.expires');    
                     let level = await adapter.getStateAsync(path + '.level');
+                    let alarmType = await adapter.getStateAsync(path + '.typeText');
+
 
                     if (color && color.val){
                         if (!adapter.config.noBackgroundColor){
@@ -599,7 +572,8 @@ async function getData(){
                                 Description: description.val,
                                 Level: level.val,
                                 Effective: getAlarmTime(effectiveDate.val, expiresDate.val),
-                                Icon: icon.val
+                                Icon: icon.val,
+                                AlarmType: alarmType.val
                             }
                         );
                     }
@@ -950,71 +924,35 @@ async function saveAlarmsForLater(alarmName){
     );
 }
 
-async function cleanObsoleteAlarms(channelName){
+async function cleanObsoleteAlarms(allAlarms){
     //const promises = await Promise.all([
-        /*
-    return new Promise(function(resolve){
-
-        adapter.getChannelsOf('alarms', function (err, result) {
-            for (const channel of result) {
-                // check if the alarm is included in the new alarms, either as identifier or reference for the updates
-                let check = allAlarms.some(function(item) {
-                    return item.Alarm_Identifier === channel.common.name})
-                //let check1 = allAlarms.some(function(item) {
-                //    return item.Alarm_Reference === channel.common.name})    
-                if (!check){
-                //if (!check && !check1){
-
-                    adapter.log.debug('11.0.2: Alarm ' + channel.common.name + ' will be deleted.')
-                    const obj = await adapter.deleteChannelAsync('alarms',channel.common.name);
-
-                    
-                    //const promises = await deleteAlarm(alarmAll)
-                    //const promises = await deleteAlarm(channel.common.name)
-                    adapter.log.debug('11.0.3: After delete channel')
-                }
-            
-            }
-            resolve('done')
-        })
-    })
-    */
-
-        //const promises = await Promise.all([
-            return new Promise(function(resolve){
-
-                //adapter.getChannelsOf('alarms', function (err, result) {
-                  //  for (const channel of result) {
-                        // check if the alarm is included in the new alarms, either as identifier or reference for the updates
-                    //    let check = allAlarms.some(function(item) {
-                      //      return item.Alarm_Identifier === channel.common.name})
-                        //let check1 = allAlarms.some(function(item) {
-                        //    return item.Alarm_Reference === channel.common.name})    
-                        //if (!check){
-                        //if (!check && !check1){
         
-                          //  adapter.log.debug('11.0.2: Alarm ' + channel.common.name + ' will be deleted.')
-                            //const obj = await adapter.deleteChannelAsync('alarms',channel.common.name);
-                            adapter.deleteChannelAsync('alarms',channelName);
+    return new Promise(async function(resolve){
 
-                            
-                            //const promises = await deleteAlarm(alarmAll)
-                            //const promises = await deleteAlarm(channel.common.name)
-                           // adapter.log.debug('11.0.3: After delete channel')
-                        //}
-                    
-                    //}
-                    resolve('done')
-                //})
+            const done = await adapter.getChannelsOfAsync('alarms', async function (err, result) {
+                for (const channel of result) {
+                    // check if the alarm is included in the new alarms, either as identifier or reference for the updates
+                    let check = allAlarms.some(function(item) {
+                        return item.Alarm_Identifier === channel.common.name})
+                    //let check1 = allAlarms.some(function(item) {
+                    //    return item.Alarm_Reference === channel.common.name})    
+                    if (!check){
+                    //if (!check && !check1){
+
+                        adapter.log.debug('11.0.1: Alarm ' + channel.common.name + ' will be deleted.')
+                        const obj = await adapter.deleteChannelAsync('alarms',channel.common.name);                        
+                        adapter.log.debug('11.0.2: After delete alarm ' + channel.common.name)
+                    }
+                
+                }
+                resolve('done')
+
             })
+
+    })
+    
 }
 
-/*
-async function deleteAlarm(channelName){
-    await adapter.deleteChannelAsync('alarms',channelName);
-
-}
-*/
 
 async function getCSVData(){
     return new Promise(function(resolve,reject){
@@ -1428,23 +1366,6 @@ async function localCreateState(state, name, value) {
     }
 }
 
-/*
-async function deleteAllAlarms(){
-    //const promises = await Promise.all([
-    //    adapter.deleteDeviceAsync('alarms')
-    //])
-
-    try {
-        const obj = await adapter.getObjectAsync('alarms');
-        if (obj) {
-            await adapter.delObjectAsync('alarms', {recursive: true});
-        }
-        
-    } catch (error) {
-        // do nothing
-    }
-}
-*/
 
 function fillNotificatinAlarmArray(identifier){
     adapter.log.debug('10.1: Added Alert Notification for '+ identifier)
