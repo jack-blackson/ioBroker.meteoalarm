@@ -1164,7 +1164,7 @@ function sendMessage(identifier,content,subject){
             break;
         case 'Pushover':
             if (adapter.config.pushInstanz){
-                adapter.sendTo('pushover', content);
+                adapter.sendTo(adapter.config.pushInstanz, content);
                 sentMessage = true
             }
             else{

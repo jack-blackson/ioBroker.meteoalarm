@@ -162,6 +162,8 @@ If you don't find your country, please create an issue on github, and I will be 
 
 ## 2.3.2 (2023-01-07)
 * (jack-blackson) Bugfix to clean up alerts correctly
+* (jack-blackson) Bugfix for pushover if multiple instances are used
+
 
 ## 2.3.0 (2022-09-15)
 * (jack-blackson) Ability to send alarms to other adapters (Telegramm, eMail, Pushover, Signal,Synochat
