@@ -158,7 +158,6 @@ If you don't find your country, please create an issue on github, and I will be 
 * Bulgaria (geocode file from meteoalarm.org is probably incorrect)
 
 
-
 ## Changelog
 
 ## 2.3.2 (2023-01-07)
