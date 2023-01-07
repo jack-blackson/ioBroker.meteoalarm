@@ -4,16 +4,17 @@
         "version": "2.3.2",
         "news": {
             "2.3.2": {
-                "en": "Bugfixes",
-                "de": "Fehlerbehebung",
-                "ru": "Исправление ошибок",
-                "pt": "Correções de bugs",
-                "nl": "Bugfixes",
-                "fr": "Corrections de bugs",
-                "it": "Correzioni di bug",
-                "es": "Corrección de errores",
-                "pl": "Poprawki",
-                "zh-cn": "Bug修复"
+                "en": "Bugfix to clean up alerts correctly",
+                "de": "Bugfix, um Alarme richtig zu reinigen",
+                "ru": "Bugfix правильно очистить оповещения",
+                "pt": "Bugfix para limpar alertas corretamente",
+                "nl": "Bugfix om de alarmen correct op te ruimen",
+                "fr": "Bugfix pour nettoyer correctement les alertes",
+                "it": "Bugfix per pulire correttamente gli avvisi",
+                "es": "Bugfix para limpiar las alertas correctamente",
+                "pl": "Bugfix do czyszczenia alarmów poprawnie",
+                "uk": "Виправлення помилок для очищення оповіщення",
+                "zh-cn": "正确处理警戒"
             },
             "2.3.1": {
                 "en": "Ability to send alarms to other adapters (Telegramm, eMail, Pushover, Signal,Synochat)",
@@ -100,7 +101,6 @@
                 "zh-cn": "Bug修复"
             }
         },
-        "title": "Meteoalarm",
         "titleLang": {
             "en": "Meteoalarm",
             "de": "Meteoalarm",
