@@ -126,26 +126,15 @@ jobs:
           npm config set //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}
           npm whoami
           npm publish
-      - name: Create Github Release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release v${{ steps.extract_release.outputs.VERSION }}
-          draft: false
-          # Prerelease versions create prereleases on Github
-          prerelease: ${{ contains(steps.extract_release.outputs.VERSION, '-') }}
-          body: ${{ steps.extract_release.outputs.BODY }}
-
+      
       - name: Notify Sentry.io about the release
         run: |
           npm i -g @sentry/cli
           export SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}
           export SENTRY_URL=https://sentry.iobroker.net
           export SENTRY_ORG=iobroker
-          export SENTRY_PROJECT=iobroker-backitup
-          export SENTRY_VERSION=iobroker.backitup@${{ steps.extract_release.outputs.VERSION }}
+          export SENTRY_PROJECT=iobroker-meteoalarm
+          export SENTRY_VERSION=iobroker.meteoalarm@${{ steps.extract_release.outputs.VERSION }}
           sentry-cli releases new $SENTRY_VERSION
           sentry-cli releases set-commits $SENTRY_VERSION --auto
           sentry-cli releases finalize $SENTRY_VERSION
