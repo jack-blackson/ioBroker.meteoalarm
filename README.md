@@ -160,6 +160,12 @@ If you don't find your country, please create an issue on github, and I will be 
 
 ## Changelog
 
+## 2.3.3 (2023-XX)
+* (jack-blackson) Added possibility to define the alarm levels for the widget, JSON and notificatio
+* (jack-blackson) Added ukrainian language 
+
+
+
 ## 2.3.2 (2023-01-07)
 * (jack-blackson) Bugfix to clean up alerts correctly
 * (jack-blackson) Bugfix for pushover if multiple instances are used
