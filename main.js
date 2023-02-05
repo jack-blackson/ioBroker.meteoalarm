@@ -996,10 +996,12 @@ async function processNotifications(alarms){
                     var notificationLevel = getNotificationLevel(alarms.Level)
                     var notificationText = prepareNotificationText(alarms.Headline,alarms.Description,tempDate,region,notificationLevel,alarms.Alarm_Identifier)
                     
+                    //adapter.log.debug('14.1.1 Alarm Level relevant for notification (according to settings): ' + checkRelevanceAlarmLevel(alarms.Level,"notification" ))
+                    if (checkRelevanceAlarmLevel(alarms.Level,"notification",alarms.Alarm_Identifier )){
+                        adapter.setStateAsync({device: '' , channel: '',state: 'notification'}, {val: notificationText, ack: true})
+                        sendNotification(alarms.Headline,alarms.Description,tempDate,region,notificationLevel,alarms.Alarm_Identifier,alarms.Alarm_Type)  
+                    }
 
-                    adapter.setStateAsync({device: '' , channel: '',state: 'notification'}, {val: notificationText, ack: true})
-                    sendNotification(alarms.Headline,alarms.Description,tempDate,region,notificationLevel,alarms.Alarm_Identifier,alarms.Alarm_Type)  
-                    
                 }
             })  
         }
@@ -1074,6 +1076,60 @@ function sendNotification(headline,description,date,region,levelText,identifier,
     }
 
     sendMessage(identifier,notificationText,descriptionText)
+}
+
+function checkRelevanceAlarmLevel(alarmlevel,type,identifier){
+    var typeRelevant = false
+    //adapter.log.debug('14.1.1.1: Type: ' + adapter.config.warningLevelSetupNotification)
+
+    //adapter.log.debug('14.1.1.1: Settings: ' + adapter.config.warningLevelSetupNotification)
+    //adapter.log.debug('14.1.1.1: AlarmLevel: ' + alarmlevel)
+
+    if (type == "notification"){
+        adapter.log.debug('14.1.1.1: Settings relevance notification: ' + adapter.config.warningLevelSetupNotification)
+
+        switch (adapter.config.warningLevelSetupNotification){
+            case '0':
+                typeRelevant = true
+                break;
+            case '1':
+                if (alarmlevel >= 3){
+                    typeRelevant = true
+                }
+                break;
+            case '2':
+                if (alarmlevel == 4){
+                    typeRelevant = true
+                }
+                break;
+            default:
+                //Do nothing
+            break;
+        }
+    }
+    if (type == "general"){
+        adapter.log.debug('14.1.1.1: Settings relevance general: ' + adapter.config.warningLevelSetupGeneral)
+        switch (adapter.config.warningLevelSetupGeneral){
+            case '0':
+                typeRelevant = true
+                break;
+            case '1':
+                if (alarmlevel >= 3){
+                    typeRelevant = true
+                }
+                break;
+            case '2':
+                if (alarmlevel == 4){
+                    typeRelevant = true
+                }
+                break;
+            default:
+                //Do nothing
+            break;
+        }
+    }
+    adapter.log.debug('14.1.1.2: Alarm ' + identifier + 'with level ' + alarmlevel + ' Relevant for ' + type +': ' + typeRelevant)
+    return typeRelevant
 }
 
 function getNotificationLevel(level){
