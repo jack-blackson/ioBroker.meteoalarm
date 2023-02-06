@@ -433,7 +433,7 @@ async function getData(){
                                             awarenesstype =parameter.value
                                             var n = awarenesstype.indexOf(";");
                                             awarenesstype = awarenesstype.substring(0, n)
-                                            typeRelevant = checkTypeRelevant(awarenesstype)
+                                            typeRelevant = checkTypeRelevant(awarenesstype,"general")
                                             //adapter.log.debug('Alarm ' + countURL + ' with type ' + awarenesstype + ' relevant: ' + typeRelevant)
                                         }  
                                     })
@@ -995,9 +995,9 @@ async function processNotifications(alarms){
 
                     var notificationLevel = getNotificationLevel(alarms.Level)
                     var notificationText = prepareNotificationText(alarms.Headline,alarms.Description,tempDate,region,notificationLevel,alarms.Alarm_Identifier)
-                    
+                    adapter.log.debug('14.1.1 Type relevant: ' +checkTypeRelevant(String(alarms.Type),"notification") )
                     //adapter.log.debug('14.1.1 Alarm Level relevant for notification (according to settings): ' + checkRelevanceAlarmLevel(alarms.Level,"notification" ))
-                    if (checkRelevanceAlarmLevel(alarms.Level,"notification",alarms.Alarm_Identifier )){
+                    if ((checkRelevanceAlarmLevel(alarms.Level,"notification",alarms.Alarm_Identifier ))&&  (checkTypeRelevant(String(alarms.Type),"notification"))){
                         adapter.setStateAsync({device: '' , channel: '',state: 'notification'}, {val: notificationText, ack: true})
                         sendNotification(alarms.Headline,alarms.Description,tempDate,region,notificationLevel,alarms.Alarm_Identifier,alarms.Alarm_Type)  
                     }
@@ -1080,13 +1080,9 @@ function sendNotification(headline,description,date,region,levelText,identifier,
 
 function checkRelevanceAlarmLevel(alarmlevel,type,identifier){
     var typeRelevant = false
-    //adapter.log.debug('14.1.1.1: Type: ' + adapter.config.warningLevelSetupNotification)
-
-    //adapter.log.debug('14.1.1.1: Settings: ' + adapter.config.warningLevelSetupNotification)
-    //adapter.log.debug('14.1.1.1: AlarmLevel: ' + alarmlevel)
 
     if (type == "notification"){
-        adapter.log.debug('14.1.1.1: Settings relevance notification: ' + adapter.config.warningLevelSetupNotification)
+        //adapter.log.debug('14.1.2.1: Settings relevance notification: ' + adapter.config.warningLevelSetupNotification)
 
         switch (adapter.config.warningLevelSetupNotification){
             case '0':
@@ -1108,7 +1104,7 @@ function checkRelevanceAlarmLevel(alarmlevel,type,identifier){
         }
     }
     if (type == "general"){
-        adapter.log.debug('14.1.1.1: Settings relevance general: ' + adapter.config.warningLevelSetupGeneral)
+        //adapter.log.debug('14.1.2.1: Settings relevance general: ' + adapter.config.warningLevelSetupGeneral)
         switch (adapter.config.warningLevelSetupGeneral){
             case '0':
                 typeRelevant = true
@@ -1128,7 +1124,7 @@ function checkRelevanceAlarmLevel(alarmlevel,type,identifier){
             break;
         }
     }
-    adapter.log.debug('14.1.1.2: Alarm ' + identifier + 'with level ' + alarmlevel + ' Relevant for ' + type +': ' + typeRelevant)
+    adapter.log.debug('14.1.2: Alarm ' + identifier + ' with level ' + alarmlevel + ' relevant for ' + type +': ' + typeRelevant)
     return typeRelevant
 }
 
@@ -1511,55 +1507,106 @@ function getTypeName(type){
 
 }
 
-function checkTypeRelevant(warntype){
-
-    switch (warntype) {
-        case '1':
-            return adapter.config.warningType1
-            break;
-        case '2':
-            return adapter.config.warningType2
-            break;
-        case '3':
-            return adapter.config.warningType3
-            break;
-        case '4':
-            return adapter.config.warningType4
-            break;
-        case '5':
-            return adapter.config.warningType5
-            break;
-        case '6':
-            return adapter.config.warningType6
-            break;
-        case '7':
-            return adapter.config.warningType7
-            break;
-        case '8':
-            return adapter.config.warningType8
-            break;
-        case '9':
-            return adapter.config.warningType9
-            break;
-        case '10':
-            return adapter.config.warningType10
-            break;
-        case '11':
-            return 'Unknown'
-            break;
-        case '12':
-            return adapter.config.warningType12
-            break;
-        case '13':
-            return adapter.config.warningType13
-            break;
-        case '0':
-            return ''
-            break;
-       default:
-           adapter.log.warn('No configuration found for type ' + warntype)
-           return true
-           break;
+function checkTypeRelevant(warntype,checkType){
+    if (checkType == "general"){
+        switch (warntype) {
+            case '1':
+                return adapter.config.warningType1
+                break;
+            case '2':
+                return adapter.config.warningType2
+                break;
+            case '3':
+                return adapter.config.warningType3
+                break;
+            case '4':
+                return adapter.config.warningType4
+                break;
+            case '5':
+                return adapter.config.warningType5
+                break;
+            case '6':
+                return adapter.config.warningType6
+                break;
+            case '7':
+                return adapter.config.warningType7
+                break;
+            case '8':
+                return adapter.config.warningType8
+                break;
+            case '9':
+                return adapter.config.warningType9
+                break;
+            case '10':
+                return adapter.config.warningType10
+                break;
+            case '11':
+                return 'Unknown'
+                break;
+            case '12':
+                return adapter.config.warningType12
+                break;
+            case '13':
+                return adapter.config.warningType13
+                break;
+            case '0':
+                return ''
+                break;
+           default:
+               adapter.log.warn('No configuration found for type ' + warntype)
+               return true
+               break;
+        }
+    }
+    if (checkType == "notification"){
+        switch (warntype) {
+            case '1':
+                return adapter.config.warningType1Notification
+                break;
+            case '2':
+                return adapter.config.warningType2Notification
+                break;
+            case '3':
+                return adapter.config.warningType3Notification
+                break;
+            case '4':
+                return adapter.config.warningType4Notification
+                break;
+            case '5':
+                return adapter.config.warningType5Notification
+                break;
+            case '6':
+                return adapter.config.warningType6Notification
+                break;
+            case '7':
+                return adapter.config.warningType7Notification
+                break;
+            case '8':
+                return adapter.config.warningType8Notification
+                break;
+            case '9':
+                return adapter.config.warningType9Notification
+                break;
+            case '10':
+                return adapter.config.warningType10Notification
+                break;
+            case '11':
+                return 'Unknown'
+                break;
+            case '12':
+                return adapter.config.warningType12Notification
+                break;
+            case '13':
+                return adapter.config.warningType13Notification
+                break;
+            case '0':
+                return ''
+                break;
+           default:
+               adapter.log.warn('No configuration found for notification alert type ' + warntype)
+               return true
+               break;
+        }
     }
 
 }
