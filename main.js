@@ -291,8 +291,8 @@ async function getData(){
             
             const temp2 = await saveAlarmNamesForLater()
             for (const alarmLoop of alarmOldIdentifier) {
-                //HERE SIND WIR
-                adapter.log.debug('TEMP: ' + alarmLoop)
+                //HIER SIND WIR
+                //adapter.log.debug('TEMP: ' + alarmLoop)
                 const temp1 = await saveAlarmsForLater(alarmLoop)
             };
 
@@ -472,7 +472,7 @@ async function getData(){
             notificationAlarmArray = []
             adapter.log.debug('10: Create alarm states')
             for (var j = 0, l = alarmAll.length; j < l; j++){ 
-                adapter.log.debug('10.TEMP: level= ' + alarmAll[j].Level)
+                //adapter.log.debug('10.TEMP: level= ' + alarmAll[j].Level)
                 if (checkRelevanceAlarmLevel(String(alarmAll[j].Level),"general","")){
                     const promises = await fillAlarm(alarmAll, j)
                 }

@@ -219,8 +219,8 @@
         "warningType13Notification": true,
         "notificationsType": "None",
         "levelType": "Kreise",
-        "warningLevelSetupGeneral": 0,
-        "warningLevelSetupNotification": 0
+        "warningLevelSetupGeneral": "0",
+        "warningLevelSetupNotification": "0"
     },
     "objects": [],
     "instanceObjects": [
