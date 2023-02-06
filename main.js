@@ -472,7 +472,10 @@ async function getData(){
             notificationAlarmArray = []
             adapter.log.debug('10: Create alarm states')
             for (var j = 0, l = alarmAll.length; j < l; j++){ 
-                const promises = await fillAlarm(alarmAll, j)
+                adapter.log.debug('10.TEMP: level= ' + alarmAll[j].Level)
+                if (checkRelevanceAlarmLevel(String(alarmAll[j].Level),"general","")){
+                    const promises = await fillAlarm(alarmAll, j)
+                }
             }
             adapter.log.debug('10.2: Created alarm states')
 
@@ -996,7 +999,6 @@ async function processNotifications(alarms){
                     var notificationLevel = getNotificationLevel(alarms.Level)
                     var notificationText = prepareNotificationText(alarms.Headline,alarms.Description,tempDate,region,notificationLevel,alarms.Alarm_Identifier)
                     adapter.log.debug('14.1.1 Type relevant: ' +checkTypeRelevant(String(alarms.Type),"notification") )
-                    //adapter.log.debug('14.1.1 Alarm Level relevant for notification (according to settings): ' + checkRelevanceAlarmLevel(alarms.Level,"notification" ))
                     if ((checkRelevanceAlarmLevel(alarms.Level,"notification",alarms.Alarm_Identifier ))&&  (checkTypeRelevant(String(alarms.Type),"notification"))){
                         adapter.setStateAsync({device: '' , channel: '',state: 'notification'}, {val: notificationText, ack: true})
                         sendNotification(alarms.Headline,alarms.Description,tempDate,region,notificationLevel,alarms.Alarm_Identifier,alarms.Alarm_Type)  
@@ -1080,6 +1082,7 @@ function sendNotification(headline,description,date,region,levelText,identifier,
 
 function checkRelevanceAlarmLevel(alarmlevel,type,identifier){
     var typeRelevant = false
+    var alarmlevelInt = parseInt(alarmlevel)
 
     if (type == "notification"){
         //adapter.log.debug('14.1.2.1: Settings relevance notification: ' + adapter.config.warningLevelSetupNotification)
@@ -1089,19 +1092,22 @@ function checkRelevanceAlarmLevel(alarmlevel,type,identifier){
                 typeRelevant = true
                 break;
             case '1':
-                if (alarmlevel >= 3){
+                if (alarmlevelInt >= 3){
                     typeRelevant = true
                 }
                 break;
             case '2':
-                if (alarmlevel == 4){
+                if (alarmlevelInt == 4){
                     typeRelevant = true
                 }
                 break;
             default:
                 //Do nothing
+                adapter.log.debug('14.1.1: Type not found -> no check for relevance possible')
             break;
         }
+        adapter.log.debug('14.1.2: Alarm ' + identifier + ' with level ' + alarmlevel + ' relevant for ' + type +': ' + typeRelevant + ' (setting: ' + adapter.config.warningLevelSetupNotification + ')')
+
     }
     if (type == "general"){
         //adapter.log.debug('14.1.2.1: Settings relevance general: ' + adapter.config.warningLevelSetupGeneral)
@@ -1110,21 +1116,23 @@ function checkRelevanceAlarmLevel(alarmlevel,type,identifier){
                 typeRelevant = true
                 break;
             case '1':
-                if (alarmlevel >= 3){
+                if (alarmlevelInt >= 3){
                     typeRelevant = true
                 }
                 break;
             case '2':
-                if (alarmlevel == 4){
+                if (alarmlevelInt == 4){
                     typeRelevant = true
                 }
                 break;
             default:
                 //Do nothing
+                adapter.log.debug('14.1.1: Type not found -> no check for relevance possible')
             break;
         }
+        adapter.log.debug('14.1.2: Alarm ' + identifier + ' with level ' + alarmlevel + ' relevant for ' + type +': ' + typeRelevant + ' (setting: ' + adapter.config.warningLevelSetupGeneral)
+
     }
-    adapter.log.debug('14.1.2: Alarm ' + identifier + ' with level ' + alarmlevel + ' relevant for ' + type +': ' + typeRelevant)
     return typeRelevant
 }
 
