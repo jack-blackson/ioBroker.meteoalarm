@@ -1,26 +1,7 @@
-![Logo](admin/meteoalarm.png)
 # ioBroker.meteoalarm
-
 
 ## Add it to your vis
 The easiest way to add it to your vis is by using the widget basic - html, and there entering {meteoalarm.0.htmlToday}. This gives you a predesigned HTML widget, which you can adjust in the setup.
-
-## Alarm Types
-|Alarm Type|Description|                                                                       
-|:---:|:---:|
-|1|Wind|
-|2|Snow/Ice|
-|3|Thunder & Lightning|
-|4|Fog|
-|5|High temperature|
-|6|Low temperature|
-|7|Coast Event|
-|8|Forrest fire|
-|9|Avalanche|
-|10|Rain|
-|11|Unknown|
-|12|Flood|
-|13|Rain-Flood|
 
 # Setup
 
@@ -105,8 +86,9 @@ These objects are created for each alarm.
 |typeText|Type of alarm in words (see alarm types above|
 |updateIdentifier|Not relevant|
 
+# Alarm Details
 
-# Alarm Levels
+## Alarm Levels
 |Alarm Level|Number|Description|                                                                       
 |:---:|:---:|:---:|
 |Green|1|There is no warning available at the moment.|
@@ -114,7 +96,22 @@ These objects are created for each alarm.
 |Orange|3|The weather is dangerous. Unusual meteorological phenomena have been predicted. Damage and accidents are likely. Be very attentive and careful and keep up to date with the expected meteorological conditions. |
 |Red|4|The weather is very dangerous. Unusually intense meteorological phenomena were predicted. Extreme damage and accidents, often over large areas, threaten life and property. |
 
-
+## Alarm Types
+|Alarm Type|Description|                                                                       
+|:---:|:---:|
+|1|Wind|
+|2|Snow/Ice|
+|3|Thunder & Lightning|
+|4|Fog|
+|5|High temperature|
+|6|Low temperature|
+|7|Coast Event|
+|8|Forrest fire|
+|9|Avalanche|
+|10|Rain|
+|11|Unknown|
+|12|Flood|
+|13|Rain-Flood|
 
 # Supported countries
 * Austria
