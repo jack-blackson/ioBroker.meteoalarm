@@ -18,7 +18,7 @@ The developer can't guarantee that the warnings are handled in time or that ther
 ## How to use it
 Choose your country, and afterwards the region you want the warnings for. If you are unsure what your region name is, please go to https://meteoalarm.org and try to find it on the map. 
 
-[English Description here](docs/en/shuttercontrol.md)
+[English Description here](docs/en/meteoalarm.md)
 
 ## Changelog
 
