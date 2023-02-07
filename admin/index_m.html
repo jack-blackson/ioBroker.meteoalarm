@@ -307,6 +307,8 @@
                 <li class="tab col s2"><a href="#tab-settings"  class="translate active">settings</a></li>
                 <li class="tab col s2"><a href="#tab-alarmtypes" class="translate">alarmtypes</a></li>
                 <li class="tab col s2"><a href="#tab-notification" class="translate">notifications</a></li>
+                <li class="tab col s2"><a href="#tab-notificationsettings" class="translate">notificationsettings</a></li>
+
             </ul>
         </div>
         <div id="tab-settings"      class="col s12 page">
@@ -427,8 +429,22 @@
         </div>
 
         <div id="tab-alarmtypes"  class="col s12 page">
+            <div class="row">
+
+                <div class="col s12">
+                    <h6 class="title translate" data-lang="alarmlevelsetup">alarmlevelsetup</h6>
+                </div>
+                <div class="input-field col s3">
+                    <select class="value select-image-size" id="warningLevelSetupGeneral">
+                        <option value="0" class="translate">LevelSetup1</option>
+                        <option value="1" class="translate">LevelSetup2</option>
+                        <option value="2" class="translate">LevelSetup3</option>
+                    </select>
+                    <label for="warningLevelSetupGeneral" class="translate">warningLevelSetupGeneral</label>
+                </div>
+            </div>
             <div class="col s12">
-                <h6 class="title translate" data-lang="alarmtypesetup">alarmtypesetup</h6>
+                <h6 class="title translate" data-lang="alarmtypeGeneralsetup">alarmtypeGeneralsetup</h6>
             </div>
             <div class="row">
                 <div class="input-field col s3">
@@ -452,6 +468,7 @@
                     <label for="warningType4" class="translate">warningType4</label>
                 </div>
             </div>
+
             <div class="row">
                 <div class="input-field col s3">
                     <img width="20" height="20" src="icons/black/t5.png"/>
@@ -579,6 +596,96 @@
 
             </div>
     </div>
+    <div id="tab-notificationsettings"  class="col s12 page">
+            <div class="row">
+
+                <div class="col s12">
+                    <h6 class="title translate" data-lang="alarmlevelsetupNotification">alarmlevelsetupNotification</h6>
+                </div>
+                <div class="input-field col s3">
+                    <select class="value select-image-size" id="warningLevelSetupNotification">
+                        <option value="0" class="translate">LevelSetup1</option>
+                        <option value="1" class="translate">LevelSetup2</option>
+                        <option value="2" class="translate">LevelSetup3</option>
+                    </select>
+                    <label for="warningLevelSetupNotification" class="translate">warningLevelSetupNotification</label>
+                </div>
+            </div>
+            <div class="col s12">
+                <h6 class="title translate" data-lang="alarmtypeNotificationsetup">alarmtypeNotificationsetup</h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s3">
+                    <img width="20" height="20" src="icons/black/t1.png"/>
+                    <input type="checkbox" id="warningType1Notification" class="value" />
+                    <label for="warningType1Notification" class="translate">warningType1</label>
+                </div>
+                <div class="input-field col s3">
+                    <img width="20" height="20" src="icons/black/t2.png"/>
+                    <input type="checkbox" id="warningType2Notification" class="value" />
+                    <label for="warningType2Notification" class="translate">warningType2</label>
+                </div>
+                <div class="input-field col s3">
+                    <img width="20" height="20" src="icons/black/t3.png"/>
+                    <input type="checkbox" id="warningType3Notification" class="value" />
+                    <label for="warningType3Notification" class="translate">warningType3</label>
+                </div>
+                <div class="input-field col s3">
+                    <img width="20" height="20" src="icons/black/t4.png"/>
+                    <input type="checkbox" id="warningType4Notification" class="value" />
+                    <label for="warningType4Notification" class="translate">warningType4</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s3">
+                    <img width="20" height="20" src="icons/black/t5.png"/>
+                    <input type="checkbox" id="warningType5Notification" class="value" />
+                    <label for="warningType5Notification" class="translate">warningType5</label>
+                </div>
+                <div class="input-field col s3">
+                    <img width="20" height="20" src="icons/black/t6.png"/>
+                    <input type="checkbox" id="warningType6Notification" class="value" />
+                    <label for="warningType6Notification" class="translate">warningType6</label>
+                </div>
+                <div class="input-field col s3">
+                    <img width="20" height="20" src="icons/black/t7.png"/>
+                    <input type="checkbox" id="warningType7Notification" class="value" />
+                    <label for="warningType7Notification" class="translate">warningType7</label>
+                </div>
+                <div class="input-field col s3">
+                    <img width="20" height="20" src="icons/black/t8.png"/>
+                    <input type="checkbox" id="warningType8Notification" class="value" />
+                    <label for="warningType8Notification" class="translate">warningType8</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s3">
+                    <img width="20" height="20" src="icons/black/t9.png"/>
+                    <input type="checkbox" id="warningType9Notification" class="value" />
+                    <label for="warningType9Notification" class="translate">warningType9</label>
+                </div>
+                <div class="input-field col s3">
+                    <img width="20" height="20" src="icons/black/t10.png"/>
+                    <input type="checkbox" id="warningType10Notification" class="value" />
+                    <label for="warningType10Notification" class="translate">warningType10</label>
+                </div>
+                <div class="input-field col s3">
+                    <img width="20" height="20" src="icons/black/t12.png"/>
+                    <input type="checkbox" id="warningType12Notification" class="value" />
+                    <label for="warningType12Notification" class="translate">warningType12</label>
+                </div>
+                <div class="input-field col s3">
+                    <img width="20" height="20" src="icons/black/t13.png"/>
+                    <input type="checkbox" id="warningType13Notification" class="value" />
+                    <label for="warningType13Notification" class="translate">warningType13</label>
+                </div>
+            </div>
+
+            </div>
+            
+            
+        </div>
 </div>
 </body>
 </html>

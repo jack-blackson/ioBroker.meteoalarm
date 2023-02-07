@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "meteoalarm",
-        "version": "2.3.2",
+        "version": "2.3.3",
         "news": {
+            "2.3.3": {
+                "en": "Define which alarm levels you are interested in",
+                "de": "Definiere, welche Alarmstufen dich interessieren",
+                "ru": "Определите, какие уровни сигнализации вас интересуют",
+                "pt": "Defina quais níveis de alarme você está interessado em",
+                "nl": "Definieer in welk alarmniveau je geïnteresseerd bent in",
+                "fr": "Définir quels niveaux d'alarme vous êtes intéressé",
+                "it": "Definire quali livelli di allarme siete interessati",
+                "es": "Define los niveles de alarma que te interesan",
+                "pl": "Definicja, której poziomy alarmu są zainteresowane",
+                "uk": "Визначення рівня сигналізації, які вас цікавлять",
+                "zh-cn": "你们关心的指责"
+            },
             "2.3.2": {
                 "en": "Bugfix to clean up alerts correctly",
                 "de": "Bugfix, um Alarme richtig zu reinigen",
@@ -26,7 +39,8 @@
                 "it": "Capacità di inviare allarmi ad altri adattatori (Telegramm, eMail, Pushover, Signal,Synochat)",
                 "es": "Capacidad para enviar alarmas a otros adaptadores (Telegramm, eMail, Pushover, Signal,Synochat)",
                 "pl": "Możliwość wysyłania alarmów do innych adapterów, takich jak (Telegramm, eMail, Pushover, Signal,Synochat)",
-                "zh-cn": "是否能够向电报或邮件等其他适应者发出震惊"
+                "zh-cn": "是否能够向电报或邮件等其他适应者发出震惊",
+                "uk": "Можливість надсилати тривоги на інші адаптери (Telegramm, eMail, Pushover, Signal, Synochat)"
             },
             "2.2.1": {
                 "en": "Bugfixes",
@@ -38,7 +52,8 @@
                 "it": "Correzioni di bug",
                 "es": "Corrección de errores",
                 "pl": "Poprawki",
-                "zh-cn": "Bug修复"
+                "zh-cn": "Bug修复",
+                "uk": "Виправлення помилок"
             },
             "2.2.0": {
                 "en": "New Object JSON to export data in JSON format, First step to get rid of duplicate alarms",
@@ -50,7 +65,8 @@
                 "it": "Nuovo oggetto JSON per esportare i dati in formato JSON, primo passo per sbarazzarsi di allarmi duplicati",
                 "es": "Nuevo objeto JSON para exportar datos en formato JSON, primer paso para deshacerse de alarmas duplicadas",
                 "pl": "Nowy obiekt JSON w celu eksportu danych w formacie JSON, pierwszy krok, aby pozbyć się duplikacyjnych alarmów",
-                "zh-cn": "新的目标联合执行组织以联合执行形式出口数据,首先要克服重复的震惊"
+                "zh-cn": "新的目标联合执行组织以联合执行形式出口数据,首先要克服重复的震惊",
+                "uk": "Новий об’єкт JSON для експорту даних у форматі JSON. Перший крок, щоб позбутися повторюваних нагадувань"
             },
             "2.1.5": {
                 "en": "Bugfixes",
@@ -62,7 +78,8 @@
                 "it": "Correzioni di bug",
                 "es": "Corrección de errores",
                 "pl": "Poprawki",
-                "zh-cn": "Bug修复"
+                "zh-cn": "Bug修复",
+                "uk": "Виправлення помилок"
             },
             "2.1.4": {
                 "en": "Add SENTRY event details",
@@ -74,7 +91,8 @@
                 "it": "Aggiungi i dettagli dell'evento SENTRY",
                 "es": "Agregar detalles del evento SENTRY",
                 "pl": "Dodaj szczegóły wydarzenia SENTRY",
-                "zh-cn": "添加 SENTRY 事件详细信息"
+                "zh-cn": "添加 SENTRY 事件详细信息",
+                "uk": "Додайте деталі події SENTRY"
             },
             "2.1.3": {
                 "en": "Bugfixes",
@@ -86,7 +104,8 @@
                 "it": "Correzioni di bug",
                 "es": "Corrección de errores",
                 "pl": "Poprawki",
-                "zh-cn": "Bug修复"
+                "zh-cn": "Bug修复",
+                "uk": "Виправлення помилок"
             },
             "2.1.2": {
                 "en": "Bugfixes",
@@ -98,7 +117,8 @@
                 "it": "Correzioni di bug",
                 "es": "Corrección de errores",
                 "pl": "Poprawki",
-                "zh-cn": "Bug修复"
+                "zh-cn": "Bug修复",
+                "uk": "Виправлення помилок"
             }
         },
         "titleLang": {
@@ -123,7 +143,7 @@
             "fr": "Alarmes météo de meteoalarm.org pour toute l'Europe",
             "it": "Allarmi meteo da meteoalarm.org per tutta l'Europa",
             "es": "Alarmas meteorológicas de meteoalarm.org para toda Europa",
-            "pl": "Alarmy pogodowe z meteoalarm.org dla całej Europy",            
+            "pl": "Alarmy pogodowe z meteoalarm.org dla całej Europy",
             "uk": "Погода надана в Європі",
             "zh-cn": "来自meteoalarm.org 的整个欧洲的天气警报"
         },
@@ -134,9 +154,11 @@
         "platform": "Javascript/Node.js",
         "mode": "schedule",
         "schedule": "*/10 * * * *",
-        "dependencies": [{
-            "js-controller": ">=3.0.0"
-        }],
+        "dependencies": [
+            {
+                "js-controller": ">=3.0.0"
+            }
+        ],
         "enabled": true,
         "compact": true,
         "readme": "https://github.com/jack-blackson/ioBroker.meteoalarm/blob/master/README.md",
@@ -183,8 +205,22 @@
         "warningType10": true,
         "warningType12": true,
         "warningType13": true,
+        "warningType1Notification": true,
+        "warningType2Notification": true,
+        "warningType3Notification": true,
+        "warningType4Notification": true,
+        "warningType5Notification": true,
+        "warningType6Notification": true,
+        "warningType7Notification": true,
+        "warningType8Notification": true,
+        "warningType9Notification": true,
+        "warningType10Notification": true,
+        "warningType12Notification": true,
+        "warningType13Notification": true,
         "notificationsType": "None",
-        "levelType": "Kreise"
+        "levelType": "Kreise",
+        "warningLevelSetupGeneral": "0",
+        "warningLevelSetupNotification": "0"
     },
     "objects": [],
     "instanceObjects": [
