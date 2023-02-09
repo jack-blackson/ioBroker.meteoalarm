@@ -22,7 +22,7 @@ Choose your country, and afterwards the region you want the warnings for. If you
 
 ## Changelog
 
-## 2.3.3 (2023-XX)
+## 2.3.3 (2023-02-09)
 * (jack-blackson) Added possibility to define the alarm levels for the widget, JSON and notificatio
 * (jack-blackson) Added ukrainian language 
 
