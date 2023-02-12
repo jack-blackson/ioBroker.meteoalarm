@@ -1,11 +1,11 @@
 # ioBroker.meteoalarm
 
-## Add it to your vis
-The easiest way to add it to your vis is by using the widget basic - html, and there entering {meteoalarm.0.htmlToday}. This gives you a predesigned HTML widget, which you can adjust in the adapter-setup.
+## Zur vis hinzufügen
+Am einfachsten fügst du es zu deinem Vis hinzu, indem du das Widget basic - html verwendest und dort {meteoalarm.0.htmlToday} eingibst. Dadurch erhältst du ein vorgefertigtes HTML-Widget, das du im Adapter-Setup anpassen kannst.
 
-# Setup
+# Einstellungen
 
-## Settings
+## Einstellungen
 "No Background Color in HTML Widget": 
 Ability to use the HTML Widget without background color (e.g. if you want to use the color object to fill your whole widget, not just the html widget)
 
@@ -24,11 +24,11 @@ Don't use the symbol in the HTML widget. You can still access it in the objects.
 "Today instead of Weekday"
 Show in the header of the widget instead of the weekday "today", "tomorrow" or "yesterday.
 
-## Alarm Types Setup
-Here you can define which alarm levels and alarm types are tracked. This has an effect on the alarm objects, on the HTML widget and on the JSON object.
+## Alarmtypen
+Hier können Sie festlegen, welche Alarmstufen und Alarmtypen verfolgt werden. Dies hat Auswirkungen auf die Alarmobjekte, auf das HTML-Widget und auf das JSON-Objekt.
 
-## Notifications
-It is possible to let the adapter send you the notifications by mail, telegram, signal or pushover. 
+## Benachrichtigungen
+Es ist möglich, dass der Adapter Ihnen die Benachrichtigungen per Mail, Telegramm, Signal oder Pushover sendet.
 
 * Signal
 * Mail
@@ -36,21 +36,20 @@ It is possible to let the adapter send you the notifications by mail, telegram, 
 * Telegram
 * Synochat
 
-Available Settings:
-* Show Location: If this setting is activated, the location name is added to the notification
-* Warning Level in Words: Add the warning level in words additionally to the warning symbols
-* No details: Don't add the description of the warning to the notification - e.g. for Alexa
-* Send "no warnings": Send a notification if all alarms are ended and there is no warning at the moment
-* Warning Level Symbols: Choose what symbols should be added to the notification
+Verfügbare Einstellungen:
+* Standort anzeigen: Wenn diese Einstellung aktiviert ist, wird der Ortsname zur Benachrichtigung hinzugefügt.
+* Warnstufe in Wörtern: Fügen Sie die Warnstufe in Worten zusätzlich zu den Warnsymbolen hinzu
+* Keine Details: Fügen Sie der Benachrichtigung keine Beschreibung der Warnung hinzu - z. B. für Alexa
+* Keine Warnungen senden": Eine Benachrichtigung senden, wenn alle Alarme beendet sind und derzeit keine Warnung vorliegt
+* Warnstufen-Symbole: Wählen Sie, welche Symbole der Benachrichtigung hinzugefügt werden sollen
 
 
-## Notification Alarm Types
-Here you can define which alarm levels and types are used for the notifications. Important: if a level or type is not tracked in the "Alarm Types" setup, then you can not track it in the notifications.
+## Benachrichtigungsalarmtypen
+Hier können Sie festlegen, welche Alarmstufen und -typen für die Benachrichtigungen verwendet werden sollen. Wichtig: Wenn eine Stufe oder ein Typ in der Einstellung "Alarmtypen" nicht verfolgt wird, können Sie sie in den Benachrichtigungen nicht verfolgen.
 
+# Objekte
 
-# Objects
-
-## General Objects
+## Generelle Objekte
 
 |Object Name|Description|                                                                       
 |:---:|:---:|
@@ -86,7 +85,7 @@ These objects are created for each alarm.
 |typeText|Type of alarm in words (see alarm types above|
 |updateIdentifier|Not relevant|
 
-# Alarm Details
+# Alarmdetails
 
 ## Alarm Levels
 |Alarm Level|Number|Description|                                                                       
@@ -113,41 +112,41 @@ These objects are created for each alarm.
 |12|Flood|
 |13|Rain-Flood|
 
-# Supported countries
-* Austria
-* Germany
-* Belgium
-* BosniaHerzegovina
-* Croatia
-* Cyprus
-* Czech Republic
-* Denmark
-* Estonia
-* Finland
-* France
-* Greece
-* Hungary
-* Iceland
+# Unterstützte Länder
+* Österreich
+* Deutschland
+* Belgien
+* BosnienHerzegowina
+* Kroatien
+* Zypern
+* Tschechische Republik
+* Dänemark
+* Estland
+* Finnland
+* Frankreich
+* Griechenland
+* Ungarn
+* Island
 * Israel
-* Italy
-* Latvia
-* Lithuania
-* Luxembourg
+* Italien
+* Lettland
+* Litauen
+* Luxemburg
 * Malta
-* Netherlands
-* Norway
-* Poland
-* Romania
-* Serbia
-* Slovakia
-* Slovenia
-* Spain
-* Sweden
-* Switzerland
+* Niederlande
+* Norwegen
+* Polen
+* Rumänien
+* Serbien
+* Slowakei
+* Slowenien
+* Spanien
+* Schweden
+* Schweiz
 * UK
 
-If you don't find your country, please create an issue on github, and I will be happy to add it
+Wenn Sie Ihr Land nicht finden, erstellen Sie bitte einen Eintrag auf github, und ich werde es gerne hinzufügen
 
-# Not supported countries
-* Portugal (geocode file from meteoalarm.org is probably incorrect)
-* Bulgaria (geocode file from meteoalarm.org is probably incorrect)
+# Nicht unterstützte Länder
+* Portugal (Geocode-Datei von meteoalarm.org ist wahrscheinlich falsch)
+* Bulgarien (Geocode-Datei von meteoalarm.org ist wahrscheinlich nicht korrekt)
