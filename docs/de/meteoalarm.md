@@ -1,6 +1,6 @@
 # ioBroker.meteoalarm
 
-## Zur vis hinzufügen
+## Zur VIS hinzufügen
 Am einfachsten fügst du es zu deinem Vis hinzu, indem du das Widget basic - html verwendest und dort {meteoalarm.0.htmlToday} eingibst. Dadurch erhältst du ein vorgefertigtes HTML-Widget, das du im Adapter-Setup anpassen kannst.
 
 # Einstellungen
@@ -25,7 +25,7 @@ Anzeige in der Kopfzeile des Widgets anstelle des Wochentags "heute", "morgen" o
 Möglichkeit, die Farben für die verschiedenen Alarmstufen im HEX-Code zu definieren. Verwendet für HTML-Widget und auch für das Farbobjekt, um es manuell einem anderen Widget zuzuweisen.
 
 ## Alarmtypen
-Hier können Sie festlegen, welche Alarmstufen und Alarmtypen verfolgt werden. Dies hat Auswirkungen auf die Alarmobjekte, auf das HTML-Widget und auf das JSON-Objekt.
+Hier kannst du festlegen, welche Alarmstufen und Alarmtypen verfolgt werden. Dies hat Auswirkungen auf die Alarmobjekte, auf das HTML-Widget und auf das JSON-Objekt.
 
 ## Benachrichtigungen
 Es ist möglich, dass der Adapter Ihnen die Benachrichtigungen per Mail, Telegramm, Signal oder Pushover sendet.
@@ -91,7 +91,7 @@ Diese Objekte werden für jeden Alarm erstellt.
 |Alarmstufen|Nummer|Beschreibung|                                                                       
 |:---:|:---:|:---:|
 |Grün|1|Zurzeit ist keine Warnung verfügbar|
-|GElb|2|Das Wetter ist potenziell gefährlich. Die vorhergesagten Wetterphänomene sind nicht ungewöhnlich, aber bei Aktivitäten, die meteorologischen Risiken ausgesetzt sind, sollte man erhöhte Aufmerksamkeit walten lassen. Informieren Sie sich über die zu erwartenden meteorologischen Bedingungen und gehen Sie keine vermeidbaren Risiken ein|
+|Gelb|2|Das Wetter ist potenziell gefährlich. Die vorhergesagten Wetterphänomene sind nicht ungewöhnlich, aber bei Aktivitäten, die meteorologischen Risiken ausgesetzt sind, sollte man erhöhte Aufmerksamkeit walten lassen. Informieren Sie sich über die zu erwartenden meteorologischen Bedingungen und gehen Sie keine vermeidbaren Risiken ein|
 |Orange|3|Das Wetter ist gefährlich. Ungewöhnliche meteorologische Phänomene sind vorhergesagt worden. Beschädigungen und Unfälle sind wahrscheinlich. Seien Sie sehr aufmerksam und vorsichtig und halten Sie sich über die zu erwartenden meteorologischen Bedingungen auf dem Laufenden|
 |Rot|4|Das Wetter ist sehr gefährlich. Ungewöhnlich intensive meteorologische Phänomene wurden vorhergesagt. Extreme Schäden und Unfälle, oft über große Gebiete hinweg, bedrohen Leben und Eigentum|
 
@@ -145,7 +145,7 @@ Diese Objekte werden für jeden Alarm erstellt.
 * Schweiz
 * UK
 
-Wenn Sie Ihr Land nicht finden, erstellen Sie bitte einen Eintrag auf github, und ich werde es gerne hinzufügen
+Wenn du dein Land nicht findest, erstelle bitte einen Eintrag auf github, und ich versuchen, es hinzuzufügen
 
 # Nicht unterstützte Länder
 * Portugal (Geocode-Datei von meteoalarm.org ist wahrscheinlich falsch)
