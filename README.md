@@ -20,6 +20,9 @@ Choose your country, and afterwards the region you want the warnings for. If you
 
 [English description](docs/en/meteoalarm.md)
 
+[Deutsche Anleitung](docs/de/meteoalarm.md)
+
+
 ## Changelog
 
 ## 2.3.3 (2023-02-09)

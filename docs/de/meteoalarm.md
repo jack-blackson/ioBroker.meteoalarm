@@ -6,23 +6,23 @@ Am einfachsten fügst du es zu deinem Vis hinzu, indem du das Widget basic - htm
 # Einstellungen
 
 ## Einstellungen
-"No Background Color in HTML Widget": 
-Ability to use the HTML Widget without background color (e.g. if you want to use the color object to fill your whole widget, not just the html widget)
+"Keine Hintergrundfarbe im HTML Widget": 
+Möglichkeit, das HTML-Widget ohne Hintergrundfarbe zu verwenden (z. B. wenn Sie das Farbobjekt verwenden möchten, um das gesamte Widget zu füllen, nicht nur das HTML-Widget)
 
-"Define Warning colors": 
-Ability to define the colors for the various alarm levels in HEX code. Used for HTML widget and also for the color object to manually assign it to another widget
-
-"Use white icons": 
-Use white icons instead of black ones
+"Weiße Symbole für Widget": 
+Weiße statt schwarze Icons verwenden.
 
 "Icons": 
-Define the size of the icon in the HTML widget
+Definiere die Größe des Symbols im HTML-Widget
 
-"No symbols in widget":
-Don't use the symbol in the HTML widget. You can still access it in the objects. This is usefill if you want to show the icon seperatly from the widget - e.g. in a bigger size.
+"Symbole im HTML Widget nicht anzeigen":
+Verwende keine Symbol im HTML-Widget. Sie können es trotzdem in den Objekten aufrufen. Dies ist nützlich, wenn Sie das Symbol getrennt vom Widget anzeigen möchten - z. B. in einer größeren Größe.
 
-"Today instead of Weekday"
-Show in the header of the widget instead of the weekday "today", "tomorrow" or "yesterday.
+"Heute statt Wochentag"
+Anzeige in der Kopfzeile des Widgets anstelle des Wochentags "heute", "morgen" oder "gestern".
+
+"Warnfarben definieren": 
+Möglichkeit, die Farben für die verschiedenen Alarmstufen im HEX-Code zu definieren. Verwendet für HTML-Widget und auch für das Farbobjekt, um es manuell einem anderen Widget zuzuweisen.
 
 ## Alarmtypen
 Hier können Sie festlegen, welche Alarmstufen und Alarmtypen verfolgt werden. Dies hat Auswirkungen auf die Alarmobjekte, auf das HTML-Widget und auf das JSON-Objekt.
@@ -49,68 +49,68 @@ Hier können Sie festlegen, welche Alarmstufen und -typen für die Benachrichtig
 
 # Objekte
 
-## Generelle Objekte
+## Übergreifende Objekte
 
-|Object Name|Description|                                                                       
+|Objekt Name|Beschreibung|                                                                       
 |:---:|:---:|
-|JSON|JSON that includes all alarms. Structure: Event, Description,Level,Start Date, Icon, Alarmtype|
-|color|Color code of the hightest available alarm level|
-|htmlToday|HTML Widget code (adjustable in setup)|
-|lastUpdate|Last Update from Meteoalarm|
-|level|Maximum level of available alarms|
+|JSON|JSON mit allen Alarm-Daten. Struktur: Event, Description,Level,Start Date, Icon, Alarmtype|
+|color|Farbcode der höchsten verfügbaren Alarmstufe|
+|htmlToday|HTML Widget (Anpassbar im Setup)|
+|lastUpdate|Letztes Update von Meteoalarm|
+|level|Maximal verfügbare ALarmstufe|
 |link|Feed Link|
-|location|Location name|
-|noOfAlarms|Count of available alarms|
-|notification|Object that changes if a new alarm is added. Can be used for notifications.|
+|location|Standort Name|
+|noOfAlarms|Anzahl verfügbarer Alarme|
+|notification|Objekt, das sich ändert, wenn ein neuer Alarm hinzugefügt wird. Kann für Benachrichtigungen verwendet werden.|
 
 
-## Objects for each alarm
-These objects are created for each alarm.
+## Objecte, die für jeden Alarm erstellt werden
+Diese Objekte werden für jeden Alarm erstellt.
 
-|Object Nane|Description|                                                                       
+|Objekt Nane|Beschreibung|                                                                       
 |:---:|:---:|
-|color|Hex code for alarm - can be adjusted in setup for the various levels|
-|description|Long description of alarm|
-|effective|Start date/time of alarm event|
-|event|Event type|
-|expires|End date/time of alarm event|
-|headline|Short description of alarm|
-|icon|Link to icon|
-|level|Level number (see alarm levels below)|
-|levelText|Level in words|
-|link|Link to xml|
-|sender|Who sent the alarm (e.g. Deutscher Wetterdienst")|
-|sent|Date/time when alarm was sent|
-|type|Type of alarm as number (see alarm types above|
-|typeText|Type of alarm in words (see alarm types above|
-|updateIdentifier|Not relevant|
+|color|Hex-Code für Alarm - kann im Setup für die verschiedenen Stufen eingestellt werden|
+|description|Langbeschreibung|
+|effective|Start Datum/Uhrzeit des Events|
+|event|Event Type|
+|expires|End Datum/Uhrzeit des Events|
+|headline|Kurzbeschreibung|
+|icon|Link zum Symbol|
+|level|Alarmstufe als Zahl (Alarmstufen siehe unten)|
+|levelText|Alarmstufe in Worten|
+|link|Link zum xml|
+|sender|Absender der Warnung (e.g. Deutscher Wetterdienst")|
+|sent|Sendedatum/Uhrzeit|
+|type|Alarmtyp als Zahl (Alarmzypen siehe unten)|
+|typeText|Alarmtyp als Wort|
+|updateIdentifier|Nicht relevant|
 
 # Alarmdetails
 
-## Alarm Levels
-|Alarm Level|Number|Description|                                                                       
+## Alarmstufen
+|Alarmstufen|Nummer|Beschreibung|                                                                       
 |:---:|:---:|:---:|
-|Green|1|There is no warning available at the moment.|
-|Yellow|2|The weather is potentially dangerous. The predicted weather phenomena are not unusual, but increased attention should be paid to activities exposed to meteorological risks. Keep yourself informed about the meteorological conditions to be expected and do not take any avoidable risks.|
-|Orange|3|The weather is dangerous. Unusual meteorological phenomena have been predicted. Damage and accidents are likely. Be very attentive and careful and keep up to date with the expected meteorological conditions. |
-|Red|4|The weather is very dangerous. Unusually intense meteorological phenomena were predicted. Extreme damage and accidents, often over large areas, threaten life and property. |
+|Grün|1|Zurzeit ist keine Warnung verfügbar|
+|GElb|2|Das Wetter ist potenziell gefährlich. Die vorhergesagten Wetterphänomene sind nicht ungewöhnlich, aber bei Aktivitäten, die meteorologischen Risiken ausgesetzt sind, sollte man erhöhte Aufmerksamkeit walten lassen. Informieren Sie sich über die zu erwartenden meteorologischen Bedingungen und gehen Sie keine vermeidbaren Risiken ein|
+|Orange|3|Das Wetter ist gefährlich. Ungewöhnliche meteorologische Phänomene sind vorhergesagt worden. Beschädigungen und Unfälle sind wahrscheinlich. Seien Sie sehr aufmerksam und vorsichtig und halten Sie sich über die zu erwartenden meteorologischen Bedingungen auf dem Laufenden|
+|Rot|4|Das Wetter ist sehr gefährlich. Ungewöhnlich intensive meteorologische Phänomene wurden vorhergesagt. Extreme Schäden und Unfälle, oft über große Gebiete hinweg, bedrohen Leben und Eigentum|
 
-## Alarm Types
-|Alarm Type|Description|                                                                       
+## Alarmtypen
+|Alarmtypen|Beschreibung|                                                                       
 |:---:|:---:|
 |1|Wind|
-|2|Snow/Ice|
-|3|Thunder & Lightning|
-|4|Fog|
-|5|High temperature|
-|6|Low temperature|
-|7|Coast Event|
-|8|Forrest fire|
-|9|Avalanche|
-|10|Rain|
-|11|Unknown|
-|12|Flood|
-|13|Rain-Flood|
+|2|Schnee und Eis|
+|3|Gewitter|
+|4|Nebel|
+|5|Hohe Temperaturen|
+|6|Niedrige Temperaturen|
+|7|Küstenevent|
+|8|Waldbrand|
+|9|Lawine|
+|10|Regen|
+|11|Unbekannt|
+|12|Flut|
+|13|Regen-Flut|
 
 # Unterstützte Länder
 * Österreich

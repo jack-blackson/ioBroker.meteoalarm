@@ -7,22 +7,22 @@ The easiest way to add it to your vis is by using the widget basic - html, and t
 
 ## Settings
 "No Background Color in HTML Widget": 
-Ability to use the HTML Widget without background color (e.g. if you want to use the color object to fill your whole widget, not just the html widget)
-
-"Define Warning colors": 
-Ability to define the colors for the various alarm levels in HEX code. Used for HTML widget and also for the color object to manually assign it to another widget
+Ability to use the HTML Widget without background color (e.g. if you want to use the color object to fill your whole widget, not just the html widget).
 
 "Use white icons": 
-Use white icons instead of black ones
+Use white icons instead of black ones.
 
 "Icons": 
-Define the size of the icon in the HTML widget
+Define the size of the icon in the HTML widget.
 
 "No symbols in widget":
 Don't use the symbol in the HTML widget. You can still access it in the objects. This is usefill if you want to show the icon seperatly from the widget - e.g. in a bigger size.
 
 "Today instead of Weekday"
 Show in the header of the widget instead of the weekday "today", "tomorrow" or "yesterday.
+
+"Define Warning colors": 
+Ability to define the colors for the various alarm levels in HEX code. Used for HTML widget and also for the color object to manually assign it to another widget
 
 ## Alarm Types Setup
 Here you can define which alarm levels and alarm types are tracked. This has an effect on the alarm objects, on the HTML widget and on the JSON object.
@@ -91,10 +91,10 @@ These objects are created for each alarm.
 ## Alarm Levels
 |Alarm Level|Number|Description|                                                                       
 |:---:|:---:|:---:|
-|Green|1|There is no warning available at the moment.|
-|Yellow|2|The weather is potentially dangerous. The predicted weather phenomena are not unusual, but increased attention should be paid to activities exposed to meteorological risks. Keep yourself informed about the meteorological conditions to be expected and do not take any avoidable risks.|
-|Orange|3|The weather is dangerous. Unusual meteorological phenomena have been predicted. Damage and accidents are likely. Be very attentive and careful and keep up to date with the expected meteorological conditions. |
-|Red|4|The weather is very dangerous. Unusually intense meteorological phenomena were predicted. Extreme damage and accidents, often over large areas, threaten life and property. |
+|Green|1|There is no warning available at the moment|
+|Yellow|2|The weather is potentially dangerous. The predicted weather phenomena are not unusual, but increased attention should be paid to activities exposed to meteorological risks. Keep yourself informed about the meteorological conditions to be expected and do not take any avoidable risks|
+|Orange|3|The weather is dangerous. Unusual meteorological phenomena have been predicted. Damage and accidents are likely. Be very attentive and careful and keep up to date with the expected meteorological conditions|
+|Red|4|The weather is very dangerous. Unusually intense meteorological phenomena were predicted. Extreme damage and accidents, often over large areas, threaten life and property|
 
 ## Alarm Types
 |Alarm Type|Description|                                                                       
