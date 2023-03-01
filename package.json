@@ -5,7 +5,7 @@
   "main": "main.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jack-blackson/ioBroker.meteoalarm.git"
+    "url": "https://github.com/jack-blackson/ioBroker.meteoalarm"
   },
   "author": {
     "name": "jack_blackson",
