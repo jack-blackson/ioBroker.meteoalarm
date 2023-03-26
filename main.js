@@ -414,9 +414,12 @@ async function getData(){
                             detailsIdentifier = result.alert.identifier
                             detailsIdentifier = detailsIdentifier.replace(/\./g,'') // remove dots
                             detailssent = result.alert.sent
-                            if (detailsType != "Alert"){
+                            if (detailsType != "Alert" && detailsReference != ""){
                                 detailsReference = result.alert.references
                                 var searchTerm = ","
+                                adapter.log.debug('TEMP: searchterm = ' + searchTerm)
+                                adapter.log.debug('TEMP: detailsreference = ' + detailsReference)
+
                                 const indexOfFirstComma = detailsReference.indexOf(searchTerm);
                                 const indexOfSecondComma = detailsReference.indexOf(searchTerm, indexOfFirstComma +1);
                                 detailsReference = detailsReference.substring(indexOfFirstComma +1,indexOfSecondComma)
