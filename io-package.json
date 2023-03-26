@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "meteoalarm",
-        "version": "2.3.3",
+        "version": "2.3.4",
         "news": {
+            "2.3.4": {
+                "en": "Bugfix",
+                "de": "Fehlerbehebung",
+                "ru": "Исправление ошибок",
+                "pt": "Correções de bugs",
+                "nl": "Bugfixes",
+                "fr": "Corrections de bugs",
+                "it": "Correzioni di bug",
+                "es": "Corrección de errores",
+                "pl": "Poprawki",
+                "zh-cn": "Bug修复",
+                "uk": "Виправлення помилок"
+            },
             "2.3.3": {
                 "en": "Define which alarm levels you are interested in",
                 "de": "Definiere, welche Alarmstufen dich interessieren",
