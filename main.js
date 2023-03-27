@@ -286,7 +286,9 @@ async function getData(){
             const csv = await getCSVData()
 
             const temp = await adapter.getStateAsync('noOfAlarms')
-            noOfAlarmsAtStart = temp.val
+            if (temp){
+                noOfAlarmsAtStart = temp.val
+            }
             adapter.log.debug('0: Existing alarm objects at adapter start: ' + noOfAlarmsAtStart)
             
             const temp2 = await saveAlarmNamesForLater()
@@ -731,6 +733,10 @@ function checkRelevante(entry){
         }
 
         var eventType = element['cap:event']
+        
+        if (locationRelevant){
+            adapter.log.debug('4.1.2: Check Result: dateRelevant = ' + dateRelevant + "statusrelevant= " + statusRelevant + " messagetyperelevant = " + messagetypeRelevant )
+        }
 
         if (locationRelevant && (dateRelevant) && statusRelevant && messagetypeRelevant){
             for(var i = 0; i < element.link.length; i += 1) {
@@ -905,7 +911,10 @@ async function saveAlarmNamesForLater(){
 async function saveAlarmsForLater(alarmName){
     let path = 'alarms.' + alarmName
 
-    const effective = await adapter.getStateAsync(path + '.effective')
+    var effective = await adapter.getStateAsync(path + '.effective')
+    if (effective == null){
+        effective = ""
+    }
     var referenz = await adapter.getStateAsync(path + '.updateIdentifier')
     if (referenz == null){
         referenz = ""
@@ -914,9 +923,18 @@ async function saveAlarmsForLater(alarmName){
     if (sent == null){
         sent = ""
     }
-    const expires = await adapter.getStateAsync(path + '.expires')
-    const tempLevel = await adapter.getStateAsync(path + '.effective')
-    const type = await adapter.getStateAsync(path + '.type')
+    var expires = await adapter.getStateAsync(path + '.expires')
+    if (expires == null){
+        expires = ""
+    }
+    var tempLevel = await adapter.getStateAsync(path + '.level')
+    if (tempLevel == null){
+        tempLevel = ""
+    }
+    var type = await adapter.getStateAsync(path + '.type')
+    if (type == null){
+        type = ""
+    }
     alarmOldArray.push(
         {
             Alarm_Identifier: alarmName,
