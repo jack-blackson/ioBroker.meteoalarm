@@ -25,6 +25,9 @@ Choose your country, and afterwards the region you want the warnings for. If you
 
 ## Changelog
 
+## 2.3.6 (2023-05-27)
+* (jack-blackson) Bugfix "No Alarm" Message
+
 ## 2.3.5 (2023-03-27)
 * (jack-blackson) IOBROKER-METEOALARM-47 & IOBROKER-METEOALARM-48
 

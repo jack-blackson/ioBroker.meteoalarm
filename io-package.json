@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "meteoalarm",
-        "version": "2.3.5",
+        "version": "2.3.6",
         "news": {
+            "2.3.6": {
+                "en": "Bugfix for notification \"All warnings ended\"",
+                "de": "Bugfix für die Benachrichtigung \"Alle Warnungen beendet\"",
+                "ru": "Bugfix для уведомления \"Все предупреждения закончились\"",
+                "pt": "Bugfix para notificação \"Todos os avisos terminados\"",
+                "nl": "Bugfix voor de melding \"Alle waarschuwingen eindigden\"",
+                "fr": "Bugfix pour la notification \"Tous les avertissements ont pris fin\"",
+                "it": "Bugfix per la notifica \"Tutti gli avvisi finiti\"",
+                "es": "Bugfix para notificación \"Todas las advertencias terminadas\"",
+                "pl": "Bugfix dla powiadomienia „Wszystkich ostrzeżeń zakończyło się”",
+                "uk": "Виправлення повідомлень \"Всі попередження закінчилися\"",
+                "zh-cn": "通知“所有警告结束”的命令"
+            },
             "2.3.5": {
                 "en": "Bugfix",
                 "de": "Fehlerbehebung",
