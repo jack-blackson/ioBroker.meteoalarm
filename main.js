@@ -631,12 +631,9 @@ async function getData(){
             ])
             adapter.log.debug('13: Set State for Widget')
 
-            if (notificationAlarmArray.length >= 1){
-                adapter.log.debug('14: Processing notifications')
-                const promises = await processNotifications(alarmAll)
-            }else{
-                adapter.log.debug('14: No new notifications to send')
-            }
+            adapter.log.debug('14: Processing notifications')
+            // Important, also go in there if no notifications are valid, because it could be that we need to trigger the "All warnings done" message
+            const promises = await processNotifications(alarmAll)
 
 
             adapter.log.debug('15: All Done')
@@ -1002,7 +999,7 @@ async function processNotifications(alarms){
         if (notificationAlarmArray.length >= 1){
             adapter.log.debug('14.1: Notifications available for alarms: ' + util.inspect(notificationAlarmArray, {showHidden: false, depth: null, colors: true}))
         }
-
+        adapter.log.debug('14.1.0 Details: noofAlarmsAtStart: ' + noOfAlarmsAtStart + ', noofAlarmsatEnd: ' + noOfAlarmsAtEnd + ' , noWarningsSetupActive: ' + adapter.config.noWarningsNotification)
 
 
         for(var i = 0; i < notificationAlarmArray.length; i += 1) {
@@ -1031,6 +1028,7 @@ async function processNotifications(alarms){
 
         if ((noOfAlarmsAtStart >= 1)  &&(noOfAlarmsAtEnd == 0) && (adapter.config.noWarningsNotification)){
             // all Alarms Ended notification should be sent
+            adapter.log.debug('14.1.1: Warning for "All warnings ended" sent')
             var region = ""
             if (adapter.config.showLocation){
                 region = ' - ' + regionName
