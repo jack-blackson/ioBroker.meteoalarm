@@ -497,6 +497,7 @@ async function getData(){
             htmlCode = ''
             var JSONAll = []
             var warningCount = 0
+            //adapter.log.debug('12 TEMP: ' + JSON.stringify(channelNames))
             if (channelNames.length >= 1){
                 htmlCode += '<table style="border-collapse: collapse; width: 100%;"><tbody>'
                 for (const channelLoop of channelNames) {
@@ -1453,7 +1454,11 @@ function fillNotificatinAlarmArray(identifier){
 
 async function createAlarms(AlarmIdentifier,notificationReference){
     var path = 'alarms.' + AlarmIdentifier
-    channelNames.push(AlarmIdentifier)
+    //adapter.log.debug('10.1 TEMP exists: ' + channelNames.includes(AlarmIdentifier))
+    // avoid duplicate entries in widget - sometimes the same alarm is sent twice from weather agencies
+    if (!channelNames.includes(AlarmIdentifier)){
+        channelNames.push(AlarmIdentifier)
+    }
     const obj = await adapter.getObjectAsync('alarms.' + AlarmIdentifier);
 
     if(!obj) {
