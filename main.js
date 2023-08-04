@@ -236,6 +236,7 @@ async function getData(){
         regionConfig = adapter.config.region
         regionName = adapter.config.regionName
         imageSizeSetup = Number(adapter.config.imageSize)
+        alarmAll = []
         
 
         if (regionConfig  == "0"|| !regionConfig){
@@ -497,7 +498,6 @@ async function getData(){
             htmlCode = ''
             var JSONAll = []
             var warningCount = 0
-            //adapter.log.debug('12 TEMP: ' + JSON.stringify(channelNames))
             if (channelNames.length >= 1){
                 htmlCode += '<table style="border-collapse: collapse; width: 100%;"><tbody>'
                 for (const channelLoop of channelNames) {
@@ -733,7 +733,7 @@ function checkRelevante(entry){
         var eventType = element['cap:event']
         
         if (locationRelevant){
-            adapter.log.debug('4.1.2: Check Result: dateRelevant = ' + dateRelevant + "statusrelevant= " + statusRelevant + " messagetyperelevant = " + messagetypeRelevant )
+            //adapter.log.debug('4.1.2: Check Result: dateRelevant = ' + dateRelevant + "statusrelevant= " + statusRelevant + " messagetyperelevant = " + messagetypeRelevant )
         }
 
         if (locationRelevant && (dateRelevant) && statusRelevant && messagetypeRelevant){
@@ -1361,8 +1361,6 @@ async function fillAlarm(content, countInt){
         await localCreateState(path + '.updateIdentifier', 'updateIdentifier', content[countInt].Alarm_Reference);
     }
 
-    //adapter.log.debug('TEMP: path: ' + path + ' for alarm type ' + content[countInt].Alarm_Type)
-
     await localCreateState(path + '.event', 'event', content[countInt].Event);
     await localCreateState(path + '.headline', 'headline', content[countInt].Headline);
     await localCreateState(path + '.description', 'description', content[countInt].Description);
@@ -1454,7 +1452,6 @@ function fillNotificatinAlarmArray(identifier){
 
 async function createAlarms(AlarmIdentifier,notificationReference){
     var path = 'alarms.' + AlarmIdentifier
-    //adapter.log.debug('10.1 TEMP exists: ' + channelNames.includes(AlarmIdentifier))
     // avoid duplicate entries in widget - sometimes the same alarm is sent twice from weather agencies
     if (!channelNames.includes(AlarmIdentifier)){
         channelNames.push(AlarmIdentifier)
