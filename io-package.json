@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "meteoalarm",
-        "version": "2.3.6",
+        "version": "2.3.7",
         "news": {
+            "2.3.7": {
+                "en": "Don't show duplicate warnings twice in HTML widget",
+                "de": "Zeigen Sie keine doppelten Warnungen zweimal in HTML Widget",
+                "ru": "Не показывать повторяющиеся предупреждения дважды в виджете HTML",
+                "pt": "Não mostre avisos duplicados duas vezes no widget HTML",
+                "nl": "Toon geen dubbele waarschuwingen in HTML Widget",
+                "fr": "Ne montrez pas les avertissements doubles dans le widget HTML",
+                "it": "Non mostrare avvisi duplicati due volte in widget HTML",
+                "es": "No mostrar advertencias duplicadas dos veces en widget HTML",
+                "pl": "Don't pokazuje dwa razy większe ostrzeżenia w HTML",
+                "uk": "Не показувати дублікати попередження двічі в HTML віджеті",
+                "zh-cn": "红十字和红新月运动两次发出重复警告"
+            },
             "2.3.6": {
                 "en": "Bugfix for notification \"All warnings ended\"",
                 "de": "Bugfix für die Benachrichtigung \"Alle Warnungen beendet\"",
