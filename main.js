@@ -236,6 +236,7 @@ async function getData(){
         regionConfig = adapter.config.region
         regionName = adapter.config.regionName
         imageSizeSetup = Number(adapter.config.imageSize)
+        alarmAll = []
         
 
         if (regionConfig  == "0"|| !regionConfig){
@@ -631,12 +632,9 @@ async function getData(){
             ])
             adapter.log.debug('13: Set State for Widget')
 
-            if (notificationAlarmArray.length >= 1){
-                adapter.log.debug('14: Processing notifications')
-                const promises = await processNotifications(alarmAll)
-            }else{
-                adapter.log.debug('14: No new notifications to send')
-            }
+            adapter.log.debug('14: Processing notifications')
+            // Important, also go in there if no notifications are valid, because it could be that we need to trigger the "All warnings done" message
+            const promises = await processNotifications(alarmAll)
 
 
             adapter.log.debug('15: All Done')
@@ -735,7 +733,7 @@ function checkRelevante(entry){
         var eventType = element['cap:event']
         
         if (locationRelevant){
-            adapter.log.debug('4.1.2: Check Result: dateRelevant = ' + dateRelevant + "statusrelevant= " + statusRelevant + " messagetyperelevant = " + messagetypeRelevant )
+            //adapter.log.debug('4.1.2: Check Result: dateRelevant = ' + dateRelevant + "statusrelevant= " + statusRelevant + " messagetyperelevant = " + messagetypeRelevant )
         }
 
         if (locationRelevant && (dateRelevant) && statusRelevant && messagetypeRelevant){
@@ -1002,7 +1000,7 @@ async function processNotifications(alarms){
         if (notificationAlarmArray.length >= 1){
             adapter.log.debug('14.1: Notifications available for alarms: ' + util.inspect(notificationAlarmArray, {showHidden: false, depth: null, colors: true}))
         }
-
+        adapter.log.debug('14.1.0 Details: noofAlarmsAtStart: ' + noOfAlarmsAtStart + ', noofAlarmsatEnd: ' + noOfAlarmsAtEnd + ' , noWarningsSetupActive: ' + adapter.config.noWarningsNotification)
 
 
         for(var i = 0; i < notificationAlarmArray.length; i += 1) {
@@ -1031,6 +1029,7 @@ async function processNotifications(alarms){
 
         if ((noOfAlarmsAtStart >= 1)  &&(noOfAlarmsAtEnd == 0) && (adapter.config.noWarningsNotification)){
             // all Alarms Ended notification should be sent
+            adapter.log.debug('14.1.1: Warning for "All warnings ended" sent')
             var region = ""
             if (adapter.config.showLocation){
                 region = ' - ' + regionName
@@ -1362,8 +1361,6 @@ async function fillAlarm(content, countInt){
         await localCreateState(path + '.updateIdentifier', 'updateIdentifier', content[countInt].Alarm_Reference);
     }
 
-    //adapter.log.debug('TEMP: path: ' + path + ' for alarm type ' + content[countInt].Alarm_Type)
-
     await localCreateState(path + '.event', 'event', content[countInt].Event);
     await localCreateState(path + '.headline', 'headline', content[countInt].Headline);
     await localCreateState(path + '.description', 'description', content[countInt].Description);
@@ -1455,7 +1452,10 @@ function fillNotificatinAlarmArray(identifier){
 
 async function createAlarms(AlarmIdentifier,notificationReference){
     var path = 'alarms.' + AlarmIdentifier
-    channelNames.push(AlarmIdentifier)
+    // avoid duplicate entries in widget - sometimes the same alarm is sent twice from weather agencies
+    if (!channelNames.includes(AlarmIdentifier)){
+        channelNames.push(AlarmIdentifier)
+    }
     const obj = await adapter.getObjectAsync('alarms.' + AlarmIdentifier);
 
     if(!obj) {
