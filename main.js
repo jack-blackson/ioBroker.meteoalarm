@@ -417,7 +417,8 @@ async function getData(){
                             detailsIdentifier = result.alert.identifier
                             detailsIdentifier = detailsIdentifier.replace(/\./g,'') // remove dots
                             detailssent = result.alert.sent
-                            if (detailsType != "Alert" && detailsReference != ""){
+                            adapter.log.debug('TEMP:' + result.alert.references)
+                            if (detailsType != "Alert" && result.alert.references != ""){
                                 detailsReference = result.alert.references
                                 var searchTerm = ","
                                 adapter.log.debug('TEMP: searchterm = ' + searchTerm)
@@ -956,14 +957,19 @@ async function cleanObsoleteAlarms(allAlarms){
                     // check if the alarm is included in the new alarms, either as identifier or reference for the updates
                     let check = allAlarms.some(function(item) {
                         return item.Alarm_Identifier === channel.common.name})
-                    //let check1 = allAlarms.some(function(item) {
-                    //    return item.Alarm_Reference === channel.common.name})    
+                    let check1 = allAlarms.some(function(item) {
+                        adapter.log.debug('TEst1 ' + item.Alarm_Reference)
+                        adapter.log.debug('TEst2 ' + channel.common.name)
+
+
+                        return item.Alarm_Reference === channel.common.name})    
                     if (!check){
+                    //adapter.log.debug('11.0.1: ' + channel.common.name + ' Check = ' + check + ' , check1 = ' +  check1)
                     //if (!check && !check1){
 
-                        adapter.log.debug('11.0.1: Alarm ' + channel.common.name + ' will be deleted.')
+                       adapter.log.debug('11.0.2: Alarm ' + channel.common.name + ' will be deleted.')
                         const obj = await adapter.deleteChannelAsync('alarms',channel.common.name);                        
-                        adapter.log.debug('11.0.2: After delete alarm ' + channel.common.name)
+                        adapter.log.debug('11.0.3: After delete alarm ' + channel.common.name)
                     }
                 
                 }
@@ -1126,7 +1132,7 @@ function checkRelevanceAlarmLevel(alarmlevel,type,identifier){
                 adapter.log.debug('14.1.1: Type not found -> no check for relevance possible')
             break;
         }
-        adapter.log.debug('14.1.2: Alarm ' + identifier + ' with level ' + alarmlevel + ' relevant for ' + type +': ' + typeRelevant + ' (setting: ' + adapter.config.warningLevelSetupNotification + ')')
+        adapter.log.debug('10.1.2: Alarm ' + identifier + ' with level ' + alarmlevel + ' relevant for ' + type +': ' + typeRelevant + ' (setting: ' + adapter.config.warningLevelSetupNotification + ')')
 
     }
     if (type == "general"){
@@ -1147,10 +1153,10 @@ function checkRelevanceAlarmLevel(alarmlevel,type,identifier){
                 break;
             default:
                 //Do nothing
-                adapter.log.debug('14.1.1: Type not found -> no check for relevance possible')
+                adapter.log.debug('10.1.1: Type not found -> no check for relevance possible')
             break;
         }
-        adapter.log.debug('14.1.2: Alarm ' + identifier + ' with level ' + alarmlevel + ' relevant for ' + type +': ' + typeRelevant + ' (setting: ' + adapter.config.warningLevelSetupGeneral)
+        adapter.log.debug('10.1.2: Alarm ' + identifier + ' with level ' + alarmlevel + ' relevant for ' + type +': ' + typeRelevant + ' (setting: ' + adapter.config.warningLevelSetupGeneral)
 
     }
     return typeRelevant

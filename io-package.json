@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "meteoalarm",
-        "version": "2.3.7",
+        "version": "2.3.8",
         "news": {
+            "2.3.8": {
+                "en": "Bugfix alarm reference",
+                "de": "Bugfix Alarm Referenz",
+                "ru": "Ссылка на бугфикс",
+                "pt": "Referência do alarme do Bugfix",
+                "nl": "Bugfix alarm referentie",
+                "fr": "Signal d ' alarme Bugfix",
+                "it": "Riferimento allarme Bugfix",
+                "es": "Referencia de alarma de Bugfix",
+                "pl": "Bugfix",
+                "uk": "Посилання на сигналізацію Bugfix",
+                "zh-cn": "Bugfix警戒"
+            },
             "2.3.7": {
                 "en": "Don't show duplicate warnings twice in HTML widget",
                 "de": "Zeigen Sie keine doppelten Warnungen zweimal in HTML Widget",
