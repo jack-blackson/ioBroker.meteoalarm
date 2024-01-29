@@ -252,9 +252,35 @@
             return arr; // returns array
         }
 
-        function loadSetup() {
+     function loadSetup() {
         //var newValue = JSON.stringify(getSettings());
             console.log('Testfunction')
+            var longSetup = ''
+            var latSetup = ''
+            socket.emit('getObject', 'system.config', function (err, obj) {
+                latSetup = parseFloat(obj.common.latitude)
+                longSetup = parseFloat(obj.common.longitude)
+                console.log(' Long Setup: ' + longSetup)
+                console.log(' Lat Setup: ' + latSetup)
+                $("#lat").val(latSetup);
+                $("#long").val(longSetup);
+
+            })
+            /*
+            let obj = getForeignObjectAsync('system.config');
+            if (!obj) {
+                console.log.error('Adapter was not able to read iobroker configuration');
+                this.terminate ? this.terminate(utils.EXIT_CODES.INVALID_CONFIG_OBJECT) : process.exit(0);
+                return;
+            }
+            this.latitude = parseFloat(obj.common.latitude);
+            this.longitude = parseFloat(obj.common.longitude);
+            if (!this.latitude || !this.longitude) {
+                this.log.error('Latitude or Longitude not set in main configuration!');
+                this.terminate ? this.terminate(utils.EXIT_CODES.INVALID_CONFIG_OBJECT) : process.exit(0);
+                return;
+            }
+            */
         }
 
 

@@ -13,7 +13,7 @@ const utils = require('@iobroker/adapter-core');
 //const request = require('request');
 const moment = require('moment');
 const util = require('util')
-const turf = require('@turf/boolean-point-in-polygon')
+const turf = require('@turf/turf')
 var parseString = require('xml2js').parseString;
 var parseStringPromise = require('xml2js').parseStringPromise;
 const stateAttr = require('./lib/stateAttr.js'); // State attribute definitions
@@ -243,6 +243,33 @@ async function getData(){
 
         latConfig = adapter.config.lat
         longConfig = adapter.config.long
+
+        //TEMP
+        var poly = [
+            [
+              9.499034790710823,
+              47.609799475661305
+            ],
+            [
+              9.499034790710823,
+              47.31622193879272
+            ],
+            [
+              10.060589182917425,
+              47.31622193879272
+            ],
+            [
+              10.060589182917425,
+              47.609799475661305
+            ],
+            [
+              9.499034790710823,
+              47.609799475661305
+            ]
+          ]
+
+        adapter.log.debug('Before check poly')
+        checkIfInPoly(poly)
 
         //adapter.log.debug('Longitute : ' + longConfig)
 
@@ -682,6 +709,45 @@ function checkDuplicates(){
     adapter.log.debug('9.1 Finished checking alerts - ' + alarmAll.length + ' relevant alarm(s)')
     //adapter.log.debug('9.3 alarmAll Array after removing duplicates: ' + JSON.stringify(alarmAll))
     //adapter.log.debug('9.3.1 alarmAll sorted by sent1 date:' + JSON.stringify(alarmAll.sort((a, b) => a.Alarm_Sent - b.Alarm_Sent)))
+}
+
+function checkIfInPoly(polyData){
+    var myLoc = {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [longConfig, latConfig]
+        }
+      };
+        
+      var poly = {
+        "type": "Feature",
+        "properties": {},
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            polyData
+          ]
+        }
+      };
+      
+      adapter.log.debug('Coordinates1: ' + [longConfig, latConfig])
+      adapter.log.debug('Coordinates2: ' + [polyData])
+
+
+
+      adapter.log.debug('MyLoc: ' + myLoc)
+      adapter.log.debug('poly: ' + polyData)
+
+      //=features
+      
+      var isInside = turf.booleanPointInPolygon(myLoc, poly);
+
+      //=isInside1
+      adapter.log.debug(isInside)
+      return isInside
+
+
 }
 
 function checkRelevante(entry){
