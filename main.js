@@ -13,6 +13,7 @@ const utils = require('@iobroker/adapter-core');
 //const request = require('request');
 const moment = require('moment');
 const util = require('util')
+const turf = require('@turf/boolean-point-in-polygon')
 var parseString = require('xml2js').parseString;
 var parseStringPromise = require('xml2js').parseStringPromise;
 const stateAttr = require('./lib/stateAttr.js'); // State attribute definitions
@@ -32,6 +33,8 @@ var DescFilter2 = '';
 var country = '';
 var countryConfig = '';
 var regionConfig = '';
+var latConfig = '';
+var longConfig = '';
 var countEntries = 0;
 var typeArray = [];
 var urlArray = [];
@@ -237,7 +240,11 @@ async function getData(){
         regionName = adapter.config.regionName
         imageSizeSetup = Number(adapter.config.imageSize)
         alarmAll = []
-        
+
+        latConfig = adapter.config.lat
+        longConfig = adapter.config.long
+
+        //adapter.log.debug('Longitute : ' + longConfig)
 
         if (regionConfig  == "0"|| !regionConfig){
             adapter.log.error('Please select a valid region in setup!')

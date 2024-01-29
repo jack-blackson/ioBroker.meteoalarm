@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "meteoalarm",
-        "version": "2.3.8",
+        "version": "3.0.0",
         "news": {
+            "3.0.0": {
+                "en": "Breaking change: Switch to polygon data",
+                "de": "Große Änderung: Umschalten auf Polygondaten",
+                "ru": "Перерыв: Переключение на данные полигона",
+                "pt": "Mudança de ruptura: Mudar para dados de polígono",
+                "nl": "Verandering: Omschakelen naar veelhoekgegevens",
+                "fr": "Briser le changement : Passer aux données polygonales",
+                "it": "Cambiamento di rottura: Passare ai dati del poligono",
+                "es": "Cambio de ruptura: Cambiar a datos de polígono",
+                "pl": "Łamanie zmian: Przełącz na dane wielokąta",
+                "uk": "Зміна розривів: Перемикач даних полігонів",
+                "zh-cn": "中断更改 : 切换到多边形数据"
+            },
             "2.3.8": {
                 "en": "Bugfix alarm reference",
                 "de": "Bugfix Alarm Referenz",
