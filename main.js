@@ -22,17 +22,19 @@ const i18nHelper = require(`${__dirname}/lib/i18nHelper`);
 const bent = require("bent");
 
 const parseCSV = require('csv-parse');
+const geoCodeJSON = require('./geocodes.json')
 const fs = require("fs");
 const path = require('path');
-const { hasUncaughtExceptionCaptureCallback } = require('process');
+const { hasUncaughtExceptionCaptureCallback, features } = require('process');
 const { count } = require('console');
 const { level } = require('./lib/stateAttr.js');
+const { addAbortSignal } = require('stream');
 
 var DescFilter1 = '';
 var DescFilter2 = '';
 var country = '';
 var countryConfig = '';
-var regionConfig = '';
+//var regionConfig = '';
 var latConfig = '';
 var longConfig = '';
 var countEntries = 0;
@@ -50,6 +52,7 @@ var alarmAll = []
 var alarmOldIdentifier = []
 var alarmOldArray = []
 var urlAtom = ""
+var locationArray = new Array()
 
 let adapter;
 let lang;
@@ -213,7 +216,9 @@ function startAdapter(options) {
 
 function main() {
 
-    //var i = 1
+    
+    
+    
 
     adapter.getForeignObject('system.config', (err, systemConfig) => {
         if (!systemConfig.common.language){
@@ -232,51 +237,52 @@ function main() {
     }) 
 }
 
+function findGeoCode(){
+    let jsonString = JSON.stringify(geoCodeJSON)
+  
+    let crs = JSON.parse(jsonString).features;
+      
+
+    locationArray = []
+
+    for(let i = 0; i < crs.length; i++) {
+        var loccode = JSON.stringify(crs[i].properties.code)
+        let polygon = JSON.stringify(crs[i].geometry.coordinates)
+        let type = JSON.stringify(crs[i].properties.type)
+        if (checkIfInPoly(polygon)){
+            //adapter.log.debug('Gefunden : ' + loccode + ' , type ' + type)
+            locationArray.push(loccode)
+        }
+    }
+
+    adapter.log.debug('check done, Location array :' + locationArray)
+
+        
+    
+        
+    //adapter.log.debug('data: ' + JSON.stringify(geoCodeJSON))
+}
+
 async function getData(){
         
         // request setup
         countryConfig = adapter.config.country
-        regionConfig = adapter.config.region
-        regionName = adapter.config.regionName
+        //regionConfig = adapter.config.region
+        //regionName = adapter.config.regionName
         imageSizeSetup = Number(adapter.config.imageSize)
         alarmAll = []
 
         latConfig = adapter.config.lat
         longConfig = adapter.config.long
 
-        //TEMP
-        var poly = [
-            [
-              9.499034790710823,
-              47.609799475661305
-            ],
-            [
-              9.499034790710823,
-              47.31622193879272
-            ],
-            [
-              10.060589182917425,
-              47.31622193879272
-            ],
-            [
-              10.060589182917425,
-              47.609799475661305
-            ],
-            [
-              9.499034790710823,
-              47.609799475661305
-            ]
-          ]
 
-        adapter.log.debug('Before check poly')
-        checkIfInPoly(poly)
+        findGeoCode()
 
-        //adapter.log.debug('Longitute : ' + longConfig)
 
-        if (regionConfig  == "0"|| !regionConfig){
-            adapter.log.error('Please select a valid region in setup!')
+        if (countryConfig  == ""|| !countryConfig || latConfig == "" || !latConfig ||longConfig == ""|| !longConfig){
+            adapter.log.error('Please select a country in setup!')
             let htmlCode = '<table style="border-collapse: collapse; width: 100%;" border="1"><tbody><tr>'
-            htmlCode += '<td style="width: 100%; background-color: #fc3d03;">Please maintain country and region in setup!</td></tr></tbody></table>'
+            htmlCode += '<td style="width: 100%; background-color: #fc3d03;">Please maintain country and location in setup!</td></tr></tbody></table>'
             await Promise.all([
                 adapter.setStateAsync({device: '' , channel: '',state: 'level'}, {val: 0, ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'htmlToday'}, {val: htmlCode, ack: true}),
@@ -287,12 +293,12 @@ async function getData(){
             adapter.terminate ? adapter.terminate(0) : process.exit(0);
         }
         else{
-            adapter.log.debug('Setup found: country ' + countryConfig + ' and region ' + regionConfig + ' - ' +  regionName )
+            adapter.log.debug('Setup found: country ' + countryConfig + ' and location Lat ' + latConfig + ' Long ' +  longConfig )
             if (Sentry){
                 adapter.log.debug('Sentry aktiv - Breadcrumb gesetzt')
                 Sentry.addBreadcrumb({
                     category: "info",
-                    message: 'Country ' + countryConfig + ', Region '+ regionConfig + ' - ' +  regionName,
+                    message: 'Country ' + countryConfig + ', Location '+ latConfig + ' - ' +  longConfig,
                     level: "info",
                   });
             }
@@ -303,13 +309,6 @@ async function getData(){
                 xmlLanguage = 'en-GB'
             }
             adapter.log.debug(' XML Language: ' + xmlLanguage)
-
-            // Delete old alarms
-            //adapter.log.debug('0: Delete Alarms')
-            // Alarms will not be deleted here any more
-
-            //const deleted =  await deleteAllAlarms();
-            //adapter.log.debug('0.1: Deleted Alarms')
 
             const checkState = await adapter.getStateAsync('weatherMapCountry')
             if (checkState != null ){
@@ -712,6 +711,7 @@ function checkDuplicates(){
 }
 
 function checkIfInPoly(polyData){
+    var polyObject = JSON.parse(polyData)
     var myLoc = {
         "type": "Feature",
         "geometry": {
@@ -720,31 +720,21 @@ function checkIfInPoly(polyData){
         }
       };
         
-      var poly = {
+
+    var poly = {
         "type": "Feature",
         "properties": {},
         "geometry": {
           "type": "Polygon",
-          "coordinates": [
-            polyData
-          ]
+          "coordinates": 
+          polyObject
+          
         }
       };
       
-      adapter.log.debug('Coordinates1: ' + [longConfig, latConfig])
-      adapter.log.debug('Coordinates2: ' + [polyData])
-
-
-
-      adapter.log.debug('MyLoc: ' + myLoc)
-      adapter.log.debug('poly: ' + polyData)
-
-      //=features
       
       var isInside = turf.booleanPointInPolygon(myLoc, poly);
 
-      //=isInside1
-      adapter.log.debug(isInside)
       return isInside
 
 
@@ -776,17 +766,20 @@ function checkRelevante(entry){
         if (element['cap:geocode'] && element['cap:geocode'].valueName ){
              locationRelevant = checkLocation(element['cap:geocode'].valueName , element['cap:geocode'].value)
         }
-        else{
-            adapter.log.debug('4.1.2: Warning without geocode - cannot check')
-            /*
-            if(Sentry){
-                Sentry && Sentry.withScope(scope => {
-                    scope.setLevel('info');
-                    scope.setExtra('Location: ', 'Country ' + countryConfig + ', Region '+ regionConfig + ' - ' +  regionName);
-                    Sentry.captureMessage('No geocode included', 'info'); // Level "info"
-                });
+        if (element['cap:polygon'])  {
+            // found polygon
+            let polygon = element['cap:polygon']
+            locationRelevant = checkIfInPoly(polygon)
+            var areaDesc = ''
+
+            if (element['cap:areaDesc'])  {
+                areaDesc = element['cap:areaDesc']
             }
-            */
+
+            if (locationRelevant){
+                adapter.log.debug('Found relevant polygon warning for location ' + areaDesc)
+            }
+            
         }
 
         var statusRelevant = false
@@ -845,16 +838,25 @@ function checkRelevante(entry){
 }
 
 
-function checkLocation(type,value){
+function checkLocation(type,locationValue){
     //check which type it is and if it is relevant for us
+
+    var temp = ['DE029','Test']
+    adapter.log.debug('locationArray: ' + locationArray)
+    adapter.log.debug('Type: ' + type + ' , value: ' + locationValue )
+    adapter.log.debug('Location check: ' + locationArray.includes(locationValue))
+    adapter.log.debug('Location Check 2' +  (locationArray.indexOf(locationValue) ))
+
     if (type == "EMMA_ID"){
-        return value == regionConfig
+        //return value == regionConfig
+        return locationArray.includes(locationValue)
     }
     else{
         var successful = false
         for(var i = 0; i < csvContent.length; i += 1) {
-            if((csvContent[i][0] == regionConfig) && (csvContent[i][2] == type) ) {
-                if (value == csvContent[i][1] ){
+            if((locationArray.includes(csvContent[i][0])) && (csvContent[i][2] == type) ) {
+
+                if (locationValue == csvContent[i][1] ){
                     successful = true
                 }
             }
@@ -1031,8 +1033,8 @@ async function cleanObsoleteAlarms(allAlarms){
                     let check = allAlarms.some(function(item) {
                         return item.Alarm_Identifier === channel.common.name})
                     let check1 = allAlarms.some(function(item) {
-                        adapter.log.debug('TEst1 ' + item.Alarm_Reference)
-                        adapter.log.debug('TEst2 ' + channel.common.name)
+                        //adapter.log.debug('TEst1 ' + item.Alarm_Reference)
+                        //adapter.log.debug('TEst2 ' + channel.common.name)
 
 
                         return item.Alarm_Reference === channel.common.name})    
@@ -1053,6 +1055,16 @@ async function cleanObsoleteAlarms(allAlarms){
     })
     
 }
+
+/*
+async function getJSONData(){
+    fetch('./geocodes.json')
+    .then((response) => response.json())
+    .then((json) => adapter.log.debug(json));
+
+}
+*/
+
 
 
 async function getCSVData(){

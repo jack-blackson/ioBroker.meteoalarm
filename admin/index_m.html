@@ -36,9 +36,10 @@
 	function load(settings, onChange) {
 			// example: select elements with id=key and class=value and insert value
 			if (!settings) return;
+            /*
             if (settings.region){
                 loadRegions(settings.region)
-            }
+            }*/
 
 
 			$('.value').each(function () {
@@ -69,9 +70,11 @@
 			if (M) M.updateTextFields();
 
             // Trigger to load regions 
+            /*
             $('#country').on('change', function () {
                 loadRegions("")
             });
+            */
 
 
             showSettings(settings);
@@ -178,6 +181,7 @@
             $sel.select();
         }
 
+        /*
 		function loadRegions(initValue){
             $('#loader1').removeClass('seenot');
             console.log('Start loadRegions')
@@ -237,6 +241,9 @@
                 $('#loader1').addClass('seenot');
             })
 		}
+        */
+
+        /*
 
         function sortObject(obj) {
             var arr = [];
@@ -251,9 +258,9 @@
             arr.sort(function(a, b) { return a.value - b.value; });
             return arr; // returns array
         }
+        */
 
      function loadSetup() {
-        //var newValue = JSON.stringify(getSettings());
             console.log('Testfunction')
             var longSetup = ''
             var latSetup = ''
@@ -266,21 +273,7 @@
                 $("#long").val(longSetup);
 
             })
-            /*
-            let obj = getForeignObjectAsync('system.config');
-            if (!obj) {
-                console.log.error('Adapter was not able to read iobroker configuration');
-                this.terminate ? this.terminate(utils.EXIT_CODES.INVALID_CONFIG_OBJECT) : process.exit(0);
-                return;
-            }
-            this.latitude = parseFloat(obj.common.latitude);
-            this.longitude = parseFloat(obj.common.longitude);
-            if (!this.latitude || !this.longitude) {
-                this.log.error('Latitude or Longitude not set in main configuration!');
-                this.terminate ? this.terminate(utils.EXIT_CODES.INVALID_CONFIG_OBJECT) : process.exit(0);
-                return;
-            }
-            */
+
         }
 
 
@@ -393,14 +386,7 @@
                 </div>
             </div>
         
-            <div class="row">
-                <div class="input-field">
-                    <select class="value select-region" id="region">
-                        <option value="0" class="translate">ChooseRegion</option>
-                    </select>
-                    <label for="region" class="translate">region_select</label>
-                </div>
-            </div>
+
         
             <div class="row">
                 
