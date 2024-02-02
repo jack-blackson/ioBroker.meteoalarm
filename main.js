@@ -1414,6 +1414,34 @@ async function processDetails(content, countInt,detailsType,detailsIdentifier,de
 
     //adapter.log.debug('Type: ' + detailsType + ' , Identifier: ' + detailsIdentifier)
 
+    adapter.log.debug('TEMP!! + ' + JSON.stringify(content.area))
+    let areaData = content.area
+    adapter.log.debug('!!Count + ' + areaData.length)
+
+    for(let i = 0; i < areaData.length; i++) {
+        let geoCodesArray = areaData[i].geocode
+        for(let h = 0; h < geoCodesArray.length; h++) {
+            //adapter.log.debug('EMMA ID: ' + geoCodesArray[h].valueName + ' - ' + geoCodesArray[h].value)
+            //adapter.log.debug('Location Array: ' + locationArray)
+            //adapter.log.debug('Incouded: ' + locationArray.includes(geoCodesArray[h].value))
+            if (geoCodesArray[h].valueName == "EMMA_ID" && (locationArray.includes(geoCodesArray[h].value))){
+                //adapter.log.debug(' Region found - ' + areaData[i].areaDesc)
+                if (regionName ==""){
+                    regionName = areaData[i].areaDesc
+                }
+                else{
+                    regionName += ', ' + areaData[i].areaDesc
+                }
+            }
+        }
+
+        //adapter.log.debug('Location : ' + areaData[i].areaDesc)
+
+    }
+    //adapter.log.debug('Location : ' + regionName)
+
+    
+
     alarmAll.push(
         {
             Alarm_Type: detailsType,
