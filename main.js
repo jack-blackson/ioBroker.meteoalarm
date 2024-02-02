@@ -246,7 +246,7 @@ function findGeoCode(){
     locationArray = []
 
     for(let i = 0; i < crs.length; i++) {
-        var loccode = JSON.stringify(crs[i].properties.code)
+        var loccode = crs[i].properties.code
         let polygon = JSON.stringify(crs[i].geometry.coordinates)
         let type = JSON.stringify(crs[i].properties.type)
         if (checkIfInPoly(polygon)){
@@ -842,10 +842,10 @@ function checkLocation(type,locationValue){
     //check which type it is and if it is relevant for us
 
     var temp = ['DE029','Test']
-    adapter.log.debug('locationArray: ' + locationArray)
-    adapter.log.debug('Type: ' + type + ' , value: ' + locationValue )
-    adapter.log.debug('Location check: ' + locationArray.includes(locationValue))
-    adapter.log.debug('Location Check 2' +  (locationArray.indexOf(locationValue) ))
+    //adapter.log.debug('locationArray: ' + locationArray)
+    //adapter.log.debug('Type: ' + type + ' , value: !' + locationValue  + '!')
+    //adapter.log.debug('Location check: ' + locationArray.includes(locationValue))
+    //adapter.log.debug('Location Check 2' +  (locationArray.indexOf(locationValue) ))
 
     if (type == "EMMA_ID"){
         //return value == regionConfig
