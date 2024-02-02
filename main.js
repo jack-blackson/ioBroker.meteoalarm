@@ -1430,7 +1430,9 @@ async function processDetails(content, countInt,detailsType,detailsIdentifier,de
                     regionName = areaData[i].areaDesc
                 }
                 else{
-                    regionName += ', ' + areaData[i].areaDesc
+                    if (!regionName.includes(areaData[i].areaDesc)){
+                        regionName += ', ' + areaData[i].areaDesc
+                    }
                 }
             }
         }
