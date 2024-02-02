@@ -450,12 +450,9 @@ async function getData(){
                             detailsIdentifier = result.alert.identifier
                             detailsIdentifier = detailsIdentifier.replace(/\./g,'') // remove dots
                             detailssent = result.alert.sent
-                            adapter.log.debug('TEMP:' + result.alert.references)
                             if (detailsType != "Alert" && result.alert.references != ""){
                                 detailsReference = result.alert.references
                                 var searchTerm = ","
-                                adapter.log.debug('TEMP: searchterm = ' + searchTerm)
-                                adapter.log.debug('TEMP: detailsreference = ' + detailsReference)
 
                                 const indexOfFirstComma = detailsReference.indexOf(searchTerm);
                                 const indexOfSecondComma = detailsReference.indexOf(searchTerm, indexOfFirstComma +1);
@@ -841,14 +838,7 @@ function checkRelevante(entry){
 function checkLocation(type,locationValue){
     //check which type it is and if it is relevant for us
 
-    var temp = ['DE029','Test']
-    //adapter.log.debug('locationArray: ' + locationArray)
-    //adapter.log.debug('Type: ' + type + ' , value: !' + locationValue  + '!')
-    //adapter.log.debug('Location check: ' + locationArray.includes(locationValue))
-    //adapter.log.debug('Location Check 2' +  (locationArray.indexOf(locationValue) ))
-
     if (type == "EMMA_ID"){
-        //return value == regionConfig
         return locationArray.includes(locationValue)
     }
     else{
@@ -1412,20 +1402,26 @@ async function processDetails(content, countInt,detailsType,detailsIdentifier,de
 
     var path = 'alarms.' + 'Alarm_' + countInt
 
-    //adapter.log.debug('Type: ' + detailsType + ' , Identifier: ' + detailsIdentifier)
-
-    adapter.log.debug('TEMP!! + ' + JSON.stringify(content.area))
+    //adapter.log.debug('TEMP!! + ' + JSON.stringify(content.area))
     let areaData = content.area
-    adapter.log.debug('!!Count + ' + areaData.length)
+    //adapter.log.debug(' is areaData an array: ' + Array.isArray(areaData))
+    if (!Array.isArray(areaData)){
+        areaData = [areaData]
+    }
 
     for(let i = 0; i < areaData.length; i++) {
         let geoCodesArray = areaData[i].geocode
+        if (!Array.isArray(geoCodesArray)){
+            geoCodesArray = [geoCodesArray]
+        }
+        //adapter.log.debug('geocodes.array length ' + geoCodesArray.length)
+
         for(let h = 0; h < geoCodesArray.length; h++) {
             //adapter.log.debug('EMMA ID: ' + geoCodesArray[h].valueName + ' - ' + geoCodesArray[h].value)
             //adapter.log.debug('Location Array: ' + locationArray)
             //adapter.log.debug('Incouded: ' + locationArray.includes(geoCodesArray[h].value))
             if (geoCodesArray[h].valueName == "EMMA_ID" && (locationArray.includes(geoCodesArray[h].value))){
-                //adapter.log.debug(' Region found - ' + areaData[i].areaDesc)
+                adapter.log.debug(' Region found - ' + areaData[i].areaDesc)
                 if (regionName ==""){
                     regionName = areaData[i].areaDesc
                 }
