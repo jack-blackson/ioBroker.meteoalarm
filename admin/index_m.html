@@ -1,6 +1,7 @@
 <html>
 <link rel="stylesheet" type="text/css" href="../../css/adapter.css"/>
 <link rel="stylesheet" type="text/css" href="../../lib/css/materialize.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 
 <script type="text/javascript" src="../../lib/js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="../../socket.io/socket.io.js"></script>
@@ -11,6 +12,8 @@
 
 
 <script type="text/javascript" src="words.js"></script>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 
 <style>
@@ -75,6 +78,7 @@
                 loadRegions("")
             });
             */
+            loadMap()
 
 
             showSettings(settings);
@@ -88,6 +92,8 @@
             console.log('Settings loaded')
 
 		}
+
+
 
         function getAdapterInstances(_adapter, callback) {
             if (typeof _adapter === 'function') {
@@ -112,6 +118,59 @@
 
             });
         }
+
+        function loadMap(){
+            // Define latitude, longitude and zoom level
+            var latitude = ""
+            var longitude = ""
+            if (!($("#lat").val() =="")){
+                 latitude = $("#lat").val()
+            }
+            else{
+                 latitude = 38.8976763;
+            }
+            if (!$("#long").val() ==""){
+                 longitude = $("#long").val()
+            }
+            else{
+                 longitude = -77.0365298;
+
+            }
+
+            console.log('Lat: ' + latitude + ' , Long: ' + longitude)
+
+            const zoom = 14;
+
+            // Set DIV element to embed map
+            var mymap = L.map('mapWrap');
+
+            // Add initial marker & popup window
+            var mmr = L.marker([0,0]);
+            mmr.bindPopup('0,0');
+            mmr.addTo(mymap);
+
+            // Add copyright attribution
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png?{foo}', {
+                foo: 'bar',
+                attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}
+            ).addTo(mymap);
+
+            // Set lat lng position and zoom level of map 
+            mmr.setLatLng(L.latLng(latitude, longitude));
+            mymap.setView([latitude, longitude], zoom);
+
+            // Set popup window content
+            //mmr.setPopupContent('Latitude: '+latitude+' <br /> Longitude: '+longitude).openPopup();
+
+            // Set marker onclick event
+            mmr.on('click', openPopupWindow);
+        }
+
+        // Marker click event handler
+        function openPopupWindow(e) {
+            mmr.setPopupContent('Latitude: '+e.latlng.lat+' <br /> Longitude: '+e.latlng.lng).openPopup();
+        }
+        
 
         function showSettings(settings){
 
@@ -181,85 +240,6 @@
             $sel.select();
         }
 
-        /*
-		function loadRegions(initValue){
-            $('#loader1').removeClass('seenot');
-            console.log('Start loadRegions')
-            console.log('Init Value: ' + initValue)
-            
-            $.getJSON( "geocodes.json" , function( result ){
-                var features = result.features
-                var NoOfEntries = features.length
-                //console.log('Einträge: ' + NoOfEntries)
-                $('#region').empty().html(' ');
-                var $option = $("<option/>", {
-                                        value: 0,
-                                        text: '--------'
-                            });
-                $('#region').append($option);
-                var regionArray = [];
-                var codeArray= [];
-                var sortedRegionArray= [];
-                for(var i = 0; i < NoOfEntries; i++) {
-                    var country = features[i].properties.country
-                    var region = features[i].properties.name
-                    var code = features[i].properties.code
-
-                    if (country == $('#country').children("option:selected").val()){
-                        //regionArray[code] = region
-                        regionArray.push(region)
-                        sortedRegionArray.push(region)
-                        codeArray.push(code)
-                    }
-                }
-                
-                console.log('Regions Array before: ' + regionArray)
-
-                //var sortedRegionArray = regionArray
-                sortedRegionArray.sort()
-                var NoOfEntries = regionArray.length
-                //console.log('Regions Array: ' + regionArray)
-                //console.log('Regions Array sorted: ' + sortedRegionArray)
-
-                for(const val of sortedRegionArray) {
-
-                    codePosition = regionArray.indexOf(val)
-                    $option = $("<option/>", {
-                                        value: codeArray[codePosition],
-                                        text: val
-                            });
-                            $('#region').append($option);
-                }
-
-                let instance =  M.FormSelect.getInstance($('#region'));
-
-                if (initValue){
-                    $("#region").val(initValue);
-                }
-                instance.destroy();
-                instances = M.FormSelect.init($('#region'));
-                $('#loader1').addClass('seenot');
-            })
-		}
-        */
-
-        /*
-
-        function sortObject(obj) {
-            var arr = [];
-            for (var prop in obj) {
-                if (obj.hasOwnProperty(prop)) {
-                    arr.push({
-                        'key': prop,
-                        'value': obj[prop]
-                    });
-                }
-            }
-            arr.sort(function(a, b) { return a.value - b.value; });
-            return arr; // returns array
-        }
-        */
-
      function loadSetup() {
             console.log('Testfunction')
             var longSetup = ''
@@ -280,7 +260,7 @@
 		// This will be called by the admin adapter when the user presses the save button
 		function save(callback) {
 			// example: select elements with class=value and build settings object
-            console.log('saving country ' + $('#country').children("option:selected").val() + ' and region ' + $('#region').children("option:selected").val()+  ' - ' + $('#region').children("option:selected").text())
+            console.log('saving country ' + $('#country').children("option:selected").val())
             //settings.regionName = $('#region').children("option:selected").text()
 
             var obj = {};
@@ -324,6 +304,11 @@
         .seenot {
             display: none;
         }
+
+        #mapWrap {
+            width: 50%;
+            height: 300px; 
+        }    
 </style>
 </head>
 <body>
@@ -407,15 +392,10 @@
                         <a id="loadSetup" class="waves-effect waves-light btn"><i class="material-icons left">sync</i><span class="translate">loadSetup</span></a>
                     </div>
                 </div>
-                
+                <div id="mapWrap"></div>
             </div>
         
-            
-            
         </div>
-
-
-
 
         <div id="tab-htmlwidget"  class="col s12 page">
             <div class="row">
