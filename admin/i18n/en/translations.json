@@ -58,6 +58,7 @@
     "activate": "activate",
     "addMailAddress": "Insert e-mail address (comma separated)",
     "adjuststyleinfo": "Adjust appearance of the HTML widget",
+    "alarmLocation": "Alarm Location",
     "alarmlevelType": "Warning level style",
     "alarmlevelsetup": "Choose the alarm levels you want to monitor",
     "alarmlevelsetupNotification": "Choose the alarm levels you want to be notified",
@@ -66,6 +67,7 @@
     "alarmtypes": "Alarm types",
     "alarmtypesetup": "Choose the alarm types you want to monitor",
     "chooseAdapter": "Notification type",
+    "chooseAlarmLocation": "Choose your alarm location",
     "chooseMailInstance": "Choose instance",
     "choosePushOverInstance": "Choose instance",
     "chooseSignalInstance": "Choose instance",
@@ -77,11 +79,13 @@
     "instruction": "For help, please check the description here: https://github.com/jack-blackson/ioBroker.meteoalarm",
     "instructionLoading": "Please select country first and click: load region",
     "large": "Large",
+    "lattitude": "lattitude",
     "layout": "Layout Adjustments",
     "levelInWords": "Level in words",
     "loadRegions": "Load regions",
     "loadSetup": "Import location from setup",
     "loadsetup": "",
+    "longitude": "longitude",
     "medium": "Medium",
     "noBackgroundColor": "No background color in HTML widget",
     "noDetails": "No details",
@@ -120,7 +124,5 @@
     "warningType9": "Avalanche",
     "warninglevel": "Warning level",
     "whiteIcons": "White icons for widgets",
-    "widget_style": "Appearance",
-    "longitude": "longitude",
-    "lattitude": "lattitude"
+    "widget_style": "Appearance"
 }

@@ -22,7 +22,7 @@ const i18nHelper = require(`${__dirname}/lib/i18nHelper`);
 const bent = require("bent");
 
 const parseCSV = require('csv-parse');
-const geoCodeJSON = require('./geocodes.json')
+const geoCodeJSON = require('./meteoalarm/geocodes.json')
 const fs = require("fs");
 const path = require('path');
 const { hasUncaughtExceptionCaptureCallback, features } = require('process');
@@ -1059,7 +1059,7 @@ async function getJSONData(){
 
 async function getCSVData(){
     return new Promise(function(resolve,reject){
-        fs.createReadStream(path.resolve(__dirname, 'geocodes-aliases.csv'))
+        fs.createReadStream(path.resolve(__dirname + '/meteoalarm', 'geocodes-aliases.csv'))
         .pipe(parseCSV({delimiter: ','}))
         .on('data', function(csvrow) {
             //console.log(csvrow);

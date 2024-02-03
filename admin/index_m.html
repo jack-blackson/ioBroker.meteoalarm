@@ -33,6 +33,9 @@
     //var regionLinkArray = [];
     //var textLoadRegions = '';
     //var textChooseRegion = '';
+    var mymap
+    var mmr
+
 
     
     // the function loadSettings has to exist ...
@@ -87,11 +90,20 @@
 
             }).trigger('change');
             onChange(false);
+
+            var $newlat = $('#lat').on('change', updateMapFromInput);
+            var $newlong = $('#long').on('change', updateMapFromInput);
+
+            //updateMap($("#lat").val(),$("#long").val())
             $('#loadSetup').click(loadSetup);
 
             console.log('Settings loaded')
 
 		}
+
+        function updateMapFromInput(){
+            updateMap($("#lat").val(),$("#long").val())
+        }
 
 
 
@@ -121,32 +133,42 @@
 
         function loadMap(){
             // Define latitude, longitude and zoom level
+            //https://www.codexworld.com/embed-open-street-map-with-marker-in-html-using-javascript/
             var latitude = ""
             var longitude = ""
+            var initialValue = 0
+            var zoom = 0
             if (!($("#lat").val() =="")){
                  latitude = $("#lat").val()
+                 initialValue += 1
             }
             else{
-                 latitude = 38.8976763;
+                 latitude = 47.2 ;
             }
             if (!$("#long").val() ==""){
                  longitude = $("#long").val()
+                 initialValue += 1
             }
             else{
-                 longitude = -77.0365298;
+                 longitude = 9.8
 
             }
 
             console.log('Lat: ' + latitude + ' , Long: ' + longitude)
+            if (initialValue = 2){
+                // not initial value, therefore zoom further away
+                zoom = 9;
 
-            const zoom = 14;
+            }
+            else{
+                zoom = 13;
+            }
 
             // Set DIV element to embed map
-            var mymap = L.map('mapWrap');
+            mymap = L.map('mapWrap');
+            mmr = L.marker([0,0]);
 
             // Add initial marker & popup window
-            var mmr = L.marker([0,0]);
-            mmr.bindPopup('0,0');
             mmr.addTo(mymap);
 
             // Add copyright attribution
@@ -159,11 +181,15 @@
             mmr.setLatLng(L.latLng(latitude, longitude));
             mymap.setView([latitude, longitude], zoom);
 
-            // Set popup window content
-            //mmr.setPopupContent('Latitude: '+latitude+' <br /> Longitude: '+longitude).openPopup();
+        }
 
-            // Set marker onclick event
-            mmr.on('click', openPopupWindow);
+        function updateMap(lat,long){
+            // Set lat lng position and zoom level of map 
+            const zoom = 13;
+
+            mmr.setLatLng(L.latLng(lat, long));
+            mymap.setView([lat, long], zoom);
+            console.log('Map updated with ' + lat+ ', ' + long)
         }
 
         // Marker click event handler
@@ -226,8 +252,6 @@
                 $('.Signal').hide();
                 $('.SynoChat').show();
             }
-
-
         }
 
         function fillInstances(id, arr, val, name) {
@@ -241,17 +265,16 @@
         }
 
      function loadSetup() {
-            console.log('Testfunction')
             var longSetup = ''
             var latSetup = ''
             socket.emit('getObject', 'system.config', function (err, obj) {
                 latSetup = parseFloat(obj.common.latitude)
                 longSetup = parseFloat(obj.common.longitude)
-                console.log(' Long Setup: ' + longSetup)
-                console.log(' Lat Setup: ' + latSetup)
-                $("#lat").val(latSetup);
-                $("#long").val(longSetup);
-
+                var roundedLat= Math.round(latSetup * 100) / 100
+                var roundedLong = Math.round(longSetup * 100) / 100
+                $("#lat").val(roundedLat);
+                $("#long").val(roundedLong);
+                updateMap(roundedLat,roundedLong)
             })
 
         }
@@ -316,7 +339,7 @@
     <div class="row">
         <div class="col s12">
             <ul class="tabs">
-                <li class="tab col s2"><a href="#tab-settings"  class="translate active">settings</a></li>
+                <li class="tab col s2"><a href="#tab-settings"  class="translate active">alarmLocation</a></li>
                 <li class="tab col s2"><a href="#tab-htmlwidget" class="translate">widget_style</a></li>
                 <li class="tab col s2"><a href="#tab-alarmtypes" class="translate">alarmtypes</a></li>
                 <li class="tab col s2"><a href="#tab-notification" class="translate">notifications</a></li>
@@ -326,7 +349,7 @@
         </div>
         <div id="tab-settings"      class="col s12 page">
             <div class="col s12">
-                <h6 class="title translate" data-lang="regionsetup">regionsetup</h6>
+                <h6 class="title translate" data-lang="regionsetup">chooseAlarmLocation</h6>
             </div>
             <div class="row">
                 <div class="input-field">
