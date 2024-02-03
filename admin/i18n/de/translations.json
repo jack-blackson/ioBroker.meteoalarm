@@ -57,6 +57,7 @@
     "activ": "Aktiv",
     "activate": "Aktivieren",
     "addMailAddress": "E-Mail-Adresse einfügen (durch Komma getrennt)",
+    "adjuststyleinfo": "Passen Sie das Erscheinungsbild des HTML-Widgets an",
     "alarmlevelType": "Stil der Warnstufe",
     "alarmlevelsetup": "Wählen Sie die Alarmstufen aus, die Sie überwachen möchten",
     "alarmlevelsetupNotification": "Wählen Sie die Alarmstufen aus, über die Sie benachrichtigt werden möchten",
@@ -79,6 +80,8 @@
     "layout": "Layoutanpassungen",
     "levelInWords": "Ebene in Worten",
     "loadRegions": "Regionen laden",
+    "loadSetup": "Standort aus Setup importieren",
+    "loadsetup": "Standort aus Setup importieren",
     "medium": "Mittel",
     "noBackgroundColor": "Keine Hintergrundfarbe im HTML-Widget",
     "noDetails": "Keine Details",
@@ -88,6 +91,7 @@
     "none": "Keiner",
     "notification": "Benachrichtigung",
     "notification settings": "Benachrichtigungseinstellungen",
+    "notificationfilter": "Benachrichtigungsfilter",
     "notifications": "Benachrichtigungen",
     "notifications type": "Benachrichtigungstyp",
     "notificationsettings": "Benachrichtigungsalarmtypen",
@@ -115,5 +119,6 @@
     "warningType8": "Waldbrand",
     "warningType9": "Lawine",
     "warninglevel": "Warnstufe",
-    "whiteIcons": "Weiße Symbole für Widgets"
+    "whiteIcons": "Weiße Symbole für Widgets",
+    "widget_style": "Aussehen"
 }

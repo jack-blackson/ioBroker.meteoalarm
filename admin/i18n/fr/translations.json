@@ -57,6 +57,7 @@
     "activ": "Actif",
     "activate": "Activer",
     "addMailAddress": "Insérer l'adresse e-mail (séparée par des virgules)",
+    "adjuststyleinfo": "Ajuster l'apparence du widget HTML",
     "alarmlevelType": "Style de niveau d'avertissement",
     "alarmlevelsetup": "Choisissez les niveaux d'alarme que vous souhaitez surveiller",
     "alarmlevelsetupNotification": "Choisissez les niveaux d'alarme dont vous souhaitez être averti",
@@ -79,6 +80,8 @@
     "layout": "Ajustements de la mise en page",
     "levelInWords": "Niveau en mots",
     "loadRegions": "Charger les régions",
+    "loadSetup": "Importer l'emplacement depuis la configuration",
+    "loadsetup": "Importer l'emplacement depuis la configuration",
     "medium": "Moyen",
     "noBackgroundColor": "Aucune couleur d'arrière-plan dans le widget HTML",
     "noDetails": "Pas de détails",
@@ -88,6 +91,7 @@
     "none": "Aucun",
     "notification": "Notification",
     "notification settings": "Paramètres de notification",
+    "notificationfilter": "Filtre de notifications",
     "notifications": "Notifications",
     "notifications type": "Type de notification",
     "notificationsettings": "Types d'alarmes de notification",
@@ -115,5 +119,6 @@
     "warningType8": "Feu de forêt",
     "warningType9": "avalanche",
     "warninglevel": "Niveau d'avertissement",
-    "whiteIcons": "Utiliser des icônes blanches pour les widgets"
+    "whiteIcons": "Utiliser des icônes blanches pour les widgets",
+    "widget_style": "Apparence"
 }

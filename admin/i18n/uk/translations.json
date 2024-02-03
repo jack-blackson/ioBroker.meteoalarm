@@ -57,6 +57,7 @@
     "activ": "Актив",
     "activate": "активувати",
     "addMailAddress": "Вставте адресу електронної пошти (через кому)",
+    "adjuststyleinfo": "Налаштування зовнішнього вигляду віджета HTML",
     "alarmlevelType": "Стиль рівня попередження",
     "alarmlevelsetup": "Виберіть рівні тривоги, які ви хочете контролювати",
     "alarmlevelsetupNotification": "Виберіть рівні тривоги, про які ви хочете отримувати сповіщення",
@@ -79,6 +80,8 @@
     "layout": "Коригування макета",
     "levelInWords": "Рівень у словах",
     "loadRegions": "Завантажити регіони",
+    "loadSetup": "Імпортувати місцезнаходження з налаштування",
+    "loadsetup": "Імпортувати місцезнаходження з налаштування",
     "medium": "Середній",
     "noBackgroundColor": "Немає фонового кольору у віджеті HTML",
     "noDetails": "Без подробиць",
@@ -88,6 +91,7 @@
     "none": "Жодного",
     "notification": "Сповіщення",
     "notification settings": "Налаштування сповіщень",
+    "notificationfilter": "Фільтр повідомлень",
     "notifications": "Сповіщення",
     "notifications type": "Тип сповіщень",
     "notificationsettings": "Типи сповіщень",
@@ -115,5 +119,6 @@
     "warningType8": "Лісова пожежа",
     "warningType9": "Лавина",
     "warninglevel": "Рівень попередження",
-    "whiteIcons": "Білі іконки для віджетів"
+    "whiteIcons": "Білі іконки для віджетів",
+    "widget_style": "Зовнішній вигляд"
 }

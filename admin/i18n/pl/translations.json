@@ -57,6 +57,7 @@
     "activ": "Aktywuj",
     "activate": "Aktywuj",
     "addMailAddress": "Wstaw adres e-mail (oddzielony przecinkami)",
+    "adjuststyleinfo": "Dostosuj wygląd widżetu HTML",
     "alarmlevelType": "Styl poziomu ostrzeżenia",
     "alarmlevelsetup": "Wybierz poziomy alarmów, które chcesz monitorować",
     "alarmlevelsetupNotification": "Wybierz poziomy alarmów, o których chcesz otrzymywać powiadomienia",
@@ -79,6 +80,8 @@
     "layout": "Layout Adjustments",
     "levelInWords": "Poziom w słowach",
     "loadRegions": "Załaduj regiony",
+    "loadSetup": "Importuj lokalizację z konfiguracji",
+    "loadsetup": "Importuj lokalizację z konfiguracji",
     "medium": "Średni",
     "noBackgroundColor": "Brak koloru tła w widżecie HTML",
     "noDetails": "Bez szczegółów",
@@ -88,6 +91,7 @@
     "none": "Nic",
     "notification": "Powiadomienie",
     "notification settings": "Ustawienia powiadomień",
+    "notificationfilter": "Filtr powiadomień",
     "notifications": "Powiadomienia",
     "notifications type": "Typ powiadomień",
     "notificationsettings": "Typy alarmów powiadomień",
@@ -115,5 +119,6 @@
     "warningType8": "Pożar lasu",
     "warningType9": "Lawina",
     "warninglevel": "Poziom ostrzeżenia",
-    "whiteIcons": "Użyj białych ikon dla widżetów"
+    "whiteIcons": "Użyj białych ikon dla widżetów",
+    "widget_style": "Wygląd"
 }

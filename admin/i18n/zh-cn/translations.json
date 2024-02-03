@@ -57,6 +57,7 @@
     "activ": "激活",
     "activate": "启用",
     "addMailAddress": "插入邮件地址（逗号分隔）",
+    "adjuststyleinfo": "调整 HTML 小部件的外观",
     "alarmlevelType": "警告级别样式",
     "alarmlevelsetup": "选择您要监控的警报级别",
     "alarmlevelsetupNotification": "选择您希望收到通知的警报级别",
@@ -79,6 +80,8 @@
     "layout": "布局调整",
     "levelInWords": "文字水平",
     "loadRegions": "加载区域",
+    "loadSetup": "从设置导入位置",
+    "loadsetup": "从设置导入位置",
     "medium": "中等的",
     "noBackgroundColor": "HTML小部件中没有背景色",
     "noDetails": "没有细节",
@@ -88,6 +91,7 @@
     "none": "没有任何",
     "notification": "通知",
     "notification settings": "通知设置",
+    "notificationfilter": "通知过滤器",
     "notifications": "通知",
     "notifications type": "通知类型",
     "notificationsettings": "通知警报类型",
@@ -115,5 +119,6 @@
     "warningType8": "福雷斯特火",
     "warningType9": "雪崩",
     "warninglevel": "警告级别",
-    "whiteIcons": "对小部件使用白色图标"
+    "whiteIcons": "对小部件使用白色图标",
+    "widget_style": "外貌"
 }

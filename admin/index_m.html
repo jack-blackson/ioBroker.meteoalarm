@@ -332,9 +332,10 @@
         <div class="col s12">
             <ul class="tabs">
                 <li class="tab col s2"><a href="#tab-settings"  class="translate active">settings</a></li>
+                <li class="tab col s2"><a href="#tab-htmlwidget" class="translate">widget_style</a></li>
                 <li class="tab col s2"><a href="#tab-alarmtypes" class="translate">alarmtypes</a></li>
                 <li class="tab col s2"><a href="#tab-notification" class="translate">notifications</a></li>
-                <li class="tab col s2"><a href="#tab-notificationsettings" class="translate">notificationsettings</a></li>
+                <li class="tab col s2"><a href="#tab-notificationsettings" class="translate">notificationfilter</a></li>
 
             </ul>
         </div>
@@ -395,75 +396,102 @@
             <div class="row">
                 <div class="input-field col s3">
                     <input type="text" id="lat" class="value" />
-                    <label for="lat" class="translate">Lattitude</label>
+                    <label for="lat" class="translate">lattitude</label>
                 </div>
                 <div class="input-field col s3">
                     <input type="text" id="long" class="value" />
-                    <label for="long" class="translate">Longitude</label>
+                    <label for="long" class="translate">longitude</label>
                 </div>
                 <div class="row">
                     <div class="col s4">
-                        <a id="loadSetup" class="waves-effect waves-light btn"><i class="material-icons left">notifications_active</i><span class="translate">loadSetup</span></a>
+                        <a id="loadSetup" class="waves-effect waves-light btn"><i class="material-icons left">sync</i><span class="translate">loadSetup</span></a>
                     </div>
                 </div>
                 
             </div>
         
-            <div class="col s12">
-                <h6 class="title translate" data-lang="layout">layout</h6>
-            </div>
+            
+            
+        </div>
+
+
+
+
+        <div id="tab-htmlwidget"  class="col s12 page">
             <div class="row">
-                <div class="input-field col s3">
-                    <input type="checkbox" id="noBackgroundColor" class="value" />
-                    <label for="noBackgroundColor" class="translate">noBackgroundColor</label>
-                </div> 
-                <div class="input-field col s3">
-                    <input type="checkbox" id="whiteIcons" class="value" />
-                    <label for="whiteIcons" class="translate">whiteIcons</label>
-                </div> 
-                <div class="input-field col s3">
-                    <input type="checkbox" id="noIcons" class="value" />
-                    <label for="noIcons" class="translate">noIcons</label>
-                </div> 
-                <div class="input-field col s3">
-                    <input type="checkbox" id="dayInWords" class="value" />
-                    <label for="dayInWords" class="translate">dayInWords</label>
-                </div> 
-            </div>
-            <div class="row">
-                <div class="input-field col s3">
-                    <select class="value select-image-size" id="imageSize">
-                        <option value="0" class="translate">small</option>
-                        <option value="1" class="translate">medium</option>
-                        <option value="2" class="translate">large</option>
-                    </select>
-                    <label for="imageSize" class="translate">selectImageSize</label>
+
+                <div class="col s12">
+                    <h6 class="title translate" data-lang="adjuststyle">adjuststyleinfo</h6>
                 </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s12">
-                    <div class="translate">ColorDefinition</div>
-                </div> 
-            </div>
-            <div class="row">
-                <div class="input-field col s3">
-                    <input type="text" id="warningColorLevel1" class="value" />
-                    <label for="warningColorLevel1" class="translate">TextwarningColorLevel1</label>
+                <div class="row">
+                    <div class="input-field col s3">
+                        <input type="checkbox" id="noBackgroundColor" class="value" />
+                        <label for="noBackgroundColor" class="translate">noBackgroundColor</label>
+                    </div> 
+                    <div class="input-field col s3">
+                        <input type="checkbox" id="whiteIcons" class="value" />
+                        <label for="whiteIcons" class="translate">whiteIcons</label>
+                    </div> 
+                    <div class="input-field col s3">
+                        <input type="checkbox" id="noIcons" class="value" />
+                        <label for="noIcons" class="translate">noIcons</label>
+                    </div> 
+                    <div class="input-field col s3">
+                        <input type="checkbox" id="dayInWords" class="value" />
+                        <label for="dayInWords" class="translate">dayInWords</label>
+                    </div> 
                 </div>
-                <div class="input-field col s3">
-                    <input type="text" id="warningColorLevel2" class="value" />
-                    <label for="warningColorLevel2" class="translate">TextwarningColorLevel2</label>
+                <div class="row">
+                    <div class="input-field col s3">
+                        <select class="value select-image-size" id="imageSize">
+                            <option value="0" class="translate">small</option>
+                            <option value="1" class="translate">medium</option>
+                            <option value="2" class="translate">large</option>
+                        </select>
+                        <label for="imageSize" class="translate">selectImageSize</label>
+                    </div>
                 </div>
-                <div class="input-field col s3">
-                    <input type="text" id="warningColorLevel3" class="value" />
-                    <label for="warningColorLevel3" class="translate">TextwarningColorLevel3</label>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <div class="translate">ColorDefinition</div>
+                    </div> 
                 </div>
-                <div class="input-field col s3">
-                    <input type="text" id="warningColorLevel4" class="value" />
-                    <label for="warningColorLevel4" class="translate">TextwarningColorLevel4</label>
+                <div class="row">
+                    <div class="input-field col s3">
+                        <input type="text" id="warningColorLevel1" class="value" />
+                        <label for="warningColorLevel1" class="translate">TextwarningColorLevel1</label>
+                    </div>
+                    <div class="input-field col s3">
+                        <input type="text" id="warningColorLevel2" class="value" />
+                        <label for="warningColorLevel2" class="translate">TextwarningColorLevel2</label>
+                    </div>
+                    <div class="input-field col s3">
+                        <input type="text" id="warningColorLevel3" class="value" />
+                        <label for="warningColorLevel3" class="translate">TextwarningColorLevel3</label>
+                    </div>
+                    <div class="input-field col s3">
+                        <input type="text" id="warningColorLevel4" class="value" />
+                        <label for="warningColorLevel4" class="translate">TextwarningColorLevel4</label>
+                    </div>
                 </div>
+
+
+
+
+
             </div>
         </div>
+
+
+
+
+
+
+
+
+
+
+
 
         <div id="tab-alarmtypes"  class="col s12 page">
             <div class="row">

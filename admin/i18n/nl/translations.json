@@ -57,6 +57,7 @@
     "activ": "actief",
     "activate": "Activeren",
     "addMailAddress": "E-mailadres invoegen (gescheiden door komma's)",
+    "adjuststyleinfo": "Pas het uiterlijk van de HTML-widget aan",
     "alarmlevelType": "Stijl waarschuwingsniveau",
     "alarmlevelsetup": "Kies de alarmniveaus die u wilt bewaken",
     "alarmlevelsetupNotification": "Kies de alarmniveaus waarvan u een melding wilt ontvangen",
@@ -79,6 +80,8 @@
     "layout": "Aanpassingen van de lay-out",
     "levelInWords": "Niveau in woorden",
     "loadRegions": "Laad regio's",
+    "loadSetup": "Importeer locatie uit de configuratie",
+    "loadsetup": "Importeer locatie uit de configuratie",
     "medium": "Medium",
     "noBackgroundColor": "Geen achtergrondkleur in HTML-widget",
     "noDetails": "Geen details",
@@ -88,6 +91,7 @@
     "none": "Geen",
     "notification": "Kennisgeving",
     "notification settings": "Notificatie instellingen",
+    "notificationfilter": "Meldingsfilter",
     "notifications": "Meldingen",
     "notifications type": "Meldingstype",
     "notificationsettings": "Meldingsalarmtypen",
@@ -115,5 +119,6 @@
     "warningType8": "bosbrand",
     "warningType9": "Lawine",
     "warninglevel": "Waarschuwingsniveau",
-    "whiteIcons": "Gebruik witte pictogrammen voor widgets"
+    "whiteIcons": "Gebruik witte pictogrammen voor widgets",
+    "widget_style": "Verschijning"
 }
