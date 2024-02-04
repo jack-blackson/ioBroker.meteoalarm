@@ -22,7 +22,7 @@ const i18nHelper = require(`${__dirname}/lib/i18nHelper`);
 const bent = require("bent");
 
 const parseCSV = require('csv-parse');
-const geoCodeJSON = require('./meteoalarm/geocodes.json')
+const geoCodeJSON = require('./admin/geocodes.json')
 const fs = require("fs");
 const path = require('path');
 const { hasUncaughtExceptionCaptureCallback, features } = require('process');
@@ -72,7 +72,7 @@ var imageSizeSetup = 0
 var updateError = false
 
 var initialDataLoaded = false
-var geoCodeLoaded = false
+//var geoCodeLoaded = false
 
 let Sentry;
 let SentryIntegrations;
@@ -235,34 +235,13 @@ function initialSetup(){
 
             latConfig = adapter.config.lat
             longConfig = adapter.config.long
+            locationArray = adapter.config.geocode
 
             countryConfig = adapter.config.country
             imageSizeSetup = Number(adapter.config.imageSize)
 
             adapter.log.debug('0.0 Initial setup loaded')
 }
-
-
-function findGeoCode(){
-    let jsonString = JSON.stringify(geoCodeJSON)
-  
-    let crs = JSON.parse(jsonString).features;
-      
-
-    locationArray = []
-
-    for(let i = 0; i < crs.length; i++) {
-        var loccode = crs[i].properties.code
-        let polygon = JSON.stringify(crs[i].geometry.coordinates)
-        let type = JSON.stringify(crs[i].properties.type)
-        if (checkIfInPoly(polygon)){
-            //adapter.log.debug('Gefunden : ' + loccode + ' , type ' + type)
-            locationArray.push(loccode)
-        }
-    }
-
-}
-
 
 async function getData(){
         
@@ -274,8 +253,8 @@ async function getData(){
             initialDataLoaded = true
         }
 
-        if (countryConfig  == ""|| !countryConfig || latConfig == "" || !latConfig ||longConfig == ""|| !longConfig){
-            adapter.log.error('0.1 Please maintain country and location in setup!')
+        if (countryConfig  == ""|| !countryConfig || latConfig == "" || !latConfig ||longConfig == ""|| !longConfig || !locationArray){
+            adapter.log.error('0.1 Please maintain country, geocode and location in setup!')
             let htmlCode = '<table style="border-collapse: collapse; width: 100%;" border="1"><tbody><tr>'
             htmlCode += '<td style="width: 100%; background-color: #fc3d03;">Please maintain country and location in setup!</td></tr></tbody></table>'
             await Promise.all([
@@ -288,7 +267,7 @@ async function getData(){
             adapter.terminate ? adapter.terminate(0) : process.exit(0);
         }
         else{
-            adapter.log.debug('0.1 Setup found: country ' + countryConfig + ' and location Lat ' + latConfig + ' Long ' +  longConfig )
+            adapter.log.debug('0.1 Setup found: country ' + countryConfig + ' with geocode(s) ' + locationArray +  ' and location Lat ' + latConfig + ' Long ' +  longConfig )
             if (Sentry){
                 adapter.log.debug('Sentry aktiv - Breadcrumb gesetzt')
                 Sentry.addBreadcrumb({
@@ -297,12 +276,13 @@ async function getData(){
                     level: "info",
                   });
             }
-
+            /*
             if (!geoCodeLoaded){
                 findGeoCode()
                 geoCodeLoaded = true
                 adapter.log.debug('0.2: Geocode loaded. Result: ' + locationArray)
             }
+            */
             
             urlAtom = getCountryLink(countryConfig)
             xmlLanguage = getXMLLanguage(countryConfig)

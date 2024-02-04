@@ -15,6 +15,10 @@
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
+<script src='https://unpkg.com/@turf/turf@6/turf.min.js'></script>
+<script>
+    var bbox = turf.bbox(features);
+</script>
 
 <style>
     .table_header {
@@ -35,6 +39,9 @@
     //var textChooseRegion = '';
     var mymap
     var mmr
+
+    var locationArray = []
+
  
     // the function loadSettings has to exist ...
 	function load(settings, onChange) {
@@ -73,12 +80,6 @@
 			// reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
 			if (M) M.updateTextFields();
 
-            // Trigger to load regions 
-            /*
-            $('#country').on('change', function () {
-                loadRegions("")
-            });
-            */
             loadMap()
 
 
@@ -94,6 +95,8 @@
 
             //updateMap($("#lat").val(),$("#long").val())
             $('#loadSetup').click(loadSetup);
+            $('#loadLocationCode').click(findGeoCode);
+
 
             console.log('Settings loaded')
 
@@ -125,6 +128,80 @@
                 }
 
             });
+        }
+
+        function findGeoCode(){
+            console.log('Start import geocode')
+            $('#loader1').addClass('seenot');
+
+            //const geoCodeJSON = require('./meteoalarm/geocodes.json')
+            //turf = require('@turf/turf')
+
+            $.getJSON('geocodes.json', function(data) {
+                
+                let jsonString = JSON.stringify(data)
+
+                let crs = JSON.parse(jsonString).features;
+            
+
+                locationArray = []
+            
+                for(let i = 0; i < crs.length; i++) {
+                    var loccode = crs[i].properties.code
+                    let polygon = JSON.stringify(crs[i].geometry.coordinates)
+                    let type = JSON.stringify(crs[i].properties.type)
+                    if (checkIfInPoly(polygon)){
+                        locationArray.push(loccode)
+                    }
+
+                    //console.log('Code: ' + loccode)
+                };
+                $('#loader1').removeClass('seenot');
+                if (!locationArray.length == 0){
+                    console.log('Geocode found')
+
+                    // geocode gefunden
+                    $("#geocode").val(locationArray);
+                }
+                else{
+                    console.log('Geocode not found')
+                    showToast(_('Geocode could not be determined. As this is mandatory to run the adapter, please first check if your location is shown on the map. If yes, create an issue in the meteoalarm adapter and add your location data!'));
+
+                }
+                            
+                }
+            )
+            
+        }
+
+        function checkIfInPoly(polyData){
+            var polyObject = JSON.parse(polyData)
+            var myLoc = {
+                "type": "Feature",
+                "geometry": {
+                "type": "Point",
+                "coordinates": [$("#long").val(), $("#lat").val()]
+                }
+            };
+                
+
+            var poly = {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                "type": "Polygon",
+                "coordinates": 
+                polyObject
+                
+                }
+            };
+            
+            
+            var isInside = turf.booleanPointInPolygon(myLoc, poly);
+
+            return isInside
+
+
         }
 
         function loadMap(){
@@ -275,31 +352,63 @@
 
         }
 
+        function checksetup(){
+            var errorFound = false
+            if ($('#country').children("option:selected").val() == ""){
+                    showToast(_('Please choose a country name!'));
+                    errorFound = true
+            }
+            if ($("#lat").val() == ""){
+                    showToast(_('Please enter a value in "Lattitude'));
+                    errorFound = true
+            }
+            if ($("#long").val() == ""){
+                    showToast(_('Please enter a value in "Longitude"'));
+                    errorFound = true
+            }
+            if ($("#geocode").val() == ""){
+                    showToast(_('Please run "Load Geocode"'));
+                    errorFound = true
+            }
+            
+           
+            
+            return errorFound
+        }
 
 		// This will be called by the admin adapter when the user presses the save button
 		function save(callback) {
 			// example: select elements with class=value and build settings object
             console.log('saving country ' + $('#country').children("option:selected").val())
+            if (!checksetup()){
+                console.log('No errors found')
+                var obj = {};
+                $('.value').each(function () {
+                    var $this = $(this);
+                    if ($this.attr('type') === 'checkbox') {
+                        obj[$this.attr('id')] = $this.prop('checked');
+                    } else if ($this.attr('type') === 'number') {
+                        obj[$this.attr('id')] = parseFloat($this.val());
+                    } else if ($this.hasClass("isNumeric")){
+                        obj[$this.attr('id')] = parseInt($this.val());
+                    } else if ($this.attr('type') === 'radio'){
+                        obj['provider'] = parseInt($("input:radio[name ='provider']:checked").val());
+                    } else { 
+                        obj[$this.attr('id')] = $this.val();
+                    }
+                });
+
+                obj.regionName = $('#region').children("option:selected").text()
+
+                callback(obj);
+
+            }
+            else{
+                //wait till errors are fixed
+                console.log('Errors found')
+            }
             //settings.regionName = $('#region').children("option:selected").text()
-            var obj = {};
-			$('.value').each(function () {
-				var $this = $(this);
-				if ($this.attr('type') === 'checkbox') {
-					obj[$this.attr('id')] = $this.prop('checked');
-				} else if ($this.attr('type') === 'number') {
-					obj[$this.attr('id')] = parseFloat($this.val());
-				} else if ($this.hasClass("isNumeric")){
-					obj[$this.attr('id')] = parseInt($this.val());
-				} else if ($this.attr('type') === 'radio'){
-					obj['provider'] = parseInt($("input:radio[name ='provider']:checked").val());
-				} else { 
-					obj[$this.attr('id')] = $this.val();
-				}
-			});
 
-            obj.regionName = $('#region').children("option:selected").text()
-
-			callback(obj);
 		}
 
 </script>
@@ -410,6 +519,15 @@
                         <a id="loadSetup" class="waves-effect waves-light btn"><i class="material-icons left">sync</i><span class="translate">loadSetup</span></a>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col s4">
+                        <a id="loadLocationCode" class="waves-effect waves-light btn"><i class="material-icons left">sync</i><span class="translate">loadLocationCode</span></a>
+                    </div>
+                    <div class="input-field col s3">
+                        <input type="text" id="geocode" class="value" readonly/>
+                        <label for="geocode" class="translate">geocode</label>
+                    </div>
+                </div>
                 <div id="mapWrap"></div>
             </div>
         
@@ -472,24 +590,8 @@
                         <label for="warningColorLevel4" class="translate">TextwarningColorLevel4</label>
                     </div>
                 </div>
-
-
-
-
-
             </div>
         </div>
-
-
-
-
-
-
-
-
-
-
-
 
         <div id="tab-alarmtypes"  class="col s12 page">
             <div class="row">
