@@ -35,9 +35,7 @@
     //var textChooseRegion = '';
     var mymap
     var mmr
-
-
-    
+ 
     // the function loadSettings has to exist ...
 	function load(settings, onChange) {
 			// example: select elements with id=key and class=value and insert value
@@ -104,8 +102,6 @@
         function updateMapFromInput(){
             updateMap($("#lat").val(),$("#long").val())
         }
-
-
 
         function getAdapterInstances(_adapter, callback) {
             if (typeof _adapter === 'function') {
@@ -285,7 +281,6 @@
 			// example: select elements with class=value and build settings object
             console.log('saving country ' + $('#country').children("option:selected").val())
             //settings.regionName = $('#region').children("option:selected").text()
-
             var obj = {};
 			$('.value').each(function () {
 				var $this = $(this);

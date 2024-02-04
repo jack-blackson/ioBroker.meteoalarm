@@ -71,6 +71,9 @@ var imageSizeSetup = 0
 
 var updateError = false
 
+var initialDataLoaded = false
+var geoCodeLoaded = false
+
 let Sentry;
 let SentryIntegrations;
 function initSentry(callback) {
@@ -215,27 +218,30 @@ function startAdapter(options) {
 
 
 function main() {
-
-    
-    
-    
-
-    adapter.getForeignObject('system.config', (err, systemConfig) => {
-        if (!systemConfig.common.language){
-            lang = 'en'
-        }
-        else{
-            lang = systemConfig.common.language
-        }
-        adapter.log.debug('Language: ' + lang)
-        //adapter.log.debug('Starting round: ' + i) // TEMP
-        //i += 1
-
         getData()
-        
-
-    }) 
 }
+
+function initialSetup(){
+            // run once when adapter starts
+
+            adapter.getForeignObject('system.config', (err, systemConfig) => {
+                if (!systemConfig.common.language){
+                    lang = 'en'
+                }
+                else{
+                    lang = systemConfig.common.language
+                }
+            }) 
+
+            latConfig = adapter.config.lat
+            longConfig = adapter.config.long
+
+            countryConfig = adapter.config.country
+            imageSizeSetup = Number(adapter.config.imageSize)
+
+            adapter.log.debug('0.0 Initial setup loaded')
+}
+
 
 function findGeoCode(){
     let jsonString = JSON.stringify(geoCodeJSON)
@@ -255,32 +261,21 @@ function findGeoCode(){
         }
     }
 
-    adapter.log.debug('check done, Location array :' + locationArray)
-
-        
-    
-        
-    //adapter.log.debug('data: ' + JSON.stringify(geoCodeJSON))
 }
+
 
 async function getData(){
         
-        // request setup
-        countryConfig = adapter.config.country
-        //regionConfig = adapter.config.region
-        //regionName = adapter.config.regionName
-        imageSizeSetup = Number(adapter.config.imageSize)
+ 
         alarmAll = []
 
-        latConfig = adapter.config.lat
-        longConfig = adapter.config.long
-
-
-        findGeoCode()
-
+        if (!initialDataLoaded){
+            initialSetup()
+            initialDataLoaded = true
+        }
 
         if (countryConfig  == ""|| !countryConfig || latConfig == "" || !latConfig ||longConfig == ""|| !longConfig){
-            adapter.log.error('Please select a country in setup!')
+            adapter.log.error('0.1 Please maintain country and location in setup!')
             let htmlCode = '<table style="border-collapse: collapse; width: 100%;" border="1"><tbody><tr>'
             htmlCode += '<td style="width: 100%; background-color: #fc3d03;">Please maintain country and location in setup!</td></tr></tbody></table>'
             await Promise.all([
@@ -293,7 +288,7 @@ async function getData(){
             adapter.terminate ? adapter.terminate(0) : process.exit(0);
         }
         else{
-            adapter.log.debug('Setup found: country ' + countryConfig + ' and location Lat ' + latConfig + ' Long ' +  longConfig )
+            adapter.log.debug('0.1 Setup found: country ' + countryConfig + ' and location Lat ' + latConfig + ' Long ' +  longConfig )
             if (Sentry){
                 adapter.log.debug('Sentry aktiv - Breadcrumb gesetzt')
                 Sentry.addBreadcrumb({
@@ -302,18 +297,24 @@ async function getData(){
                     level: "info",
                   });
             }
+
+            if (!geoCodeLoaded){
+                findGeoCode()
+                geoCodeLoaded = true
+                adapter.log.debug('0.2: Geocode loaded. Result: ' + locationArray)
+            }
             
             urlAtom = getCountryLink(countryConfig)
             xmlLanguage = getXMLLanguage(countryConfig)
             if (xmlLanguage == ""){
                 xmlLanguage = 'en-GB'
             }
-            adapter.log.debug(' XML Language: ' + xmlLanguage)
+            adapter.log.debug('0.3 XML Language: ' + xmlLanguage)
 
             const checkState = await adapter.getStateAsync('weatherMapCountry')
             if (checkState != null ){
 
-                adapter.log.debug('0.2: Cleaning up old objects');
+                adapter.log.debug('0.3: Cleaning up old objects');
                 const cleaned = await cleanupOld()
             }
             
@@ -323,7 +324,7 @@ async function getData(){
             if (temp){
                 noOfAlarmsAtStart = temp.val
             }
-            adapter.log.debug('0: Existing alarm objects at adapter start: ' + noOfAlarmsAtStart)
+            adapter.log.debug('0.4: Existing alarm objects at adapter start: ' + noOfAlarmsAtStart)
             
             const temp2 = await saveAlarmNamesForLater()
             for (const alarmLoop of alarmOldIdentifier) {
