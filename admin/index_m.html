@@ -32,11 +32,7 @@
 </style>
 <!-- you have to define 2 functions in the global scope: -->
 <script type="text/javascript">
-    //var setup = [];
-    //var regionArray = [];
-    //var regionLinkArray = [];
-    //var textLoadRegions = '';
-    //var textChooseRegion = '';
+
     var mymap
     var mmr
 
@@ -47,11 +43,6 @@
 	function load(settings, onChange) {
 			// example: select elements with id=key and class=value and insert value
 			if (!settings) return;
-            /*
-            if (settings.region){
-                loadRegions(settings.region)
-            }*/
-
 
 			$('.value').each(function () {
 				var $key = $(this);
@@ -132,7 +123,8 @@
 
         function findGeoCode(){
             console.log('Start import geocode')
-            $('#loader1').addClass('seenot');
+            document.getElementById("loader").style.display = "block";
+            //$('#loader1').removeClass('seenot');
 
             //const geoCodeJSON = require('./meteoalarm/geocodes.json')
             //turf = require('@turf/turf')
@@ -156,7 +148,9 @@
 
                     //console.log('Code: ' + loccode)
                 };
-                $('#loader1').removeClass('seenot');
+                //$('#loader1').addClass('seenot');
+                document.getElementById("loader").style.display = "none";
+
                 if (!locationArray.length == 0){
                     console.log('Geocode found')
 
@@ -413,38 +407,63 @@
 
 </script>
 <style>
-    /*.m .select-wrapper+label {
-        top: 100%;
-    }*/
 
     .wrapper {
         display: flex; 
         flex-direction: column; 
         justify-content: space-evenly; 
         width: 50%; 
-        padding-right: 1rem
+        padding-right: 0.75rem;
+        padding-left: 0.75rem;
     }
 
-    .loader {
-            border: 4px solid #b8d1f3;
-            /* Light grey */
-            border-top: 4px solid #3498db;
-            /* Blue */
-            border-radius: 50%;
-            width: 32px;
-            height: 32px;
-            animation: spin 2s linear infinite;
+    #loader {
+        position: absolute;
+        display: none;
+        
+        left: 50%;
+        top: 50%;
+        z-index: 4;
+        width: 120px;
+        height: 120px;
+        margin: -76px 0 0 -76px;
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid #3498db;
+        -webkit-animation: spin 2s linear infinite;
+        animation: spin 2s linear infinite;
         }
 
-        .seenot {
-            display: none;
+        @-webkit-keyframes spin {
+        0% { -webkit-transform: rotate(0deg); }
+        100% { -webkit-transform: rotate(360deg); }
         }
 
-        #mapWrap {
-            width: 50%;
-            height: 300px; 
-            margin-right: 1rem;
-        }    
+        @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+        }
+
+     #mapWrap {
+        width: 50%;
+        height: 300px; 
+        margin-right: 1rem;
+        z-index: 2;
+    }    
+
+        .column {
+            float: left;
+            width: 40%;
+            /*padding-left: 0.5rem;*/
+        }
+
+            /* Clear floats after the columns */
+            .row:after {
+                
+            content: "";
+            display: table;
+            clear: both;
+        }
 </style>
 </head>
 <body>
@@ -466,56 +485,68 @@
             </div>
             <div class="row" style="display: flex;">
                 <div class="wrapper" >
-                    <div class="input-field col">
-                        <select class="value select-country" id="country">
-                            <option value="" class="translate">ChooseCountry</option>
-                            <option value="AT" class="translate">Austria</option>
-                            <option value="CH" class="translate">Switzerland</option> 
-                            <option value="DE" class="translate">Germany</option>
-                            <option value="BE" class="translate">Belgium</option>
-                            <option value="BA" class="translate">BosniaHerzegovina</option>
-                            <!--<option value="BG" class="translate">Bulgaria</option> Auskommentiert da falsch in geocodes.json-->
-                            <option value="HR" class="translate">Croatia</option>
-                            <option value="CY" class="translate">Cyprus</option>
-                            <option value="CZ" class="translate">Czech Republic</option>
-                            <option value="DK" class="translate">Denmark</option>
-                            <option value="EE" class="translate">Estonia</option>
-                            <option value="FI" class="translate">Finland</option>
-                            <option value="FR" class="translate">France</option>
-                            <option value="GR" class="translate">Greece</option>
-                            <option value="HU" class="translate">Hungary</option>
-                            <option value="IE" class="translate">Ireland</option>
-                            <option value="IS" class="translate">Iceland</option>
-                            <option value="IL" class="translate">Israel</option>
-                            <option value="IT" class="translate">Italy</option>
-                            <option value="LV" class="translate">Latvia</option>
-                            <option value="LT" class="translate">Lithuania</option>
-                            <option value="LU" class="translate">Luxembourg</option>
-                            <option value="MK" class="translate">North Macedonia</option>
-                            <option value="MT" class="translate">Malta</option>
-                            <option value="NL" class="translate">Netherlands</option>
-                            <option value="NO" class="translate">Norway</option>
-                            <option value="PL" class="translate">Poland</option>
-                            <!--<option value="PT" class="translate">Portugal</option> Auskommentiert da falsch in geocodes.json-->
-                            <option value="RO" class="translate">Romania</option>
-                            <option value="RS" class="translate">Serbia</option>
-                            <option value="SK" class="translate">Slovakia</option>
-                            <option value="SI" class="translate">Slovenia</option>
-                            <option value="ES" class="translate">Spain</option>
-                            <option value="SE" class="translate">Sweden</option>
-                            <option value="UK" class="translate">UK</option>
-                        </select>
-                        <label for="country" class="translate">country_select</label>
+                    <div class="input-field ">
+                        <div class="translate">SelectCountry</div>
+                    </div> 
+
+                    <div class="column"><select class="value select-country" id="country">
+                        <option value="" class="translate">ChooseCountry</option>
+                        <option value="AT" class="translate">Austria</option>
+                        <option value="CH" class="translate">Switzerland</option> 
+                        <option value="DE" class="translate">Germany</option>
+                        <option value="BE" class="translate">Belgium</option>
+                        <option value="BA" class="translate">BosniaHerzegovina</option>
+                        <!--<option value="BG" class="translate">Bulgaria</option> Auskommentiert da falsch in geocodes.json-->
+                        <option value="HR" class="translate">Croatia</option>
+                        <option value="CY" class="translate">Cyprus</option>
+                        <option value="CZ" class="translate">Czech Republic</option>
+                        <option value="DK" class="translate">Denmark</option>
+                        <option value="EE" class="translate">Estonia</option>
+                        <option value="FI" class="translate">Finland</option>
+                        <option value="FR" class="translate">France</option>
+                        <option value="GR" class="translate">Greece</option>
+                        <option value="HU" class="translate">Hungary</option>
+                        <option value="IE" class="translate">Ireland</option>
+                        <option value="IS" class="translate">Iceland</option>
+                        <option value="IL" class="translate">Israel</option>
+                        <option value="IT" class="translate">Italy</option>
+                        <option value="LV" class="translate">Latvia</option>
+                        <option value="LT" class="translate">Lithuania</option>
+                        <option value="LU" class="translate">Luxembourg</option>
+                        <option value="MK" class="translate">North Macedonia</option>
+                        <option value="MT" class="translate">Malta</option>
+                        <option value="NL" class="translate">Netherlands</option>
+                        <option value="NO" class="translate">Norway</option>
+                        <option value="PL" class="translate">Poland</option>
+                        <!--<option value="PT" class="translate">Portugal</option> Auskommentiert da falsch in geocodes.json-->
+                        <option value="RO" class="translate">Romania</option>
+                        <option value="RS" class="translate">Serbia</option>
+                        <option value="SK" class="translate">Slovakia</option>
+                        <option value="SI" class="translate">Slovenia</option>
+                        <option value="ES" class="translate">Spain</option>
+                        <option value="SE" class="translate">Sweden</option>
+                        <option value="UK" class="translate">UK</option>
+                    </select></div>
+                    <div class="column"></div>
+
+
+                   
+                    <div class="input-field">
+                        <div class="translate">SetPosition</div>
+                    </div> 
+                    <div>
+
+                        <div class="column">
+                            <input type="text" id="lat" class="value" />
+                            <label for="lat" class="translate">lattitude</label>
+                        </div>
+                        <div class="column">
+                            <input type="text" id="long" class="value" />
+                            <label for="long" class="translate">longitude</label>
+                        </div>
                     </div>
-                    <div class="input-field col">
-                        <input type="text" id="lat" class="value" />
-                        <label for="lat" class="translate">lattitude</label>
-                    </div>
-                    <div class="input-field col">
-                        <input type="text" id="long" class="value" />
-                        <label for="long" class="translate">longitude</label>
-                    </div>
-                    <div class="col">
+
+                    <div style="margin-top: 0.75rem;">
                         <a id="loadSetup" class="waves-effect waves-light btn"><i class="material-icons left">sync</i><span class="translate">loadSetup</span></a>
                     </div>
                 </div>
@@ -523,56 +554,57 @@
                 <div id="mapWrap"></div>
 
             </div>
-        
+            <div id="loader"></div>
 
-        
-            <div class="row">
+            <div class="row" style="display: flex; flex-direction: column;">
                 
-            </div>
+                <div class="input-field col">
+                    <div class="translate">InstructionGeoCode</div>
+                </div> 
 
-            <div class="row">
-                
-                <div class="row">
-                    
+                <div class="col">
+                    <a id="loadLocationCode" class="waves-effect waves-light btn"><i class="material-icons left">map</i><span class="translate">LoadGeocode</span></a>
+
                 </div>
-                <div class="row">
-                    <div class="col s4">
-                        <a id="loadLocationCode" class="waves-effect waves-light btn"><i class="material-icons left">sync</i><span class="translate">loadLocationCode</span></a>
-                    </div>
-                    <div class="input-field col s3">
+  
+                <div class="col">
                         <input type="text" id="geocode" class="value" readonly/>
-                        <label for="geocode" class="translate">geocode</label>
-                    </div>
                 </div>
+
             </div>
         
         </div>
 
         <div id="tab-htmlwidget"  class="col s12 page">
-            <div class="row">
+            <div>
 
                 <div class="col s12">
-                    <h6 class="title translate" data-lang="adjuststyle">adjuststyleinfo</h6>
+                    <h6 class="title translate" data-lang="adjuststyleinfo">adjuststyleinfo</h6>
                 </div>
-                <div class="row">
-                    <div class="input-field col s3">
+                
+                <div>
+                    <div class="input-field col">
                         <input type="checkbox" id="noBackgroundColor" class="value" />
                         <label for="noBackgroundColor" class="translate">noBackgroundColor</label>
                     </div> 
-                    <div class="input-field col s3">
+                    <div class="input-field col">
                         <input type="checkbox" id="whiteIcons" class="value" />
                         <label for="whiteIcons" class="translate">whiteIcons</label>
                     </div> 
-                    <div class="input-field col s3">
+                    
+                </div>
+                <div>
+                    <div class="input-field col">
                         <input type="checkbox" id="noIcons" class="value" />
                         <label for="noIcons" class="translate">noIcons</label>
                     </div> 
-                    <div class="input-field col s3">
+                    <div class="input-field col">
                         <input type="checkbox" id="dayInWords" class="value" />
                         <label for="dayInWords" class="translate">dayInWords</label>
                     </div> 
                 </div>
-                <div class="row">
+
+                <div>
                     <div class="input-field col s3">
                         <select class="value select-image-size" id="imageSize">
                             <option value="0" class="translate">small</option>
@@ -582,25 +614,28 @@
                         <label for="imageSize" class="translate">selectImageSize</label>
                     </div>
                 </div>
-                <div class="row">
+                <div>
                     <div class="input-field col s12">
                         <div class="translate">ColorDefinition</div>
                     </div> 
                 </div>
-                <div class="row">
-                    <div class="input-field col s3">
+                <div>
+                    <div class="input-field col">
                         <input type="text" id="warningColorLevel1" class="value" />
                         <label for="warningColorLevel1" class="translate">TextwarningColorLevel1</label>
                     </div>
-                    <div class="input-field col s3">
+                    <div class="input-field col">
                         <input type="text" id="warningColorLevel2" class="value" />
                         <label for="warningColorLevel2" class="translate">TextwarningColorLevel2</label>
                     </div>
-                    <div class="input-field col s3">
+                
+                </div>
+                <div>
+                    <div class="input-field col">
                         <input type="text" id="warningColorLevel3" class="value" />
                         <label for="warningColorLevel3" class="translate">TextwarningColorLevel3</label>
                     </div>
-                    <div class="input-field col s3">
+                    <div class="input-field col">
                         <input type="text" id="warningColorLevel4" class="value" />
                         <label for="warningColorLevel4" class="translate">TextwarningColorLevel4</label>
                     </div>
@@ -609,7 +644,7 @@
         </div>
 
         <div id="tab-alarmtypes"  class="col s12 page">
-            <div class="row">
+            <div>
 
                 <div class="col s12">
                     <h6 class="title translate" data-lang="alarmlevelsetup">alarmlevelsetup</h6>
@@ -626,7 +661,7 @@
             <div class="col s12">
                 <h6 class="title translate" data-lang="alarmtypeGeneralsetup">alarmtypeGeneralsetup</h6>
             </div>
-            <div class="row">
+            <div>
                 <div class="input-field col s3">
                     <img width="20" height="20" src="icons/black/t1.png"/>
                     <input type="checkbox" id="warningType1" class="value" />
@@ -649,7 +684,7 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div>
                 <div class="input-field col s3">
                     <img width="20" height="20" src="icons/black/t5.png"/>
                     <input type="checkbox" id="warningType5" class="value" />
@@ -671,7 +706,7 @@
                     <label for="warningType8" class="translate">warningType8</label>
                 </div>
             </div>
-            <div class="row">
+            <div>
                 <div class="input-field col s3">
                     <img width="20" height="20" src="icons/black/t9.png"/>
                     <input type="checkbox" id="warningType9" class="value" />
@@ -694,90 +729,93 @@
                 </div>
             </div>
 
-            </div>
+            
         </div>
         
         <div id="tab-notification"  class="col s12 page">
-            <div class="col s12">
-                <h6 class="title translate" data-lang="notifications type">notifications type</h6>
-            </div>
-            <div class="row">
-                <div class="input-field col s11 m2">
-                    <select class="value" id="notificationsType">
-                    <option value="None" class="translate">none</option>
-                    <option value="Telegram" class="translate">Telegram</option>
-                    <option value="Mail" class="translate">E-Mail</option>
-                    <option value="Pushover" class="translate">Pushover</option>
-                    <option value="Signal" class="translate">Signal</option>
-                    <option value="SynoChat" class="translate">SynoChat</option>
-                    </select>
-                    <label for="notificationsType" class="translate">notifications type</label>
+            <div>
+                <div class="col s12">
+                    <h6 class="title translate" data-lang="notifications type">notifications type</h6>
                 </div>
-                <div class="input-field col s4 m2 Telegram">
-                    <select id="telegramInstanz" class="value"></select>
-                    <label class="translate" for="telegramInstanz">chooseTelegramInstance</label>
+                <div>
+                    <div class="input-field col s11 m2">
+                        <select class="value" id="notificationsType">
+                        <option value="None" class="translate">none</option>
+                        <option value="Telegram" class="translate">Telegram</option>
+                        <option value="Mail" class="translate">E-Mail</option>
+                        <option value="Pushover" class="translate">Pushover</option>
+                        <option value="Signal" class="translate">Signal</option>
+                        <option value="SynoChat" class="translate">SynoChat</option>
+                        </select>
+                        <label for="notificationsType" class="translate">notifications type</label>
+                    </div>
+                    <div class="input-field col s4 m2 Telegram">
+                        <select id="telegramInstanz" class="value"></select>
+                        <label class="translate" for="telegramInstanz">chooseTelegramInstance</label>
+                    </div>
+                    <div class="input-field col s4 m2 Mail">
+                        <select id="mailInstanz" class="value"></select>
+                        <label class="translate" for="mailInstanz">chooseMailInstance</label>
+                    </div>
+                    <div class="input-field col s3 Mail">
+                        <input type="text" id="mailAddress" class="value" />
+                        <label for="mailAddress" class="translate">addMailAddress</label>
+                    </div>
+                    <div class="input-field col s4 m2 Pushover">
+                        <select id="pushInstanz" class="value"></select>
+                        <label class="translate" for="pushInstanz">choosePushOverInstance</label>
+                    </div>
+                    <div class="input-field col s4 m2 Signal">
+                        <select id="signalInstanz" class="value"></select>
+                        <label class="translate" for="signalInstanz">chooseSignalInstance</label>
+                    </div>
+                    <div class="input-field col s4 m2 SynoChat">
+                        <select id="synoInstanz" class="value"></select>
+                        <label class="translate" for="synoInstanz">chooseSynoChatInstance</label>
+                    </div>
+                    <div class="input-field col s3 SynoChat">
+                        <input type="text" id="SynoChannel" class="value" />
+                        <label for="SynoChannel" class="translate">synoChatChannel</label>
+                    </div>
                 </div>
-                <div class="input-field col s4 m2 Mail">
-                    <select id="mailInstanz" class="value"></select>
-                    <label class="translate" for="mailInstanz">chooseMailInstance</label>
+                <div class="col s12">
+                    <h6 class="title translate" data-lang="notification settings">notification settings</h6>
                 </div>
-                <div class="input-field col s3 Mail">
-                    <input type="text" id="mailAddress" class="value" />
-                    <label for="mailAddress" class="translate">addMailAddress</label>
+                <div>
+                    <div class="input-field col s3">
+                        <input type="checkbox" id="showLocation" class="value" />
+                        <label for="showLocation" class="translate">showLocation</label>
+                    </div>
+                    <div class="input-field col s3">
+                        <input type="checkbox" id="levelInWords" class="value" />
+                        <label for="levelInWords" class="translate">warningLevelInWords</label>
+                    </div>
+                    <div class="input-field col s3">
+                        <input type="checkbox" id="noDetails" class="value" />
+                        <label for="noDetails" class="translate">noDetails</label>
+                    </div>
+                    <div class="input-field col s3">
+                        <input type="checkbox" id="noWarningsNotification" class="value" />
+                        <label for="noWarningsNotification" class="translate">noWarnings</label>
+                    </div>
                 </div>
-                <div class="input-field col s4 m2 Pushover">
-                    <select id="pushInstanz" class="value"></select>
-                    <label class="translate" for="pushInstanz">choosePushOverInstance</label>
-                </div>
-                <div class="input-field col s4 m2 Signal">
-                    <select id="signalInstanz" class="value"></select>
-                    <label class="translate" for="signalInstanz">chooseSignalInstance</label>
-                </div>
-                <div class="input-field col s4 m2 SynoChat">
-                    <select id="synoInstanz" class="value"></select>
-                    <label class="translate" for="synoInstanz">chooseSynoChatInstance</label>
-                </div>
-                <div class="input-field col s3 SynoChat">
-                    <input type="text" id="SynoChannel" class="value" />
-                    <label for="SynoChannel" class="translate">synoChatChannel</label>
-                </div>
-            </div>
-            <div class="col s12">
-                <h6 class="title translate" data-lang="notification settings">notification settings</h6>
-            </div>
-            <div class="row">
-                <div class="input-field col s3">
-                    <input type="checkbox" id="showLocation" class="value" />
-                    <label for="showLocation" class="translate">showLocation</label>
-                </div>
-                <div class="input-field col s3">
-                    <input type="checkbox" id="levelInWords" class="value" />
-                    <label for="levelInWords" class="translate">warningLevelInWords</label>
-                </div>
-                <div class="input-field col s3">
-                    <input type="checkbox" id="noDetails" class="value" />
-                    <label for="noDetails" class="translate">noDetails</label>
-                </div>
-                <div class="input-field col s3">
-                    <input type="checkbox" id="noWarningsNotification" class="value" />
-                    <label for="noWarningsNotification" class="translate">noWarnings</label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s11 m2">
-                    <select class="value" id="levelType">
-                    <option value="None" class="translate">none</option>
-                    <option value="Rufezeichen" class="translate">❗❗❗</option>
-                    <option value="Kreise" class="translate">🟢 🟡 🟠 🔴</option>
-                    </select>
-                    <label for="levelType" class="translate">alarmlevelType</label>
+                <div>
+                    <div class="input-field col s11 m2">
+                        <select class="value" id="levelType">
+                        <option value="None" class="translate">none</option>
+                        <option value="Rufezeichen" class="translate">❗❗❗</option>
+                        <option value="Kreise" class="translate">🟢 🟡 🟠 🔴</option>
+                        </select>
+                        <label for="levelType" class="translate">alarmlevelType</label>
+                    </div>
+    
+    
                 </div>
 
-
-            </div>
-    </div>
+            </div>   
+        </div>
     <div id="tab-notificationsettings"  class="col s12 page">
-            <div class="row">
+            <div>
 
                 <div class="col s12">
                     <h6 class="title translate" data-lang="alarmlevelsetupNotification">alarmlevelsetupNotification</h6>
@@ -794,7 +832,7 @@
             <div class="col s12">
                 <h6 class="title translate" data-lang="alarmtypeNotificationsetup">alarmtypeNotificationsetup</h6>
             </div>
-            <div class="row">
+            <div>
                 <div class="input-field col s3">
                     <img width="20" height="20" src="icons/black/t1.png"/>
                     <input type="checkbox" id="warningType1Notification" class="value" />
@@ -817,7 +855,7 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div>
                 <div class="input-field col s3">
                     <img width="20" height="20" src="icons/black/t5.png"/>
                     <input type="checkbox" id="warningType5Notification" class="value" />
@@ -839,7 +877,7 @@
                     <label for="warningType8Notification" class="translate">warningType8</label>
                 </div>
             </div>
-            <div class="row">
+            <div>
                 <div class="input-field col s3">
                     <img width="20" height="20" src="icons/black/t9.png"/>
                     <input type="checkbox" id="warningType9Notification" class="value" />
@@ -862,10 +900,10 @@
                 </div>
             </div>
 
-            </div>
             
             
-        </div>
+            
+    </div>
 </div>
 </body>
 </html>
