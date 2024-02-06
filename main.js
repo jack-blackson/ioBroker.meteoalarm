@@ -34,6 +34,7 @@ var DescFilter1 = '';
 var DescFilter2 = '';
 var country = '';
 var countryConfig = '';
+var geocodeLocationConfig = []
 //var regionConfig = '';
 var latConfig = '';
 var longConfig = '';
@@ -42,7 +43,7 @@ var typeArray = [];
 var urlArray = [];
 
 var regionCSV = ""
-var regionName = ""
+//var regionName = ""
 var xmlLanguage = ""
 const warnMessages = {};
 
@@ -238,6 +239,7 @@ function initialSetup(){
             locationArray = adapter.config.geocode
 
             countryConfig = adapter.config.country
+            geocodeLocationConfig = adapter.config.geocodeLocation
             imageSizeSetup = Number(adapter.config.imageSize)
 
             adapter.log.debug('0.0 Initial setup loaded')
@@ -267,7 +269,7 @@ async function getData(){
             adapter.terminate ? adapter.terminate(0) : process.exit(0);
         }
         else{
-            adapter.log.debug('0.1 Setup found: country ' + countryConfig + ' with geocode(s) ' + locationArray +  ' and location Lat ' + latConfig + ' Long ' +  longConfig )
+            adapter.log.debug('0.1 Setup found: country ' + countryConfig + ' with geocode(s) ' + locationArray + ' for location ' + geocodeLocationConfig+ ' and Lat ' + latConfig + ' Long ' +  longConfig )
             if (Sentry){
                 adapter.log.debug('Sentry aktiv - Breadcrumb gesetzt')
                 Sentry.addBreadcrumb({
@@ -636,7 +638,7 @@ async function getData(){
             await Promise.all([
                 adapter.setStateAsync({device: '' , channel: '',state: 'level'}, {val: maxAlarmLevel, ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'htmlToday'}, {val: htmlCode, ack: true}),
-                adapter.setStateAsync({device: '' , channel: '',state: 'location'}, {val: regionName, ack: true}),
+                adapter.setStateAsync({device: '' , channel: '',state: 'location'}, {val: geocodeLocationConfig, ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'link'}, {val: urlAtom, ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'color'}, {val: getColor(maxAlarmLevel.toString()), ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'noOfAlarms'}, {val: warningCount, ack: true}),
@@ -650,8 +652,8 @@ async function getData(){
 
 
             adapter.log.debug('15: All Done')
-            if (regionName){
-                adapter.log.info('15.1: Updated Weather Alarms for ' + regionName + ' -> ' + warningCount + ' alarm(s) found')
+            if (geocodeLocationConfig){
+                adapter.log.info('15.1: Updated Weather Alarms for ' + geocodeLocationConfig + ' -> ' + warningCount + ' alarm(s) found')
             }
             
             adapter.terminate ? adapter.terminate('All data processed. Adapter stopped until next scheduled process.') : process.exit(0);
@@ -1074,7 +1076,7 @@ async function processNotifications(alarms){
                     }
                     var region = ""
                     if (adapter.config.showLocation){
-                        region = ' - ' + regionName
+                        region = ' - ' + geocodeLocationConfig
                     }
 
                     var notificationLevel = getNotificationLevel(alarms.Level)
@@ -1094,7 +1096,7 @@ async function processNotifications(alarms){
             adapter.log.debug('14.1.1: Warning for "All warnings ended" sent')
             var region = ""
             if (adapter.config.showLocation){
-                region = ' - ' + regionName
+                region = ' - ' + geocodeLocationConfig
             }
             var notificationLevel = getNotificationLevel(1)
             var notificationText = notificationLevel  + region + ': ' + i18nHelper.warningsLifted[lang]
@@ -1396,23 +1398,6 @@ async function processDetails(content, countInt,detailsType,detailsIdentifier,de
             geoCodesArray = [geoCodesArray]
         }
         //adapter.log.debug('geocodes.array length ' + geoCodesArray.length)
-
-        for(let h = 0; h < geoCodesArray.length; h++) {
-            //adapter.log.debug('EMMA ID: ' + geoCodesArray[h].valueName + ' - ' + geoCodesArray[h].value)
-            //adapter.log.debug('Location Array: ' + locationArray)
-            //adapter.log.debug('Incouded: ' + locationArray.includes(geoCodesArray[h].value))
-            if (geoCodesArray[h].valueName == "EMMA_ID" && (locationArray.includes(geoCodesArray[h].value))){
-                adapter.log.debug(' Region found - ' + areaData[i].areaDesc)
-                if (regionName ==""){
-                    regionName = areaData[i].areaDesc
-                }
-                else{
-                    if (!regionName.includes(areaData[i].areaDesc)){
-                        regionName += ', ' + areaData[i].areaDesc
-                    }
-                }
-            }
-        }
 
         //adapter.log.debug('Location : ' + areaData[i].areaDesc)
 

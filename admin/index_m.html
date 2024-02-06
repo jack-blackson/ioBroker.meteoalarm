@@ -124,10 +124,6 @@
         function findGeoCode(){
             console.log('Start import geocode')
             document.getElementById("loader").style.display = "block";
-            //$('#loader1').removeClass('seenot');
-
-            //const geoCodeJSON = require('./meteoalarm/geocodes.json')
-            //turf = require('@turf/turf')
 
             $.getJSON('geocodes.json', function(data) {
                 
@@ -137,13 +133,16 @@
             
 
                 locationArray = []
+                var geocodeNameArray = []
             
                 for(let i = 0; i < crs.length; i++) {
                     var loccode = crs[i].properties.code
                     let polygon = JSON.stringify(crs[i].geometry.coordinates)
                     let type = JSON.stringify(crs[i].properties.type)
+                    let geocodeLocation = crs[i].properties.name
                     if (checkIfInPoly(polygon)){
                         locationArray.push(loccode)
+                        geocodeNameArray.push(geocodeLocation)
                     }
 
                     //console.log('Code: ' + loccode)
@@ -156,6 +155,8 @@
 
                     // geocode gefunden
                     $("#geocode").val(locationArray);
+                    $("#geocodeLocation").val(geocodeNameArray);
+
                 }
                 else{
                     console.log('Geocode not found')
@@ -536,7 +537,7 @@
                     </div> 
                     <div>
 
-                        <div class="column">
+                        <div class="column  ">
                             <input type="text" id="lat" class="value" />
                             <label for="lat" class="translate">lattitude</label>
                         </div>
@@ -567,6 +568,9 @@
                 </div>
   
                 <div class="col" style="width:20%">
+                    <input type="text" id="geocodeLocation" class="value" readonly/>
+            </div>
+                <div class="col" style="width:20%" hidden>
                         <input type="text" id="geocode" class="value" readonly/>
                 </div>
 
