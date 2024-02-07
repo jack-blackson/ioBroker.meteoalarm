@@ -44,6 +44,15 @@
 			// example: select elements with id=key and class=value and insert value
 			if (!settings) return;
 
+            $('#loadLocationCode').on('click', function () {
+                onChange();
+
+            });
+            $('#loadSetup').on('click', function () {
+                onChange();
+
+            });
+
 			$('.value').each(function () {
 				var $key = $(this);
 				var id = $key.attr('id');
@@ -156,7 +165,6 @@
                     // geocode gefunden
                     $("#geocode").val(locationArray);
                     $("#geocodeLocation").val(geocodeNameArray);
-
                 }
                 else{
                     console.log('Geocode not found')
