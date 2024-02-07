@@ -748,7 +748,7 @@ function checkRelevante(entry){
         }
         if (element['cap:polygon'])  {
             // found polygon
-            let polygon = element['cap:polygon']
+            let polygon = JSON.stringify(element['cap:polygon'])
             locationRelevant = checkIfInPoly(polygon)
             var areaDesc = ''
 
