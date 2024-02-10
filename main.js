@@ -47,6 +47,8 @@ var regionCSV = ""
 var xmlLanguage = ""
 const warnMessages = {};
 
+var tempFirst = true
+
 var channelNames = []
 var csvContent = [];
 var alarmAll = []
@@ -690,32 +692,106 @@ function checkDuplicates(){
     //adapter.log.debug('9.3.1 alarmAll sorted by sent1 date:' + JSON.stringify(alarmAll.sort((a, b) => a.Alarm_Sent - b.Alarm_Sent)))
 }
 
+
+function createPolyDataString(PolyDataToConvert){
+    var result = []
+    var first = true
+    var i = 0
+    var lat = ''
+    var long = ''
+    do {
+        var loc = PolyDataToConvert.indexOf(' ')
+        var countComma = (PolyDataToConvert.match(/,/g) || []).length;
+        var lengthpolyDataToConvert = PolyDataToConvert.length
+        var tempString = PolyDataToConvert.substring(0, loc)
+        var locComma = tempString.indexOf(',')
+        adapter.log.debug('data: ' +i + ' ' + PolyDataToConvert)
+        adapter.log.debug('Count Comma ' + countComma)
+
+        if (countComma >1){
+            // still multiple objects
+
+            
+
+            PolyDataToConvert = PolyDataToConvert.substring(loc+1,lengthpolyDataToConvert)
+
+            
+            long = tempString.substring(locComma+1,tempString.length)
+            lat = tempString.substring(0,locComma)
+            adapter.log.debug(' push: ' + lat + ' ' + long)
+            i ++
+            result.push([long, lat ])
+        }
+        else{
+            //last object
+            var locComma = PolyDataToConvert.indexOf(',')
+
+            adapter.log.debug('loc comma' + locComma)
+            long = PolyDataToConvert.substring(locComma+1,tempString.length)
+            lat = PolyDataToConvert.substring(0,locComma)
+            result.push([long, lat ])
+            adapter.log.debug('last push: ' + lat + ' ' + long)
+            PolyDataToConvert = ''
+
+        }
+        
+        lengthpolyDataToConvert = PolyDataToConvert.length
+      } while (lengthpolyDataToConvert > 1);
+      
+    return result
+}
+
 function checkIfInPoly(polyData){
-    var polyObject = JSON.parse(polyData)
+
+    var polyArray = createPolyDataString(polyData)
+
     var myLoc = {
         "type": "Feature",
         "geometry": {
           "type": "Point",
-          "coordinates": [longConfig, latConfig]
-        }
-      };
-        
-
-    var poly = {
-        "type": "Feature",
-        "properties": {},
-        "geometry": {
-          "type": "Polygon",
           "coordinates": 
-          polyObject
-          
+            [8.641112837702982, latConfig]
         }
-      };
-      
-      
-      var isInside = turf.booleanPointInPolygon(myLoc, poly);
+    };
+            
+    let i = 0;
+    let pathArray = [];
+    
+    while (i < polyArray.length) {
+        //adapter.log.debug('long: ' + polyArray[i][0]);
+        //adapter.log.debug('lat: ' + polyArray[i][1]);
+        var lat = polyArray[i][0]
+        var long = polyArray[i][1]
 
-      return isInside
+        pathArray.push([lat, long])
+
+        i++;
+    }
+
+    adapter.log.debug('Path Array: ' +pathArray)
+     
+    var poly = {        
+            "type": "Feature",
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": 
+                  [pathArray]
+        }
+    }
+
+    adapter.log.debug('poly: ' + JSON.stringify(poly))
+
+
+            
+    var isInside = turf.booleanPointInPolygon(myLoc, poly);
+
+      //adapter.log.debug('type config: ' + typeof longConfig + ' type poly: ' + typeof polyData)
+
+    adapter.log.debug('Is inside:' + isInside)
+
+   
+
+    return isInside
 
 
 }
@@ -748,13 +824,22 @@ function checkRelevante(entry){
         }
         if (element['cap:polygon'])  {
             // found polygon
-            let polygon = JSON.stringify(element['cap:polygon'])
-            locationRelevant = checkIfInPoly(polygon)
-            var areaDesc = ''
+            let polygon = element['cap:polygon']
 
+            var areaDesc = ''
             if (element['cap:areaDesc'])  {
                 areaDesc = element['cap:areaDesc']
             }
+
+            //TEMP!!!!!
+            if (areaDesc == "Muotathal"){
+                locationRelevant = checkIfInPoly(polygon)
+
+            }
+
+
+
+            
 
             if (locationRelevant){
                 adapter.log.debug('Found relevant polygon warning for location ' + areaDesc)
