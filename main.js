@@ -705,8 +705,8 @@ function createPolyDataString(PolyDataToConvert){
         var lengthpolyDataToConvert = PolyDataToConvert.length
         var tempString = PolyDataToConvert.substring(0, loc)
         var locComma = tempString.indexOf(',')
-        adapter.log.debug('data: ' +i + ' ' + PolyDataToConvert)
-        adapter.log.debug('Count Comma ' + countComma)
+        //adapter.log.debug('data: ' +i + ' ' + PolyDataToConvert)
+        //adapter.log.debug('Count Comma ' + countComma)
 
         if (countComma >1){
             // still multiple objects
@@ -718,19 +718,26 @@ function createPolyDataString(PolyDataToConvert){
             
             long = tempString.substring(locComma+1,tempString.length)
             lat = tempString.substring(0,locComma)
-            adapter.log.debug(' push: ' + lat + ' ' + long)
+            //adapter.log.debug(' push: ' + lat + ' ' + long)
             i ++
             result.push([long, lat ])
         }
         else{
             //last object
+            /*
             var locComma = PolyDataToConvert.indexOf(',')
 
-            adapter.log.debug('loc comma' + locComma)
-            long = PolyDataToConvert.substring(locComma+1,tempString.length)
-            lat = PolyDataToConvert.substring(0,locComma)
-            result.push([long, lat ])
-            adapter.log.debug('last push: ' + lat + ' ' + long)
+            //adapter.log.debug('loc comma' + locComma)
+            var locComma = tempString.indexOf(',')
+
+            var longLast = PolyDataToConvert.substring(locComma+1,PolyDataToConvert.length)
+            var latLast = PolyDataToConvert.substring(0,locComma)
+            if (longLast != long && latLast != lat){
+                result.push([long, lat ])
+
+            }
+            */
+            //adapter.log.debug('last push: ' + lat + ' ' + long)
             PolyDataToConvert = ''
 
         }
@@ -741,16 +748,20 @@ function createPolyDataString(PolyDataToConvert){
     return result
 }
 
+
+
 function checkIfInPoly(polyData){
 
     var polyArray = createPolyDataString(polyData)
+    adapter.log.debug(polyArray)
+
 
     var myLoc = {
         "type": "Feature",
         "geometry": {
           "type": "Point",
           "coordinates": 
-            [8.641112837702982, latConfig]
+            [longConfig, latConfig]
         }
     };
             
@@ -758,8 +769,6 @@ function checkIfInPoly(polyData){
     let pathArray = [];
     
     while (i < polyArray.length) {
-        //adapter.log.debug('long: ' + polyArray[i][0]);
-        //adapter.log.debug('lat: ' + polyArray[i][1]);
         var lat = polyArray[i][0]
         var long = polyArray[i][1]
 
@@ -767,8 +776,6 @@ function checkIfInPoly(polyData){
 
         i++;
     }
-
-    adapter.log.debug('Path Array: ' +pathArray)
      
     var poly = {        
             "type": "Feature",
@@ -778,10 +785,15 @@ function checkIfInPoly(polyData){
                   [pathArray]
         }
     }
+      
+    //adapter.log.debug('myloc: ' + JSON.stringify(myLoc))
+      //adapter.log.debug('array: ' + polyArray)
 
-    adapter.log.debug('poly: ' + JSON.stringify(poly))
+    //adapter.log.debug('poly: ' + JSON.stringify(poly))
+    //adapter.log.debug('type: ' + typeof polyArray)
 
 
+ 
             
     var isInside = turf.booleanPointInPolygon(myLoc, poly);
 
@@ -832,7 +844,7 @@ function checkRelevante(entry){
             }
 
             //TEMP!!!!!
-            if (areaDesc == "Muotathal"){
+            if (areaDesc == "Verzasca"){
                 locationRelevant = checkIfInPoly(polygon)
 
             }
