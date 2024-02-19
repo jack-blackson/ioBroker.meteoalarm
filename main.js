@@ -312,8 +312,6 @@ async function getData(){
             
             const temp2 = await saveAlarmNamesForLater()
             for (const alarmLoop of alarmOldIdentifier) {
-                //HIER SIND WIR
-                //adapter.log.debug('TEMP: ' + alarmLoop)
                 const temp1 = await saveAlarmsForLater(alarmLoop)
             };
 
@@ -430,7 +428,6 @@ async function getData(){
                             else {
                                 info = [result.alert.info]
                             }
-
                             detailsType= result.alert.msgType
                             detailsIdentifier = result.alert.identifier
                             detailsIdentifier = detailsIdentifier.replace(/\./g,'') // remove dots
@@ -450,6 +447,7 @@ async function getData(){
                                 var element = info[j]
 
                                 if (element.language == xmlLanguage){
+
                                     element.parameter.forEach(function (parameter){
                                         if (parameter.valueName == "awareness_type") {
                                             awarenesstype =parameter.value
@@ -705,39 +703,28 @@ function createPolyDataString(PolyDataToConvert){
         var lengthpolyDataToConvert = PolyDataToConvert.length
         var tempString = PolyDataToConvert.substring(0, loc)
         var locComma = tempString.indexOf(',')
-        //adapter.log.debug('data: ' +i + ' ' + PolyDataToConvert)
-        //adapter.log.debug('Count Comma ' + countComma)
 
         if (countComma >1){
             // still multiple objects
-
-            
-
             PolyDataToConvert = PolyDataToConvert.substring(loc+1,lengthpolyDataToConvert)
 
             
             long = tempString.substring(locComma+1,tempString.length)
             lat = tempString.substring(0,locComma)
-            //adapter.log.debug(' push: ' + lat + ' ' + long)
             i ++
             result.push([long, lat ])
         }
         else{
             //last object
-            /*
+            
             var locComma = PolyDataToConvert.indexOf(',')
-
-            //adapter.log.debug('loc comma' + locComma)
             var locComma = tempString.indexOf(',')
-
             var longLast = PolyDataToConvert.substring(locComma+1,PolyDataToConvert.length)
             var latLast = PolyDataToConvert.substring(0,locComma)
             if (longLast != long && latLast != lat){
                 result.push([long, lat ])
 
-            }
-            */
-            //adapter.log.debug('last push: ' + lat + ' ' + long)
+            }            
             PolyDataToConvert = ''
 
         }
@@ -753,8 +740,6 @@ function createPolyDataString(PolyDataToConvert){
 function checkIfInPoly(polyData){
 
     var polyArray = createPolyDataString(polyData)
-    adapter.log.debug(polyArray)
-
 
     var myLoc = {
         "type": "Feature",
@@ -771,8 +756,7 @@ function checkIfInPoly(polyData){
     while (i < polyArray.length) {
         var lat = polyArray[i][0]
         var long = polyArray[i][1]
-
-        pathArray.push([lat, long])
+        pathArray.push([Number(lat), Number(long)])
 
         i++;
     }
@@ -785,23 +769,8 @@ function checkIfInPoly(polyData){
                   [pathArray]
         }
     }
-      
-    //adapter.log.debug('myloc: ' + JSON.stringify(myLoc))
-      //adapter.log.debug('array: ' + polyArray)
-
-    //adapter.log.debug('poly: ' + JSON.stringify(poly))
-    //adapter.log.debug('type: ' + typeof polyArray)
-
-
- 
-            
+           
     var isInside = turf.booleanPointInPolygon(myLoc, poly);
-
-      //adapter.log.debug('type config: ' + typeof longConfig + ' type poly: ' + typeof polyData)
-
-    adapter.log.debug('Is inside:' + isInside)
-
-   
 
     return isInside
 
@@ -843,18 +812,10 @@ function checkRelevante(entry){
                 areaDesc = element['cap:areaDesc']
             }
 
-            //TEMP!!!!!
-            if (areaDesc == "Verzasca"){
-                locationRelevant = checkIfInPoly(polygon)
-
-            }
-
-
-
-            
+            locationRelevant = checkIfInPoly(polygon)            
 
             if (locationRelevant){
-                adapter.log.debug('Found relevant polygon warning for location ' + areaDesc)
+                adapter.log.debug('4.1.2: Found relevant polygon warning for location ' + areaDesc)
             }
             
         }
@@ -1482,9 +1443,7 @@ async function processDetails(content, countInt,detailsType,detailsIdentifier,de
 
     var path = 'alarms.' + 'Alarm_' + countInt
 
-    //adapter.log.debug('TEMP!! + ' + JSON.stringify(content.area))
     let areaData = content.area
-    //adapter.log.debug(' is areaData an array: ' + Array.isArray(areaData))
     if (!Array.isArray(areaData)){
         areaData = [areaData]
     }
@@ -1494,12 +1453,9 @@ async function processDetails(content, countInt,detailsType,detailsIdentifier,de
         if (!Array.isArray(geoCodesArray)){
             geoCodesArray = [geoCodesArray]
         }
-        //adapter.log.debug('geocodes.array length ' + geoCodesArray.length)
-
-        //adapter.log.debug('Location : ' + areaData[i].areaDesc)
+        
 
     }
-    //adapter.log.debug('Location : ' + regionName)
 
     
 
@@ -2050,6 +2006,9 @@ function getXMLLanguage(country){
         case 'HR':
             return 'hr-HR'
             break;
+        case 'CH':
+            return 'de'
+            break;   
         case 'CY':
             return 'el-GR'
             break;
