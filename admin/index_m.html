@@ -354,6 +354,12 @@
 
         }
 
+        function isNumber(str) {
+            if (typeof str != "string") return false // we only process strings!  
+            return !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
+                    !isNaN(parseFloat(str)) // ...and ensure strings of whitespace fail
+        }
+
         function checksetup(){
             var errorFound = false
             if ($('#country').children("option:selected").val() == ""){
@@ -364,10 +370,20 @@
                     showToast(_('Please enter a value in "Lattitude'));
                     errorFound = true
             }
+            if (!isNumber($("#lat").val())) {
+                showToast(_('Please enter a numeric in "Lattitude'));
+                    errorFound = true
+            }
+            
             if ($("#long").val() == ""){
                     showToast(_('Please enter a value in "Longitude"'));
                     errorFound = true
             }
+            if (!isNumber($("#long").val())) {
+                showToast(_('Please enter a numeric in "Longitude'));
+                    errorFound = true
+            }
+
             if ($("#geocode").val() == ""){
                     showToast(_('Please run "Load Geocode"'));
                     errorFound = true
