@@ -25,6 +25,8 @@ Choose your country, and afterwards the region you want the warnings for. If you
 
 ## Changelog
 
+### 3.0.0 (2024-02-26)
+* (jack-blackson) Breaking change: switch to locations instead of choosing geocodes to be able to also handle warnings coming with polygons (e.g. Switzerland)
 
 ### 2.3.8 (2023-08-06)
 * (jack-blackson) Bugfix alarm updates
