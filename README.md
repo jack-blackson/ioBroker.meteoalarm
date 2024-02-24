@@ -195,7 +195,7 @@ Bell in icon designed by Freepik from www.flaticon.com
 ## License
 The MIT License (MIT)
 
-Copyright (c) 2019-2023 jack-blackson <blacksonj7@gmail.com>
+Copyright (c) 2019-2024 jack-blackson <blacksonj7@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
