@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "meteoalarm",
-        "version": "2.3.8",
+        "version": "3.0.0",
         "news": {
+            "3.0.0": {
+                "en": "Breaking change: Switch to polygon data",
+                "de": "Große Änderung: Umschalten auf Polygondaten",
+                "ru": "Перерыв: Переключение на данные полигона",
+                "pt": "Mudança de ruptura: Mudar para dados de polígono",
+                "nl": "Verandering: Omschakelen naar veelhoekgegevens",
+                "fr": "Briser le changement : Passer aux données polygonales",
+                "it": "Cambiamento di rottura: Passare ai dati del poligono",
+                "es": "Cambio de ruptura: Cambiar a datos de polígono",
+                "pl": "Łamanie zmian: Przełącz na dane wielokąta",
+                "uk": "Зміна розривів: Перемикач даних полігонів",
+                "zh-cn": "中断更改 : 切换到多边形数据"
+            },
             "2.3.8": {
                 "en": "Bugfix alarm reference",
                 "de": "Bugfix Alarm Referenz",
@@ -200,17 +213,17 @@
             "zh-cn": "Meteoalarm"
         },
         "desc": {
-            "en": "Weather alarms from meteoalarm.org for whole Europe",
-            "de": "Unwetterwarnungen von meteoalarm.org für ganz Europa",
-            "ru": "Погодные оповещения от meteoalarm.org для всей Европы",
-            "pt": "Alarmes meteorológicos de meteoalarm.org para toda a Europa",
-            "nl": "Weeralarmen van meteoalarm.org voor heel Europa",
-            "fr": "Alarmes météo de meteoalarm.org pour toute l'Europe",
-            "it": "Allarmi meteo da meteoalarm.org per tutta l'Europa",
-            "es": "Alarmas meteorológicas de meteoalarm.org para toda Europa",
-            "pl": "Alarmy pogodowe z meteoalarm.org dla całej Europy",
-            "uk": "Погода надана в Європі",
-            "zh-cn": "来自meteoalarm.org 的整个欧洲的天气警报"
+            "en": "Extreme weather warnings for all european countries from meteoalarm.org",
+            "de": "Extremwetterwarnungen für alle europäischen Länder von meteoalarm.org",
+            "ru": "Экстремальные предупреждения о погоде для всех европейских стран от Frankfurtalarm.org",
+            "pt": "Avisos meteorológicos extremos para todos os países europeus de meteoalarm.org",
+            "nl": "Extreme weer waarschuwingen voor alle Europese landen van meteoalarm.org",
+            "fr": "Avertissements météorologiques extrêmes pour tous les pays européens de metealarm.org",
+            "it": "Avvertenze meteorologiche estreme per tutti i paesi europei da meteoalarm.org",
+            "es": "Extremas advertencias meteorológicas para todos los países europeos desde meteoalarm.org",
+            "pl": "Ekstremalne ostrzeżenia pogodowe dla wszystkich krajów europejskich z meteoalarm.org",
+            "uk": "Екстремальні погодні попередження для всіх країн Європи з метеоризмом.org",
+            "zh-cn": "欧洲所有国家的极端天气警报来自meteoalarm.org"
         },
         "authors": [
             "Jack <blacksonj7@gmail.com>"
@@ -243,7 +256,50 @@
             "sentry": {
                 "dsn": "https://336269261940428d9f3093e61a6e06c6@sentry.iobroker.net/124"
             }
-        }
+        },
+        "messages": [
+            {
+              "condition": {
+                "operand": "and",
+                "rules": [
+                  "oldVersion<3.0.0",
+                  "newVersion>=3.0.0"
+                ]
+              },
+              "title": {
+                "en": "Important notice!",
+                "de": "Wichtiger Hinweis!",
+                "ru": "Важное замечание!",
+                "pt": "Notícia importante!",
+                "nl": "Belangrijke mededeling!",
+                "fr": "Avis important!",
+                "it": "Avviso IMPORTANTE!",
+                "es": "Noticia importante!",
+                "pl": "Ważna uwaga!",
+                "zh-cn": "重要通知!",
+                "uk": "Важливе повідомлення!"
+              },
+              "text": {
+                "en": "This update contains a breaking change. Please go to the setup and maintain the location. Otherwise, the alarms will not work any more.",
+                "de": "Dieses Update enthält eine kritische Änderung. Bitte gehen Sie zum Setup und halten Sie den Standort. Sonst funktionieren die Alarme nicht mehr.",
+                "ru": "Это обновление содержит нарушающие изменения. Пожалуйста, отправляйтесь на установку и сохраняйте местоположение. В противном случае тревога больше не будет работать.",
+                "pt": "Esta atualização contém uma mudança de ruptura. Por favor, vá para a configuração e mantenha a localização. Caso contrário, os alarmes não funcionarão mais.",
+                "nl": "Deze update bevat een breuk verandering. Ga naar de setup en onderhoud de locatie. Anders werkt het alarm niet meer.",
+                "fr": "Cette mise à jour contient un changement de rupture. Veuillez aller à l'installation et maintenir l'emplacement. Sinon, les alarmes ne fonctionneront plus.",
+                "it": "Questo aggiornamento contiene un cambiamento di rottura. Si prega di andare alla configurazione e mantenere la posizione. Altrimenti, gli allarmi non funzioneranno più.",
+                "es": "Esta actualización contiene un cambio de ruptura. Por favor, vaya a la configuración y mantenga la ubicación. De lo contrario, las alarmas ya no funcionarán.",
+                "pl": "Ta aktualizacja zawiera przełomową zmianę. Proszę przejść do ustawienia i utrzymać lokalizację. Inaczej alarmy już nie będą działać.",
+                "uk": "Цей оновлення містить зміни розриву. Будь ласка, перейдемо на налаштування та підтримує розташування. В іншому випадку сигналізація не працює.",
+                "zh-cn": "此更新包含一个突破性的更改 。 请到设置处维持位置. 否则,警报就会失效."
+              },
+              "level": "warn",
+              "buttons": [
+                "agree",
+                "cancel"
+              ]
+            }
+            ]
+    
     },
     "adminUI": {
         "config": "materialize"

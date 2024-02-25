@@ -13,6 +13,7 @@ const utils = require('@iobroker/adapter-core');
 //const request = require('request');
 const moment = require('moment');
 const util = require('util')
+const turf = require('@turf/turf')
 var parseString = require('xml2js').parseString;
 var parseStringPromise = require('xml2js').parseStringPromise;
 const stateAttr = require('./lib/stateAttr.js'); // State attribute definitions
@@ -21,25 +22,32 @@ const i18nHelper = require(`${__dirname}/lib/i18nHelper`);
 const bent = require("bent");
 
 const parseCSV = require('csv-parse');
+const geoCodeJSON = require('./admin/geocodes.json')
 const fs = require("fs");
 const path = require('path');
-const { hasUncaughtExceptionCaptureCallback } = require('process');
+const { hasUncaughtExceptionCaptureCallback, features } = require('process');
 const { count } = require('console');
 const { level } = require('./lib/stateAttr.js');
+const { addAbortSignal } = require('stream');
 
 var DescFilter1 = '';
 var DescFilter2 = '';
 var country = '';
 var countryConfig = '';
-var regionConfig = '';
+var geocodeLocationConfig = []
+//var regionConfig = '';
+var latConfig = '';
+var longConfig = '';
 var countEntries = 0;
 var typeArray = [];
 var urlArray = [];
 
 var regionCSV = ""
-var regionName = ""
+//var regionName = ""
 var xmlLanguage = ""
 const warnMessages = {};
+
+var tempFirst = true
 
 var channelNames = []
 var csvContent = [];
@@ -47,6 +55,7 @@ var alarmAll = []
 var alarmOldIdentifier = []
 var alarmOldArray = []
 var urlAtom = ""
+var locationArray = new Array()
 
 let adapter;
 let lang;
@@ -64,6 +73,9 @@ var notificationAlarmArray = []
 var imageSizeSetup = 0
 
 var updateError = false
+
+var initialDataLoaded = false
+//var geoCodeLoaded = false
 
 let Sentry;
 let SentryIntegrations;
@@ -209,40 +221,46 @@ function startAdapter(options) {
 
 
 function main() {
-
-    //var i = 1
-
-    adapter.getForeignObject('system.config', (err, systemConfig) => {
-        if (!systemConfig.common.language){
-            lang = 'en'
-        }
-        else{
-            lang = systemConfig.common.language
-        }
-        adapter.log.debug('Language: ' + lang)
-        //adapter.log.debug('Starting round: ' + i) // TEMP
-        //i += 1
-
         getData()
-        
+}
 
-    }) 
+function initialSetup(){
+            // run once when adapter starts
+
+            adapter.getForeignObject('system.config', (err, systemConfig) => {
+                if (!systemConfig.common.language){
+                    lang = 'en'
+                }
+                else{
+                    lang = systemConfig.common.language
+                }
+            }) 
+
+            latConfig = adapter.config.lat
+            longConfig = adapter.config.long
+            locationArray = adapter.config.geocode
+
+            countryConfig = adapter.config.country
+            geocodeLocationConfig = adapter.config.geocodeLocation
+            imageSizeSetup = Number(adapter.config.imageSize)
+
+            adapter.log.debug('0.0 Initial setup loaded')
 }
 
 async function getData(){
         
-        // request setup
-        countryConfig = adapter.config.country
-        regionConfig = adapter.config.region
-        regionName = adapter.config.regionName
-        imageSizeSetup = Number(adapter.config.imageSize)
+ 
         alarmAll = []
-        
 
-        if (regionConfig  == "0"|| !regionConfig){
-            adapter.log.error('Please select a valid region in setup!')
+        if (!initialDataLoaded){
+            initialSetup()
+            initialDataLoaded = true
+        }
+
+        if (countryConfig  == ""|| !countryConfig || latConfig == "" || !latConfig ||longConfig == ""|| !longConfig || !locationArray){
+            adapter.log.error('0.1 Please maintain country, geocode and location in setup!')
             let htmlCode = '<table style="border-collapse: collapse; width: 100%;" border="1"><tbody><tr>'
-            htmlCode += '<td style="width: 100%; background-color: #fc3d03;">Please maintain country and region in setup!</td></tr></tbody></table>'
+            htmlCode += '<td style="width: 100%; background-color: #fc3d03;">Please maintain country and location in setup!</td></tr></tbody></table>'
             await Promise.all([
                 adapter.setStateAsync({device: '' , channel: '',state: 'level'}, {val: 0, ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'htmlToday'}, {val: htmlCode, ack: true}),
@@ -253,34 +271,34 @@ async function getData(){
             adapter.terminate ? adapter.terminate(0) : process.exit(0);
         }
         else{
-            adapter.log.debug('Setup found: country ' + countryConfig + ' and region ' + regionConfig + ' - ' +  regionName )
+            adapter.log.debug('0.1 Setup found: country ' + countryConfig + ' with geocode(s) ' + locationArray + ' for location ' + geocodeLocationConfig+ ' and Lat ' + latConfig + ' Long ' +  longConfig )
             if (Sentry){
                 adapter.log.debug('Sentry aktiv - Breadcrumb gesetzt')
                 Sentry.addBreadcrumb({
                     category: "info",
-                    message: 'Country ' + countryConfig + ', Region '+ regionConfig + ' - ' +  regionName,
+                    message: 'Country ' + countryConfig + ', Location '+ latConfig + ' - ' +  longConfig,
                     level: "info",
                   });
             }
+            /*
+            if (!geoCodeLoaded){
+                findGeoCode()
+                geoCodeLoaded = true
+                adapter.log.debug('0.2: Geocode loaded. Result: ' + locationArray)
+            }
+            */
             
             urlAtom = getCountryLink(countryConfig)
             xmlLanguage = getXMLLanguage(countryConfig)
             if (xmlLanguage == ""){
                 xmlLanguage = 'en-GB'
             }
-            adapter.log.debug(' XML Language: ' + xmlLanguage)
-
-            // Delete old alarms
-            //adapter.log.debug('0: Delete Alarms')
-            // Alarms will not be deleted here any more
-
-            //const deleted =  await deleteAllAlarms();
-            //adapter.log.debug('0.1: Deleted Alarms')
+            adapter.log.debug('0.3 XML Language: ' + xmlLanguage)
 
             const checkState = await adapter.getStateAsync('weatherMapCountry')
             if (checkState != null ){
 
-                adapter.log.debug('0.2: Cleaning up old objects');
+                adapter.log.debug('0.3: Cleaning up old objects');
                 const cleaned = await cleanupOld()
             }
             
@@ -290,12 +308,10 @@ async function getData(){
             if (temp){
                 noOfAlarmsAtStart = temp.val
             }
-            adapter.log.debug('0: Existing alarm objects at adapter start: ' + noOfAlarmsAtStart)
+            adapter.log.debug('0.4: Existing alarm objects at adapter start: ' + noOfAlarmsAtStart)
             
             const temp2 = await saveAlarmNamesForLater()
             for (const alarmLoop of alarmOldIdentifier) {
-                //HIER SIND WIR
-                //adapter.log.debug('TEMP: ' + alarmLoop)
                 const temp1 = await saveAlarmsForLater(alarmLoop)
             };
 
@@ -412,17 +428,13 @@ async function getData(){
                             else {
                                 info = [result.alert.info]
                             }
-
                             detailsType= result.alert.msgType
                             detailsIdentifier = result.alert.identifier
                             detailsIdentifier = detailsIdentifier.replace(/\./g,'') // remove dots
                             detailssent = result.alert.sent
-                            adapter.log.debug('TEMP:' + result.alert.references)
                             if (detailsType != "Alert" && result.alert.references != ""){
                                 detailsReference = result.alert.references
                                 var searchTerm = ","
-                                adapter.log.debug('TEMP: searchterm = ' + searchTerm)
-                                adapter.log.debug('TEMP: detailsreference = ' + detailsReference)
 
                                 const indexOfFirstComma = detailsReference.indexOf(searchTerm);
                                 const indexOfSecondComma = detailsReference.indexOf(searchTerm, indexOfFirstComma +1);
@@ -435,6 +447,7 @@ async function getData(){
                                 var element = info[j]
 
                                 if (element.language == xmlLanguage){
+
                                     element.parameter.forEach(function (parameter){
                                         if (parameter.valueName == "awareness_type") {
                                             awarenesstype =parameter.value
@@ -625,7 +638,7 @@ async function getData(){
             await Promise.all([
                 adapter.setStateAsync({device: '' , channel: '',state: 'level'}, {val: maxAlarmLevel, ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'htmlToday'}, {val: htmlCode, ack: true}),
-                adapter.setStateAsync({device: '' , channel: '',state: 'location'}, {val: regionName, ack: true}),
+                adapter.setStateAsync({device: '' , channel: '',state: 'location'}, {val: geocodeLocationConfig, ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'link'}, {val: urlAtom, ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'color'}, {val: getColor(maxAlarmLevel.toString()), ack: true}),
                 adapter.setStateAsync({device: '' , channel: '',state: 'noOfAlarms'}, {val: warningCount, ack: true}),
@@ -639,8 +652,8 @@ async function getData(){
 
 
             adapter.log.debug('15: All Done')
-            if (regionName){
-                adapter.log.info('15.1: Updated Weather Alarms for ' + regionName + ' -> ' + warningCount + ' alarm(s) found')
+            if (geocodeLocationConfig){
+                adapter.log.info('15.1: Updated Weather Alarms for ' + geocodeLocationConfig + ' -> ' + warningCount + ' alarm(s) found')
             }
             
             adapter.terminate ? adapter.terminate('All data processed. Adapter stopped until next scheduled process.') : process.exit(0);
@@ -677,6 +690,93 @@ function checkDuplicates(){
     //adapter.log.debug('9.3.1 alarmAll sorted by sent1 date:' + JSON.stringify(alarmAll.sort((a, b) => a.Alarm_Sent - b.Alarm_Sent)))
 }
 
+
+function createPolyDataString(PolyDataToConvert){
+    var result = []
+    var first = true
+    var i = 0
+    var lat = ''
+    var long = ''
+    do {
+        var loc = PolyDataToConvert.indexOf(' ')
+        var countComma = (PolyDataToConvert.match(/,/g) || []).length;
+        var lengthpolyDataToConvert = PolyDataToConvert.length
+        var tempString = PolyDataToConvert.substring(0, loc)
+        var locComma = tempString.indexOf(',')
+
+        if (countComma >1){
+            // still multiple objects
+            PolyDataToConvert = PolyDataToConvert.substring(loc+1,lengthpolyDataToConvert)
+
+            
+            long = tempString.substring(locComma+1,tempString.length)
+            lat = tempString.substring(0,locComma)
+            i ++
+            result.push([long, lat ])
+        }
+        else{
+            //last object
+            
+            var locComma = PolyDataToConvert.indexOf(',')
+            var locComma = tempString.indexOf(',')
+            var longLast = PolyDataToConvert.substring(locComma+1,PolyDataToConvert.length)
+            var latLast = PolyDataToConvert.substring(0,locComma)
+            if (longLast != long && latLast != lat){
+                result.push([long, lat ])
+
+            }            
+            PolyDataToConvert = ''
+
+        }
+        
+        lengthpolyDataToConvert = PolyDataToConvert.length
+      } while (lengthpolyDataToConvert > 1);
+      
+    return result
+}
+
+
+
+function checkIfInPoly(polyData){
+
+    var polyArray = createPolyDataString(polyData)
+
+    var myLoc = {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": 
+            [longConfig, latConfig]
+        }
+    };
+            
+    let i = 0;
+    let pathArray = [];
+    
+    while (i < polyArray.length) {
+        var lat = polyArray[i][0]
+        var long = polyArray[i][1]
+        pathArray.push([Number(lat), Number(long)])
+
+        i++;
+    }
+     
+    var poly = {        
+            "type": "Feature",
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": 
+                  [pathArray]
+        }
+    }
+           
+    var isInside = turf.booleanPointInPolygon(myLoc, poly);
+
+    return isInside
+
+
+}
+
 function checkRelevante(entry){
     var i = 0
     var now = new Date();
@@ -703,17 +803,21 @@ function checkRelevante(entry){
         if (element['cap:geocode'] && element['cap:geocode'].valueName ){
              locationRelevant = checkLocation(element['cap:geocode'].valueName , element['cap:geocode'].value)
         }
-        else{
-            adapter.log.debug('4.1.2: Warning without geocode - cannot check')
-            /*
-            if(Sentry){
-                Sentry && Sentry.withScope(scope => {
-                    scope.setLevel('info');
-                    scope.setExtra('Location: ', 'Country ' + countryConfig + ', Region '+ regionConfig + ' - ' +  regionName);
-                    Sentry.captureMessage('No geocode included', 'info'); // Level "info"
-                });
+        if (element['cap:polygon'])  {
+            // found polygon
+            let polygon = element['cap:polygon']
+
+            var areaDesc = ''
+            if (element['cap:areaDesc'])  {
+                areaDesc = element['cap:areaDesc']
             }
-            */
+
+            locationRelevant = checkIfInPoly(polygon)            
+
+            if (locationRelevant){
+                adapter.log.debug('4.1.2: Found relevant polygon warning for location ' + areaDesc)
+            }
+            
         }
 
         var statusRelevant = false
@@ -772,16 +876,18 @@ function checkRelevante(entry){
 }
 
 
-function checkLocation(type,value){
+function checkLocation(type,locationValue){
     //check which type it is and if it is relevant for us
+
     if (type == "EMMA_ID"){
-        return value == regionConfig
+        return locationArray.includes(locationValue)
     }
     else{
         var successful = false
         for(var i = 0; i < csvContent.length; i += 1) {
-            if((csvContent[i][0] == regionConfig) && (csvContent[i][2] == type) ) {
-                if (value == csvContent[i][1] ){
+            if((locationArray.includes(csvContent[i][0])) && (csvContent[i][2] == type) ) {
+
+                if (locationValue == csvContent[i][1] ){
                     successful = true
                 }
             }
@@ -958,8 +1064,8 @@ async function cleanObsoleteAlarms(allAlarms){
                     let check = allAlarms.some(function(item) {
                         return item.Alarm_Identifier === channel.common.name})
                     let check1 = allAlarms.some(function(item) {
-                        adapter.log.debug('TEst1 ' + item.Alarm_Reference)
-                        adapter.log.debug('TEst2 ' + channel.common.name)
+                        //adapter.log.debug('TEst1 ' + item.Alarm_Reference)
+                        //adapter.log.debug('TEst2 ' + channel.common.name)
 
 
                         return item.Alarm_Reference === channel.common.name})    
@@ -981,10 +1087,20 @@ async function cleanObsoleteAlarms(allAlarms){
     
 }
 
+/*
+async function getJSONData(){
+    fetch('./geocodes.json')
+    .then((response) => response.json())
+    .then((json) => adapter.log.debug(json));
+
+}
+*/
+
+
 
 async function getCSVData(){
     return new Promise(function(resolve,reject){
-        fs.createReadStream(path.resolve(__dirname, 'geocodes-aliases.csv'))
+        fs.createReadStream(path.resolve(__dirname + '/meteoalarm', 'geocodes-aliases.csv'))
         .pipe(parseCSV({delimiter: ','}))
         .on('data', function(csvrow) {
             //console.log(csvrow);
@@ -1018,7 +1134,7 @@ async function processNotifications(alarms){
                     }
                     var region = ""
                     if (adapter.config.showLocation){
-                        region = ' - ' + regionName
+                        region = ' - ' + geocodeLocationConfig
                     }
 
                     var notificationLevel = getNotificationLevel(alarms.Level)
@@ -1038,7 +1154,7 @@ async function processNotifications(alarms){
             adapter.log.debug('14.1.1: Warning for "All warnings ended" sent')
             var region = ""
             if (adapter.config.showLocation){
-                region = ' - ' + regionName
+                region = ' - ' + geocodeLocationConfig
             }
             var notificationLevel = getNotificationLevel(1)
             var notificationText = notificationLevel  + region + ': ' + i18nHelper.warningsLifted[lang]
@@ -1327,7 +1443,21 @@ async function processDetails(content, countInt,detailsType,detailsIdentifier,de
 
     var path = 'alarms.' + 'Alarm_' + countInt
 
-    //adapter.log.debug('Type: ' + detailsType + ' , Identifier: ' + detailsIdentifier)
+    let areaData = content.area
+    if (!Array.isArray(areaData)){
+        areaData = [areaData]
+    }
+
+    for(let i = 0; i < areaData.length; i++) {
+        let geoCodesArray = areaData[i].geocode
+        if (!Array.isArray(geoCodesArray)){
+            geoCodesArray = [geoCodesArray]
+        }
+        
+
+    }
+
+    
 
     alarmAll.push(
         {
@@ -1876,6 +2006,9 @@ function getXMLLanguage(country){
         case 'HR':
             return 'hr-HR'
             break;
+        case 'CH':
+            return 'de'
+            break;   
         case 'CY':
             return 'el-GR'
             break;
