@@ -154,7 +154,13 @@
                     let countryFound = crs[i].properties.country
                     if (checkIfInPoly(polygon)){
                         locationArray.push(loccode)
-                        geocodeNameArray.push(geocodeLocation)
+                        if (geocodeNameArray.length == 0){
+                            geocodeNameArray.push(geocodeLocation)
+                        }
+                        else{
+                            geocodeNameArray.push(' ' + geocodeLocation)
+
+                        }
                         country = countryFound
                         console.log('Country:  ' + country)
                     }

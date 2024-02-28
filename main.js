@@ -243,7 +243,10 @@ function initialSetup(){
 
             geocodeLocationConfig = adapter.config.geocodeLocation
             geocodeCountry = adapter.config.geocodeCountry
-            adapter.log.debug('TT: ' + geocodeCountry)
+            if (geocodeCountry == ''){
+                // could be the case for the people who tested version 3.0.0
+                geocodeCountry = locationArray[0]+locationArray[1]
+            }
             // check if there is a space after the comma, and if not, add it
 
             /*
