@@ -33,8 +33,9 @@ const { addAbortSignal } = require('stream');
 var DescFilter1 = '';
 var DescFilter2 = '';
 var country = '';
-var countryConfig = '';
+//var countryConfig = '';
 var geocodeLocationConfig = []
+var geocodeCountry = ""
 //var regionConfig = '';
 var latConfig = '';
 var longConfig = '';
@@ -240,8 +241,24 @@ function initialSetup(){
             longConfig = adapter.config.long
             locationArray = adapter.config.geocode
 
-            countryConfig = adapter.config.country
             geocodeLocationConfig = adapter.config.geocodeLocation
+            geocodeCountry = adapter.config.geocodeCountry
+            adapter.log.debug('TT: ' + geocodeCountry)
+            // check if there is a space after the comma, and if not, add it
+
+            /*
+            if (geocodeLocationConfig.indexOf(',') > -1)
+            {
+                let indexFind = geocodeLocationConfig.indexOf(',')
+                if (geocodeLocationConfig.substring(indexFind+1, indexFind+2) != ' '){
+                    geocodeLocationConfig  = geocodeLocationConfig.substring(0,indexFind) + ', ' + 
+                    
+                }
+                adapter.log.debug('TTT: ' + geocodeLocationConfig.substring(indexFind+1, indexFind+2))
+
+              //if ()
+            }
+            */
             imageSizeSetup = Number(adapter.config.imageSize)
 
             adapter.log.debug('0.0 Initial setup loaded')
@@ -257,7 +274,7 @@ async function getData(){
             initialDataLoaded = true
         }
 
-        if (countryConfig  == ""|| !countryConfig || latConfig == "" || !latConfig ||longConfig == ""|| !longConfig || !locationArray){
+        if (geocodeCountry  == ""|| !geocodeCountry || latConfig == "" || !latConfig ||longConfig == ""|| !longConfig || !locationArray){
             adapter.log.error('0.1 Please maintain country, geocode and location in setup!')
             let htmlCode = '<table style="border-collapse: collapse; width: 100%;" border="1"><tbody><tr>'
             htmlCode += '<td style="width: 100%; background-color: #fc3d03;">Please maintain country and location in setup!</td></tr></tbody></table>'
@@ -271,12 +288,12 @@ async function getData(){
             adapter.terminate ? adapter.terminate(0) : process.exit(0);
         }
         else{
-            adapter.log.debug('0.1 Setup found: country ' + countryConfig + ' with geocode(s) ' + locationArray + ' for location ' + geocodeLocationConfig+ ' and Lat ' + latConfig + ' Long ' +  longConfig )
+            adapter.log.debug('0.1 Setup found: country ' + geocodeCountry + ' with geocode(s) ' + locationArray + ' for location ' + geocodeLocationConfig+ ' and Lat ' + latConfig + ' Long ' +  longConfig )
             if (Sentry){
                 adapter.log.debug('Sentry aktiv - Breadcrumb gesetzt')
                 Sentry.addBreadcrumb({
                     category: "info",
-                    message: 'Country ' + countryConfig + ', Location '+ latConfig + ' - ' +  longConfig,
+                    message: 'Country ' + geocodeCountry + ', Location '+ latConfig + ' - ' +  longConfig,
                     level: "info",
                   });
             }
@@ -288,8 +305,8 @@ async function getData(){
             }
             */
             
-            urlAtom = getCountryLink(countryConfig)
-            xmlLanguage = getXMLLanguage(countryConfig)
+            urlAtom = getCountryLink(geocodeCountry)
+            xmlLanguage = getXMLLanguage(geocodeCountry)
             if (xmlLanguage == ""){
                 xmlLanguage = 'en-GB'
             }
