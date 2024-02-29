@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "meteoalarm",
-        "version": "3.0.0",
+        "version": "3.0.1",
         "news": {
+            "3.0.1": {
+                "en": "Small bugfixes",
+                "de": "Kleine Bugfixes",
+                "ru": "Небольшие исправления",
+                "pt": "Pequenas correções de bugs",
+                "nl": "Kleine foutfixes",
+                "fr": "Petits correctifs",
+                "it": "Piccoli bugfix",
+                "es": "Pequeños bugfixes",
+                "pl": "Małe poprawki",
+                "uk": "Маленькі виправлення",
+                "zh-cn": "小错误修正"
+            },
             "3.0.0": {
                 "en": "Breaking change: Switch to polygon data",
                 "de": "Große Änderung: Umschalten auf Polygondaten",
@@ -259,47 +272,46 @@
         },
         "messages": [
             {
-              "condition": {
-                "operand": "and",
-                "rules": [
-                  "oldVersion<3.0.0",
-                  "newVersion>=3.0.0"
+                "condition": {
+                    "operand": "and",
+                    "rules": [
+                        "oldVersion<3.0.0",
+                        "newVersion>=3.0.0"
+                    ]
+                },
+                "title": {
+                    "en": "Important notice!",
+                    "de": "Wichtiger Hinweis!",
+                    "ru": "Важное замечание!",
+                    "pt": "Notícia importante!",
+                    "nl": "Belangrijke mededeling!",
+                    "fr": "Avis important!",
+                    "it": "Avviso IMPORTANTE!",
+                    "es": "Noticia importante!",
+                    "pl": "Ważna uwaga!",
+                    "zh-cn": "重要通知!",
+                    "uk": "Важливе повідомлення!"
+                },
+                "text": {
+                    "en": "This update contains a breaking change. Please go to the setup and maintain the location. Otherwise, the alarms will not work any more.",
+                    "de": "Dieses Update enthält eine kritische Änderung. Bitte gehen Sie zum Setup und halten Sie den Standort. Sonst funktionieren die Alarme nicht mehr.",
+                    "ru": "Это обновление содержит нарушающие изменения. Пожалуйста, отправляйтесь на установку и сохраняйте местоположение. В противном случае тревога больше не будет работать.",
+                    "pt": "Esta atualização contém uma mudança de ruptura. Por favor, vá para a configuração e mantenha a localização. Caso contrário, os alarmes não funcionarão mais.",
+                    "nl": "Deze update bevat een breuk verandering. Ga naar de setup en onderhoud de locatie. Anders werkt het alarm niet meer.",
+                    "fr": "Cette mise à jour contient un changement de rupture. Veuillez aller à l'installation et maintenir l'emplacement. Sinon, les alarmes ne fonctionneront plus.",
+                    "it": "Questo aggiornamento contiene un cambiamento di rottura. Si prega di andare alla configurazione e mantenere la posizione. Altrimenti, gli allarmi non funzioneranno più.",
+                    "es": "Esta actualización contiene un cambio de ruptura. Por favor, vaya a la configuración y mantenga la ubicación. De lo contrario, las alarmas ya no funcionarán.",
+                    "pl": "Ta aktualizacja zawiera przełomową zmianę. Proszę przejść do ustawienia i utrzymać lokalizację. Inaczej alarmy już nie będą działać.",
+                    "uk": "Цей оновлення містить зміни розриву. Будь ласка, перейдемо на налаштування та підтримує розташування. В іншому випадку сигналізація не працює.",
+                    "zh-cn": "此更新包含一个突破性的更改 。 请到设置处维持位置. 否则,警报就会失效."
+                },
+                "level": "warn",
+                "buttons": [
+                    "agree",
+                    "cancel"
                 ]
-              },
-              "title": {
-                "en": "Important notice!",
-                "de": "Wichtiger Hinweis!",
-                "ru": "Важное замечание!",
-                "pt": "Notícia importante!",
-                "nl": "Belangrijke mededeling!",
-                "fr": "Avis important!",
-                "it": "Avviso IMPORTANTE!",
-                "es": "Noticia importante!",
-                "pl": "Ważna uwaga!",
-                "zh-cn": "重要通知!",
-                "uk": "Важливе повідомлення!"
-              },
-              "text": {
-                "en": "This update contains a breaking change. Please go to the setup and maintain the location. Otherwise, the alarms will not work any more.",
-                "de": "Dieses Update enthält eine kritische Änderung. Bitte gehen Sie zum Setup und halten Sie den Standort. Sonst funktionieren die Alarme nicht mehr.",
-                "ru": "Это обновление содержит нарушающие изменения. Пожалуйста, отправляйтесь на установку и сохраняйте местоположение. В противном случае тревога больше не будет работать.",
-                "pt": "Esta atualização contém uma mudança de ruptura. Por favor, vá para a configuração e mantenha a localização. Caso contrário, os alarmes não funcionarão mais.",
-                "nl": "Deze update bevat een breuk verandering. Ga naar de setup en onderhoud de locatie. Anders werkt het alarm niet meer.",
-                "fr": "Cette mise à jour contient un changement de rupture. Veuillez aller à l'installation et maintenir l'emplacement. Sinon, les alarmes ne fonctionneront plus.",
-                "it": "Questo aggiornamento contiene un cambiamento di rottura. Si prega di andare alla configurazione e mantenere la posizione. Altrimenti, gli allarmi non funzioneranno più.",
-                "es": "Esta actualización contiene un cambio de ruptura. Por favor, vaya a la configuración y mantenga la ubicación. De lo contrario, las alarmas ya no funcionarán.",
-                "pl": "Ta aktualizacja zawiera przełomową zmianę. Proszę przejść do ustawienia i utrzymać lokalizację. Inaczej alarmy już nie będą działać.",
-                "uk": "Цей оновлення містить зміни розриву. Будь ласка, перейдемо на налаштування та підтримує розташування. В іншому випадку сигналізація не працює.",
-                "zh-cn": "此更新包含一个突破性的更改 。 请到设置处维持位置. 否则,警报就会失效."
-              },
-              "level": "warn",
-              "buttons": [
-                "agree",
-                "cancel"
-              ]
             }
-            ]
-    
+        ]
     },
     "adminUI": {
         "config": "materialize"

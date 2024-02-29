@@ -99,6 +99,7 @@
 
 
             console.log('Settings loaded')
+            //console.log('Val country: ' + $("#geocodeCountry").val())
 
 		}
 
@@ -143,15 +144,25 @@
 
                 locationArray = []
                 var geocodeNameArray = []
+                var country = ''
             
                 for(let i = 0; i < crs.length; i++) {
                     var loccode = crs[i].properties.code
                     let polygon = JSON.stringify(crs[i].geometry.coordinates)
                     let type = JSON.stringify(crs[i].properties.type)
                     let geocodeLocation = crs[i].properties.name
+                    let countryFound = crs[i].properties.country
                     if (checkIfInPoly(polygon)){
                         locationArray.push(loccode)
-                        geocodeNameArray.push(geocodeLocation)
+                        if (geocodeNameArray.length == 0){
+                            geocodeNameArray.push(geocodeLocation)
+                        }
+                        else{
+                            geocodeNameArray.push(' ' + geocodeLocation)
+
+                        }
+                        country = countryFound
+                        console.log('Country:  ' + country)
                     }
 
                     //console.log('Code: ' + loccode)
@@ -165,6 +176,8 @@
                     // geocode gefunden
                     $("#geocode").val(locationArray);
                     $("#geocodeLocation").val(geocodeNameArray);
+                    $("#geocodeCountry").val(country);
+
                 }
                 else{
                     console.log('Geocode not found')
@@ -397,7 +410,7 @@
 		// This will be called by the admin adapter when the user presses the save button
 		function save(callback) {
 			// example: select elements with class=value and build settings object
-            console.log('saving country ' + $('#country').children("option:selected").val())
+            console.log('saving country ' + $('#geocodeCountry').val())
             if (!checksetup()){
                 console.log('No errors found')
                 var obj = {};
@@ -416,7 +429,7 @@
                     }
                 });
 
-                obj.regionName = $('#region').children("option:selected").text()
+                //obj.regionName = $('#region').children("option:selected").text()
 
                 callback(obj);
 
@@ -425,7 +438,6 @@
                 //wait till errors are fixed
                 console.log('Errors found')
             }
-            //settings.regionName = $('#region').children("option:selected").text()
 
 		}
 
@@ -439,6 +451,10 @@
         width: 50%; 
         padding-right: 0.75rem;
         padding-left: 0.75rem;
+    }
+
+    .headline {
+        font-weight: bold;
     }
 
     #loader {
@@ -470,7 +486,7 @@
 
      #mapWrap {
         width: 50%;
-        height: 300px; 
+        height: 400px; 
         margin-right: 1rem;
         z-index: 2;
     }    
@@ -509,58 +525,11 @@
             </div>
             <div class="row" style="display: flex;">
                 <div class="wrapper" >
-                    <div class="input-field ">
-                        <div class="translate">SelectCountry</div>
-                    </div> 
-
-                    <div class="column"><select class="value select-country" id="country">
-                        <option value="" class="translate">ChooseCountry</option>
-                        <option value="AT" class="translate">Austria</option>
-                        <option value="CH" class="translate">Switzerland</option> 
-                        <option value="DE" class="translate">Germany</option>
-                        <option value="BE" class="translate">Belgium</option>
-                        <option value="BA" class="translate">BosniaHerzegovina</option>
-                        <!--<option value="BG" class="translate">Bulgaria</option> Auskommentiert da falsch in geocodes.json-->
-                        <option value="HR" class="translate">Croatia</option>
-                        <option value="CY" class="translate">Cyprus</option>
-                        <option value="CZ" class="translate">Czech Republic</option>
-                        <option value="DK" class="translate">Denmark</option>
-                        <option value="EE" class="translate">Estonia</option>
-                        <option value="FI" class="translate">Finland</option>
-                        <option value="FR" class="translate">France</option>
-                        <option value="GR" class="translate">Greece</option>
-                        <option value="HU" class="translate">Hungary</option>
-                        <option value="IE" class="translate">Ireland</option>
-                        <option value="IS" class="translate">Iceland</option>
-                        <option value="IL" class="translate">Israel</option>
-                        <option value="IT" class="translate">Italy</option>
-                        <option value="LV" class="translate">Latvia</option>
-                        <option value="LT" class="translate">Lithuania</option>
-                        <option value="LU" class="translate">Luxembourg</option>
-                        <option value="MK" class="translate">North Macedonia</option>
-                        <option value="MT" class="translate">Malta</option>
-                        <option value="NL" class="translate">Netherlands</option>
-                        <option value="NO" class="translate">Norway</option>
-                        <option value="PL" class="translate">Poland</option>
-                        <!--<option value="PT" class="translate">Portugal</option> Auskommentiert da falsch in geocodes.json-->
-                        <option value="RO" class="translate">Romania</option>
-                        <option value="RS" class="translate">Serbia</option>
-                        <option value="SK" class="translate">Slovakia</option>
-                        <option value="SI" class="translate">Slovenia</option>
-                        <option value="ES" class="translate">Spain</option>
-                        <option value="SE" class="translate">Sweden</option>
-                        <option value="UK" class="translate">UK</option>
-                    </select></div>
-                    <div class="column"></div>
-
-
-                   
-                    <div class="input-field">
-                        <div class="translate">SetPosition</div>
+                    <div class="input-field col headLine" >
+                        <div class="translate">SetPosition1</div>
                     </div> 
                     <div>
-
-                        <div class="column  ">
+                        <div class="column col  ">
                             <input type="text" id="lat" class="value" />
                             <label for="lat" class="translate">lattitude</label>
                         </div>
@@ -570,34 +539,35 @@
                         </div>
                     </div>
 
-                    <div style="margin-top: 0.75rem;">
+                    
+
+                    <div style="margin-top: 0.75rem; " class="col">
                         <a id="loadSetup" class="waves-effect waves-light btn"><i class="material-icons left">sync</i><span class="translate">loadSetup</span></a>
                     </div>
+
+                    <div class="input-field col headLine">
+                        <div class="translate">InstructionGeoCode</div>
+                    </div> 
+
+                    <div class="col">
+                        <a id="loadLocationCode" class="waves-effect waves-light btn"><i class="material-icons left">map</i><span class="translate">LoadGeocode</span></a>
+                    </div>
+                    <div class="col" style="width:80%">
+                        <input type="text" id="geocodeLocation" class="value" readonly/>
+                    </div>
+                    <div class="col" style="width:20%" hidden>
+                            <input type="text" id="geocode" class="value" readonly/>
+                    </div>
+                    <div class="col" style="width:20%" hidden>
+                        <input type="text" id="geocodeCountry" class="value" readonly/>
+                    </div>
+
                 </div>
                 
                 <div id="mapWrap"></div>
 
             </div>
             <div id="loader"></div>
-
-            <div class="row" style="display: flex; flex-direction: column;">
-                
-                <div class="input-field col">
-                    <div class="translate">InstructionGeoCode</div>
-                </div> 
-
-                <div class="col">
-                    <a id="loadLocationCode" class="waves-effect waves-light btn"><i class="material-icons left">map</i><span class="translate">LoadGeocode</span></a>
-                </div>
-  
-                <div class="col" style="width:20%">
-                    <input type="text" id="geocodeLocation" class="value" readonly/>
-            </div>
-                <div class="col" style="width:20%" hidden>
-                        <input type="text" id="geocode" class="value" readonly/>
-                </div>
-
-            </div>
         
         </div>
 
