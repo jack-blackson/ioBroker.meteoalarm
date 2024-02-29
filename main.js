@@ -1340,7 +1340,7 @@ function getNotificationLevel(level){
     
 
     if (adapter.config.notificationsType){
-        notificationText +=  i18nHelper.warninglevel[lang] + ' ' + level + '/4' + ' '
+        notificationText +=  i18nHelper.warninglevel[lang] + ' ' + level + '/4'
     }
 
     return notificationText

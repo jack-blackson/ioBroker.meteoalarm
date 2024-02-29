@@ -25,7 +25,7 @@ Choose your country, and afterwards the region you want the warnings for. If you
 
 ## Changelog
 
-### 3.0.1 (2024-02-26)
+### 3.0.1 (2024-02-29)
 * (jack-blackson) Bugfix for location names
 * (jack-blackson) Removed necessity to choose country, this is now automatically detected
 
