@@ -1192,7 +1192,7 @@ async function processNotifications(alarms){
 function prepareNotificationText(headline,description,date,region,level,identifier){
     var notificationText = ""
 
-    notificationText += level + headline + region + ' (' + date + ') ' + description
+    notificationText += level +' ' +  headline + region + ' (' + date + ') ' + description
 
     return notificationText
 }
