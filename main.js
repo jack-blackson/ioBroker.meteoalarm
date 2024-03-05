@@ -1192,7 +1192,7 @@ async function processNotifications(alarms){
 function prepareNotificationText(headline,description,date,region,level,identifier){
     var notificationText = ""
 
-    notificationText += level +' ' +  headline + region + ' (' + date + ') ' + description
+    notificationText += level +  headline + region + ' (' + date + ') ' + description
 
     return notificationText
 }
@@ -1202,7 +1202,7 @@ function sendNotification(headline,description,date,region,levelText,identifier,
     var descriptionText = ""
     var typeText = ""
     if (type == 'Update'){
-        typeText = i18nHelper.update[lang] + ': '
+        typeText = ' ' + i18nHelper.update[lang] + ': '
     }
     if (!adapter.config.noDetails ){
         descriptionText = description
