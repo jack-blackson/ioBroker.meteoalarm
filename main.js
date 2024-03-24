@@ -1192,7 +1192,7 @@ async function processNotifications(alarms){
 function prepareNotificationText(headline,description,date,region,level,identifier){
     var notificationText = ""
 
-    notificationText += level + headline + region + ' (' + date + ') ' + description
+    notificationText += level +  headline + region + ' (' + date + ') ' + description
 
     return notificationText
 }
@@ -1202,8 +1202,20 @@ function sendNotification(headline,description,date,region,levelText,identifier,
     var descriptionText = ""
     var typeText = ""
     if (type == 'Update'){
-        typeText = i18nHelper.update[lang] + ': '
+        if (adapter.config.levelInWords){
+            typeText = ' ' + i18nHelper.update[lang] + ': '
+        }
+        else{
+            typeText = i18nHelper.update[lang] + ': '
+
+        }
     }
+    else
+        {
+            if (adapter.config.levelInWords){
+                typeText = ': ' + typeText
+            }
+        }
     if (!adapter.config.noDetails ){
         descriptionText = description
     }
@@ -1339,7 +1351,7 @@ function getNotificationLevel(level){
     }
     
 
-    if (adapter.config.notificationsType){
+    if (adapter.config.levelInWords){
         notificationText +=  i18nHelper.warninglevel[lang] + ' ' + level + '/4'
     }
 

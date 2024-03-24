@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "meteoalarm",
-        "version": "3.0.1",
+        "version": "3.0.2",
         "news": {
+            "3.0.2": {
+                "en": "Small bugfixes",
+                "de": "Kleine Bugfixes",
+                "ru": "Небольшие исправления",
+                "pt": "Pequenas correções de bugs",
+                "nl": "Kleine foutfixes",
+                "fr": "Petits correctifs",
+                "it": "Piccoli bugfix",
+                "es": "Pequeños bugfixes",
+                "pl": "Małe poprawki",
+                "uk": "Маленькі виправлення",
+                "zh-cn": "小错误修正"
+            },
             "3.0.1": {
                 "en": "Small bugfixes",
                 "de": "Kleine Bugfixes",
