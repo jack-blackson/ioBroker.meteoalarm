@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "meteoalarm",
-        "version": "3.0.2",
+        "version": "3.0.3",
         "news": {
+            "3.0.3": {
+                "en": "Small bugfixes, Updated Repositories",
+                "de": "Kleine Bugfixes, Aktualisierte Repositories",
+                "ru": "Небольшие исправления, Обновленные хранилища",
+                "pt": "Pequenas correções de bugs, repositórios atualizados",
+                "nl": "Kleine bugfixes, bijgewerkte repositories",
+                "fr": "Petits bugfixes, Dépôts mis à jour",
+                "it": "Piccoli bugfix, repository aggiornati",
+                "es": "Pequeños bugfixes, Repositorios actualizados",
+                "pl": "Małe poprawki, Aktualizacja Repozytoriów",
+                "uk": "Малі багфікси, Оновлені репозиторії",
+                "zh-cn": "小错误修正, 更新的仓库"
+            },
             "3.0.2": {
                 "en": "Small bugfixes",
                 "de": "Kleine Bugfixes",
@@ -41,19 +54,6 @@
                 "pl": "Łamanie zmian: Przełącz na dane wielokąta",
                 "uk": "Зміна розривів: Перемикач даних полігонів",
                 "zh-cn": "中断更改 : 切换到多边形数据"
-            },
-            "2.3.8": {
-                "en": "Bugfix alarm reference",
-                "de": "Bugfix Alarm Referenz",
-                "ru": "Ссылка на бугфикс",
-                "pt": "Referência do alarme do Bugfix",
-                "nl": "Bugfix alarm referentie",
-                "fr": "Signal d ' alarme Bugfix",
-                "it": "Riferimento allarme Bugfix",
-                "es": "Referencia de alarma de Bugfix",
-                "pl": "Bugfix",
-                "uk": "Посилання на сигналізацію Bugfix",
-                "zh-cn": "Bugfix警戒"
             },
             "2.3.7": {
                 "en": "Don't show duplicate warnings twice in HTML widget",
@@ -260,7 +260,7 @@
         "schedule": "*/10 * * * *",
         "dependencies": [
             {
-                "js-controller": ">=3.0.0"
+                "js-controller": ">=5.0.19"
             }
         ],
         "enabled": true,
