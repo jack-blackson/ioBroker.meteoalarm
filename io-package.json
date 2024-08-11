@@ -124,7 +124,10 @@
         "authors": [
             "Jack <blacksonj7@gmail.com>"
         ],
-        "license": "MIT",
+        "licenseInformation": {
+            "license": "MIT",
+            "type": "free"
+          },
         "platform": "Javascript/Node.js",
         "mode": "schedule",
         "schedule": "*/10 * * * *",
