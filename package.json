@@ -2,7 +2,7 @@
   "name": "iobroker.meteoalarm",
   "version": "3.0.3",
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=18.0.0"
   },
   "description": "Meteolaram",
   "main": "main.js",
@@ -17,7 +17,8 @@
   "keywords": [
     "Meteoalarm",
     "meteoalarm",
-    "weather alarm"
+    "weather alarm",
+    "ioBroker"
   ],
   "license": "MIT",
   "homepage": "https://github.com/jack-blackson/ioBroker.meteoalarm",
