@@ -1,6 +1,9 @@
 {
   "name": "iobroker.meteoalarm",
-  "version": "3.0.2",
+  "version": "3.0.3",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "description": "Meteolaram",
   "main": "main.js",
   "repository": {
@@ -14,7 +17,8 @@
   "keywords": [
     "Meteoalarm",
     "meteoalarm",
-    "weather alarm"
+    "weather alarm",
+    "ioBroker"
   ],
   "license": "MIT",
   "homepage": "https://github.com/jack-blackson/ioBroker.meteoalarm",
@@ -22,13 +26,13 @@
     "url": "https://github.com/jack-blackson/ioBroker.meteoalarm/issues"
   },
   "dependencies": {
-    "@iobroker/adapter-core": "^2.6.8",
+    "@iobroker/adapter-core": "^3.1.6",
     "@iobroker/testing": "^4.0.0",
     "@sentry/integrations": "^6.17.3",
     "@sentry/node": "^6.17.3",
     "bent": "^7.3.12",
-    "csv-parse": "4.16.3",
-    "moment": "2.30.1",
+    "csv-parse": "^4.16.3",
+    "moment": "^2.30.1",
     "xml2js": "^0.6.0",
     "@turf/turf": "^6.5.0"
   },
@@ -41,6 +45,7 @@
   },
   "devDependencies": {
     "@iobroker/adapter-dev": "^1.2.0",
+    "@iobroker/testing":"4.1.3",
     "axios": ">=0.21.1",
     "chai": "^4.2.0",
     "gulp": "^4.0.2",

@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "meteoalarm",
-        "version": "3.0.2",
+        "version": "3.0.3",
         "news": {
+            "3.0.3": {
+                "en": "Small bugfixes, Updated Repositories",
+                "de": "Kleine Bugfixes, Aktualisierte Repositories",
+                "ru": "Небольшие исправления, Обновленные хранилища",
+                "pt": "Pequenas correções de bugs, repositórios atualizados",
+                "nl": "Kleine bugfixes, bijgewerkte repositories",
+                "fr": "Petits bugfixes, Dépôts mis à jour",
+                "it": "Piccoli bugfix, repository aggiornati",
+                "es": "Pequeños bugfixes, Repositorios actualizados",
+                "pl": "Małe poprawki, Aktualizacja Repozytoriów",
+                "uk": "Малі багфікси, Оновлені репозиторії",
+                "zh-cn": "小错误修正, 更新的仓库"
+            },
             "3.0.2": {
                 "en": "Small bugfixes",
                 "de": "Kleine Bugfixes",
@@ -42,19 +55,6 @@
                 "uk": "Зміна розривів: Перемикач даних полігонів",
                 "zh-cn": "中断更改 : 切换到多边形数据"
             },
-            "2.3.8": {
-                "en": "Bugfix alarm reference",
-                "de": "Bugfix Alarm Referenz",
-                "ru": "Ссылка на бугфикс",
-                "pt": "Referência do alarme do Bugfix",
-                "nl": "Bugfix alarm referentie",
-                "fr": "Signal d ' alarme Bugfix",
-                "it": "Riferimento allarme Bugfix",
-                "es": "Referencia de alarma de Bugfix",
-                "pl": "Bugfix",
-                "uk": "Посилання на сигналізацію Bugfix",
-                "zh-cn": "Bugfix警戒"
-            },
             "2.3.7": {
                 "en": "Don't show duplicate warnings twice in HTML widget",
                 "de": "Zeigen Sie keine doppelten Warnungen zweimal in HTML Widget",
@@ -83,136 +83,6 @@
             },
             "2.3.5": {
                 "en": "Bugfix",
-                "de": "Fehlerbehebung",
-                "ru": "Исправление ошибок",
-                "pt": "Correções de bugs",
-                "nl": "Bugfixes",
-                "fr": "Corrections de bugs",
-                "it": "Correzioni di bug",
-                "es": "Corrección de errores",
-                "pl": "Poprawki",
-                "zh-cn": "Bug修复",
-                "uk": "Виправлення помилок"
-            },
-            "2.3.4": {
-                "en": "Bugfix",
-                "de": "Fehlerbehebung",
-                "ru": "Исправление ошибок",
-                "pt": "Correções de bugs",
-                "nl": "Bugfixes",
-                "fr": "Corrections de bugs",
-                "it": "Correzioni di bug",
-                "es": "Corrección de errores",
-                "pl": "Poprawki",
-                "zh-cn": "Bug修复",
-                "uk": "Виправлення помилок"
-            },
-            "2.3.3": {
-                "en": "Define which alarm levels you are interested in",
-                "de": "Definiere, welche Alarmstufen dich interessieren",
-                "ru": "Определите, какие уровни сигнализации вас интересуют",
-                "pt": "Defina quais níveis de alarme você está interessado em",
-                "nl": "Definieer in welk alarmniveau je geïnteresseerd bent in",
-                "fr": "Définir quels niveaux d'alarme vous êtes intéressé",
-                "it": "Definire quali livelli di allarme siete interessati",
-                "es": "Define los niveles de alarma que te interesan",
-                "pl": "Definicja, której poziomy alarmu są zainteresowane",
-                "uk": "Визначення рівня сигналізації, які вас цікавлять",
-                "zh-cn": "你们关心的指责"
-            },
-            "2.3.2": {
-                "en": "Bugfix to clean up alerts correctly",
-                "de": "Bugfix, um Alarme richtig zu reinigen",
-                "ru": "Bugfix правильно очистить оповещения",
-                "pt": "Bugfix para limpar alertas corretamente",
-                "nl": "Bugfix om de alarmen correct op te ruimen",
-                "fr": "Bugfix pour nettoyer correctement les alertes",
-                "it": "Bugfix per pulire correttamente gli avvisi",
-                "es": "Bugfix para limpiar las alertas correctamente",
-                "pl": "Bugfix do czyszczenia alarmów poprawnie",
-                "uk": "Виправлення помилок для очищення оповіщення",
-                "zh-cn": "正确处理警戒"
-            },
-            "2.3.1": {
-                "en": "Ability to send alarms to other adapters (Telegramm, eMail, Pushover, Signal,Synochat)",
-                "de": "Möglichkeit, Benachrichtigungen an andere Adapter (Telegramm, eMail, Pushover, Signal,Synochat) zu senden",
-                "ru": "Возможность отправки сигналов другим адаптерам, таким как телеграм или почта",
-                "pt": "Capacidade de enviar alarmes para outros adaptadores como telegrama ou correio",
-                "nl": "Vermogen om alarmen te sturen naar andere adapters zoals (Telegramm, eMail, Pushover, Signal,Synochat)",
-                "fr": "Possibilité d'envoyer des alarmes à d'autres adaptateurs (Telegramm, eMail, Pushover, Signal,Synochat)",
-                "it": "Capacità di inviare allarmi ad altri adattatori (Telegramm, eMail, Pushover, Signal,Synochat)",
-                "es": "Capacidad para enviar alarmas a otros adaptadores (Telegramm, eMail, Pushover, Signal,Synochat)",
-                "pl": "Możliwość wysyłania alarmów do innych adapterów, takich jak (Telegramm, eMail, Pushover, Signal,Synochat)",
-                "zh-cn": "是否能够向电报或邮件等其他适应者发出震惊",
-                "uk": "Можливість надсилати тривоги на інші адаптери (Telegramm, eMail, Pushover, Signal, Synochat)"
-            },
-            "2.2.1": {
-                "en": "Bugfixes",
-                "de": "Fehlerbehebung",
-                "ru": "Исправление ошибок",
-                "pt": "Correções de bugs",
-                "nl": "Bugfixes",
-                "fr": "Corrections de bugs",
-                "it": "Correzioni di bug",
-                "es": "Corrección de errores",
-                "pl": "Poprawki",
-                "zh-cn": "Bug修复",
-                "uk": "Виправлення помилок"
-            },
-            "2.2.0": {
-                "en": "New Object JSON to export data in JSON format, First step to get rid of duplicate alarms",
-                "de": "New Object JSON zum Export von Daten im JSON-Format, Erste Schritte, um doppelte Alarme loszuwerden",
-                "ru": "Новый объект JSON для экспорта данных в формате JSON, первый шаг, чтобы избавиться от повторяющихся тревог",
-                "pt": "Novo objeto JSON para exportar dados em formato JSON, Primeiro passo para se livrar de alarmes duplicados",
-                "nl": "New Object JSON om gegevens te exporteren in JSON format, eerste stap om van duplicaat alarm af te komen",
-                "fr": "Nouveau objet JSON pour exporter des données en format JSON, Première étape pour se débarrasser des alarmes en double",
-                "it": "Nuovo oggetto JSON per esportare i dati in formato JSON, primo passo per sbarazzarsi di allarmi duplicati",
-                "es": "Nuevo objeto JSON para exportar datos en formato JSON, primer paso para deshacerse de alarmas duplicadas",
-                "pl": "Nowy obiekt JSON w celu eksportu danych w formacie JSON, pierwszy krok, aby pozbyć się duplikacyjnych alarmów",
-                "zh-cn": "新的目标联合执行组织以联合执行形式出口数据,首先要克服重复的震惊",
-                "uk": "Новий об’єкт JSON для експорту даних у форматі JSON. Перший крок, щоб позбутися повторюваних нагадувань"
-            },
-            "2.1.5": {
-                "en": "Bugfixes",
-                "de": "Fehlerbehebung",
-                "ru": "Исправление ошибок",
-                "pt": "Correções de bugs",
-                "nl": "Bugfixes",
-                "fr": "Corrections de bugs",
-                "it": "Correzioni di bug",
-                "es": "Corrección de errores",
-                "pl": "Poprawki",
-                "zh-cn": "Bug修复",
-                "uk": "Виправлення помилок"
-            },
-            "2.1.4": {
-                "en": "Add SENTRY event details",
-                "de": "SENTRY-Ereignisdetails hinzufügen",
-                "ru": "Добавить информацию о событии SENTRY",
-                "pt": "Adicionar detalhes do evento SENTRY",
-                "nl": "Voeg SENTRY-evenementdetails toe",
-                "fr": "Ajouter les détails de l'événement SENTRY",
-                "it": "Aggiungi i dettagli dell'evento SENTRY",
-                "es": "Agregar detalles del evento SENTRY",
-                "pl": "Dodaj szczegóły wydarzenia SENTRY",
-                "zh-cn": "添加 SENTRY 事件详细信息",
-                "uk": "Додайте деталі події SENTRY"
-            },
-            "2.1.3": {
-                "en": "Bugfixes",
-                "de": "Fehlerbehebung",
-                "ru": "Исправление ошибок",
-                "pt": "Correções de bugs",
-                "nl": "Bugfixes",
-                "fr": "Corrections de bugs",
-                "it": "Correzioni di bug",
-                "es": "Corrección de errores",
-                "pl": "Poprawki",
-                "zh-cn": "Bug修复",
-                "uk": "Виправлення помилок"
-            },
-            "2.1.2": {
-                "en": "Bugfixes",
                 "de": "Fehlerbehebung",
                 "ru": "Исправление ошибок",
                 "pt": "Correções de bugs",
@@ -254,13 +124,16 @@
         "authors": [
             "Jack <blacksonj7@gmail.com>"
         ],
-        "license": "MIT",
+        "licenseInformation": {
+            "license": "MIT",
+            "type": "free"
+          },
         "platform": "Javascript/Node.js",
         "mode": "schedule",
         "schedule": "*/10 * * * *",
         "dependencies": [
             {
-                "js-controller": ">=3.0.0"
+                "js-controller": ">=5.0.19"
             }
         ],
         "enabled": true,
@@ -277,6 +150,7 @@
         "type": "weather",
         "connectionType": "cloud",
         "dataSource": "poll",
+        "tier": 2,
         "singletonHost": false,
         "plugins": {
             "sentry": {
