@@ -29,7 +29,7 @@
     "@iobroker/testing": "^4.1.1",
     "@iobroker/adapter-core": "^3.1.6",
     "@sentry/integrations": "^6.17.3",
-    "@sentry/node": "^6.17.3",
+    "@sentry/node": "^7.75.0",
     "bent": "^7.3.12",
     "csv-parse": "^4.16.3",
     "moment": "^2.30.1",
