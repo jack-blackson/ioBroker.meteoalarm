@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "meteoalarm",
-        "version": "3.0.3",
+        "version": "3.0.4",
         "news": {
+            "3.0.4": {
+                "en": "Small bugfix for telegram notification",
+                "de": "Kleines Bugfix für Telegramm-Benachrichtigung",
+                "ru": "Небольшой исправления для уведомления о телеграмме",
+                "pt": "Pequeno bugfix para notificação de telegrama",
+                "nl": "Kleine bugfix voor telegram notificatie",
+                "fr": "Petit bugfix pour notification par télégramme",
+                "it": "Piccolo bugfix per la notifica del telegramma",
+                "es": "Fix pequeño para la notificación de telegrama",
+                "pl": "Mały bugfix do powiadamiania telegramu",
+                "uk": "Невеликий Виправлення помилок для повідомлення про телеграму",
+                "zh-cn": "电报通知小错误"
+            },
             "3.0.3": {
                 "en": "Small bugfixes, Updated Repositories",
                 "de": "Kleine Bugfixes, Aktualisierte Repositories",
@@ -54,45 +67,6 @@
                 "pl": "Łamanie zmian: Przełącz na dane wielokąta",
                 "uk": "Зміна розривів: Перемикач даних полігонів",
                 "zh-cn": "中断更改 : 切换到多边形数据"
-            },
-            "2.3.7": {
-                "en": "Don't show duplicate warnings twice in HTML widget",
-                "de": "Zeigen Sie keine doppelten Warnungen zweimal in HTML Widget",
-                "ru": "Не показывать повторяющиеся предупреждения дважды в виджете HTML",
-                "pt": "Não mostre avisos duplicados duas vezes no widget HTML",
-                "nl": "Toon geen dubbele waarschuwingen in HTML Widget",
-                "fr": "Ne montrez pas les avertissements doubles dans le widget HTML",
-                "it": "Non mostrare avvisi duplicati due volte in widget HTML",
-                "es": "No mostrar advertencias duplicadas dos veces en widget HTML",
-                "pl": "Don't pokazuje dwa razy większe ostrzeżenia w HTML",
-                "uk": "Не показувати дублікати попередження двічі в HTML віджеті",
-                "zh-cn": "红十字和红新月运动两次发出重复警告"
-            },
-            "2.3.6": {
-                "en": "Bugfix for notification \"All warnings ended\"",
-                "de": "Bugfix für die Benachrichtigung \"Alle Warnungen beendet\"",
-                "ru": "Bugfix для уведомления \"Все предупреждения закончились\"",
-                "pt": "Bugfix para notificação \"Todos os avisos terminados\"",
-                "nl": "Bugfix voor de melding \"Alle waarschuwingen eindigden\"",
-                "fr": "Bugfix pour la notification \"Tous les avertissements ont pris fin\"",
-                "it": "Bugfix per la notifica \"Tutti gli avvisi finiti\"",
-                "es": "Bugfix para notificación \"Todas las advertencias terminadas\"",
-                "pl": "Bugfix dla powiadomienia „Wszystkich ostrzeżeń zakończyło się”",
-                "uk": "Виправлення повідомлень \"Всі попередження закінчилися\"",
-                "zh-cn": "通知“所有警告结束”的命令"
-            },
-            "2.3.5": {
-                "en": "Bugfix",
-                "de": "Fehlerbehebung",
-                "ru": "Исправление ошибок",
-                "pt": "Correções de bugs",
-                "nl": "Bugfixes",
-                "fr": "Corrections de bugs",
-                "it": "Correzioni di bug",
-                "es": "Corrección de errores",
-                "pl": "Poprawki",
-                "zh-cn": "Bug修复",
-                "uk": "Виправлення помилок"
             }
         },
         "titleLang": {

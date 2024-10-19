@@ -1220,18 +1220,12 @@ function sendNotification(headline,description,date,region,levelText,identifier,
         descriptionText = description
     }
 
-
     switch (adapter.config.notificationsType){
         case 'None':
             // Do nothing
             break;
         case 'Telegram':
-            if (adapter.config.notificationsType){
-                notificationText = '<b>' + typeText + headline + region + '</b>' + '\r\n' + levelText + '\r\n' + descriptionText + '\r\n' + date
-            }
-            else{
-                notificationText = levelText + '<b>' + typeText +  headline + region + '</b>' + '\r\n' + ' (' + date + ') ' + '\r\n' + descriptionText
-            }
+            notificationText = levelText + '<b>' + typeText +  headline + region + '</b>' + '\r\n' + ' (' + date + ') ' + '\r\n' + descriptionText            
             break;
         case 'Mail':
             notificationText =  levelText + typeText + headline + region + ' (' + date + ') ';
@@ -1250,7 +1244,6 @@ function sendNotification(headline,description,date,region,levelText,identifier,
             //Do nothing
         break;
     }
-
     sendMessage(identifier,notificationText,descriptionText)
 }
 
